@@ -1,1 +1,60 @@
-<p>navbar works!</p>
+<nav
+  class="fixed flex justify-between py-4 w-full  md:px-12 px-4 transition duration-500 ease-in content-center z-10 bg-orange-500"
+  [ngClass]="{
+    'bg-medium  transition duration-700 ease-in py-0': isScrolled,
+  }"
+>
+  <div
+    class="flex items-center uppercase font-varela font-extrabold md:text-2xl text-xl  leading-7 "
+  >
+    <!-- <img src="assets/images/nirovi.png" alt="Logo" width="150" height="150" /> -->
+    <h1>
+      <span class="text-green-900">direna </span
+      ><span class="text-red-600"> FitPro</span>
+    </h1>
+  </div>
+  <ul class="font-montserrat items-center hidden md:flex text-white">
+    <li class="mx-3">
+      <a class="growing-underline cursor-pointer hover:text-primary"> Home </a>
+    </li>
+    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+      <a>Service</a>
+    </li>
+    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+      <a>Rooms</a>
+    </li>
+    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+      <a>Contact us</a>
+    </li>
+  </ul>
+  <div class="font-montserrat hidden lg:block">
+    <button class="mr-6">Login</button>
+    <button class="py-2 px-4 text-white bg-black rounded-3xl">Signup</button>
+  </div>
+  <div id="showMenu" class="md:hidden" (click)="openMobileNav()">
+    <img src=" assets/logos/Menu.svg" alt="Menu icon" />
+  </div>
+</nav>
+
+<div
+  *ngIf="showMenu"
+  class="px-4 py-6 fixed top-0 left-0 h-full w-full bg-medium text-white z-20 animate-fade-in-down"
+>
+  <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
+    <img src="assets/logos/Cross.svg" alt="" class="h-16 w-16" />
+  </div>
+  <ul class="font-raleway flex flex-col mx-8 my-24 items-center text-2xl">
+    <li id="hideMenu" class="my-6">
+      <a (click)="closeMobileNav()">Home</a>
+    </li>
+    <li class="my-6">
+      <a id="hideMenu" (click)="closeMobileNav()">Service</a>
+    </li>
+    <li class="my-6">
+      <a id="hideMenu" (click)="closeMobileNav()">Rooms</a>
+    </li>
+    <li class="my-6">
+      <a id="hideMenu" (click)="closeMobileNav()">Contact us</a>
+    </li>
+  </ul>
+</div>
