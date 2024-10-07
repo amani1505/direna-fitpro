@@ -1,0 +1,12 @@
+<app-navbar [isScrolled]="isScrolled"></app-navbar>
+
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>
+<div
+*ngIf="isScrolled"
+class="fixed flex bottom-0 right-0 mr-5 mb-5 border-2 border-primary bg-primary p-2 w-9 h-9 text-center items-center rounded-full z-10 animate-bounce"
+(click)="backToTheTop()"
+>
+Top
+</div>
