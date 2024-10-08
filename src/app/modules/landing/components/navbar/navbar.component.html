@@ -1,35 +1,74 @@
 <nav
-  class="fixed flex justify-between py-4 w-full  md:px-12 px-4 transition duration-500 ease-in content-center z-10 "
+  class="fixed flex justify-between py-4 w-full md:px-12 px-4 transition duration-500 ease-in content-center z-10"
   [ngClass]="{
-    'bg-orange-500  transition duration-700 ease-in py-0': isScrolled,
+    'bg-white text-primary transition duration-700 ease-in py-0': isScrolled,
   }"
 >
   <div
-    class="flex items-center uppercase font-varela font-extrabold md:text-2xl text-xl  leading-7 "
+    class="flex items-center uppercase font-varela font-extrabold md:text-2xl text-xl leading-7"
   >
     <!-- <img src="assets/images/nirovi.png" alt="Logo" width="150" height="150" /> -->
-    <h1>
+    <h1 class="flex gap-1">
       <span class="text-green-900">direna </span
       ><span class="text-red-600"> FitPro</span>
     </h1>
   </div>
-  <ul class="font-montserrat items-center hidden md:flex text-white">
+  <ul
+    class="font-montserrat items-center hidden md:flex text-white"
+    [ngClass]="{
+      'text-black hover:text-secondary  transition duration-700 ease-in py-0':
+        isScrolled,
+    }"
+  >
     <li class="mx-3">
-      <a class="growing-underline cursor-pointer hover:text-primary"> Home </a>
+      <a
+        class="growing-underline cursor-pointer hover:text-primary"
+        [routerLink]="['/']"
+        routerLinkActive="  font-semibold"
+        exact="true"
+      >
+        Home
+      </a>
     </li>
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
-      <a>Service</a>
+      <a
+        [routerLink]="['/about']"
+        routerLinkActive=" font-semibold"
+        exact="true"
+        >About Us</a
+      >
     </li>
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
-      <a>Rooms</a>
+      <a href="#class" exact="true">Class</a>
     </li>
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
-      <a>Contact us</a>
+      <a
+        [routerLink]="['/blog']"
+        routerLinkActive=" font-semibold"
+        exact="true"
+      >
+        Blog</a
+      >
+    </li>
+    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+      <a
+        [routerLink]="['/']"
+        routerLinkActive="text-primary font-semibold"
+        exact="true"
+        >Contact us</a
+      >
     </li>
   </ul>
-  <div class="font-montserrat hidden lg:block">
-    <button class="mr-6">Login</button>
-    <button class="py-2 px-4 text-white bg-black rounded-3xl">Signup</button>
+  <div class="font-montserrat hidden lg:flex">
+    <button
+      class="btn !text-2xl !font-semibold bg-white rounded-md text-primary uppercase"
+      [ngClass]="{
+        'bg-primary text-white': isScrolled,
+        'bg-white text-primary': !isScrolled,
+      }"
+    >
+      Login
+    </button>
   </div>
   <div id="showMenu" class="md:hidden" (click)="openMobileNav()">
     <img src=" assets/logos/Menu.svg" alt="Menu icon" />

@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './home.component';
+import { BlogComponent } from './blog.component';
 
 export default [
   {
     path: '',
-    component: HomeComponent,
+    component: BlogComponent,
   },
 ] as Routes;
