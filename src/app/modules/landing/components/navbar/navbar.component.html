@@ -16,8 +16,7 @@
   <ul
     class="font-montserrat items-center hidden md:flex text-white"
     [ngClass]="{
-      'text-black hover:text-secondary  transition duration-700 ease-in py-0':
-        isScrolled,
+      'text-black  transition duration-700 ease-in py-0': isScrolled,
     }"
   >
     <li class="mx-3">
@@ -26,6 +25,9 @@
         [routerLink]="['/']"
         routerLinkActive="  font-semibold"
         exact="true"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
       >
         Home
       </a>
@@ -35,17 +37,29 @@
         [routerLink]="['/about']"
         routerLinkActive=" font-semibold"
         exact="true"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
         >About Us</a
       >
     </li>
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
-      <a href="#class" exact="true">Class</a>
+      <a
+        href="#class"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
+        >Class</a
+      >
     </li>
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
       <a
         [routerLink]="['/blog']"
         routerLinkActive=" font-semibold"
         exact="true"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
       >
         Blog</a
       >
@@ -55,6 +69,9 @@
         [routerLink]="['/']"
         routerLinkActive="text-primary font-semibold"
         exact="true"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
         >Contact us</a
       >
     </li>
@@ -70,17 +87,38 @@
       Login
     </button>
   </div>
-  <div id="showMenu" class="md:hidden" (click)="openMobileNav()">
-    <img src=" assets/logos/Menu.svg" alt="Menu icon" />
+  <div
+    id="showMenu"
+    class="md:hidden p-2 rounded-md shadow rotate-180 !font-extrabold"
+    (click)="openMobileNav()"
+    [ngClass]="{
+      'bg-primary text-white': isScrolled,
+      'bg-white text-primary': !isScrolled,
+    }"
+  >
+    <svg-icon
+      src="./assets/icons/bars-3-center-left.svg"
+      [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
+    ></svg-icon>
   </div>
 </nav>
 
 <div
-  *ngIf="showMenu"
-  class="px-4 py-6 fixed top-0 left-0 h-full w-full bg-medium text-white z-20 animate-fade-in-down"
+  *ngIf="isAnimating || showMenu"
+  class="px-4 py-6 fixed top-0 left-0 h-full w-full bg-primary text-white z-20 "
+  [ngClass]="{
+    'animate-slide-up': showMenu,
+    'animate-slide-down': !showMenu,
+  }"
+  (animationend)="handleAnimationEnd()"
 >
-  <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
-    <img src="assets/logos/Cross.svg" alt="" class="h-16 w-16" />
+  <div id="hideMenu" class="flex justify-end " (click)="closeMobileNav()">
+   <div class="bg-white p-2 text-primary w-14 rounded-md shadow">
+    <svg-icon
+    src="./assets/icons/x-mark.svg"
+    [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
+  ></svg-icon>
+   </div>
   </div>
   <ul class="font-raleway flex flex-col mx-8 my-24 items-center text-2xl">
     <li id="hideMenu" class="my-6">

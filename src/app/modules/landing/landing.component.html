@@ -1,14 +1,17 @@
 <app-navbar [isScrolled]="isScrolled"></app-navbar>
 
 <section>
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </section>
 
 <app-footer></app-footer>
 <div
-*ngIf="isScrolled"
-class="fixed flex bottom-0 right-0 mr-5 mb-5 border-2 border-primary bg-primary p-2 w-9 h-9 text-center items-center rounded-full z-10 animate-bounce"
-(click)="backToTheTop()"
+  *ngIf="isScrolled"
+  class="fixed flex bottom-0 right-0 mr-5 mb-5 border-2 border-black bg-primary  w-14 h-14 items-center justify-center rounded-full z-10 animate-bounce text-black shadow-lg"
+  (click)="backToTheTop()"
 >
-Top
+  <svg-icon
+    src="./assets/icons/play.svg"
+    [svgClass]="'h-8 w-8 !text-3xl font-extrabold -rotate-90'"
+  ></svg-icon>
 </div>
