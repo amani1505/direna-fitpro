@@ -5,13 +5,36 @@
   }"
 >
   <div
-    class="flex items-center uppercase font-varela font-extrabold md:text-2xl text-xl leading-7"
+    class="flex items-center uppercase font-varela font-extrabold md:!text-[1.5rem] !text-xl leading-7"
   >
-    <!-- <img src="assets/images/nirovi.png" alt="Logo" width="150" height="150" /> -->
-    <h1 class="flex gap-1">
-      <span class="text-green-900">direna </span
-      ><span class="text-red-600"> FitPro</span>
-    </h1>
+    <div>
+      <svg-icon
+        src="assets/images/logo.svg"
+        [svgClass]="'h-14 w-14 md:h-full  md:w-16'"
+      ></svg-icon>
+    </div>
+    <div>
+      <h1
+        class="flex gap-1 items-center justify-center text-[1.5rem] md:text-[2.5rem] font-extrabold"
+      >
+        <span
+          class="py-2 flex items-center"
+          [ngClass]="{
+            'text-primary': isScrolled,
+            ' text-white': !isScrolled,
+          }"
+          >direna </span
+        ><span
+          class="py-2 flex items-center"
+          [ngClass]="{
+            'text-secondary': isScrolled,
+            ' text-primary': !isScrolled,
+          }"
+        >
+          FitPro</span
+        >
+      </h1>
+    </div>
   </div>
   <ul
     class="font-montserrat items-center hidden md:flex text-white"
@@ -32,26 +55,17 @@
         Home
       </a>
     </li>
-    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
-      <a
-        [routerLink]="['/about']"
-        routerLinkActive=" font-semibold"
-        exact="true"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
-        >About Us</a
-      >
-    </li>
+
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
       <a
         href="#class"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
-        >Class</a
+        >Classes</a
       >
     </li>
+
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
       <a
         [routerLink]="['/blog']"
@@ -66,8 +80,20 @@
     </li>
     <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
       <a
+        [routerLink]="['/about']"
+        routerLinkActive=" font-semibold"
+        exact="true"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
+        >About Us</a
+      >
+    </li>
+
+    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+      <a
         [routerLink]="['/']"
-        routerLinkActive="text-primary font-semibold"
+        routerLinkActive=" font-semibold"
         exact="true"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
@@ -76,7 +102,7 @@
       >
     </li>
   </ul>
-  <div class="font-montserrat hidden lg:flex">
+  <div class="font-montserrat hidden md:flex">
     <button
       class="btn !text-2xl !font-semibold bg-white rounded-md text-primary uppercase"
       [ngClass]="{
@@ -105,33 +131,121 @@
 
 <div
   *ngIf="isAnimating || showMenu"
-  class="px-4 py-6 fixed top-0 left-0 h-full w-full bg-primary text-white z-20 "
+  class="px-4 py-6 fixed top-0 left-0 h-full w-full bg-primary text-white z-20"
   [ngClass]="{
     'animate-slide-up': showMenu,
     'animate-slide-down': !showMenu,
   }"
   (animationend)="handleAnimationEnd()"
 >
-  <div id="hideMenu" class="flex justify-end " (click)="closeMobileNav()">
-   <div class="bg-white p-2 text-primary w-14 rounded-md shadow">
-    <svg-icon
-    src="./assets/icons/x-mark.svg"
-    [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
-  ></svg-icon>
-   </div>
+  <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
+    <div class="bg-white p-2 text-primary w-14 rounded-md shadow">
+      <svg-icon
+        src="./assets/icons/x-mark.svg"
+        [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
+      ></svg-icon>
+    </div>
   </div>
-  <ul class="font-raleway flex flex-col mx-8 my-24 items-center text-2xl">
+  <ul
+    class="font-montserrat flex flex-col mx-8 my-24 items-center !text-[2rem]"
+  >
     <li id="hideMenu" class="my-6">
-      <a (click)="closeMobileNav()">Home</a>
+      <a
+        (click)="navigate('/')"
+        [ngClass]="{
+          'font-semibold border-b-2 border-secondary': isActiveRoute('/'),
+        }"
+        >Home</a
+      >
     </li>
     <li class="my-6">
-      <a id="hideMenu" (click)="closeMobileNav()">Service</a>
+      <a id="hideMenu" href="#class" (click)="closeMobileNav()"> Classes</a>
     </li>
     <li class="my-6">
-      <a id="hideMenu" (click)="closeMobileNav()">Rooms</a>
+      <a
+        id="hideMenu"
+        (click)="navigate('blog')"
+        [ngClass]="{
+          'font-semibold border-b-2 border-secondary': isActiveRoute('/blog'),
+        }"
+      >
+        Blog</a
+      >
     </li>
+    <li class="my-6">
+      <a
+        id="hideMenu"
+        (click)="navigate('about')"
+        [ngClass]="{
+          'font-semibold border-b-2 border-secondary': isActiveRoute('/about'),
+        }"
+        >About Us</a
+      >
+    </li>
+
     <li class="my-6">
       <a id="hideMenu" (click)="closeMobileNav()">Contact us</a>
     </li>
   </ul>
+
+  <div class="font-montserrat">
+    <button
+      class="text-2xl !font-semibold bg-white rounded-[var(--radius-8)] text-primary uppercase w-full py-[15px] px-[35px]"
+      [ngClass]="{
+        'bg-primary text-white': isScrolled,
+        'bg-white text-primary': !isScrolled,
+      }"
+    >
+      Login
+    </button>
+  </div>
+
+  <div
+    class="fixed flex bottom-10 right-0 left-0 justify-center w-full gap-2 p-b-5"
+  >
+    <div>
+      <a
+        href="#"
+        class="p-[5px] bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+      >
+        <svg-icon
+          [src]="'assets/icons/logo-facebook.svg'"
+          [svgStyle]="{ 'width.px': 20 }"
+        ></svg-icon>
+      </a>
+    </div>
+    <div>
+      <a
+      href="#"
+      class="p-[5px]  bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+    >
+      <svg-icon
+        [src]="'assets/icons/logo-twitter.svg'"
+        [svgStyle]="{ 'width.px': 20 }"
+      ></svg-icon>
+    </a>
+    </div>
+    <div>
+      <a
+      href="#"
+      class="p-[5px]  bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+    >
+      <svg-icon
+        [src]="'assets/icons/logo-instagram.svg'"
+        [svgStyle]="{ 'width.px': 20 }"
+      ></svg-icon>
+    </a>
+    </div>
+    <div>
+      <a
+      href="#"
+      class="p-[5px]  bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+    >
+      <svg-icon
+        [src]="'assets/icons/logo-linkedin.svg'"
+        [svgStyle]="{ 'width.px': 20 }"
+      ></svg-icon>
+    </a>
+    </div>
+  </div>
 </div>
