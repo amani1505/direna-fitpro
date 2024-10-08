@@ -1,58 +1,57 @@
 <section class="section about" id="about" aria-label="about">
-    <div class="container">
+@if (about) {
+  <div class="container">
 
-      <div class="about-banner has-after">
-        <img src="./assets/images/about-banner.png" width="660" height="648" loading="lazy" alt="about banner"
-          class="w-100">
+    <div class="about-banner has-after">
+      <img src="{{about.image}}" width="660" height="648" loading="lazy" alt="about banner"
+        class="w-100">
 
-        <img src="./assets/images/about-circle-one.png" width="660" height="534" loading="lazy" aria-hidden="true"
-          alt="" class="circle circle-1">
-        <img src="./assets/images/about-circle-two.png" width="660" height="534" loading="lazy" aria-hidden="true"
-          alt="" class="circle circle-2">
+      <img src="./assets/images/about-circle-one.png" width="660" height="534" loading="lazy" aria-hidden="true"
+        alt="" class="circle circle-1">
+      <img src="./assets/images/about-circle-two.png" width="660" height="534" loading="lazy" aria-hidden="true"
+        alt="" class="circle circle-2">
 
-        <img src="./assets/images/fitness.png" width="650" height="154" loading="lazy" alt="fitness"
-          class="abs-img w-100">
-      </div>
+      <img src="./assets/images/fitness.png" width="650" height="154" loading="lazy" alt="fitness"
+        class="abs-img w-100">
+    </div>
 
-      <div class="about-content">
+    <div class="about-content">
 
-        <p class="section-subtitle">About Us</p>
+      <p class="section-subtitle">About Us</p>
 
-        <h2 class="h2 section-title">Welcome To Our Fitness Gym</h2>
+      <h2 class="h2 section-title">{{about.title}}</h2>
 
-        <p class="section-text">
-          Nam ut hendrerit leo. Aenean vel ipsum nunc. Curabitur in tellus vitae nisi aliquet dapibus non et erat.
-          Pellentesque
-          porta sapien non accumsan dignissim curabitur sagittis nulla sit amet dolor feugiat.
-        </p>
+      <p class="section-text">
+       {{about.description}}
+      </p>
 
-        <p class="section-text">
-          Integer placerat vitae metus posuere tincidunt. Nullam suscipit ante ac aliquet viverra vestibulum ante
-          ipsum primis.
-        </p>
+      <p class="section-text">
+{{about.subDescription}}
+      </p>
 
-        <div class="wrapper">
+      <div class="wrapper">
 
-          <div class="about-coach">
+        <div class="about-coach">
 
-            <figure class="coach-avatar">
-              <img src="./assets/images/about-coach.jpg" width="65" height="65" loading="lazy" alt="Trainer">
-            </figure>
+          <figure class="coach-avatar">
+            <img src="{{about.ownerImage}}" width="65" height="65" loading="lazy" alt="Trainer">
+          </figure>
 
-            <div>
-              <h3 class="h3 coach-name">Denis Robinson</h3>
+          <div>
+            <h3 class="h3 coach-name">{{about.ownerName}}</h3>
 
-              <p class="coach-title">Our Coach</p>
-            </div>
-
+            <p class="coach-title">{{about.ownerPosition}}</p>
           </div>
 
-          <a href="#" class="btn btn-primary">Explore More</a>
-
         </div>
+
+        <a href="#" class="btn btn-primary">Explore More</a>
 
       </div>
 
     </div>
+
+  </div>
+}
   </section>
 

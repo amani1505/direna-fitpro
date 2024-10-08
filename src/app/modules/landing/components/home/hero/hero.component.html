@@ -1,37 +1,67 @@
-<section class="section hero bg-dark has-after max-h-1/2" id="home" aria-label="hero" data-section
-style="background-image: url('./assets/images/hero-bg.png')">
-<div class="container max-h-1/2">
+<section
+  class="section hero bg-dark has-after max-h-1/2"
+  id="home"
+  aria-label="hero"
+  data-section
+  style="background-image: url(&quot;./assets/images/hero-bg.png&quot;)"
+>
+  @if (hero) {
+    <div class="container max-h-1/2">
+      <div class="hero-content">
+        <p class="hero-subtitle">
+          <strong class="strong">The Best</strong>Fitness Club
+        </p>
 
-  <div class="hero-content">
+        <h1 class="h1 hero-title">{{ hero.title }}</h1>
 
-    <p class="hero-subtitle">
-      <strong class="strong">The Best</strong>Fitness Club
-    </p>
+        <p class="section-text">
+          {{ hero.subtitle }}
+        </p>
 
-    <h1 class="h1 hero-title">Work Hard To Get Better Life</h1>
+        <a href="#" class="btn btn-primary">Join Us</a>
+      </div>
 
-    <p class="section-text">
-      Duis mollis felis quis libero dictum vehicula. Duis dictum lorem mi, a faucibus nisi eleifend eu.
-    </p>
+      <div class="hero-banner">
+        <img
+          src="{{ hero.image }}"
+          width="660"
+          height="753"
+          alt="hero banner"
+          class="w-full"
+        />
 
-    <a href="#" class="btn btn-primary">Get Started</a>
+        <img
+          src="./assets/images/hero-circle-one.png"
+          width="666"
+          height="666"
+          aria-hidden="true"
+          alt=""
+          class="circle circle-1"
+        />
+        <img
+          src="./assets/images/hero-circle-two.png"
+          width="666"
+          height="666"
+          aria-hidden="true"
+          alt=""
+          class="circle circle-2"
+        />
 
-  </div>
-
-  <div class="hero-banner">
-
-    <img src="./assets/images/hero-banner.png" width="660" height="753" alt="hero banner" class="w-full">
-
-    <img src="./assets/images/hero-circle-one.png" width="666" height="666" aria-hidden="true" alt=""
-      class="circle circle-1">
-    <img src="./assets/images/hero-circle-two.png" width="666" height="666" aria-hidden="true" alt=""
-      class="circle circle-2">
-
-    <img src="./assets/images/heart-rate.svg" width="255" height="270" alt="heart rate"
-      class="abs-img abs-img-1">
-    <img src="./assets/images/calories.svg" width="348" height="224" alt="calories" class="abs-img abs-img-2">
-
-  </div>
-
-</div>
+        <img
+          src="./assets/images/heart-rate.svg"
+          width="255"
+          height="270"
+          alt="heart rate"
+          class="abs-img abs-img-1"
+        />
+        <img
+          src="./assets/images/calories.svg"
+          width="348"
+          height="224"
+          alt="calories"
+          class="abs-img abs-img-2"
+        />
+      </div>
+    </div>
+  }
 </section>
