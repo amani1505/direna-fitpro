@@ -47,7 +47,7 @@
         class="growing-underline cursor-pointer hover:text-primary"
         [routerLink]="['/']"
         routerLinkActive="  font-semibold"
-        exact="true"
+        [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
@@ -70,7 +70,7 @@
       <a
         [routerLink]="['/blog']"
         routerLinkActive=" font-semibold"
-        exact="true"
+        [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
@@ -82,7 +82,7 @@
       <a
         [routerLink]="['/about']"
         routerLinkActive=" font-semibold"
-        exact="true"
+        [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
@@ -94,7 +94,7 @@
       <a
         [routerLink]="['/']"
         routerLinkActive=" font-semibold"
-        exact="true"
+        [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
@@ -216,36 +216,36 @@
     </div>
     <div>
       <a
-      href="#"
-      class="p-[5px]  bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
-    >
-      <svg-icon
-        [src]="'assets/icons/logo-twitter.svg'"
-        [svgStyle]="{ 'width.px': 20 }"
-      ></svg-icon>
-    </a>
+        href="#"
+        class="p-[5px] bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+      >
+        <svg-icon
+          [src]="'assets/icons/logo-twitter.svg'"
+          [svgStyle]="{ 'width.px': 20 }"
+        ></svg-icon>
+      </a>
     </div>
     <div>
       <a
-      href="#"
-      class="p-[5px]  bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
-    >
-      <svg-icon
-        [src]="'assets/icons/logo-instagram.svg'"
-        [svgStyle]="{ 'width.px': 20 }"
-      ></svg-icon>
-    </a>
+        href="#"
+        class="p-[5px] bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+      >
+        <svg-icon
+          [src]="'assets/icons/logo-instagram.svg'"
+          [svgStyle]="{ 'width.px': 20 }"
+        ></svg-icon>
+      </a>
     </div>
     <div>
       <a
-      href="#"
-      class="p-[5px]  bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
-    >
-      <svg-icon
-        [src]="'assets/icons/logo-linkedin.svg'"
-        [svgStyle]="{ 'width.px': 20 }"
-      ></svg-icon>
-    </a>
+        href="#"
+        class="p-[5px] bg-white rounded-md flex text-secondary transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+      >
+        <svg-icon
+          [src]="'assets/icons/logo-linkedin.svg'"
+          [svgStyle]="{ 'width.px': 20 }"
+        ></svg-icon>
+      </a>
     </div>
   </div>
 </div>

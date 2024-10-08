@@ -4,11 +4,12 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgIf } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { BreadCrumbsComponent } from '@components/bread-crumbs/bread-crumbs.component';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf,AngularSvgIconModule],
+  imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf,AngularSvgIconModule,BreadCrumbsComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })

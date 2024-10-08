@@ -1,0 +1,24 @@
+<nav class="flex justify-center items-center text-gray-700">
+  <ul class="flex space-x-2 items-center">
+    <li *ngFor="let breadcrumb of breadcrumbs; let first = first; let last = last" class="flex items-center">
+      <ng-container *ngIf="!(first && currentUrl === '/')">
+        <ng-container *ngIf="first && breadcrumb.label === ''; else normalBreadcrumb">
+          <a [routerLink]="breadcrumb.url" class="flex items-center space-x-2 text-gray-900 dark:text-night-50">
+            <svg-icon
+              src="./assets/icons/home.svg"
+              [svgClass]="'w-4 h-4'"
+              class="inline-block"
+            >
+            </svg-icon>
+          </a>
+        </ng-container>
+        <ng-template #normalBreadcrumb>
+          <a [routerLink]="breadcrumb.url" class="font-rubik font-[400] text-primary-500 " [ngClass]="{'font-[500]': last}">
+            {{ breadcrumb.label | titlecase }}
+          </a>
+        </ng-template>
+      </ng-container>
+      <span *ngIf="!last" class="mx-2 font-poppins dark:text-night-200">></span>
+    </li>
+  </ul>
+</nav>

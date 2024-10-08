@@ -1,5 +1,10 @@
 <app-navbar [isScrolled]="isScrolled"></app-navbar>
 
+<!-- <section class="min-h-[25vh] bg-red-500 text-center flex items-center justify-center h-[100px]">
+  <BreadCrumbs></BreadCrumbs>
+</section> -->
+
+
 <section>
   <router-outlet></router-outlet>
 </section>
@@ -7,7 +12,7 @@
 <app-footer></app-footer>
 <div
   *ngIf="isScrolled"
-  class="fixed flex bottom-0 right-0 mr-5 mb-5 border-2 border-black bg-primary  w-14 h-14 items-center justify-center rounded-full z-10 animate-bounce text-black shadow-lg"
+  class="fixed flex bottom-0 right-0 mr-5 mb-5 border-2 border-black bg-primary w-14 h-14 items-center justify-center rounded-full z-10 animate-bounce text-black shadow-lg"
   (click)="backToTheTop()"
 >
   <svg-icon
