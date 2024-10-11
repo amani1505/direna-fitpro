@@ -5,14 +5,14 @@
 </section> -->
 
 
-<section>
+<section class="">
   <router-outlet></router-outlet>
 </section>
 
 <app-footer></app-footer>
 <div
   *ngIf="isScrolled"
-  class="fixed flex bottom-0 right-0 mr-5 mb-5 border-2 border-black bg-primary w-14 h-14 items-center justify-center rounded-full z-10 animate-bounce text-black shadow-lg"
+  class="fixed bottom-0 right-0 z-10 flex items-center justify-center mb-5 mr-5 text-black border-2 border-black rounded-full shadow-lg bg-primary w-14 h-14 animate-bounce"
   (click)="backToTheTop()"
 >
   <svg-icon

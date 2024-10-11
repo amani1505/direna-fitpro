@@ -21,7 +21,8 @@
     "useDefineForClassFields": false,
     "paths": {
       "@components/*": ["app/components/*"],
-      "@modules/*": ["app/modules/*"]
+      "@modules/*": ["app/modules/*"],
+      "@utils/*": ["app/utils/*"],
     },
     "lib": ["ES2022", "dom"]
   },

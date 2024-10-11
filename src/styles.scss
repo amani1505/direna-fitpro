@@ -6,6 +6,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,400;1,100;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+@import 'quill/dist/quill.snow.css';
 
 // From Static website
 
@@ -121,6 +122,15 @@ button,
 strong,
 svg-icon {
   display: block;
+}
+
+ul {
+  list-style-type: disc; /* Ensure bullets are displayed */
+  padding-left: 20px;    /* Indent the list */
+}
+ol {
+
+  padding-left: 20px;    /* Indent the list */
 }
 
 img {
@@ -1544,4 +1554,10 @@ body {
 .growing-underline:hover::after,
 .growing-underline:focus::after {
   transform: translate3d(0, 0, 0);
+}
+.truncate-2-lines {
+  display: -webkit-box; /* For Safari */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  overflow: hidden;
 }

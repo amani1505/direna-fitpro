@@ -1,7 +1,7 @@
 <nav
-  class="fixed flex justify-between py-4 w-full md:px-12 px-4 transition duration-500 ease-in content-center z-10"
+  class="fixed z-10 flex content-center justify-between w-full px-4 py-4 transition duration-500 ease-in md:px-12"
   [ngClass]="{
-    'bg-white text-primary transition duration-700 ease-in py-0': isScrolled,
+    'bg-white text-primary transition duration-700 ease-in py-0 shadow ': isScrolled ,
   }"
 >
   <div
@@ -18,14 +18,14 @@
         class="flex gap-1 items-center justify-center text-[1.5rem] md:text-[2.5rem] font-extrabold"
       >
         <span
-          class="py-2 flex items-center"
+          class="flex items-center py-2"
           [ngClass]="{
             'text-primary': isScrolled,
             ' text-white': !isScrolled,
           }"
           >direna </span
         ><span
-          class="py-2 flex items-center"
+          class="flex items-center py-2"
           [ngClass]="{
             'text-secondary': isScrolled,
             ' text-primary': !isScrolled,
@@ -37,14 +37,14 @@
     </div>
   </div>
   <ul
-    class="font-montserrat items-center hidden md:flex text-white"
+    class="items-center hidden text-white font-montserrat md:flex"
     [ngClass]="{
       'text-black  transition duration-700 ease-in py-0': isScrolled,
     }"
   >
     <li class="mx-3">
       <a
-        class="growing-underline cursor-pointer hover:text-primary"
+        class="cursor-pointer growing-underline hover:text-primary"
         [routerLink]="['/']"
         routerLinkActive="  font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -56,7 +56,7 @@
       </a>
     </li>
 
-    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
       <a
         href="#class"
         [ngClass]="{
@@ -66,7 +66,7 @@
       >
     </li>
 
-    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
       <a
         [routerLink]="['/blog']"
         routerLinkActive=" font-semibold"
@@ -78,7 +78,7 @@
         Blog</a
       >
     </li>
-    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
       <a
         [routerLink]="['/about']"
         routerLinkActive=" font-semibold"
@@ -90,7 +90,7 @@
       >
     </li>
 
-    <li class="growing-underline mx-3 cursor-pointer hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
       <a
         [routerLink]="['/']"
         routerLinkActive=" font-semibold"
@@ -102,7 +102,7 @@
       >
     </li>
   </ul>
-  <div class="font-montserrat hidden md:flex">
+  <div class="hidden font-montserrat md:flex">
     <button
       class="btn !text-2xl !font-semibold bg-white rounded-md text-primary uppercase"
       [ngClass]="{
@@ -131,7 +131,7 @@
 
 <div
   *ngIf="isAnimating || showMenu"
-  class="px-4 py-6 fixed top-0 left-0 h-full w-full bg-primary text-white z-20"
+  class="fixed top-0 left-0 z-20 w-full h-full px-4 py-6 text-white bg-primary"
   [ngClass]="{
     'animate-slide-up': showMenu,
     'animate-slide-down': !showMenu,
@@ -139,7 +139,7 @@
   (animationend)="handleAnimationEnd()"
 >
   <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
-    <div class="bg-white p-2 text-primary w-14 rounded-md shadow">
+    <div class="p-2 bg-white rounded-md shadow text-primary w-14">
       <svg-icon
         src="./assets/icons/x-mark.svg"
         [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
@@ -201,7 +201,7 @@
   </div>
 
   <div
-    class="fixed flex bottom-10 right-0 left-0 justify-center w-full gap-2 p-b-5"
+    class="fixed left-0 right-0 flex justify-center w-full gap-2 bottom-10 p-b-5"
   >
     <div>
       <a

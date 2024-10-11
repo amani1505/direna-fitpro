@@ -1,7 +1,32 @@
-<section class="min-h-[25vh] flex justify-center items-end bg-dark has-bg-image pb-10 "
-style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
+<section
+  class="min-h-[25vh] flex justify-center items-end bg-dark has-bg-image pb-10"
+  style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
 >
-<div class="text-white text-[5rem] capitalize font-[500]" >blog</div>
-
+  <div class="text-white text-[5rem] capitalize font-[500]">blog</div>
 </section>
-hksavghdhsvh
+
+<section class=" md:px-[5rem] md:py-[5rem] ">
+  <section class="grid grid-cols-1 gap-6 p-8 md:grid-cols-2 lg:grid-cols-3">
+    <BlogCard
+      *ngFor="let news of fitnessBlogPosts; let i = index"
+      [blog]="news"
+      [large]="isPrime(i)"
+    >
+    </BlogCard>
+  </section>
+</section>
+
+<!-- <section class="container">
+
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <!-- other form fields --
+  
+    <quill-editor formControlName="description" [styles]="{height:'250px',width:'100%'}"></quill-editor>
+  
+    <button type="submit">Submit</button>
+  </form>
+</section>
+
+<section class="container">
+  <div [innerHTML]="safeHtmlContent"></div>
+</section> -->

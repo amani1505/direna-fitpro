@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideQuillConfig } from 'ngx-quill/config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,5 +13,24 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     importProvidersFrom(AngularSvgIconModule.forRoot()),
     provideHttpClient(withFetch()),
+    provideQuillConfig({
+      modules: {
+        syntax: true,
+        toolbar: [
+          ['bold', 'italic', 'underline'], // toggled buttons
+          [{ header: 1 }, { header: 2 }], // custom button values
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
+          [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
+          [{ direction: 'rtl' }], // text direction
+          [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
+          [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+          [{ font: [] }],
+          [{ align: [] }],
+          ['clean'],
+          ['link',]
+        ],
+      },
+    }),
   ],
 };

@@ -1,0 +1,33 @@
+<li class="">
+  <div class="blog-card shadow-orange-300 hover:shaow-lg">
+    <div
+      class="card-banner img-holder"
+      style="--width: 440; --height: 270"
+    >
+      <img
+        [src]="blog.image"
+        width="440"
+        height="270"
+        loading="lazy"
+        alt="Going to the gym for the first time"
+        class="img-cover"
+      />
+
+      <time class="card-meta" datetime="2022-07-07">{{
+        blog.date
+      }}</time>
+    </div>
+
+    <div class="card-content">
+      <h3 class="h3">
+        <a href="#" class="card-title">{{ blog.title }}</a>
+      </h3>
+
+      <p class="card-text truncate-2-lines">
+        {{ blog.description }}
+      </p>
+
+      <a href="#" class="btn-link has-before">Read More</a>
+    </div>
+  </div>
+</li>
