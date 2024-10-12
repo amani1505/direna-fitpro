@@ -12,7 +12,7 @@
 <app-footer></app-footer>
 <div
   *ngIf="isScrolled"
-  class="fixed bottom-0 right-0 z-10 flex items-center justify-center mb-5 mr-5 text-black border-2 border-black rounded-full shadow-lg bg-primary w-14 h-14 animate-bounce"
+  class="fixed bottom-0 right-0 flex items-center justify-center mb-5 mr-5 text-black border-2 border-black rounded-full shadow-lg z- bg-primary w-14 h-14 animate-bounce z-[99999999]"
   (click)="backToTheTop()"
 >
   <svg-icon

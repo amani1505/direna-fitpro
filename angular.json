@@ -25,7 +25,14 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss",
+              {
+                "input": "node_modules/leaflet/dist/leaflet.css",
+                "bundleName": "leaflet-css",
+                "inject": false
+              }
+            ],
             "scripts": [],
             "server": "src/main.server.ts",
             "prerender": true,

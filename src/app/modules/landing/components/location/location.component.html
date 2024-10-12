@@ -1,0 +1,29 @@
+<section class="py-12">
+  <div class="container px-4 mx-auto">
+    <div class="about-content">
+        <p class="mb-5 text-center section-subtitle">Visit Us</p>
+   
+
+    </div>  
+    
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+      <div>
+      
+        <p class="section-text">
+          Direna FitPro is located at {{ locationInfo.address }}. We offer ample
+          parking space and easy access to public transportation.
+        </p>
+        <p class="mt-4 section-text">
+          We're open from {{ locationInfo.hours }}. Whether you're looking for
+          personal training, group classes, or dietary consultations, our team
+          is here to help!
+        </p>
+        <ul class="mt-4">
+          <li><strong>Email:</strong> {{ locationInfo.email }}</li>
+          <li><strong>Phone:</strong> {{ locationInfo.phone }}</li>
+        </ul>
+      </div>
+      <Map [latitude]="40.712776" [longitude]="-74.005974" [zoom]="13"></Map>
+    </div>
+  </div>
+</section>
