@@ -8,6 +8,53 @@
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 @import 'quill/dist/quill.snow.css';
 
+
+
+@layer base {
+  [type="text"],
+  [type="email"],
+  [type="url"],
+  [type="password"],
+  [type="number"],
+  [type="date"],
+  [type="datetime-local"],
+  [type="month"],
+  [type="search"],
+  [type="tel"],
+  [type="time"],
+  [type="week"],
+  [multiple],
+  textarea,
+  select {
+    @apply w-full rounded-md border border-gray-300 px-3   placeholder-primary-500 focus:z-10  focus:border-primary-500 focus:outline-none focus:ring-primary-500;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    @apply h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-500 focus:ring-2 focus:ring-primary-500;
+  }
+}
+@layer components {
+	.dropdown-content {
+		@apply pointer-events-none scale-95 opacity-0 duration-100 ease-in;
+	}
+
+	.dropdown:hover > .dropdown-content {
+		@apply pointer-events-auto block scale-100 animate-fade-in-up opacity-100 duration-200;
+	}
+}
+
+/** Scroll bar **/
+@supports selector(::-webkit-scrollbar) {
+	.supports-scrollbars\: pr-2 {
+		padding-right: 0.5rem;
+	}
+}
+
+
+
+
+
 // From Static website
 
 /*-----------------------------------*\
@@ -117,7 +164,6 @@ a {
 a,
 img,
 span,
-input,
 button,
 strong,
 svg-icon {
@@ -137,16 +183,14 @@ img {
   height: auto;
 }
 
-input,
+
 button {
   background: none;
   border: none;
   font: inherit;
 }
 
-input {
-  width: 100%;
-}
+
 
 button {
   cursor: pointer;
@@ -971,6 +1015,14 @@ body {
 }
 
 .footer-form .input-field {
+  background-color: var(--white);
+  color: var(--rich-black-fogra-29-1);
+  padding-block: 18px;
+  padding-inline: 30px 80px;
+  border-radius: var(--radius-10);
+}
+
+.input-field {
   background-color: var(--white);
   color: var(--rich-black-fogra-29-1);
   padding-block: 18px;

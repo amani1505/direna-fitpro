@@ -1,7 +1,7 @@
 <nav
-  class="fixed z-10 flex content-center justify-between w-full px-4 py-4 transition duration-500 ease-in md:px-12"
+  class="fixed flex content-center justify-between w-full px-4 py-4 transition duration-500 ease-in z-[999999999] md:px-12 text=[12px]"
   [ngClass]="{
-    'bg-white text-primary transition duration-700 ease-in py-0 shadow ':
+    'bg-white text-primary-500 transition duration-700 ease-in py-0 shadow ':
       isScrolled,
   }"
 >
@@ -21,7 +21,7 @@
         <span
           class="flex items-center py-2"
           [ngClass]="{
-            'text-primary': isScrolled,
+            'text-primary-500': isScrolled,
             ' text-white': !isScrolled,
           }"
           >direna </span
@@ -29,7 +29,7 @@
           class="flex items-center py-2"
           [ngClass]="{
             'text-secondary': isScrolled,
-            ' text-primary': !isScrolled,
+            ' text-primary-500': !isScrolled,
           }"
         >
           FitPro</span
@@ -45,7 +45,7 @@
   >
     <li class="mx-3">
       <a
-        class="cursor-pointer growing-underline hover:text-primary"
+        class="cursor-pointer growing-underline hover:text-primary-500"
         [routerLink]="['/']"
         routerLinkActive="  font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -57,7 +57,7 @@
       </a>
     </li>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
       <a
         href="#class"
         [ngClass]="{
@@ -67,7 +67,7 @@
       >
     </li>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
       <a
         [routerLink]="['/blog']"
         routerLinkActive=" font-semibold"
@@ -79,7 +79,7 @@
         Blog</a
       >
     </li>
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
       <a
         [routerLink]="['/about']"
         routerLinkActive=" font-semibold"
@@ -91,9 +91,9 @@
       >
     </li>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary">
+    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
       <a
-        [routerLink]="['/']"
+        [routerLink]="['/contact-us']"
         routerLinkActive=" font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
@@ -105,10 +105,10 @@
   </ul>
   <div class="hidden font-montserrat md:flex">
     <button
-      class="btn !text-2xl !font-semibold bg-white rounded-md text-primary uppercase"
+      class="btn !text-2xl !font-semibold bg-white rounded-md text-primary-500 uppercase"
       [ngClass]="{
-        'bg-primary text-white': isScrolled,
-        'bg-white text-primary': !isScrolled,
+        'bg-primary-500 text-white': isScrolled,
+        'bg-white text-primary-500': !isScrolled,
       }"
     >
       Login
@@ -119,8 +119,8 @@
     class="md:hidden p-2 rounded-md shadow rotate-180 !font-extrabold"
     (click)="openMobileNav()"
     [ngClass]="{
-      'bg-primary text-white': isScrolled,
-      'bg-white text-primary': !isScrolled,
+      'bg-primary-500 text-white': isScrolled,
+      'bg-white text-primary-500': !isScrolled,
     }"
   >
     <svg-icon
@@ -130,9 +130,11 @@
   </div>
 </nav>
 
+<!-- Mobile navigation -->
+
 <div
   *ngIf="isAnimating || showMenu"
-  class="fixed top-0 left-0 z-20 w-full h-full px-4 py-6 text-white bg-primary"
+  class="fixed top-0 left-0 z-[9999999999999] w-full h-full px-4 py-6 text-white bg-primary-500"
   [ngClass]="{
     'animate-slide-up': showMenu,
     'animate-slide-down': !showMenu,
@@ -140,7 +142,7 @@
   (animationend)="handleAnimationEnd()"
 >
   <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
-    <div class="p-2 bg-white rounded-md shadow text-primary w-14">
+    <div class="p-2 bg-white rounded-md shadow text-primary-500 w-14">
       <svg-icon
         src="./assets/icons/x-mark.svg"
         [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
@@ -185,16 +187,16 @@
     </li>
 
     <li class="my-6">
-      <a id="hideMenu" (click)="closeMobileNav()">Contact us</a>
+      <a id="hideMenu" (click)="navigate('contact-us')">Contact us</a>
     </li>
   </ul>
 
   <div class="font-montserrat">
     <button
-      class="text-2xl !font-semibold bg-white rounded-[var(--radius-8)] text-primary uppercase w-full py-[15px] px-[35px]"
+      class="text-2xl !font-semibold bg-white rounded-[var(--radius-8)] text-primary-500 uppercase w-full py-[15px] px-[35px]"
       [ngClass]="{
-        'bg-primary text-white': isScrolled,
-        'bg-white text-primary': !isScrolled,
+        'bg-primary-500 text-white': isScrolled,
+        'bg-white text-primary-500': !isScrolled,
       }"
     >
       Login

@@ -1,0 +1,72 @@
+<section
+  class="min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-20 sm:pb-10"
+  style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
+>
+  <div
+    class="text-white xl:text-[5rem] md:text-[2rem] capitalize font-[500] text-[3rem]"
+  >
+    contact Us
+  </div>
+  <p class="text-[14px] xl:text-[16px] lg:text-[12px] text-center">
+    Send us a message and we'll get back to you as soon as possible.
+  </p>
+</section>
+
+<section class="mx-3 my-5 md:my-24 mx- md:mx-24">
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+    <div class="p-2 rounded-lg shadow">
+      <Map [latitude]="40.712776" [longitude]="-74.005974" [zoom]="13"></Map>
+    </div>
+
+    <div class="p-10 rounded-lg bg-primary-50">
+      <form class="space-y-6">
+        <!-- Name Input -->
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="relative">
+            <input
+              type="text"
+              name="name"
+              aria-label="name"
+              placeholder="Fullname"
+              required
+              class="input-field"
+            />
+          </div>
+
+          <!-- Email Input -->
+          <div class="relative">
+            <input
+              type="email"
+              name="email_address"
+              aria-label="email"
+              placeholder="Email Address"
+              required
+              class="input-field"
+            />
+          </div>
+        </div>
+
+        <!-- Message Input -->
+        <div class="relative">
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="Write your message here..."
+            class="input-field"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            class="w-full px-4 py-3 text-white rounded-md shadow-sm bg-primary-400 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
+          >
+            Send Message
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

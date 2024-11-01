@@ -1,12 +1,39 @@
 <section
-  class="min-h-[25vh] flex flex-col  justify-end items-center bg-dark has-bg-image pb-10"
+  class="min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-20 sm:pb-10"
   style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
 >
-  <div class="text-white text-[4rem] md:text-[5rem] capitalize font-[500]">About us</div>
-  <p class="text-[12px]">Get to know more about Direna FitPro and our mission</p>
+  <div
+    class="text-white xl:text-[5rem] md:text-[2rem] capitalize font-[500] text-[3rem]"
+  >
+    About us
+  </div>
+  <p class="text-[14px] xl:text-[16px] lg:text-[12px] text-center">
+    Get to know more about Direna FitPro and our mission
+  </p>
 </section>
 
-<section class=" md:px-[5rem] md:py-[5rem] ">
-<about-section></about-section>
-<Location></Location>
+<section>
+  <div class="md:px-[5rem] md:py-[5rem]">
+    <about-section></about-section>
+  </div>
+
+  <section class="py-12 bg-primary-50">
+    <div class="container px-4 mx-auto">
+      <div class="flex items-center justify-center my-7">
+        <p class="mb-5 section-subtitle">Meet Our Team</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <team-member
+          *ngFor="let member of teamMembers"
+          [name]="member.name"
+          [role]="member.role"
+          [imageUrl]="member.imageUrl"
+        >
+        </team-member>
+      </div>
+    </div>
+  </section>
+
+
 </section>
