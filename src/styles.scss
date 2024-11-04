@@ -1,14 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,400;1,100;1,400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
-@import 'quill/dist/quill.snow.css';
+@import "quill/dist/quill.snow.css";
 
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   [type="text"],
@@ -31,29 +29,25 @@
 
   [type="checkbox"],
   [type="radio"] {
-    @apply h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-500 focus:ring-2 focus:ring-primary-500;
+  	@apply h-7 w-7 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-night-600 dark:bg-night-700 dark:ring-offset-night-800 dark:focus:ring-primary-600;
   }
 }
 @layer components {
-	.dropdown-content {
-		@apply pointer-events-none scale-95 opacity-0 duration-100 ease-in;
-	}
+  .dropdown-content {
+    @apply pointer-events-none scale-95 opacity-0 duration-100 ease-in;
+  }
 
-	.dropdown:hover > .dropdown-content {
-		@apply pointer-events-auto block scale-100 animate-fade-in-up opacity-100 duration-200;
-	}
+  .dropdown:hover > .dropdown-content {
+    @apply pointer-events-auto block scale-100 animate-fade-in-up opacity-100 duration-200;
+  }
 }
 
 /** Scroll bar **/
 @supports selector(::-webkit-scrollbar) {
-	.supports-scrollbars\: pr-2 {
-		padding-right: 0.5rem;
-	}
+  .supports-scrollbars\: pr-2 {
+    padding-right: 0.5rem;
+  }
 }
-
-
-
-
 
 // From Static website
 
@@ -163,34 +157,28 @@ a {
 
 a,
 img,
-span,
 button,
-strong,
-svg-icon {
+strong {
   display: block;
 }
 
 ul {
   list-style-type: disc; /* Ensure bullets are displayed */
-  padding-left: 20px;    /* Indent the list */
+  padding-left: 20px; /* Indent the list */
 }
 ol {
-
-  padding-left: 20px;    /* Indent the list */
+  padding-left: 20px; /* Indent the list */
 }
 
 img {
   height: auto;
 }
 
-
 button {
   background: none;
   border: none;
   font: inherit;
 }
-
-
 
 button {
   cursor: pointer;
@@ -275,7 +263,6 @@ body {
 .h2,
 .h3 {
   font-family: var(--ff-catamaran);
-  line-height: 1.25;
 }
 
 .h1 {
@@ -1025,8 +1012,8 @@ body {
 .input-field {
   background-color: var(--white);
   color: var(--rich-black-fogra-29-1);
-  padding-block: 18px;
-  padding-inline: 20px 50px;
+  padding-block: 10px;
+  padding-inline: 15px 45px;
   border-radius: var(--radius-10);
 }
 
@@ -1595,7 +1582,7 @@ body {
   left: 0;
   width: 100%;
   height: 0.1em;
-  background-color: var( --coquelicot);
+  background-color: var(--coquelicot);
   transition:
     opacity 300ms,
     transform 300ms;

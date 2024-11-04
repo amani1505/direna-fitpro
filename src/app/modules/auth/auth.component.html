@@ -1,21 +1,45 @@
-<div class="w-full">
-  <div class="flex flex-col justify-center min-h-screen px-5 shadow-lg bg-primary-500 lg:flex-row lg:px-0">
-    <!-- Background Image for Mobile / Image Section for Desktop -->
-    <div
-      class="absolute w-full h-screen bg-cover center lg:w-1/2 lg:relative lg:h-auto lg:bg-none backg"
-      style="background-image: url(&quot;./assets/images/hero-banner.png&quot;)"
-    >
-      <!-- Empty div that creates space on mobile -->
-      <div class="h-screen opacity-0 lg:hidden"></div>
+<div class="flex w-screen h-screen">
+  <div
+    class="items-center justify-center flex-1 hidden bg-cover auth-bg bg-primary-500 lg:flex"
+  >
+    <div class="p-8 space-y-4 text-center text-white ">
+      <img src="./assets/images/auth-screens.png" alt="dashboard widget" />
+      <h1 class="text-4xl font-bold">"Fast, Efficient and Productive"</h1>
+      <p class="font-light ">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis
+        <span class="font-medium text-yellow-400 cursor-pointer">nostrud</span>
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        <span class="font-medium text-yellow-400 cursor-pointer"
+          >consequat.</span
+        >
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </p>
     </div>
-
-    <!-- Form Container -->
-    <div
-      class="relative z-10 flex items-center w-full bg-white rounded-lg lg:p-8 lg:w-1/2 lg:rounded-none lg:static"
-    >
-      <div class="w-full p-6 ">
-        <router-outlet></router-outlet>
+  </div>
+  <div
+    class="flex items-center justify-center flex-1 bg-white dark:bg-night-700"
+  >
+    <div class="w-full px-4 overflow-y-auto">
+      <!-- logo -->
+      <div class="flex items-center justify-center">
+        <a class="p-2 rounded bg-primary-500">
+          <svg-icon
+            src="assets/images/logo-icon-white.svg"
+            [svgClass]="'h-10 w-10'"
+          >
+          </svg-icon>
+        </a>
+        <b class="pl-3 font-bold text-gray-700 text-md dark:text-white">
+          Direna FitPro
+        </b>
       </div>
+      <!-- Route -->
+
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>
