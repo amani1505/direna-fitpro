@@ -43,9 +43,9 @@ export class MapComponent implements AfterViewInit {
       this.zoom,
     );
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '© OpenStreetMap contributors',
-    }).addTo(this.map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',).addTo(
+      this.map,
+    );
 
     L.marker([this.latitude, this.longitude]).addTo(this.map);
   }

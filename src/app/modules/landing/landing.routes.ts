@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { NotFoundComponent } from '@components/error/not-found/not-found.component';
+
 import { LandingComponent } from './landing.component';
 
 export default [
@@ -25,8 +25,5 @@ export default [
       },
     ],
   },
-  {
-    path: '**',
-    component: NotFoundComponent,
-  },
+
 ] as Routes;

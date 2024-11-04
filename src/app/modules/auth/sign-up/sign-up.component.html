@@ -1,0 +1,49 @@
+<form class="my-10 space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="text-center">
+    <h2 class="flex justify-center gap-3 mb-1 text-3xl font-semibold text-gray-700 dark:text-white">
+      Sign Up <span class="text-primary-500">!</span>
+    </h2>
+    <p class="text-gray-400 text-md dark:text-night-200">Let's get started with your 30 day free trial</p>
+  </div>
+
+  <div class="my-2 form__group">
+    <div class="relative">
+      <input
+        type="text"
+        id="email"
+        [ngClass]="{ 'is__invalid-input': submitted && f['email'].errors }"
+        class="block text-md peer input-field"
+        placeholder="Enter your email "
+        formControlName="email" />
+
+    </div>
+    <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
+      <div *ngIf="f['email'].errors['required']">Required field</div>
+      <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between space-x-3">
+    <div class="flex items-center">
+      <input id="accept-term" name="accept-term" type="checkbox" />
+      <label for="accept-term" class="flex gap-3 ml-2 text-gray-400 text-md dark:text-night-200">
+        I Accept the
+        <a class="font-medium text-primary-500 hover:text-primary-400"> Terms </a>
+      </label>
+    </div>
+  </div>
+
+
+  <!-- Submit Button -->
+  <button
+    type="button"
+    routerLink="/dashboard"
+    class="relative flex justify-center w-full px-4 py-2 mb-10 font-medium text-white border border-transparent rounded-md text-md group bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+    Sign up
+  </button>
+
+  <!-- Sign-up -->
+  <div class="flex gap-3 text-gray-400 text-md dark:text-night-200">
+    Already have an Account? <a routerLink="/auth" class="text-primary-500 hover:text-primary-400">Sign in</a>
+  </div>
+</form>

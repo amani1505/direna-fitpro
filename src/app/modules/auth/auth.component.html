@@ -1,0 +1,21 @@
+<div class="w-full">
+  <div class="flex flex-col justify-center min-h-screen px-5 shadow-lg bg-primary-500 lg:flex-row lg:px-0">
+    <!-- Background Image for Mobile / Image Section for Desktop -->
+    <div
+      class="absolute w-full h-screen bg-cover center lg:w-1/2 lg:relative lg:h-auto lg:bg-none backg"
+      style="background-image: url(&quot;./assets/images/hero-banner.png&quot;)"
+    >
+      <!-- Empty div that creates space on mobile -->
+      <div class="h-screen opacity-0 lg:hidden"></div>
+    </div>
+
+    <!-- Form Container -->
+    <div
+      class="relative z-10 flex items-center w-full bg-white rounded-lg lg:p-8 lg:w-1/2 lg:rounded-none lg:static"
+    >
+      <div class="w-full p-6 ">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

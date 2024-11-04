@@ -26,7 +26,7 @@
   [multiple],
   textarea,
   select {
-    @apply w-full rounded-md border border-gray-300 px-3   placeholder-primary-500 focus:z-10  focus:border-primary-500 focus:outline-none focus:ring-primary-500;
+    @apply w-full rounded-md border border-gray-300 px-3   placeholder-gray-500 focus:z-10  focus:border-primary-500 focus:outline-none focus:ring-primary-500;
   }
 
   [type="checkbox"],
@@ -1026,7 +1026,7 @@ body {
   background-color: var(--white);
   color: var(--rich-black-fogra-29-1);
   padding-block: 18px;
-  padding-inline: 30px 80px;
+  padding-inline: 20px 50px;
   border-radius: var(--radius-10);
 }
 
