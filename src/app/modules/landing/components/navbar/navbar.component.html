@@ -1,44 +1,38 @@
 <nav
-  class="fixed flex content-center justify-between w-full px-4 py-4 transition duration-500 ease-in z-[999999999] md:px-12 text=[12px]"
+  class="fixed flex content-center justify-between w-full px-4 py-3 transition duration-500 ease-in z-[999999999] md:px-12 text-[12px]"
   [ngClass]="{
     'bg-white text-primary-500 transition duration-700 ease-in py-0 shadow ':
       isScrolled,
   }"
 >
-  <div
-    class="flex items-center uppercase font-varela font-extrabold md:!text-[1.5rem] !text-xl leading-7"
-  >
+  <div class="flex items-center text-white h-1/2">
     <div>
       <svg-icon
         src="assets/images/logo.svg"
-        [svgClass]="'h-14 w-14 md:h-full  md:w-16'"
+        [svgClass]="'h-8 w-8  block'"
       ></svg-icon>
     </div>
-    <div>
-      <h1
-        class="flex gap-1 items-center justify-center text-[1.5rem] md:text-[2.5rem] font-extrabold"
+    <div class="font-extrabold leading-7 uppercase text-[15px] font-varela">
+      <span
+        class=""
+        [ngClass]="{
+          'text-primary-500': isScrolled,
+          ' text-white': !isScrolled,
+        }"
+        >direna </span
+      ><span
+        class="py-2"
+        [ngClass]="{
+          'text-secondary': isScrolled,
+          ' text-primary-500': !isScrolled,
+        }"
       >
-        <span
-          class="flex items-center py-2"
-          [ngClass]="{
-            'text-primary-500': isScrolled,
-            ' text-white': !isScrolled,
-          }"
-          >direna </span
-        ><span
-          class="flex items-center py-2"
-          [ngClass]="{
-            'text-secondary': isScrolled,
-            ' text-primary-500': !isScrolled,
-          }"
-        >
-          FitPro</span
-        >
-      </h1>
+        FitPro</span
+      >
     </div>
   </div>
   <ul
-    class="items-center hidden text-white font-montserrat md:flex"
+    class="items-center hidden text-white text-[14px] font-montserrat md:flex"
     [ngClass]="{
       'text-black  transition duration-700 ease-in py-0': isScrolled,
     }"
@@ -103,9 +97,9 @@
       >
     </li>
   </ul>
-  <div class="hidden font-montserrat md:flex">
+  <!-- <div class="hidden font-montserrat md:flex">
     <button
-      class="btn !text-2xl !font-semibold bg-white rounded-md text-primary-500 uppercase"
+      class="px-4 py-2 font-semibold uppercase bg-white rounded-md text-[14px] text-primary-500"
       [ngClass]="{
         'bg-primary-500 text-white': isScrolled,
         'bg-white text-primary-500': !isScrolled,
@@ -113,10 +107,12 @@
     >
       Login
     </button>
-  </div>
+  </div> -->
+
+  <!-- BUTTON FOR SMALL SCREEN -->
   <div
     id="showMenu"
-    class="md:hidden p-2 rounded-md shadow rotate-180 !font-extrabold"
+    class="w-10 h-10 p-2 font-extrabold rotate-180 rounded-md shadow md:hidden"
     (click)="openMobileNav()"
     [ngClass]="{
       'bg-primary-500 text-white': isScrolled,
@@ -125,12 +121,12 @@
   >
     <svg-icon
       src="./assets/icons/bars-3-center-left.svg"
-      [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
+      [svgClass]="'h-6 w-6 text-[14px] font-extrabold'"
     ></svg-icon>
   </div>
 </nav>
 
-<!-- Mobile navigation -->
+<!-- MOBILE NAVIGATION BAR -->
 
 <div
   *ngIf="isAnimating || showMenu"
@@ -142,16 +138,14 @@
   (animationend)="handleAnimationEnd()"
 >
   <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
-    <div class="p-2 bg-white rounded-md shadow text-primary-500 w-14">
+    <div class="w-10 h-10 p-2 bg-white rounded-md shadow text-primary-500">
       <svg-icon
         src="./assets/icons/x-mark.svg"
-        [svgClass]="'h-10 w-10 !text-3xl font-extrabold'"
+        [svgClass]="'h-6 w-6 !text-3xl font-extrabold'"
       ></svg-icon>
     </div>
   </div>
-  <ul
-    class="font-montserrat flex flex-col mx-8 my-24 items-center !text-[2rem]"
-  >
+  <ul class="font-montserrat flex flex-col mx-8 my-24 items-center text-[14px]">
     <li id="hideMenu" class="my-6">
       <a
         (click)="navigate('/')"
@@ -193,7 +187,7 @@
 
   <div class="font-montserrat">
     <button
-      class="text-2xl !font-semibold bg-white rounded-[var(--radius-8)] text-primary-500 uppercase w-full py-[15px] px-[35px]"
+      class="py-5 font-semibold uppercase bg-white rounded-md text-[14px] text-primary-500 w-full"
       [ngClass]="{
         'bg-primary-500 text-white': isScrolled,
         'bg-white text-primary-500': !isScrolled,

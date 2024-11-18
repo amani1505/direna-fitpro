@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 interface HeroInterface {
   id: string;
@@ -10,7 +11,7 @@ interface HeroInterface {
 @Component({
   selector: 'hero',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
 })

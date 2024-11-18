@@ -1,0 +1,48 @@
+<!-- modal.component.html -->
+<div  *ngIf="isOpen" class="fixed inset-0 flex items-center justify-center z-50 px-5 md:px-0">
+    <!-- Modal Overlay -->
+    <div (click)="closeModal()" class="fixed inset-0 bg-gray-900 dark:bg-gray-100 dark:bg-opacity-15  bg-opacity-50  duration-300 ease-in  "></div>
+  
+    <!-- Modal -->
+    <div @modalAnimation  class="bg-white rounded-lg shadow-lg max-w-lg w-full z-10 dark:bg-night-700">
+      <div class="flex items-center gap-4 px-4 py-3 border-b">
+        <svg-icon   src="assets/icons/heroicons/solid/exclamation-triangle.svg"  [svgClass]="'h-7 w-7 text-yellow-500'"></svg-icon>
+        <h2 class="text-xl font-semibold font-rubik text-gray-700 dark:text-night-50 ">{{title}}</h2>
+      </div>
+      <div class="p-6">
+        <p class="text-gray-700  dark:text-night-50 font-rubik font-[500]">
+      {{content}}
+        </p>
+        <p class="text-md my-3 font-raleway dark:text-night-50"><span class="text-red-600 font-[500] font-rubik">Note:: </span>{{subContent}}</p>
+      </div>
+      <div class="flex justify-end items-center gap-3  p-3 border-t">
+        <Button size="medium" color="danger" (onClick)="closeModal()">cancel</Button>
+
+    <Button size="medium" color="secondary" (onClick)="save()"
+      ><svg
+        *ngIf="loading"
+        class="-ml-1 mr-3 h-5 w-5 animate-spin text-primary-500 text-center"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      <span *ngIf="!loading"> submit</span></Button
+    >
+   
+    </div>
+  </div>
+  

@@ -23,6 +23,9 @@
       "@components/*": ["app/components/*"],
       "@modules/*": ["app/modules/*"],
       "@utils/*": ["app/utils/*"],
+      "@model/*": ["app/models/*"],
+      "@service/*": ["app/services/*"],
+      "@directive/*": ["app/directives/*"]
     },
     "lib": ["ES2022", "dom"]
   },

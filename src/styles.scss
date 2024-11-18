@@ -29,7 +29,7 @@
 
   [type="checkbox"],
   [type="radio"] {
-  	@apply h-7 w-7 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-night-600 dark:bg-night-700 dark:ring-offset-night-800 dark:focus:ring-primary-600;
+    @apply h-7 w-7 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-night-600 dark:bg-night-700 dark:ring-offset-night-800 dark:focus:ring-primary-600;
   }
 }
 @layer components {
@@ -138,6 +138,21 @@
   #RESET
 \*-----------------------------------*/
 
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html {
+  font-family: var(--ff-rubik);
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--white);
+  color: var(--sonic-silver);
+  font-size: 1.6rem;
+  line-height: 5;
+}
+
 *,
 *::before,
 *::after {
@@ -190,19 +205,6 @@ ion-icon {
 
 address {
   font-style: normal;
-}
-
-html {
-  font-family: var(--ff-rubik);
-  font-size: 10px;
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--white);
-  color: var(--sonic-silver);
-  font-size: 1.6rem;
-  line-height: 1.6;
 }
 
 :focus-visible {
@@ -371,7 +373,6 @@ body {
 
 .btn-link {
   --color: var(--white);
-
   color: var(--color);
   font-size: var(--fs-6);
   font-weight: var(--fw-500);
@@ -571,10 +572,7 @@ body {
 }
 
 .hero-subtitle {
-  background-color: var(--white_10);
-  color: var(--white);
   margin-inline: auto;
-  padding: 5px;
   padding-inline-end: 15px;
   border-radius: var(--radius-8);
 }
@@ -894,7 +892,7 @@ body {
 }
 
 .blog-card .card-content {
-  padding: 25px;
+  padding: 25px ;
 }
 
 .blog-card .card-title {
@@ -1441,7 +1439,7 @@ body {
   }
 
   .about .wrapper {
-    gap: 30px;
+    gap: 20px;
   }
 
   /**

@@ -6,19 +6,23 @@
   style="background-image: url(&quot;./assets/images/hero-bg.png&quot;)"
 >
   @if (hero) {
-    <div class="container max-h-1/2">
-      <div class="hero-content">
-        <p class="hero-subtitle">
-          <strong class="strong">The Best</strong>Fitness Club
+    <div class="container">
+      <div class="flex flex-col items-center lg:items-start">
+        <p class="bg-gray-800 text-white p-[5px] hero-subtitle text-xl">
+          <strong
+            class="inline-block bg-[var(--coquelicot)] p-[6px] sm:py-2 sm:px-14 rounded-[var(--radius-5)] me-[10px] sm:me-[15px]"
+            >The Best</strong
+          >Fitness Club
         </p>
-
-        <h1 class="h1 hero-title">{{ hero.title }}</h1>
-
-        <p class="section-text">
+        <h1
+          class="text-3xl font-[700] text-white hero-title xl:text-[3.8rem] xl:font-[900] leading-[1.2]"
+        >
+          {{ hero.title }}
+        </h1>
+        <p class="xl:text-[1.5rem] tracking-wider leading-normal">
           {{ hero.subtitle }}
         </p>
-
-        <a href="#" class="btn btn-primary">Join Us</a>
+        <a class="btn btn-primary" routerLink="/auth">Join Us</a>
       </div>
 
       <div class="hero-banner">

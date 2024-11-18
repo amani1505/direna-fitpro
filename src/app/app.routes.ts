@@ -11,6 +11,10 @@ export const routes: Routes = [
     loadChildren: () => import('@modules/auth/auth.routes'),
   },
   {
+    path: 'dashboard',
+    loadChildren: () => import('@modules/layout/layout.routes'),
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },

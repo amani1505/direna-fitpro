@@ -1,0 +1,67 @@
+<!-- <div class="flex items-center justify-between p-4">
+  <button
+    (click)="goToFirstPage()"
+    [disabled]="currentPage === 1"
+    class="btn "
+  >
+    First
+  </button>
+  <button
+    (click)="goToPreviousPage()"
+    [disabled]="currentPage === 1"
+    class="btn"
+  >
+    Previous
+  </button>
+  <span class="text-sm">{{
+    getRangeLabel(currentPage, itemsPerPage, totalItems)
+  }}</span>
+  <button
+    (click)="goToNextPage()"
+    [disabled]="currentPage === totalPages"
+    class="btn"
+  >
+    Next
+  </button>
+  <button
+    (click)="goToLastPage()"
+    [disabled]="currentPage === totalPages"
+    class="btn"
+  >
+    Last
+  </button>
+</div> -->
+
+<div class="flex items-center justify-between p-4">
+    <button
+      (click)="goToFirstPage()"
+      [disabled]="currentPage === 1"
+      class="btn"
+    >
+      First
+    </button>
+    <button
+      (click)="goToPreviousPage()"
+      [disabled]="currentPage === 1"
+      class="btn"
+    >
+      Previous
+    </button>
+    <span class="text-sm">{{
+      getRangeLabel(currentPage, itemsPerPage, totalItems)
+    }}</span>
+    <button
+      (click)="goToNextPage()"
+      [disabled]="currentPage === totalPages"
+      class="btn"
+    >
+      Next
+    </button>
+    <button
+      (click)="goToLastPage()"
+      [disabled]="currentPage === totalPages"
+      class="btn"
+    >
+      Last
+    </button>
+  </div>

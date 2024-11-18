@@ -1,0 +1,8 @@
+<button
+  [ngClass]="[colorClasses, sizeClasses, rounded ? 'rounded-full' : 'rounded']"
+  matRipple
+  class="h-5 w-5 transition delay-100 duration-300 ease-in-out font-raleway capitalize flex justify-center items-center"
+  (click)="click()"
+>
+  <svg-icon src="{{ icon }}" [svgClass]="iconSize"> </svg-icon>
+</button>

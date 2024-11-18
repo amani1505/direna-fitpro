@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { ButtonComponent } from '@components/button/button.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, AngularSvgIconModule],
+  imports: [CommonModule, RouterModule, AngularSvgIconModule,ButtonComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
@@ -45,7 +46,7 @@ export class NavbarComponent {
 
   // Method for partial match of routes
   isPartialActiveRoute(route: string): boolean {
-    return this._router.isActive(route, false); 
+    return this._router.isActive(route, false);
 
   }
 }

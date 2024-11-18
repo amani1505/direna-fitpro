@@ -1,0 +1,14 @@
+<nav class="flex justify-center">
+  <ul class="flex space-x-2">
+    <li *ngIf="currentPage > 1">
+      <button (click)="selectPage(currentPage - 1)" class="px-3 py-1 border rounded"><<</button>
+    </li>
+    <li *ngFor="let page of pages" [class.font-bold]="page === currentPage">
+      <button *ngIf="page !== '...'" (click)="selectPage(page)" class="px-3 py-1 border rounded">{{ page }}</button>
+      <span *ngIf="page === '...'">...</span>
+    </li>
+    <li *ngIf="currentPage < totalPages">
+      <button (click)="selectPage(currentPage + 1)" class="px-3 py-1 border rounded">>></button>
+    </li>
+  </ul>
+</nav>

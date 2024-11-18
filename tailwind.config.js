@@ -2,9 +2,9 @@
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   darkMode: "class",
+  important: true,
   theme: {
     extend: {
-      
       colors: {
         primary: {
           50: "#ffe9e7", // Very light
@@ -40,6 +40,7 @@ module.exports = {
         montserrat: ["Montserrat", "sans-serif"],
         raleway: ["Raleway"],
         varela: ["Varela Round", "sans-serif"],
+        catamaran: ["Catamaran", "sans-serif"],
       },
       keyframes: {
         wiggle: {

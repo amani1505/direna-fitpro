@@ -1,0 +1,59 @@
+<div
+  class="relative flex items-center justify-center rounded-md bg-gray-50 hover:bg-gray-100 dark:bg-night-300 border border-dashed cursor-pointer"
+  [ngClass]="{ 'border-none': currentImage }"
+  [style.width]="width"
+  [style.height]="height"
+  [class.border-blue-500]="isDragOver"
+  (drop)="onDrop($event)"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+ 
+>
+  <!-- Display selected image -->
+  <img
+    *ngIf="currentImage"
+    [src]="currentImage"
+    [style.width]="width"
+    [style.height]="height"
+    alt="Selected Image"
+    class="rounded-md"
+  />
+
+  <!-- Centered text and upload button -->
+  <div
+    class="flex flex-col items-center justify-center absolute inset-0 text-neutral-600 px-2 font-raleway "
+    *ngIf="!currentImage"
+  >
+    <svg-icon
+      src="./assets/icons/heroicons/outline/photo.svg"
+      [svgClass]="'w-6 h-6'"
+      class="inline-block dark:text-night-50"
+    >
+    </svg-icon>
+    <span class="text-[9px] dark:text-night-50 text-center"
+      >Drag your image here or
+      <span class="underline cursor-pointer  text-blue-700 text-center"  (click)="fileInput.click()">
+        click to browser
+      </span></span
+    >
+  </div>
+  <button
+    *ngIf="currentImage"
+    (click)="deleteImage()"
+    class="absolute flex items-center  bottom-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
+  >
+    <svg-icon
+      src="./assets/icons/heroicons/outline/trash.svg"
+      [svgClass]="'w-4 h-4'"
+    >
+    </svg-icon>
+  </button>
+  <!-- Hidden file input -->
+  <input
+    type="file"
+    #fileInput
+    (change)="onFileSelected($event)"
+    accept="image/*"
+    hidden
+  />
+</div>

@@ -6,6 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideQuillConfig } from 'ngx-quill/config';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,6 +32,6 @@ export const appConfig: ApplicationConfig = {
           ['link',]
         ],
       },
-    }),
+    }), provideAnimationsAsync(), provideAnimationsAsync(),
   ],
 };
