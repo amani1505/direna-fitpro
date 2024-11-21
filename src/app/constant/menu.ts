@@ -11,46 +11,67 @@ export class Menu {
         },
 
         {
-          icon: 'assets/icons/heroicons/solid/shopping-bag.svg',
-          label: 'products',
+          icon: 'assets/icons/heroicons/solid/user-group.svg',
+          label: 'members',
           route: '/admin/product',
+          // children: [
+          //   {
+          //     icon: 'assets/icons/heroicons/solid/users.svg',
+          //     label: 'New Member',
+          //     route: '/admin/members/add-member',
+          //   },
+          //   {
+          //     icon: 'assets/icons/heroicons/solid/users.svg',
+          //     label: 'Members',
+          //     route: '/admin/members',
+          //   },
+          // ],
+        },
+        {
+          icon: 'assets/icons/heroicons/solid/briefcase.svg',
+          label: 'Packages',
+          route: '/admin/packages',
+        },
+        {
+          icon: 'assets/icons/heroicons/solid/calender-days.svg',
+          label: 'Classes',
+          route: '/admin/classes',
+        },
+        {
+          icon: 'assets/icons/heroicons/solid/users.svg',
+          label: 'staffs',
+          route: '/admin/staffs',
+        },
+        {
+          icon: 'assets/icons/heroicons/solid/swatch.svg',
+          label: 'Equipments',
+          route: '/admin/equipments',
+        },
+
+        {
+          icon: 'assets/icons/heroicons/solid/banknotes.svg',
+          label: 'financial overview',
+          route: '/admin/financials/expenses',
           children: [
             {
-              icon: 'assets/icons/heroicons/solid/users.svg',
-              label: 'products',
-              route: '/admin/product',
+              label: 'expense',
+              route: '/admin/financials/expense',
             },
             {
-              icon: 'assets/icons/heroicons/solid/users.svg',
-              label: 'category',
-              route: '/admin/product/category',
+              label: 'revenue',
+              route: '/admin/financials/revenue',
             },
           ],
         },
         {
-          icon: 'assets/icons/heroicons/solid/users-group.svg',
-          label: 'customers',
-          route: '/users',
-        },
-        {
-          icon: 'assets/icons/heroicons/solid/shopping-cart.svg',
-          label: 'carts',
-          route: '/users',
-        },
-        {
-          icon: 'assets/icons/heroicons/solid/briefcase.svg',
-          label: 'order',
-          route: '/users',
-        },
-        {
-          icon: 'assets/icons/heroicons/solid/bank-notes.svg',
-          label: 'payment',
-          route: '/users',
+          icon: 'assets/icons/heroicons/solid/chart-bar-square.svg',
+          label: 'Analytics and Reports',
+          route: '/admin/financials/reports',
         },
         {
           icon: 'assets/icons/heroicons/solid/user-circle.svg',
           label: 'profile',
-          route: '/users',
+          route: '/admin/profile',
         },
       ],
     },

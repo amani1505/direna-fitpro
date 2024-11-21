@@ -1,27 +1,27 @@
 <nav
   [ngClass]="menuService.showSideBar ? 'w-52 xl:w-64' : 'w-[70px]'"
-  class="scrollbar-thumb-rounded scrollbar-track-rounded hidden h-full flex-col justify-between overflow-auto bg-white pt-3 transition-all duration-300 scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-100 dark:bg-night-700 dark:scrollbar-thumb-night-500 dark:scrollbar-track-night-600 lg:flex"
+  class="flex-col justify-between hidden h-full pt-3 overflow-auto transition-all duration-300 bg-white scrollbar-thumb-rounded scrollbar-track-rounded scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-100 dark:bg-night-700 dark:scrollbar-thumb-night-500 dark:scrollbar-track-night-600 lg:flex"
 >
   <div class="px-4">
     <!-- Logo -->
     <div class="relative h-10">
       <div class="flex items-center" *ngIf="menuService.showSideBar">
         <a
-          class="flex items-center justify-center rounded bg-primary-100 p-2 focus:outline-none focus:ring-1"
+          class="flex items-center justify-center p-2 rounded bg-primary-100 focus:outline-none focus:ring-1"
         >
           <svg-icon
-            src="assets/logo/logo.svg"
+            src="assets/images/logo.svg"
             [svgClass]="'h-6 w-6'"
           >
           </svg-icon>
         </a>
-        <!-- <b class="ml-1 pl-2 text-sm font-bold dark:text-night-50">
+        <!-- <b class="pl-2 ml-1 text-sm font-bold dark:text-night-50">
           {{ appJson.displayName }}
         </b> -->
       </div>
       <button
         (click)="toggleSidebar()"
-        class="absolute top-2 right-2 flex h-5 w-5 items-center justify-center rounded text-gray-400 transition-all duration-200 focus:outline-none hover:text-gray-500 dark:text-night-400 dark:hover:text-night-300"
+        class="absolute flex items-center justify-center w-5 h-5 text-gray-400 transition-all duration-200 rounded top-2 right-2 focus:outline-none hover:text-gray-500 dark:text-night-400 dark:hover:text-night-300"
         [ngClass]="{ 'rotate-180': !menuService.showSideBar }"
       >
         <svg-icon src="assets/icons/heroicons/solid/chevron-double-left.svg"
@@ -32,7 +32,7 @@
 
     <!-- Separator -->
     <div class="pt-3">
-      <hr class="border-dashed border-gray-200 dark:border-night-500" />
+      <hr class="border-gray-200 border-dashed dark:border-night-500" />
     </div>
 
     <!-- Menu Items -->
@@ -42,12 +42,12 @@
 
   <div class="mx-4 my-4 space-y-1">
     <div class="pt-3">
-      <hr class="border-dashed border-gray-200 dark:border-night-500" />
+      <hr class="border-gray-200 border-dashed dark:border-night-500" />
     </div>
     <!-- Dark Theme -->
     <div
       (click)="toggleTheme()"
-      class="group flex h-9 cursor-pointer items-center justify-start rounded p-2 hover:bg-gray-100 dark:hover:bg-night-600"
+      class="flex items-center justify-start p-2 rounded cursor-pointer group h-9 hover:bg-gray-100 dark:hover:bg-night-600"
     >
       <svg-icon
         [src]="
@@ -75,7 +75,7 @@
     </div>
     <!-- Sign out -->
     <div
-      class="group flex h-9 cursor-pointer items-center justify-start rounded p-2 hover:bg-gray-100 dark:hover:bg-night-600"
+      class="flex items-center justify-start p-2 rounded cursor-pointer group h-9 hover:bg-gray-100 dark:hover:bg-night-600"
     >
       <svg-icon
         src="assets/icons/heroicons/solid/logout.svg"
@@ -85,7 +85,7 @@
 
       <a
         routerLink="/auth"
-        
+
         class="ml-3 truncate text-xs font-[500] font-rubik tracking-wide text-gray-600 focus:outline-none dark:text-night-100"
       >
         Sign out
