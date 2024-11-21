@@ -13,21 +13,21 @@
         class="img-cover"
       />
 
-      <time class="card-meta" datetime="2022-07-07">{{
+      <time class="bg-[var(--coquelicot)] text-white absolute text-xl font-[500]  xl:text-[1.5rem] uppercase card-meta"  datetime="2022-07-07">{{
         blog.date
       }}</time>
     </div>
 
     <div class="card-content">
-      <h3 class="h3">
-        <a href="#" class="card-title">{{ blog.title }}</a>
+      <h3 class="">
+        <a href="#" class="text-xl font-[500] text-[var(--rich-black-fogra-29-1)]  xl:text-[1.5rem] leading-[1.2]">{{ blog.title }}</a>
       </h3>
 
-      <p class="card-text truncate-2-lines">
+      <p class="text-[var(--sonic-silver)] truncate-2-lines">
         {{ blog.description }}
       </p>
 
-      <a href="#" class="btn-link has-before">Read More</a>
+      <a href="#" class="text-sm btn-link has-before">Read More</a>
     </div>
   </div>
 </li>
