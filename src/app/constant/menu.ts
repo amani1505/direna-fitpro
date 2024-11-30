@@ -13,7 +13,7 @@ export class Menu {
         {
           icon: 'assets/icons/heroicons/solid/user-group.svg',
           label: 'members',
-          route: '/admin/product',
+          route: '/admin/members',
           // children: [
           //   {
           //     icon: 'assets/icons/heroicons/solid/users.svg',

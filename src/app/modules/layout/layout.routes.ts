@@ -11,6 +11,8 @@ export default [
     // providers: [provideState({ name: 'app_state', reducer: app_reducer })],
   },
 
+
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
   // { path: '**', redirectTo: 'error/404' },
 ] as Routes;
