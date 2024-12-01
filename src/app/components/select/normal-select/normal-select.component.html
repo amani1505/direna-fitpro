@@ -1,12 +1,16 @@
-<div class="relative inline-block text-left w-full">
+<div
+  class="relative inline-block w-64 text-left border border-gray-300 rounded-md"
+>
   <!-- Dropdown Button -->
   <button
     (click)="toggleDropdown()"
     clickOutside
     (clickOutside)="dropdownOpen = false"
-    class="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 cursor-pointer"
+    class="inline-flex justify-between w-full gap-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-primary-500"
   >
-    <span class="text-gray-400">{{ selectedOption || placeholder }}</span>
+    <span class="text-gray-400 capitalize truncate">{{
+      selectedOption || placeholder
+    }}</span>
     <svg-icon
       src="assets/icons/heroicons/solid/chevron-down.svg"
       [svgClass]="'h-4 w-4 transition ease-out duration-300 delay-300'"
@@ -16,15 +20,15 @@
   <!-- Dropdown Menu -->
   <div
     *ngIf="dropdownOpen"
-    class="absolute right-0 z-10 w-full mt-1 md:mt-2 origin-top-right bg-white border border-gray-200 rounded-md shadow p-2 transition ease-out duration-300 delay-300"
+    class="absolute right-0 z-10 w-full p-2 mt-1 transition duration-300 ease-out delay-300 origin-top-right bg-white border border-gray-200 rounded-md shadow md:mt-2"
   >
-    <div class="py-2 max-h-40 overflow-y-auto has-scrollbar">
+    <div class="py-2 overflow-y-auto max-h-40 scrollbar">
       <a
         *ngFor="let option of options"
-        (click)="selectOption(option)"
-        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+        (click)="selectOption(option.value)"
+        class="block px-4 py-2 text-sm text-gray-700 truncate cursor-pointer hover:bg-gray-100"
       >
-        {{ option }}
+        {{ option.label }}
       </a>
     </div>
   </div>

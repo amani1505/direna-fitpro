@@ -8,7 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { TableFilterService } from './service/filter.service';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './parts/header/header.component';
-
+import { HeaderColumn, TableActions } from '@model/TableColumn.interface';
+import { log } from 'console';
 
 export const dummyData: any[] = [
   {
@@ -135,34 +136,51 @@ export const dummyData: any[] = [
     HeaderComponent,
     FormsModule,
     AngularSvgIconModule,
-    RowComponent
-],
+    RowComponent,
+  ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent implements OnInit{
+export class TableComponent implements OnInit {
+  [x: string]: any;
   users = signal<any[]>([]);
+  columns: HeaderColumn[] = [
+    { key: 'selected', type: 'checkbox' },
+    { key: 'name', type: 'text', label: 'Member' },
+    { key: 'username', type: 'text', label: 'Username' },
+    { key: 'hobbies', type: 'text', label: 'Hobbies' },
+    { key: 'occupation', type: 'text', label: 'Occupation' },
+    { key: 'phone', type: 'text', label: 'Phone' },
+    { key: 'actions', type: 'actions' },
+  ];
 
-  constructor(private _http: HttpClient, private filterService: TableFilterService) {
-    this._http.get<any[]>('https://freetestapi.com/api/v1/users?limit=8').subscribe({
-      next: (data) => this.users.set(data),
-      error: (error) => {
-        this.users.set(dummyData);
-        this.handleRequestError(error);
-      },
-    });
+  constructor(
+    private _http: HttpClient,
+    private filterService: TableFilterService,
+  ) {
+    this._http
+      .get<any[]>('https://freetestapi.com/api/v1/users?limit=8')
+      .subscribe({
+        next: (data) => this.users.set(data),
+        error: (error) => {
+          this.users.set(dummyData);
+          this.handleRequestError(error);
+        },
+      });
   }
 
-  public toggleUsers(checked: any) {
-    this.users.update((users) => {
-      return users.map((user) => {
-        return { ...user, selected: checked };
-      });
-    });
+  public toggleUsers(checked: any): any {
+    console.log('Checked', checked);
+    // this.users.update((users) => {
+    //   return users.map((user) => {
+    //     return { ...user, selected: checked };
+    //   });
+    // });
   }
 
   private handleRequestError(error: any) {
-    const msg = 'An error occurred while fetching users. Loading dummy data as fallback.';
+    const msg =
+      'An error occurred while fetching users. Loading dummy data as fallback.';
     // toast.error(msg, {
     //   position: 'bottom-right',
     //   description: error.message,
@@ -203,16 +221,45 @@ export class TableComponent implements OnInit{
       .sort((a, b) => {
         const defaultNewest = !order || order === '1';
         if (defaultNewest) {
-          return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
         } else if (order === '2') {
-          return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+          return (
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+          );
         }
         return 0;
       });
   });
 
+  actions: TableActions[] = [
+    {
+      type: 'search',
+      placeholder: 'Search users',
+      action: (event: Event) => {
+        const input = event.target as HTMLInputElement;
+        console.log('Search:', input.value);
+      },
+    },
+    {
+      type: 'select',
+      options: [
+        { label: 'All', value: 'all' },
+        { label: 'Active', value: 'active' },
+        { label: 'Disabled', value: 'disabled' },
+        { label: 'Pending', value: 'pending' },
+      ],
+      placeholder: 'Select Members Status',
+      action: (value: Event | string | null) => {
+        console.log('Status changed to:', value);
+      },
+    },
+  ];
+
   ngOnInit() {}
 
-
-
+  delete(id: string) {
+   alert(`Delete User +  ${id}`)
+  }
 }

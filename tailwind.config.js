@@ -19,7 +19,19 @@ module.exports = {
           900: "#731f19", // Very dark
         },
         medium: "rgba(0,0,0,0.5)",
-        secondary: "#2d6f17",
+        secondary: {
+          25: "#c2e085", // Lighter green shade
+          50: "#9ec64c", // Lighter green shade
+          100: "#7ab01f", // Slightly lighter green
+          200: "#659d1b", // Medium-light green
+          300: "#4f8b16", // Medium green
+          400: "#3b7512", // Medium-dark green
+          500: "#2d6f17", // Base color
+          600: "#275b14", // Darker green
+          700: "#1f4c11", // Much darker green
+          800: "#183f0e", // Very dark green
+          900: "#11300b", // Darkest green
+        },
         black: "black",
         white: "white",
         night: {

@@ -1,29 +1,16 @@
-import { Component } from '@angular/core';
-import { TableFilterService } from '@components/table/service/filter.service';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { TableActions } from '../../../../models/TableColumn.interface';
+import { NormalSelectComponent } from '@components/select/normal-select/normal-select.component';
 
 @Component({
   selector: 'TableActions',
   standalone: true,
-  imports: [AngularSvgIconModule],
+  imports: [CommonModule, AngularSvgIconModule, NormalSelectComponent],
   templateUrl: './actions.component.html',
   styleUrl: './actions.component.scss',
 })
 export class ActionsComponent {
-  constructor(public filterService: TableFilterService) {}
-
-  onSearchChange(value: Event) {
-    const input = value.target as HTMLInputElement;
-    this.filterService.searchField.set(input.value);
-  }
-
-  onStatusChange(value: Event) {
-    const selectElement = value.target as HTMLSelectElement;
-    this.filterService.statusField.set(selectElement.value);
-  }
-
-  onOrderChange(value: Event) {
-    const selectElement = value.target as HTMLSelectElement;
-    this.filterService.orderField.set(selectElement.value);
-  }
+  @Input() actions: Array<TableActions> = [];
 }

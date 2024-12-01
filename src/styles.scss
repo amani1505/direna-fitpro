@@ -29,7 +29,7 @@
 
   [type="checkbox"],
   [type="radio"] {
-    @apply h-7 w-7 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-night-600 dark:bg-night-700 dark:ring-offset-night-800 dark:focus:ring-primary-600;
+    @apply h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-night-600 dark:bg-night-700 dark:ring-offset-night-800 dark:focus:ring-primary-600;
   }
 }
 @layer components {
@@ -409,6 +409,28 @@ address {
   height: 100%;
   object-fit: cover;
 }
+
+.scrollbar {
+  padding-bottom: 5px;
+}
+.scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 20px;
+}
+.scrollbar:hover::-webkit-scrollbar-thumb {
+  background: hsl(0, 0%, 90%);
+}
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: hsl(0, 0%, 80%);
+}
+
+
+
 
 .has-scrollbar {
   display: flex;
@@ -892,7 +914,7 @@ address {
 }
 
 .blog-card .card-content {
-  padding: 25px ;
+  padding: 25px;
 }
 
 .blog-card .card-title {

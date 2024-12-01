@@ -23,22 +23,39 @@
 <div
   class="flex flex-col min-w-full p-2 overflow-x-auto bg-white border rounded-xl border-muted/20"
 >
-  <TableActions></TableActions>
+  <TableActions [actions]="actions"></TableActions>
   <div
     class="overflow-x-auto scrollbar-thumb-rounded scrollbar-track-rounded grow scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted"
   >
     <table
-      class="table w-full text-sm sm:text-base overflow-x-auto leading-5 text-left align-middle border-0 border-collapse table-auto text-muted-foreground"
+      class="table w-full overflow-x-auto text-sm leading-5 text-left align-middle border-0 border-collapse table-auto sm:text-base text-muted-foreground"
     >
-      <thead class="text-xs border border-muted/20 text-muted-foreground">
-        <tr app-table-header (onCheck)="toggleUsers($event)"></tr>
+      <thead class="p-10 text-xs border bg-gray-50">
+        <tr
+          app-table-header
+          (onCheck)="toggleUsers($event)"
+          [columns]="columns"
+        ></tr>
       </thead>
       <tbody>
         <!-- Loop through users, if any -->
         @for (user of filteredUsers(); track $index) {
-          <tr app-table-row [user]="user" class="hover:bg-primary-50"></tr>
-        }
-        @empty {
+          <tr
+            app-table-row
+            [data]="user"
+            [columns]="[
+              { key: 'selected', type: 'checkbox', action: toggleUsers },
+              { key: 'name', type: 'text' },
+              { key: 'email', type: 'text' },
+              { key: 'hobbies', type: 'badge' },
+              { key: 'occupation', type: 'text' },
+              { key: 'phone', type: 'text' },
+              { key: 'action', type: 'button', actionType: ['update','delete'] },
+            ]"
+            (onDelete) = "delete(user.id)"
+            class="hover:bg-primary-50"
+          ></tr>
+        } @empty {
           <tr>
             <td class="py-4 text-sm text-center" colspan="7">No users found</td>
           </tr>
