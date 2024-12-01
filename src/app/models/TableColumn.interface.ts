@@ -1,6 +1,6 @@
 export interface BaseTableColumn {
   key: string;
-  type: 'text' | 'image' | 'badge' | 'button' | 'checkbox' | 'actions';
+  type: 'text' | 'image' | 'badge' | 'button' | 'checkbox' | 'actions' | 's/n';
   align?: 'left' | 'center' | 'right';
 }
 
@@ -10,7 +10,6 @@ export interface HeaderColumn extends BaseTableColumn {
 
 export interface RowColumn extends BaseTableColumn {
   alt?: string;
-  action?: (data: any) => any;
   actionType?: Array<'delete' | 'update' | 'view'>;
   icon?: string;
 }

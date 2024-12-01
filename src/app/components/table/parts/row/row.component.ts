@@ -14,11 +14,13 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 export class RowComponent {
   @Input() data: any;
   @Input() hasImage: boolean = false;
+  @Input({required: true}) index: number = 0
   @Input() columns: Array<RowColumn> = [];
 
-  @Output() onDelete = new EventEmitter<void>();
-  @Output() onView = new EventEmitter<void>();
-  @Output() onUpdate = new EventEmitter<void>();
+  @Output() onDelete = new EventEmitter<any>();
+  @Output() onView = new EventEmitter<any>();
+  @Output() onUpdate = new EventEmitter<any>();
+  @Output() onCheck = new EventEmitter<{ checked: boolean; row: any }>();
 
   constructor() {}
 
@@ -46,16 +48,23 @@ export class RowComponent {
     this.onView.emit();
   }
 
-  getActions(action: string) {
+  handleAction(action: string) {
     switch (action) {
       case 'view':
         return this.view();
       case 'update':
+        console.log("Update Type ", action )
         return this.update();
       case 'delete':
+        console.log("Delete Type ", action )
         return this.delete();
+
       default:
         return '';
     }
+  }
+  toggle(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.onCheck.emit({ checked, row: this.data });
   }
 }

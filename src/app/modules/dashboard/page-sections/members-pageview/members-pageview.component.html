@@ -1,1 +1,19 @@
-<ListTable></ListTable>
+<ListTable
+  [title]="'Gym Members'"
+  [totalTitle]="'All members'"
+  [totalValue]="10000"
+  (onAdd)="addNewMember()"
+  [buttonLabel]="'Add Member'"
+  [actions]="actions"
+  (onCheckAll)="toggleUsers($event)"
+  (onCheck)="toggleUser($event)"
+  (onUpdate)="update($event)"
+  (onDelete)="delete($event)"
+  [data]="data"
+  [headerColumns]="headerColumns"
+  [rowColumns]="rowColumns"
+  [itemsPerPage]="itemsPerPage"
+  [totalItems]="totalItems"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+></ListTable>

@@ -1,30 +1,24 @@
-<!-- <ng-container>
-  <th class="w-[50px]">
-    <input (change)="toggle($event)" class="checkbox checkbox-sm" data-datatable-check="true" type="checkbox" />
-  </th>
-  <th class="min-w-[300px]">Member</th>
-  <th class="min-w-[180px]">Username</th>
-  <th class="min-w-[180px]">Hobbies</th>
-  <th class="min-w-[180px]">Occupation</th>
-  <th class="min-w-[150px]">Phone</th>
-  <th class="w-[60px]"></th>
-</ng-container> -->
 
 <th
   *ngFor="let column of columns"
+  [class.w-[25px]]="column.type === 's/n'"
   [class.w-[50px]]="column.type === 'checkbox'"
   [class.min-w-[300px]]="column.key === 'member'"
-  [class.min-w-[180px]]="!['checkbox', 'actions'].includes(column.type)"
+  [class.min-w-[180px]]="!['checkbox', 'actions','s/n'].includes(column.type)"
   [class.w-[60px]]="column.type === 'actions'"
   [class.text-center]="column.align === 'center'"
 >
   <ng-container [ngSwitch]="column.type">
     <!-- Checkbox Header -->
+    <ng-container *ngSwitchCase="'s/n'">
+      {{ column.label }}
+    </ng-container>
     <ng-container *ngSwitchCase="'checkbox'">
       <input
         (change)="toggle($event)"
         class="checkbox checkbox-sm"
         data-datatable-check="true"
+        [checked]="isAllSelected"
         type="checkbox"
       />
     </ng-container>

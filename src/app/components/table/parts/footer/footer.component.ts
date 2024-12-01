@@ -3,6 +3,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
+export interface PaginationConfig {
+  itemsPerPage?: number[];
+  maxVisiblePages?: number;
+  boundaryNumbers?: number;
+  showFirstLast?: boolean;
+  showPreviousNext?: boolean;
+}
+
 @Component({
   selector: 'TableFooter',
   standalone: true,
@@ -15,9 +23,10 @@ export class FooterComponent {
   @Input() totalItems: number = 100;
   @Input() currentPage: number = 1;
   @Input() totalPages: number = 10;
-  @Output() pageChange = new EventEmitter<number>();
 
-  // Start and end item numbers for current page
+  @Output() pageChange = new EventEmitter<number>();
+  @Output() itemsPerPageChange = new EventEmitter<number>();
+
   get startItem(): number {
     return (this.currentPage - 1) * this.itemsPerPage + 1;
   }
@@ -70,31 +79,28 @@ export class FooterComponent {
 
   onItemsPerPageChange() {
     this.currentPage = 1;
-    this.emitPageChange();
+    this.itemsPerPageChange.emit(this.itemsPerPage);
+    this.pageChange.emit(this.currentPage);
   }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.emitPageChange();
+      this.pageChange.emit(this.currentPage);
     }
   }
 
   goToPreviousPage(): void {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.emitPageChange();
+      this.pageChange.emit(this.currentPage);
     }
   }
 
   goToNextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
-      this.emitPageChange();
+      this.pageChange.emit(this.currentPage);
     }
-  }
-
-  emitPageChange(): void {
-    this.pageChange.emit(this.currentPage);
   }
 }

@@ -1,60 +1,56 @@
-<td *ngFor="let column of columns">
-  <ng-container [ngSwitch]="column.type">
-    <ng-container *ngSwitchCase="'checkbox'">
-      <input
-        [(ngModel)]="data.selected"
-        class="checkbox checkbox-sm"
-        data-datatable-row-check="true"
-        type="checkbox"
-        value="28"
-        (change)="column.action(data.selected)"
-      />
-    </ng-container>
-    <ng-container *ngSwitchCase="'image'">
-      <img
-        [src]="data[column.key]"
-        *ngIf="hasImage"
-        [alt]="column.alt || 'Image'"
-        class="rounded-full h-9 w-9 shrink-0"
-      />
-    </ng-container>
-    <!-- Text Content -->
-    <ng-container *ngSwitchCase="'text'">
-      {{ data[column.key] }}
-    </ng-container>
 
-    <!-- Badge Content -->
-    <ng-container *ngSwitchCase="'badge'">
-      <span
-        *ngFor="let item of data[column.key]; let i = index"
-        class="rounded-[30px] bg-yellow-500/10 px-2 py-0.5 text-xs font-medium text-yellow-800"
-      >
-        {{ item }}
-      </span>
-    </ng-container>
-
-    <ng-container *ngSwitchCase="'button'">
-      <div class="flex justify-end gap-2">
-        <button
-          class="flex items-center justify-center text-blue-400 bg-blue-200 rounded-md h-7 w-7 dark:bg-blue-500 dark:text-blue-300"
-          *ngFor="let type of column.actionType"
-          [ngClass]="{
-            'bg-green-200 text-green-400 dark:bg-green-500 dark:text-green-300':
-              type === 'view',
-            'bg-blue-200 text-blue-400 dark:bg-blue-500 dark:text-blue-300':
-              type === 'update',
-            'bg-red-200 text-red-400 dark:bg-red-500 dark:text-red-300':
-              type === 'delete',
-          }"
-          (click) ="getActions(type)"
-        >
-          <svg-icon
-            [src]="getIconForAction(type)"
-            [svgClass]="'h-5 w-5'"
+@for (column of columns; track column.key) {
+  @switch (column.type) {
+    @case ("s/n") {
+      <td class="" >{{index}}</td>
+    }
+    @case ("checkbox") {
+      <td>
+        <input
+          [(ngModel)]="data.selected"
+          type="checkbox"
+          class="checkbox checkbox-sm"
+          (change)="toggle($event)"
+        />
+      </td>
+    }
+    @case ("text") {
+      <td>{{ data[column.key] }}</td>
+    }
+    @case ("badge") {
+      <td>
+        @for (item of data[column.key]; track $index) {
+          <span
+            class="rounded-[30px] bg-primary-500/10 px-2 py-0.5 text-xs font-medium text-primary-800 m-[1px]"
           >
-          </svg-icon>
-        </button>
-      </div>
-    </ng-container>
-  </ng-container>
-</td>
+            {{ item }}
+          </span>
+        }
+      </td>
+    }
+    @case ("button") {
+      <td class="flex justify-end gap-2">
+        @for (type of column.actionType; track $index) {
+          <button
+            class="flex items-center justify-center rounded-md h-7 w-7"
+            [ngClass]="{
+              'bg-green-200 text-green-400 dark:bg-green-500 dark:text-green-300':
+                type === 'view',
+              'bg-blue-200 text-blue-400 dark:bg-blue-500 dark:text-blue-300':
+                type === 'update',
+              'bg-red-200 text-red-400 dark:bg-red-500 dark:text-red-300':
+                type === 'delete',
+            }"
+            (click)="handleAction(type)"
+          >
+          <svg-icon
+          [src]="getIconForAction(type)"
+          [svgClass]="'h-5 w-5'"
+        >
+        </svg-icon>
+          </button>
+        }
+      </td>
+    }
+  }
+}

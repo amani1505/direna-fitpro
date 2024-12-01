@@ -12,10 +12,11 @@ import { HeaderColumn } from '@model/TableColumn.interface';
 })
 export class HeaderComponent {
   @Input() columns: HeaderColumn[] = [];
-  @Output() onCheck = new EventEmitter<boolean>();
+  @Input() isAllSelected: boolean = false;
+  @Output() onCheckAll = new EventEmitter<boolean>();
 
-  public toggle(event: Event) {
+  toggle(event: Event) {
     const value = (event.target as HTMLInputElement).checked;
-    this.onCheck.emit(value);
+    this.onCheckAll.emit(value);
   }
 }
