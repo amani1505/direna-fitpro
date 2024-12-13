@@ -9,23 +9,16 @@ export class Menu {
           label: 'Dashboard',
           route: '/admin/',
         },
+        {
+          icon: 'assets/icons/heroicons/solid/chart-pie.svg',
+          label: 'Services',
+          route: '/admin/services',
+        },
 
         {
           icon: 'assets/icons/heroicons/solid/user-group.svg',
           label: 'members',
           route: '/admin/members',
-          // children: [
-          //   {
-          //     icon: 'assets/icons/heroicons/solid/users.svg',
-          //     label: 'New Member',
-          //     route: '/admin/members/add-member',
-          //   },
-          //   {
-          //     icon: 'assets/icons/heroicons/solid/users.svg',
-          //     label: 'Members',
-          //     route: '/admin/members',
-          //   },
-          // ],
         },
         {
           icon: 'assets/icons/heroicons/solid/briefcase.svg',
@@ -50,18 +43,8 @@ export class Menu {
 
         {
           icon: 'assets/icons/heroicons/solid/banknotes.svg',
-          label: 'financial overview',
+          label: 'expense',
           route: '/admin/financials/expenses',
-          children: [
-            {
-              label: 'expense',
-              route: '/admin/financials/expense',
-            },
-            {
-              label: 'revenue',
-              route: '/admin/financials/revenue',
-            },
-          ],
         },
         {
           icon: 'assets/icons/heroicons/solid/chart-bar-square.svg',

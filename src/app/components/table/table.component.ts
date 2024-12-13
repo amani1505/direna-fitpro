@@ -18,6 +18,7 @@ import {
   RowColumn,
   TableActions,
 } from '@model/TableColumn.interface';
+import { ModalComponent } from '@components/modal/modal.component';
 
 @Component({
   selector: 'ListTable',
@@ -29,6 +30,7 @@ import {
     FooterComponent,
     HeaderComponent,
     RowComponent,
+    ModalComponent
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
@@ -46,7 +48,7 @@ export class TableComponent {
   @Input({ required: true }) totalItems: number = 100;
   @Input({ required: true }) currentPage: number = 1;
   @Input({ required: true }) totalPages: number = 10;
-
+  @Input() isModalOpen: boolean = false;
   // Outputs
   @Output() onAdd = new EventEmitter<void>();
   @Output() onCheckAll = new EventEmitter<boolean>();
@@ -96,5 +98,8 @@ export class TableComponent {
 
   onItemsPerPageChange(itemsPerPage: number) {
     this.itemsPerPageChange.emit(itemsPerPage);
+  }
+  closeModal() {
+    this.isModalOpen = false;
   }
 }

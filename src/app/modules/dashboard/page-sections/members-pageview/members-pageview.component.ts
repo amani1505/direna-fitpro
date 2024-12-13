@@ -1,157 +1,65 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalComponent } from '@components/modal/modal.component';
 import { TableComponent } from '@components/table/table.component';
+import { QueryParams } from '@model/QueryParams.interface';
 import {
   HeaderColumn,
   RowColumn,
   TableActions,
 } from '@model/TableColumn.interface';
+import { MemberService } from '@service/modules/member.service';
+import { debounceTime, Subject } from 'rxjs';
 
-export const dummyData: any[] = [
-  {
-    id: 1,
-    name: 'John Doe',
-    age: 30,
-    username: 'johndoe',
-    email: 'john.doe@example.com',
-    phone: '+1-202-555-0156',
-    website: 'johndoe.com',
-    occupation: 'Software Engineer',
-    hobbies: ['coding', 'hiking', 'reading'],
-    selected: true,
-    status: 1,
-    created_at: '2024-10-12T12:34:56Z',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    age: 25,
-    username: 'janesmith',
-    email: 'jane.smith@example.com',
-    phone: '+1-202-555-0123',
-    website: 'janesmith.net',
-    occupation: 'Graphic Designer',
-    hobbies: ['drawing', 'photography', 'travel'],
-    selected: false,
-    status: 1,
-    created_at: '2024-10-14T12:34:56Z',
-  },
-  {
-    id: 3,
-    name: 'Michael Brown',
-    age: 35,
-    username: 'michaelb',
-    email: 'michael.brown@example.com',
-    phone: '+1-202-555-0189',
-    website: 'michaelbrown.me',
-    occupation: 'Data Scientist',
-    hobbies: ['data analysis', 'cycling', 'music'],
-    selected: true,
-    status: 2,
-    created_at: '2024-10-16T12:34:56Z',
-  },
-  {
-    id: 4,
-    name: 'Emily White',
-    age: 28,
-    username: 'emilyw',
-    email: 'emily.white@example.com',
-    phone: '+1-202-555-0147',
-    website: 'emilywhite.org',
-    occupation: 'Marketing Specialist',
-    hobbies: ['writing', 'yoga', 'baking'],
-    selected: false,
-    status: 2,
-    created_at: '2024-10-18T12:34:56Z',
-  },
-  {
-    id: 5,
-    name: 'David Johnson',
-    age: 40,
-    username: 'davidj',
-    email: 'david.johnson@example.com',
-    phone: '+1-202-555-0168',
-    website: 'davidjohnson.co',
-    occupation: 'Product Manager',
-    hobbies: ['innovation', 'gaming', 'finance'],
-    selected: true,
-    status: 1,
-    created_at: '2024-10-20T12:34:56Z',
-  },
-  {
-    id: 6,
-    name: 'Sarah Davis',
-    age: 32,
-    username: 'sarahd',
-    email: 'sarah.davis@example.com',
-    phone: '+1-202-555-0190',
-    website: 'sarahdavis.dev',
-    occupation: 'UI/UX Designer',
-    hobbies: ['design', 'gardening', 'swimming'],
-    selected: false,
-    status: 1,
-    created_at: '2024-10-22T12:34:56Z',
-  },
-  {
-    id: 7,
-    name: 'Chris Lee',
-    age: 29,
-    username: 'chrislee',
-    email: 'chris.lee@example.com',
-    phone: '+1-202-555-0134',
-    website: 'chrislee.io',
-    occupation: 'Mobile Developer',
-    hobbies: ['app development', 'traveling', 'reading'],
-    selected: false,
-    status: 1,
-    created_at: '2024-10-26T12:34:56Z',
-  },
-  {
-    id: 8,
-    name: 'Emma Wilson',
-    age: 27,
-    username: 'emmawilson',
-    email: 'emma.wilson@example.com',
-    phone: '+1-202-555-0175',
-    website: 'emmawilson.tech',
-    occupation: 'DevOps Engineer',
-    hobbies: ['automation', 'gaming', 'blogging'],
-    selected: true,
-    status: 3,
-    created_at: '2024-10-28T12:34:56Z',
-  },
-];
 @Component({
   selector: 'members-pageview',
   standalone: true,
-  imports: [TableComponent],
+  imports: [TableComponent, ModalComponent],
   templateUrl: './members-pageview.component.html',
   styleUrl: './members-pageview.component.scss',
 })
-export class MembersPageviewComponent {
-  data: any[] = dummyData;
+export class MembersPageviewComponent implements OnInit {
+  private _memberService = inject(MemberService);
+  private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
 
-  itemsPerPage: number = 30;
-  totalItems: number = 200;
-  currentPage: number = 4;
-  totalPages: number = 70;
+  isModalOpen: boolean = false;
+
+  currentPage = signal(1);
+  searchTerm = signal('');
+  statusFilter = signal<string>('fullname');
+
+  // Computed data from service
+  members = computed(() => this._memberService.members()?.data || []);
+  totalItems = computed(() => this._memberService.members()?.total_items || 0);
+  totalPages = computed(() => this._memberService.members()?.total_pages || 1);
+  loading = this._memberService.loading;
+
+  // Component configuration
+  itemsPerPage = 10;
 
   headerColumns: HeaderColumn[] = [
     { key: 's/n', type: 's/n', label: 'S/N' },
-    { key: 'name', type: 'text', label: 'Member' },
-    { key: 'username', type: 'text', label: 'Username' },
-    { key: 'hobbies', type: 'text', label: 'Hobbies' },
-    { key: 'occupation', type: 'text', label: 'Occupation' },
-    { key: 'phone', type: 'text', label: 'Phone' },
+    { key: 'fullname', type: 'text', label: 'Member Name' },
+    { key: 'email', type: 'text', label: 'Member Email' },
+    { key: 'gender', type: 'text', label: 'Gender' },
+    { key: 'height', type: 'text', label: 'Weight' },
+    { key: 'weight', type: 'text', label: 'Height' },
+    { key: 'goal', type: 'text', label: 'Goal' },
+    { key: 'isActive', type: 'text', label: 'Status' },
     { key: 'actions', type: 'actions' },
   ];
 
   rowColumns: Array<RowColumn> = [
     { key: 's/n', type: 's/n' },
-    { key: 'name', type: 'text' },
+    { key: 'fullname', type: 'text' },
     { key: 'email', type: 'text' },
-    { key: 'hobbies', type: 'badge' },
-    { key: 'occupation', type: 'text' },
-    { key: 'phone', type: 'text' },
+    { key: 'gender', type: 'text' },
+    { key: 'height', type: 'text' },
+    { key: 'weight', type: 'text' },
+    { key: 'goal', type: 'text' },
+    { key: 'isActive', type: 'status' },
     {
       key: 'action',
       type: 'button',
@@ -159,46 +67,115 @@ export class MembersPageviewComponent {
     },
   ];
 
+  ngOnInit(): void {
+    this._route.queryParams.subscribe((params) => {
+      const queryParams: QueryParams = {
+        page: +params['page'] || 1,
+        limit: +params['limit'] || this.itemsPerPage,
+        sortBy: params['sortBy'] || 'created_at',
+        sortOrder: params['sortOrder'] || 'DESC',
+        search: params['search'] || '',
+        filterBy: params['filterBy'] || 'fullname',
+        withPagination: true,
+      };
+
+      this.currentPage.set(queryParams.page);
+      this.searchTerm.set(queryParams.search || '');
+      this.statusFilter.set(queryParams.filterBy || 'fullname');
+
+      // Fetch members with query params
+      this._memberService.findAll(queryParams);
+
+      this.actions[0].value = queryParams.search || '';
+    });
+  }
+
   actions: TableActions[] = [
     {
       type: 'search',
+      value: this.searchTerm(),
       placeholder: 'Search users',
       action: (event: Event) => {
         const input = event.target as HTMLInputElement;
-        console.log('Search:', input.value);
+        this.searchTerm.set(input.value);
+        this.onSearch(input.value);
       },
     },
     {
       type: 'select',
       options: [
-        { label: 'All', value: 'all' },
-        { label: 'Active', value: 'active' },
-        { label: 'Disabled', value: 'disabled' },
-        { label: 'Pending', value: 'pending' },
+        { label: 'All', value: '' },
+        { label: 'Fullname', value: 'fullname' },
+        { label: 'Email', value: 'email' },
+        { label: 'Goal', value: 'goal' },
       ],
-      placeholder: 'Select Members Status',
-      action: (value: Event | string | null) => {
-        console.log('Status changed to:', value);
+      placeholder: 'Select Members Column',
+      action: (value: string) => {
+        this.onStatusFilterChange(value);
       },
     },
   ];
+
+  onSearch(term: string) {
+    this.updateRouteAndFetch({
+      search: term,
+      page: 1,
+    });
+  }
+
+  // Status filter functionality
+  onStatusFilterChange(status: string) {
+    this.updateRouteAndFetch({
+      filterBy: status,
+      page: 1,
+    });
+  }
+
+  // Pagination methods
+  onPageChange(page: number) {
+    this.updateRouteAndFetch({ page });
+  }
+  onItemPerPageChange(limit: number) {
+    this.updateRouteAndFetch({ limit: limit });
+  }
+
+  private updateRouteAndFetch(params: Partial<QueryParams>) {
+    const queryParams = { ...params };
+
+    Object.keys(queryParams).forEach((key) => {
+      const value = queryParams[key as keyof QueryParams];
+      if (value === '') {
+        (queryParams[key as keyof QueryParams] as any) = null;
+      }
+    });
+
+    this._router.navigate([], {
+      relativeTo: this._route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
 
   toggleUsers(checked: any) {
     console.log('Checked', checked);
   }
   toggleUser(selected: any) {
     console.log('Row', selected);
-    const selectedUsers = this.data.filter((user) => user.selected);
+    // const selectedUsers = this.data.filter((user) => user.selected);
   }
   addNewMember() {
     alert('Member added');
   }
 
-  delete(id: any) {
-    alert(`Member deleted ${id}`);
+  delete() {
+    this.isModalOpen = true;
   }
 
   update(id: any) {
     alert(`Member updated ${id}`);
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
   }
 }

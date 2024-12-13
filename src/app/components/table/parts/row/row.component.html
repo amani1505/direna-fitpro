@@ -1,8 +1,7 @@
-
 @for (column of columns; track column.key) {
   @switch (column.type) {
     @case ("s/n") {
-      <td class="" >{{index}}</td>
+      <td class="">{{ index }}</td>
     }
     @case ("checkbox") {
       <td>
@@ -15,7 +14,37 @@
       </td>
     }
     @case ("text") {
-      <td>{{ data[column.key] }}</td>
+      <td>{{ data[column.key] || "-" }}</td>
+    }
+    @case ("status") {
+      <td class="">
+        <div
+          class="relative inline-flex items-center cursor-pointer"
+          [ngClass]="{
+            'opacity-50': data[column.key] !== true,
+            'opacity-100': data[column.key] === true,
+          }"
+        >
+          <div
+            class="w-10 h-5 transition-colors duration-300 rounded-full"
+            [ngClass]="{
+              'bg-green-500': data[column.key] === true,
+              'bg-red-500': data[column.key] !== true,
+            }"
+          >
+            <div
+              class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-md transition-transform duration-300"
+              [ngClass]="{
+                'translate-x-5': data[column.key] === true,
+                'translate-x-0': data[column.key] !== true,
+              }"
+            ></div>
+          </div>
+          <span class="ml-2 text-xs">
+            {{ data[column.key] === true ? "Active" : "Inactive" }}
+          </span>
+        </div>
+      </td>
     }
     @case ("badge") {
       <td>
@@ -43,14 +72,13 @@
             }"
             (click)="handleAction(type)"
           >
-          <svg-icon
-          [src]="getIconForAction(type)"
-          [svgClass]="'h-5 w-5'"
-        >
-        </svg-icon>
+            <svg-icon [src]="getIconForAction(type)" [svgClass]="'h-5 w-5'">
+            </svg-icon>
           </button>
         }
       </td>
     }
   }
 }
+
+

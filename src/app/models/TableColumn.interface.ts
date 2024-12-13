@@ -1,6 +1,6 @@
 export interface BaseTableColumn {
   key: string;
-  type: 'text' | 'image' | 'badge' | 'button' | 'checkbox' | 'actions' | 's/n';
+  type: 'text' | 'image' | 'badge' | 'button' | 'checkbox' | 'actions' | 's/n' | 'status';
   align?: 'left' | 'center' | 'right';
 }
 
@@ -17,6 +17,7 @@ export interface RowColumn extends BaseTableColumn {
 export interface TableActions {
   type: 'search' | 'select' | 'button';
   label?: string;
+  value?: string
   placeholder?: string;
   options?: Array<{ label: string; value: string }>;
   action: (value: Event | string | null) => void;
