@@ -6,6 +6,7 @@ import {
   Output,
   signal,
   inject,
+  input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +31,7 @@ import { ModalComponent } from '@components/modal/modal.component';
     FooterComponent,
     HeaderComponent,
     RowComponent,
-    ModalComponent
+    ModalComponent,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
@@ -40,6 +41,8 @@ export class TableComponent {
   @Input({ required: true }) totalTitle!: string;
   @Input({ required: true }) totalValue!: number;
   @Input({ required: true }) buttonLabel!: string;
+  @Input({ required: true }) deleteContent!: string;
+  @Input({ required: true }) deleteSubContent!: string;
   @Input({ required: true }) actions: Array<TableActions> = [];
   @Input({ required: true }) data: Array<any> = [];
   @Input({ required: true }) headerColumns: Array<HeaderColumn> = [];
@@ -48,12 +51,14 @@ export class TableComponent {
   @Input({ required: true }) totalItems: number = 100;
   @Input({ required: true }) currentPage: number = 1;
   @Input({ required: true }) totalPages: number = 10;
-  @Input() isModalOpen: boolean = false;
+  isModalOpen = input.required<boolean>();
   // Outputs
   @Output() onAdd = new EventEmitter<void>();
   @Output() onCheckAll = new EventEmitter<boolean>();
   @Output() onCheck = new EventEmitter<boolean>();
   @Output() onDelete = new EventEmitter<void>();
+  @Output() openDeleteModal = new EventEmitter<void>();
+  @Output() closeModalEvent = new EventEmitter<void>();
   @Output() onView = new EventEmitter<void>();
   @Output() onUpdate = new EventEmitter<void>();
   @Output() pageChange = new EventEmitter<number>();
@@ -61,7 +66,9 @@ export class TableComponent {
 
   selectedAll: boolean = false;
 
-  ngOnInit() {}
+  get colSpans(): number {
+    return this.headerColumns.length;
+  }
 
   toggleAll(checked: boolean) {
     this.selectedAll = checked;
@@ -74,8 +81,11 @@ export class TableComponent {
     this.onCheck.emit(checked);
   }
 
-  delete(row: any) {
-    this.onDelete.emit(row);
+  deleteModal(row: any) {
+    this.openDeleteModal.emit(row);
+  }
+  delete() {
+    this.onDelete.emit();
   }
 
   update(row: any) {
@@ -100,6 +110,6 @@ export class TableComponent {
     this.itemsPerPageChange.emit(itemsPerPage);
   }
   closeModal() {
-    this.isModalOpen = false;
+    this.closeModalEvent.emit();
   }
 }

@@ -15,7 +15,7 @@ import { debounceTime, Subject } from 'rxjs';
 @Component({
   selector: 'members-pageview',
   standalone: true,
-  imports: [TableComponent, ModalComponent],
+  imports: [TableComponent],
   templateUrl: './members-pageview.component.html',
   styleUrl: './members-pageview.component.scss',
 })
@@ -24,7 +24,8 @@ export class MembersPageviewComponent implements OnInit {
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
 
-  isModalOpen: boolean = false;
+  isModalOpen = signal<boolean>(false);
+  memberId: string = '';
 
   currentPage = signal(1);
   searchTerm = signal('');
@@ -63,7 +64,7 @@ export class MembersPageviewComponent implements OnInit {
     {
       key: 'action',
       type: 'button',
-      actionType: ['update', 'delete'],
+      actionType: ['view', 'update', 'delete'],
     },
   ];
 
@@ -167,15 +168,18 @@ export class MembersPageviewComponent implements OnInit {
     alert('Member added');
   }
 
+  deleteModal(id: any) {
+    this.memberId = id;
+    this.isModalOpen.set(true);
+  }
   delete() {
-    this.isModalOpen = true;
+    this._memberService.delete(this.memberId);
+    this.isModalOpen.set(false);
   }
 
-  update(id: any) {
-    alert(`Member updated ${id}`);
-  }
+  update(id: any) {}
 
   closeModal() {
-    this.isModalOpen = false;
+    this.isModalOpen.set(false);
   }
 }

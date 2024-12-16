@@ -40,7 +40,7 @@ export class ButtonComponent {
       case 'primary':
         return `${baseClass} border-primary-600 ${this.variant !== 'outlined' ? 'bg-primary-500 hover:bg-primary-600' : 'text-primary-700 hover:bg-primary-600'}`;
       case 'secondary':
-        return `${baseClass} border-secondary-600 ${this.variant !== 'outlined' ? 'bg-secondary-500 hover:bg-secondary-600' : 'text-secondary-700 hover:bg-secondary-600'}`;
+        return `${baseClass} border-secondary-600 ${this.variant !== 'outlined' ? 'bg-secondary-400 hover:bg-secondary-600' : 'text-secondary-700 hover:bg-secondary-600'}`;
       case 'danger':
         return `${baseClass} border-red-600 ${this.variant !== 'outlined' ? 'bg-red-500 hover:bg-red-600' : 'text-red-700 hover:bg-red-600'}`;
       case 'warning':

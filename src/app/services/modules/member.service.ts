@@ -1,10 +1,17 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
+import { DeleteResponse } from '@model/delere-response.interface';
 import { Member } from '@model/member.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
+import { response } from 'express';
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +20,13 @@ export class MemberService {
   private http = inject(HttpClient);
   private _toast = inject(ToastService);
 
-  private _members = signal<PaginationResponse<Member>>(undefined);
+  private _members = signal<PaginationResponse<Member>>({
+    data: [],
+    limit: 0,
+    current_page: 1,
+    total_pages: 0,
+    total_items: 0,
+  });
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
     page: 1,
@@ -53,6 +66,24 @@ export class MemberService {
         error: (error) => {
           this._toast.error(error.error.message);
           this._loading.set(false);
+        },
+      });
+  }
+
+  delete(id: string) {
+    this.http
+      .delete<DeleteResponse>(`${environment.apiUrl}member/jklhnjhjkl`)
+      .subscribe({
+        next: (response) => {
+          console.log(response.message);
+          this._toast.success(response.message);
+          this.findAll();
+        },
+        error: (err: HttpErrorResponse) => {
+          const errorMessage =
+            err.error instanceof ErrorEvent ? err.message : err.error.message;
+
+          this._toast.error(errorMessage);
         },
       });
   }

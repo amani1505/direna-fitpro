@@ -45,14 +45,19 @@
             [data]="row"
             [columns]="rowColumns"
             (onCheck)="toggle($event.checked, row)"
-            (onDelete)="delete(row.id)"
+            (onDelete)="deleteModal(row.id)"
             (onUpdate)="update(row.id)"
             (onView)="view(row.id)"
             class="hover:bg-gray-50"
           ></tr>
         } @empty {
           <tr>
-            <td class="py-4 text-sm text-center" colspan="7">No Data found</td>
+            <td
+              class="py-4 text-sm text-center h-[10rem] bg-gray-50"
+              [attr.colspan]="colSpans"
+            >
+              No Data found
+            </td>
           </tr>
         }
       </tbody>
@@ -69,11 +74,10 @@
 </div>
 
 <Modal
-  [isOpen]="isModalOpen"
+  [isOpen]="isModalOpen()"
   (closeModalEvent)="closeModal()"
   [title]="'Delete Confirmation'"
-  [content]="'Are you sure you want to delete this category?'"
-  [subContent]="
-    'The category might have products that depend on it. If you delete the category, the products will also be deleted.'
-  "
+  [content]="deleteContent"
+  [subContent]="deleteSubContent"
+  (submit)="delete()"
 ></Modal>
