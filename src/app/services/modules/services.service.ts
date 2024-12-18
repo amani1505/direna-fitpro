@@ -1,32 +1,28 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
-import { DeleteResponse } from '@model/delere-response.interface';
-import { Member } from '@model/member.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
+import { Services } from '@model/services.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
-import { response } from 'express';
-import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MemberService {
+export class ServicesService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);
 
-  private _members = signal<PaginationResponse<Member>>({
+  private _services = signal<PaginationResponse<Services>>({
     data: [],
     limit: 0,
     current_page: 1,
     total_pages: 0,
     total_items: 0,
   });
+
+  private _allServices = signal<Array<Services>>([]);
+
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
     page: 1,
@@ -36,7 +32,8 @@ export class MemberService {
     withPagination: true,
   });
 
-  members: Signal<PaginationResponse<Member>> = this._members.asReadonly();
+  services: Signal<PaginationResponse<Services>> = this._services.asReadonly();
+  allServices: Signal<Array<Services>> = this._allServices.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -54,13 +51,12 @@ export class MemberService {
     });
 
     this._http
-      .get<PaginationResponse<Member>>(`${environment.apiUrl}member`, {
+      .get<PaginationResponse<Services>>(`${environment.apiUrl}service`, {
         params: httpParams,
       })
       .subscribe({
         next: (response) => {
-          this._members.set(response);
-
+          this._services.set(response);
           this._loading.set(false);
         },
         error: (error) => {
@@ -70,21 +66,18 @@ export class MemberService {
       });
   }
 
-  delete(id: string) {
-    this._http
-      .delete<DeleteResponse>(`${environment.apiUrl}member/${id}`)
-      .subscribe({
-        next: (response) => {
-          console.log(response.message);
-          this._toast.success(response.message);
-          this.findAll();
-        },
-        error: (err: HttpErrorResponse) => {
-          const errorMessage =
-            err.error instanceof ErrorEvent ? err.message : err.error.message;
+  getAllServices(): void {
+    this._loading.set(true);
 
-          this._toast.error(errorMessage);
-        },
-      });
+    this._http.get<Array<Services>>(`${environment.apiUrl}service`).subscribe({
+      next: (response) => {
+        this._allServices.set(response);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
   }
 }

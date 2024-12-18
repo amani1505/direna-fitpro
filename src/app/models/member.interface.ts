@@ -1,3 +1,5 @@
+import { Services } from './services.interface';
+
 export enum PACKAGETYPES {
   GOLD = 'Gold',
   SILVER = 'Silver',
@@ -14,7 +16,7 @@ export interface Member {
   weight: number;
   height: number;
   goal: string;
-  service: Array<Service>;
+  service: Array<Services>;
   package: PackageInterface;
   workout: WorkoutPlanInterface;
   created_at: Date;
@@ -33,17 +35,7 @@ export interface PackageInterface {
 
 export interface WorkoutPlanInterface {}
 
-export interface Branch{
-  id:string;
-  city:string;
-  country:string;
-  street:string;
-  district:string;
-  house_no:string;
-  road:string;
-  created_at: Date;
-  updated_at: Date;
-}
+
 
 export interface AttendanceInterface {
   id: string;
@@ -57,7 +49,7 @@ export interface Staff {
   fullname: string;
   email: string;
   age: number;
-  service: Service;
+  service: Services;
   created_at: Date;
   updated_at: Date;
 }
@@ -66,7 +58,7 @@ export interface User {
   id: string;
   avatar: string;
   username: string;
-  email:string;
+  email: string;
   password: string;
   role: Array<string>;
   created_at: Date;
@@ -77,13 +69,6 @@ export interface RoleInterface {
   id: string;
   name: string;
   permissions: Array<string>;
-  created_at: Date;
-  updated_at: Date;
-}
-export interface Service {
-  id: string;
-  name: string;
-  description: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -115,7 +100,6 @@ export interface Class {
   updated_at: Date;
 }
 
-
 export interface Expenses {
   id: string;
   title: string;
@@ -126,5 +110,3 @@ export interface Expenses {
   created_at: Date;
   updated_at: Date;
 }
-
-

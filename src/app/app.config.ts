@@ -7,6 +7,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideQuillConfig } from 'ngx-quill/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     importProvidersFrom(AngularSvgIconModule.forRoot()),
     provideHttpClient(withFetch()),
+    provideEnvironmentNgxMask(),
     provideQuillConfig({
       modules: {
         syntax: true,
@@ -29,9 +31,11 @@ export const appConfig: ApplicationConfig = {
           [{ font: [] }],
           [{ align: [] }],
           ['clean'],
-          ['link',]
+          ['link'],
         ],
       },
-    }), provideAnimationsAsync(), provideAnimationsAsync(),
+    }),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
   ],
 };

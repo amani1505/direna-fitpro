@@ -1,14 +1,21 @@
-import { CommonModule, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
   Output,
+  computed,
+  signal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+
+export interface MultiSelectOption {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'MultiSelect',
@@ -20,55 +27,107 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     AngularSvgIconModule,
   ],
   templateUrl: './multi-select.component.html',
-  styleUrl: './multi-select.component.scss',
+  styleUrls: ['./multi-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiSelectComponent {
-  @Input({ required: true }) options: string[] = [];
-  @Output() search: EventEmitter<string> = new EventEmitter<string>();
-  @Input({ required: true }) placeholder: string = 'Select an option';
-  @Output() selectionChange = new EventEmitter<Array<string>>();
+  // Signals for reactive state management
+  private optionsSignal = signal<MultiSelectOption[]>([]);
+  public selectedValuesSignal = signal<string[]>([]);
+  private searchTermSignal = signal('');
 
-  selectedOptions: string[] = [];
-  filteredOptions: string[] = [];
-  dropdownOpen: boolean = false;
-  searchTerm: string = '';
+  // Signals for UI state
+  dropdownOpenSignal = signal(false);
+  isTouchedSignal = signal(false); // Tracks if the field is touched
 
-  ngOnInit() {
-    this.filteredOptions = [...this.options];
+  // Validation Signal
+  isValid = computed(() => this.selectedValuesSignal().length > 0);
+
+  // Computed signals
+  filteredOptions = computed(() => {
+    const options = this.optionsSignal();
+    const searchTerm = this.searchTermSignal().toLowerCase();
+    return options.filter((option) =>
+      option.label.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  selectedOptionDetails = computed(() =>
+    this.selectedValuesSignal().map((selectedValue) =>
+      this.optionsSignal().find((opt) => opt.value === selectedValue)!
+    )
+  );
+
+  @Input({ required: true })
+  set options(value: MultiSelectOption[]) {
+    this.optionsSignal.set(value);
+  }
+  get options(): MultiSelectOption[] {
+    return this.optionsSignal();
+  }
+
+  @Input({ required: true }) placeholder = 'Select an option';
+  @Input({ required: true }) buttonLabel!: string;
+  @Input() canAdd: boolean=false;
+  @Output() selectionChange = new EventEmitter<string[]>();
+  @Output() validationChange = new EventEmitter<boolean>(); // Emit validation status
+  @Output() search = new EventEmitter();
+  @Output() onAdd = new EventEmitter();
+
+  ngOnChanges() {
+    this.validationChange.emit(this.isValid());
   }
 
   toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-    this.searchTerm = '';
-    this.filterOptions();
+    this.isTouchedSignal.set(true); // Mark field as touched on interaction
+    this.dropdownOpenSignal.update((open) => !open);
+    this.searchTermSignal.set('');
   }
 
-  filterOptions() {
-    const lowerSearch = this.searchTerm.toLowerCase();
-    this.filteredOptions = this.options.filter((option) =>
-      option.toLowerCase().includes(lowerSearch),
-    );
+  closeDropdown() {
+    this.dropdownOpenSignal.set(false);
   }
 
-  onSearchChange() {
-    this.search.emit(this.searchTerm);
-    this.filterOptions();
+  onSearchChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const searchTerm = input.value;
+    this.searchTermSignal.set(searchTerm);
+    this.search.emit(searchTerm);
   }
 
-  selectOption(option: string) {
-    if (!this.selectedOptions.includes(option)) {
-      this.selectedOptions.push(option);
-      this.selectionChange.emit(this.selectedOptions);
+  selectOption(option: MultiSelectOption) {
+    const currentSelected = this.selectedValuesSignal();
+    if (!currentSelected.includes(option.value)) {
+      const newSelected = [...currentSelected, option.value];
+      this.selectedValuesSignal.set(newSelected);
+      this.selectionChange.emit(newSelected);
+      this.validationChange.emit(this.isValid());
     }
-    this.filterOptions();
   }
 
-  removeOption(option: string, event: Event) {
+  removeOption(optionValue: string, event: Event) {
     event.stopPropagation();
-    this.selectedOptions = this.selectedOptions.filter(
-      (selected) => selected !== option,
+    const currentSelected = this.selectedValuesSignal();
+    const newSelected = currentSelected.filter(
+      (selected) => selected !== optionValue
     );
-    this.filterOptions();
+    this.selectedValuesSignal.set(newSelected);
+    this.selectionChange.emit(newSelected);
+    this.validationChange.emit(this.isValid());
+  }
+
+  // Submit handler
+  handleSubmit() {
+    this.isTouchedSignal.set(true); // Mark field as touched during submission
+    this.validationChange.emit(this.isValid());
+    if (!this.isValid()) {
+      console.error('Form submission blocked: Validation failed');
+    } else {
+      console.log('Form submitted successfully!');
+    }
+  }
+
+  add() {
+    this.onAdd.emit();
   }
 }

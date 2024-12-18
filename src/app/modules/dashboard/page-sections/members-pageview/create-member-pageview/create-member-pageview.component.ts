@@ -1,12 +1,114 @@
-import { Component } from '@angular/core';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { Component, computed, inject, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { MultiSelectComponent } from '@components/select/multi-select/multi-select.component';
+import { SeachableSelectComponent } from '@components/select/seachable-select/seachable-select.component';
+import { BranchesService } from '@service/modules/branches.service';
+import { ServicesService } from '@service/modules/services.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'create-member-pageview',
   standalone: true,
-  imports: [],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    NgIf,
+    NgxMaskDirective,
+    MultiSelectComponent,
+    AngularSvgIconModule,
+    SeachableSelectComponent,
+  ],
+  providers: [provideNgxMask()],
   templateUrl: './create-member-pageview.component.html',
-  styleUrl: './create-member-pageview.component.scss'
+  styleUrl: './create-member-pageview.component.scss',
 })
-export class CreateMemberPageviewComponent {
+export class CreateMemberPageviewComponent implements OnInit {
+  private readonly _formBuilder = inject(FormBuilder);
+  private readonly _router = inject(Router);
+  private _servicesService = inject(ServicesService);
+  private _branchesService = inject(BranchesService);
 
+  options = [
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+    { label: 'Option 3', value: '3' },
+  ];
+
+  services = computed(() => this._servicesService.allServices() || []);
+  branches = computed(() => this._branchesService.allBranches() || []);
+  submitted = false;
+  selectedServices: Array<string> = [];
+
+  memberForm = this._formBuilder.group({
+    fullname: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', Validators.required],
+    branchId: [''],
+    gender: ['', Validators.required],
+    age: [0],
+    weight: ['', Validators.required],
+    height: [''],
+    goal: ['', Validators.required],
+  });
+
+  ngOnInit(): void {
+    this._servicesService.getAllServices();
+    this._branchesService.getAllBranches();
+  }
+
+  transformToMultiSelectOptions = (
+    apiData: Array<any>,
+  ): Array<{ label: string; value: string }> => {
+    return apiData.map((item) => ({
+      label: item.name,
+      value: item.id,
+    }));
+  };
+
+  transformToSelectOptions = (
+    apiData: Array<any>,
+  ): Array<{ label: string; value: string }> => {
+    return apiData.map((item) => ({
+      label: item.road,
+      value: item.id,
+    }));
+  };
+
+  onValidationChange(isValid: boolean) {
+    // console.log('Is valid:', isValid);
+  }
+
+  selectService(ids: any) {
+    this.selectedServices = ids;
+  }
+  selectBranch(id: any) {
+    console.log('Select', id);
+  }
+
+  onSubmit() {
+    this.submitted = true;
+
+    const data = {
+      serviceIds: this.selectedServices,
+      ...this.memberForm.value,
+    };
+    console.log('Form data:', data);
+
+    // stop here if form is invalid
+    if (this.memberForm.invalid) {
+      return;
+    }
+
+    this._router.navigate(['/']);
+  }
 }

@@ -1,12 +1,15 @@
-<div class="relative inline-block text-left w-full">
+<div class="relative inline-block w-full text-left">
   <!-- Dropdown Button -->
   <button
     (click)="toggleDropdown()"
-    class="inline-flex justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 cursor-pointer"
+    clickOutside
+    (clickOutside)="closeDropdown()"
+    class="inline-flex justify-between w-full gap-1 px-4 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-primary-500"
   >
-    <span class="text-gray-400">{{ selectedOption || placeholder }}</span>
+    <span class="text-gray-400">
+      {{ selectedOptionDetail()?.label || placeholder }}
+    </span>
     <svg-icon
-   
       src="assets/icons/heroicons/solid/chevron-right.svg"
       [svgClass]="'h-4 w-4'"
     ></svg-icon>
@@ -14,33 +17,67 @@
 
   <!-- Dropdown Menu -->
   <div
-    *ngIf="dropdownOpen"
-    class="absolute right-0 z-10 w-full mt-1 md:mt-2 origin-top-right bg-white border border-gray-200 rounded-md shadow p-2 transition ease-out duration-300 delay-300"
+    *ngIf="dropdownOpenSignal()"
+    class="absolute z-10 w-full p-2 mt-1 bg-white border border-gray-200 rounded-md shadow"
   >
     <!-- Search Input -->
     <input
       type="text"
-      [(ngModel)]="searchTerm"
-      (keyup)="onSearchChange()"
       placeholder="Search..."
-      class="w-full px-4 py-2 text-sm border-b border-gray-200 focus:outline-none sticky top-0 bg-white z-20"
+      class="w-full px-4 py-2 mb-2 text-sm border border-gray-200 rounded focus:outline-none"
+      (input)="onSearchChange($event)"
+      (click)="$event.stopPropagation()"
     />
-    <div class="py-2 max-h-40 overflow-y-auto mt-1 md:mt-2 has-scrollbar">
-      @if (filterOptions().length > 0) {
-        <a
-          *ngFor="let option of filterOptions()"
-          (click)="selectOption(option)"
-          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded"
-        >
-          {{ option }}
-        </a>
-      } @else {
-        <div
-          class="block px-4 py-2 text-sm text-gray-700 bg-gray-100 text-center rounded"
-        >
-          there are is no any option
-        </div>
-      }
+
+    <!-- Options -->
+    <div *ngIf="filteredOptions().length > 0; else noOptions">
+      <div
+        *ngFor="let option of filteredOptions()"
+        (click)="selectOption(option)"
+        class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+      >
+        {{ option.label }}
+      </div>
     </div>
+    <ng-template #noOptions>
+      <div class="px-4 py-2 text-sm text-center text-gray-500">
+        No options available
+      </div>
+    </ng-template>
+
+    @if (canAdd) {
+      <div>
+        <button
+          (click)="add()"
+          class="w-full flex rounded-md bg-gray-200 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-300 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 capitalize justify-center items-center gap-2"
+        >
+          <div>
+            <svg-icon
+              src="./assets/icons/heroicons/solid/plus-circle.svg"
+              [svgClass]="'w-4 h-4'"
+              class="inline-block"
+            >
+            </svg-icon>
+          </div>
+          <div>{{ buttonLabel }}</div>
+        </button>
+      </div>
+    }
   </div>
+
+  <!-- Validation Error -->
+  <div
+    class="mt-1 text-sm text-red-600"
+    *ngIf="isTouchedSignal() && !isValid()"
+  >
+    Please select an option.
+  </div>
+
+  <!-- Submit Button -->
+  <!-- <button
+    (click)="handleSubmit()"
+    class="px-4 py-2 mt-3 text-white bg-blue-500 rounded"
+  >
+    Submit
+  </button> -->
 </div>
