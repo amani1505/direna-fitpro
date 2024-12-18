@@ -165,7 +165,7 @@ export class MembersPageviewComponent implements OnInit {
     // const selectedUsers = this.data.filter((user) => user.selected);
   }
   addNewMember() {
-    alert('Member added');
+    this._router.navigate(['add'], { relativeTo: this._route });
   }
 
   deleteModal(id: any) {
@@ -177,7 +177,12 @@ export class MembersPageviewComponent implements OnInit {
     this.isModalOpen.set(false);
   }
 
-  update(id: any) {}
+  update(id: any) {
+    this._router.navigate(['edit', id], { relativeTo: this._route });
+  }
+  view(id: any) {
+    this._router.navigate([id], { relativeTo: this._route });
+  }
 
   closeModal() {
     this.isModalOpen.set(false);
