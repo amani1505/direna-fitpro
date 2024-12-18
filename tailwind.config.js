@@ -48,6 +48,7 @@ module.exports = {
         },
       },
       fontFamily: {
+        poppins: ["Poppins", "system-ui", "sans-serif"],
         "pt-serif": ["PT Serif", "serif"],
         montserrat: ["Montserrat", "sans-serif"],
         raleway: ["Raleway"],

@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<div [ngClass]="{ dark: this.themeService.isDark }">
+  <router-outlet></router-outlet>
+  <!-- <app-responsive-helper></app-responsive-helper> -->
+</div>

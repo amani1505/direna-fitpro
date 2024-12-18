@@ -10,7 +10,12 @@ export class Menu {
           route: '/admin/',
         },
         {
-          icon: 'assets/icons/heroicons/solid/chart-pie.svg',
+          icon: 'assets/icons/heroicons/solid/building-office-2.svg',
+          label: 'Branches',
+          route: '/admin/branches',
+        },
+        {
+          icon: 'assets/icons/heroicons/solid/wrench-screwdriver.svg',
           label: 'Services',
           route: '/admin/services',
         },
