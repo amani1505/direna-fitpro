@@ -1,0 +1,37 @@
+<ReusableModal [isOpen]="isModalOpen" [config]="modalConfig">
+  <!-- Custom header -->
+  <ng-container modalHeader>
+    <h2
+      class="text-xl font-semibold text-gray-700 font-rubik dark:text-night-50 ms-2"
+    >
+      Add New Branch
+    </h2>
+  </ng-container>
+
+  <!-- Modal content -->
+  <div>
+    <div class="mb-3 form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Title</label
+        >
+        <input
+          type="text"
+          id="fullname"
+          class="block text-md peer input-field"
+          placeholder="Enter Fullname "
+          required
+        />
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Description</label
+        >
+        <textarea rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+</ReusableModal>

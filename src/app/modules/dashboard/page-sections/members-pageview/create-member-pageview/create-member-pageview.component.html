@@ -127,6 +127,7 @@
         (selectionChange)="selectService($event)"
         (validationChange)="onValidationChange($event)"
         [canAdd]="true"
+        (onAdd)="openServiceModal()"
         [buttonLabel]="'Add New Service'"
       ></MultiSelect>
     </div>
@@ -138,6 +139,7 @@
         [options]="transformToSelectOptions(branches())"
         (selectionChange)="selectBranch($event)"
         [canAdd]="true"
+        (onAdd)="openBranchModal()"
         [buttonLabel]="'Add New Branch'"
       ></SeachableSelect>
     </div>
@@ -253,3 +255,6 @@
     </button>
   </div>
 </form>
+<add-service-modal [isModalOpen]="isServiceModalOpen"></add-service-modal>
+<add-branch-modal [isModalOpen]="isBranchModalOpen"></add-branch-modal>
+

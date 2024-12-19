@@ -13,6 +13,8 @@ import { BranchesService } from '@service/modules/branches.service';
 import { ServicesService } from '@service/modules/services.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { AddServiceModalComponent } from '../../services-pageview/add-service-modal/add-service-modal.component';
+import { AddBranchModalComponent } from '../../branch-pageview/add-branch-modal/add-branch-modal.component';
 
 @Component({
   selector: 'create-member-pageview',
@@ -27,6 +29,8 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     MultiSelectComponent,
     AngularSvgIconModule,
     SeachableSelectComponent,
+    AddServiceModalComponent,
+    AddBranchModalComponent,
   ],
   providers: [provideNgxMask()],
   templateUrl: './create-member-pageview.component.html',
@@ -38,15 +42,11 @@ export class CreateMemberPageviewComponent implements OnInit {
   private _servicesService = inject(ServicesService);
   private _branchesService = inject(BranchesService);
 
-  options = [
-    { label: 'Option 1', value: '1' },
-    { label: 'Option 2', value: '2' },
-    { label: 'Option 3', value: '3' },
-  ];
-
   services = computed(() => this._servicesService.allServices() || []);
   branches = computed(() => this._branchesService.allBranches() || []);
   submitted = false;
+  isServiceModalOpen = false;
+  isBranchModalOpen = false;
   selectedServices: Array<string> = [];
 
   memberForm = this._formBuilder.group({
@@ -93,6 +93,12 @@ export class CreateMemberPageviewComponent implements OnInit {
   }
   selectBranch(id: any) {
     console.log('Select', id);
+  }
+  openServiceModal() {
+    this.isServiceModalOpen = true;
+  }
+  openBranchModal() {
+    this.isBranchModalOpen = true;
   }
 
   onSubmit() {

@@ -1,0 +1,61 @@
+<div *ngIf="isOpen" class="fixed inset-0 z-50 flex items-center justify-center px-5 md:px-0">
+  <div
+    (click)="config.closeOnOverlayClick ? closeModal() : null"
+    class="fixed inset-0 duration-300 ease-in bg-gray-900 bg-opacity-50 dark:bg-gray-100 dark:bg-opacity-15">
+  </div>
+
+  <div
+    @modalAnimation
+    [ngClass]="[
+      'z-10 bg-white rounded-lg shadow-lg dark:bg-night-700 w-full',
+      getSizeClass(),
+      config.customClass
+    ]">
+
+    <div *ngIf="config.showHeader !== false" class="flex gap-2 px-4 pt-3 border-b">
+      <ng-content select="[modalHeader]">
+        <h2 class="text-xl font-semibold text-gray-700 font-rubik dark:text-night-50">
+          {{ config.title }}
+        </h2>
+      </ng-content>
+    </div>
+
+    <div class="p-6">
+      <ng-content></ng-content>
+    </div>
+
+    <div *ngIf="config.showFooter !== false" class="flex items-center justify-end gap-3 p-3 border-t">
+      <ng-content select="[modalFooter]">
+        <Button
+          size="medium"
+          color="danger"
+          (onClick)="closeModal()"
+          [rounded]="true">
+          {{ config.cancelLabel || 'Cancel' }}
+        </Button>
+
+        <Button
+          size="medium"
+          color="secondary"
+          (onClick)="save()"
+          [rounded]="true"
+          [disabled]="loading">
+          <svg
+            *ngIf="loading"
+            class="w-5 h-5 mr-3 -ml-1 text-center animate-spin text-primary-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          <span *ngIf="!loading">{{ config.submitLabel || 'Submit' }}</span>
+        </Button>
+      </ng-content>
+    </div>
+  </div>
+</div>
