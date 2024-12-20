@@ -255,6 +255,8 @@
     </button>
   </div>
 </form>
-<add-service-modal [isModalOpen]="isServiceModalOpen"></add-service-modal>
-<add-branch-modal [isModalOpen]="isBranchModalOpen"></add-branch-modal>
-
+<add-service-modal
+  [isModalOpen]="isServiceModalOpen()"
+  (onCancel)="closeServiceModal()"
+></add-service-modal>
+<add-branch-modal [isModalOpen]="isBranchModalOpen()"   (onCancel)="closeBranchModal()"></add-branch-modal>

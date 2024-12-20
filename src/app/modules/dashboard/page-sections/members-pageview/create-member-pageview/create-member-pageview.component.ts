@@ -1,5 +1,5 @@
 import { CommonModule, NgClass, NgIf } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -45,8 +45,10 @@ export class CreateMemberPageviewComponent implements OnInit {
   services = computed(() => this._servicesService.allServices() || []);
   branches = computed(() => this._branchesService.allBranches() || []);
   submitted = false;
-  isServiceModalOpen = false;
-  isBranchModalOpen = false;
+
+  isServiceModalOpen = signal<boolean>(false);
+  isBranchModalOpen = signal<boolean>(false);
+
   selectedServices: Array<string> = [];
 
   memberForm = this._formBuilder.group({
@@ -95,10 +97,16 @@ export class CreateMemberPageviewComponent implements OnInit {
     console.log('Select', id);
   }
   openServiceModal() {
-    this.isServiceModalOpen = true;
+    this.isServiceModalOpen.set(true)
+  }
+  closeServiceModal() {
+    this.isServiceModalOpen.set(false)
   }
   openBranchModal() {
-    this.isBranchModalOpen = true;
+    this.isBranchModalOpen.set(true)
+  }
+  closeBranchModal() {
+    this.isBranchModalOpen.set(false)
   }
 
   onSubmit() {

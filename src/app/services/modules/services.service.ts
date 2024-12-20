@@ -80,4 +80,24 @@ export class ServicesService {
       },
     });
   }
+  create(type: string, data: { name: string; description: string }) {
+    this._loading.set(true);
+
+    this._http.post<Services>(`${environment.apiUrl}service`, data).subscribe({
+      next: (response) => {
+        this._toast.success('Service created successfully.');
+        if (type === 'findAll') {
+          this.findAll();
+          this._loading.set(false);
+        } else if (type === 'getAll') {
+          this.getAllServices();
+          this._loading.set(false);
+        }
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
+  }
 }

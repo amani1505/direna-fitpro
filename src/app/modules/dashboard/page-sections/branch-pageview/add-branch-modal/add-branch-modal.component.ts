@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { ReusableModalComponent } from '@components/modal/reusable-modal/reusable-modal.component';
 import { ModalConfig } from '@model/modal-config.interface';
 
@@ -10,7 +10,9 @@ import { ModalConfig } from '@model/modal-config.interface';
   styleUrl: './add-branch-modal.component.scss',
 })
 export class AddBranchModalComponent {
-  @Input({ required: true }) isModalOpen: boolean = false;
+  isModalOpen = input.required<boolean>();
+
+  @Output() onCancel = new EventEmitter<number>();
 
   modalConfig: ModalConfig = {
     title: 'Confirm Action',
@@ -21,5 +23,9 @@ export class AddBranchModalComponent {
     customClass: 'my-custom-modal',
   };
 
+  submit() {}
 
+  cancel() {
+  this.onCancel.emit()
+  }
 }
