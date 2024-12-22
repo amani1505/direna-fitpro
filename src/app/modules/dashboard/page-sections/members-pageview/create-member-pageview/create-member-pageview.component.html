@@ -8,13 +8,16 @@
     <div class="form__group">
       <div class="relative">
         <label class="block mb-1 text-sm font-medium text-gray-700"
-          >Fullname</label
-        >
+          >Fullname
+          <span class="text-[#e11d48]">*</span>
+        </label>
         <input
           type="text"
           id="fullname"
           [ngClass]="{
-            'is__invalid-input': submitted && memberForm['fullname'].errors,
+            'is__invalid-input': memberForm
+              .get('fullname')
+              .hasError('required'),
           }"
           class="block text-md peer input-field"
           placeholder="Enter Fullname "
@@ -22,48 +25,55 @@
           required
         />
       </div>
+
       <div
-        *ngIf="submitted && memberForm['fullname'].hasError('required')"
+        *ngIf="memberForm.get('fullname').hasError('required')"
         class="is__invalid-error"
       >
-        <div *ngIf="memberForm['fullname'].hasError('required')">
-          Fullname is Required
-        </div>
+        Fullname is Required
       </div>
     </div>
 
     <div class="form__group">
       <div class="relative">
         <label class="block mb-1 text-sm font-medium text-gray-700"
-          >Email</label
-        >
+          >Email
+          <span class="text-[#e11d48]">*</span>
+        </label>
         <input
           type="email"
           id="email"
           [ngClass]="{
-            'is__invalid-input': submitted && memberForm['email'].error,
+            'is__invalid-input':
+              memberForm.get('email').hasError('required') ||
+              memberForm.get('email').hasError('email'),
           }"
           class="block text-md peer input-field"
           placeholder="direna@mail.com "
           formControlName="email"
         />
       </div>
+
       <div
-        *ngIf="submitted && memberForm['email'].error"
+        *ngIf="memberForm.get('email').hasError('required')"
         class="is__invalid-error"
       >
-        <div *ngIf="memberForm['email'].error['required']">Required field</div>
-        <div *ngIf="memberForm['email'].error['email']">
-          Email must be an email address valid
-        </div>
+        Email is required
+      </div>
+      <div
+        *ngIf="memberForm.get('email').hasError('email')"
+        class="is__invalid-error"
+      >
+        Email must be an email address valid
       </div>
     </div>
 
     <div class="form__group">
       <div class="relative">
         <label class="block mb-1 text-sm font-medium text-gray-700"
-          >Phone Number</label
-        >
+          >Phone Number
+          <span class="text-[#e11d48]">*</span>
+        </label>
         <input
           type="text"
           id="phone"
@@ -72,22 +82,31 @@
           [showMaskTyped]="true"
           [validation]="true"
           [ngClass]="{
-            'is__invalid-input': submitted && memberForm['phone'].error,
+            'is__invalid-input': memberForm.get('phone').hasError('required'),
           }"
           class="block text-md peer input-field"
           formControlName="phone"
         />
       </div>
-      <!-- <div
-        *ngIf="submitted && memberForm['phone'].error"
+
+      <div
+        *ngIf="memberForm.get('phone').hasError('required')"
         class="is__invalid-error"
       >
-        <div *ngIf="memberForm['phone'].error['required']">Required field</div>
-      </div> -->
+        Phone number is required
+      </div>
+      <div
+        *ngIf="memberForm.get('phone').hasError('mask')"
+        class="is__invalid-error"
+      >
+        Fill all inputs for the phone number
+      </div>
     </div>
 
     <div class="form__group">
-      <label class="block text-sm font-medium text-gray-700">Gender</label>
+      <label class="block text-sm font-medium text-gray-700"
+        >Gender <span class="text-[#e11d48]">*</span></label
+      >
       <div class="mt-2 space-x-4">
         <label class="inline-flex items-center">
           <input
@@ -108,18 +127,17 @@
           <span class="ml-2">Female</span>
         </label>
       </div>
+
       <div
-        *ngIf="submitted && memberForm.get('gender')?.errors"
+        *ngIf="memberForm.get('gender').hasError('required')"
         class="is__invalid-error"
       >
-        <div *ngIf="memberForm.get('gender')?.errors?.['required']">
-          Please select a gender
-        </div>
+        Please select a gender
       </div>
     </div>
     <div class="form__group">
       <label class="block mb-1 text-sm font-medium text-gray-700"
-        >Services</label
+        >Services<span class="text-[#e11d48]">*</span></label
       >
       <MultiSelect
         [placeholder]="'Select the Services'"
@@ -133,7 +151,9 @@
     </div>
 
     <div class="form__group">
-      <label class="block mb-1 text-sm font-medium text-gray-700">Branch</label>
+      <label class="block mb-1 text-sm font-medium text-gray-700"
+        >Branch<span class="text-[#e11d48]">*</span></label
+      >
       <SeachableSelect
         [placeholder]="'Select Branch'"
         [options]="transformToSelectOptions(branches())"
@@ -147,29 +167,28 @@
     <div class="form__group">
       <div class="relative">
         <label class="block mb-1 text-sm font-medium text-gray-700"
-          >Weight</label
+          >Weight <span class="text-[#e11d48]">*</span></label
         >
         <input
           type="text"
           id="weight"
           suffix=" kg"
           mask="0000"
-          [validation]="true"
+          [validation]="false"
           [ngClass]="{
-            'is__invalid-input': submitted && memberForm['weight'].error,
+            'is__invalid-input': memberForm.get('weight').hasError('required'),
           }"
           class="block text-md peer input-field"
           placeholder="Enter the weight"
           formControlName="weight"
         />
       </div>
+
       <div
-        *ngIf="submitted && memberForm['weight'].errors"
+        *ngIf="memberForm.get('weight').hasError('required')"
         class="is__invalid-error"
       >
-        <div *ngIf="memberForm['weight'].errors['required']">
-          Weight field is Required
-        </div>
+        Weight field is Required
       </div>
     </div>
 
@@ -179,19 +198,10 @@
         <input
           type="number"
           id="age"
-          [ngClass]="{
-            'is__invalid-input': submitted && memberForm['age'].error,
-          }"
           class="block text-md peer input-field"
           formControlName="age"
         />
       </div>
-      <!-- <div
-        *ngIf="submitted && memberForm['phone'].error"
-        class="is__invalid-error"
-      >
-        <div *ngIf="memberForm['phone'].error['required']">Required field</div>
-      </div> -->
     </div>
 
     <div class="form__group">
@@ -205,9 +215,6 @@
           suffix=" cm"
           mask="0000"
           [validation]="true"
-          [ngClass]="{
-            'is__invalid-input': submitted && memberForm['height'].error,
-          }"
           class="block text-md peer input-field"
           placeholder="Enter Height "
           formControlName="height"
@@ -216,42 +223,78 @@
     </div>
     <div class="form__group">
       <div class="relative">
-        <label class="block mb-1 text-sm font-medium text-gray-700">Goal</label>
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Goal <span class="text-[#e11d48]">*</span></label
+        >
         <input
           type="text"
           id="goal"
           [ngClass]="{
-            'is__invalid-input': submitted && memberForm['goal'].error,
+            'is__invalid-input': memberForm.get('goal').hasError('required'),
           }"
           class="block text-md peer input-field"
           placeholder="Enter Goal "
           formControlName="goal"
         />
       </div>
+
       <div
-        *ngIf="submitted && memberForm['goal'].error"
+        *ngIf="memberForm.get('goal').hasError('required')"
         class="is__invalid-error"
       >
-        <div *ngIf="memberForm['goal'].error['required']">
-          Goal Field is Required
-        </div>
+        Goal Field is Required
       </div>
     </div>
   </div>
   <div class="flex items-center justify-end gap-3 p-3">
     <button
-      type="submit"
-      (click)="onSubmit()"
+      (click)="cancel()"
       class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
     >
       Cancel
     </button>
     <button
       type="submit"
-      (click)="onSubmit()"
-      class="px-5 py-2 text-white bg-green-500 rounded-lg font-[500] hover:bg-green-700"
+      [disabled]="
+        memberForm.invalid ||
+        memberLoading() ||
+        selectedServices.length === 0 ||
+        !selectedBranch
+      "
+      (click)="submit()"
+      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      [ngClass]="{
+        'bg-green-500 hover:bg-green-700':
+          !memberForm.invalid && !memberLoading(),
+        'bg-gray-300':
+          memberForm.invalid ||
+          memberLoading() ||
+          selectedServices.length === 0 ||
+          !selectedBranch,
+      }"
     >
-      Add
+      <svg
+        *ngIf="memberLoading()"
+        class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      {{ memberLoading() ? "Submitting..." : "Submit" }}
     </button>
   </div>
 </form>
@@ -259,4 +302,7 @@
   [isModalOpen]="isServiceModalOpen()"
   (onCancel)="closeServiceModal()"
 ></add-service-modal>
-<add-branch-modal [isModalOpen]="isBranchModalOpen()"   (onCancel)="closeBranchModal()"></add-branch-modal>
+<add-branch-modal
+  [isModalOpen]="isBranchModalOpen()"
+  (onCancel)="closeBranchModal()"
+></add-branch-modal>

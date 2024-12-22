@@ -87,4 +87,22 @@ export class MemberService {
         },
       });
   }
+
+  create(data: any): Observable<any> {
+    this._loading.set(true);
+
+    return this._http.post<any>(`${environment.apiUrl}member`, data).pipe(
+      map((response) => {
+        this._toast.success('Member created successfully.');
+        this.findAll();
+        this._loading.set(false);
+        return response;
+      }),
+      catchError((error) => {
+        this._loading.set(false);
+        this._toast.error(error.error.message);
+        throw error; // Re-throw the error to be handled by the component
+      }),
+    );
+  }
 }
