@@ -81,4 +81,35 @@ export class BranchesService {
       },
     });
   }
+
+  create(
+    type: string,
+    data: {
+      city: string;
+      country: string;
+      street: string;
+      district: string;
+      house_no: string;
+      road: string;
+    },
+  ) {
+    this._loading.set(true);
+
+    this._http.post<Branch>(`${environment.apiUrl}branch`, data).subscribe({
+      next: (response) => {
+        this._toast.success('branch created successfully.');
+        if (type === 'findAll') {
+          this.findAll();
+          this._loading.set(false);
+        } else if (type === 'getAll') {
+          this.getAllBranches();
+          this._loading.set(false);
+        }
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
+  }
 }

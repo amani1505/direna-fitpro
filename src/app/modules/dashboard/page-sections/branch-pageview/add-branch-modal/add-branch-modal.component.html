@@ -2,7 +2,6 @@
   [isOpen]="isModalOpen()"
   [config]="modalConfig"
   (closeModalEvent)="cancel()"
-  (submit)="submit()"
 >
   <!-- Custom header -->
   <ng-container modalHeader>
@@ -15,31 +14,212 @@
 
   <!-- Modal content -->
   <ng-container modalContent>
-    <div>
+    <form [formGroup]="createBranchForm">
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-1 text-sm font-medium text-gray-700"
-            >Title</label
-          >
+          <label class="block mb-2 text-sm font-medium text-gray-700"
+            >Branch City
+            <span class="text-[#e11d48]">*</span>
+          </label>
           <input
             type="text"
-            id="fullname"
+            id="city"
             class="block text-md peer input-field"
-            placeholder="Enter Fullname "
-            required
+            placeholder="Enter Branch Name "
+            [ngClass]="{
+              'is__invalid-input': createBranchForm
+                .get('city')
+                .hasError('required'),
+            }"
+            formControlName="city"
           />
         </div>
-      </div>
-
-      <div class="form__group">
-        <div class="relative">
-          <label class="block mb-1 text-sm font-medium text-gray-700"
-            >Description</label
-          >
-          <textarea rows="3"></textarea>
+        <div
+          *ngIf="createBranchForm.get('city').hasError('required')"
+          class="is__invalid-error"
+        >
+          Branch city is Required
         </div>
       </div>
+
+      <div class="mb-3 form__group">
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-700"
+            >Branch Country
+            <span class="text-[#e11d48]">*</span>
+          </label>
+          <input
+            type="text"
+            id="city"
+            class="block text-md peer input-field"
+            placeholder="Enter Branch Name "
+            [ngClass]="{
+              'is__invalid-input': createBranchForm
+                .get('country')
+                .hasError('required'),
+            }"
+            formControlName="country"
+          />
+        </div>
+        <div
+          *ngIf="createBranchForm.get('country').hasError('required')"
+          class="is__invalid-error"
+        >
+          Branch country is Required
+        </div>
+      </div>
+
+      <div class="mb-3 form__group">
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-700"
+            >Branch Street
+            <span class="text-[#e11d48]">*</span>
+          </label>
+          <input
+            type="text"
+            id="city"
+            class="block text-md peer input-field"
+            placeholder="Enter Branch Street "
+            [ngClass]="{
+              'is__invalid-input': createBranchForm
+                .get('street')
+                .hasError('required'),
+            }"
+            formControlName="street"
+          />
+        </div>
+        <div
+          *ngIf="createBranchForm.get('street').hasError('required')"
+          class="is__invalid-error"
+        >
+          Branch street is Required
+        </div>
+      </div>
+
+      <div class="mb-3 form__group">
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-700"
+            >Branch district
+            <span class="text-[#e11d48]">*</span>
+          </label>
+          <input
+            type="text"
+            id="city"
+            class="block text-md peer input-field"
+            placeholder="Enter Branch district "
+            [ngClass]="{
+              'is__invalid-input': createBranchForm
+                .get('district')
+                .hasError('required'),
+            }"
+            formControlName="district"
+          />
+        </div>
+        <div
+          *ngIf="createBranchForm.get('district').hasError('required')"
+          class="is__invalid-error"
+        >
+          Branch district is Required
+        </div>
+      </div>
+
+      <div class="mb-3 form__group">
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-700"
+            >Road
+            <span class="text-[#e11d48]">*</span>
+          </label>
+          <input
+            type="text"
+            id="city"
+            class="block text-md peer input-field"
+            placeholder="Enter Branch road "
+            [ngClass]="{
+              'is__invalid-input': createBranchForm
+                .get('road')
+                .hasError('required'),
+            }"
+            formControlName="road"
+          />
+        </div>
+        <div
+          *ngIf="createBranchForm.get('road').hasError('required')"
+          class="is__invalid-error"
+        >
+          road is Required
+        </div>
+      </div>
+      <div class="mb-3 form__group">
+        <div class="relative">
+          <label class="block mb-2 text-sm font-medium text-gray-700"
+            >Branch House No
+            <span class="text-[#e11d48]">*</span>
+          </label>
+          <input
+            type="text"
+            id="city"
+            class="block text-md peer input-field"
+            placeholder="Enter Branch House No "
+            [ngClass]="{
+              'is__invalid-input': createBranchForm
+                .get('house_no')
+                .hasError('required'),
+            }"
+            formControlName="house_no"
+          />
+        </div>
+        <div
+          *ngIf="createBranchForm.get('house_no').hasError('required')"
+          class="is__invalid-error"
+        >
+          Branch House No is Required
+        </div>
+      </div>
+    </form>
+  </ng-container>
+  <ng-container modalFooter>
+    <div class="flex items-center justify-end gap-3 p-3">
+      <button
+        type="submit"
+        (click)="cancel()"
+        class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="createBranchForm.invalid || loading()"
+        (click)="submit()"
+        class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+        [ngClass]="{
+          'bg-green-500 hover:bg-green-700':
+            !createBranchForm.invalid && !loading(),
+          'bg-gray-300': createBranchForm.invalid || loading(),
+        }"
+      >
+        <svg
+          *ngIf="loading()"
+          class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        {{ loading() ? "Submitting..." : "Submit" }}
+      </button>
     </div>
   </ng-container>
-
 </ReusableModal>

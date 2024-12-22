@@ -20,7 +20,7 @@
           <label class="block mb-2 text-sm font-medium text-gray-700"
             >Title
             <span
-              ngClass="{'text-[#e11d48]' :  createServiceForm.get('name').hasError('required')}"
+            class="text-[#e11d48]"
               >*</span
             >
           </label>
@@ -31,7 +31,7 @@
             placeholder="Enter service name "
             [ngClass]="{
               'is__invalid-input': createServiceForm
-                .get('description')
+                .get('name')
                 .hasError('required'),
             }"
             formControlName="name"
@@ -51,8 +51,7 @@
             >Description
 
             <span
-              ngClass="{'text-[#e11d48]' :  createServiceForm.get('name').hasError('required')}"
-              >*</span
+            class="text-[#e11d48]">*</span
             >
           </label>
           <textarea
