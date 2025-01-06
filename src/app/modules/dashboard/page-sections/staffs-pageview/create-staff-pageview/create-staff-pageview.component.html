@@ -1,1 +1,198 @@
-<p>create-staff-pageview works!</p>
+<form [formGroup]="staffForm">
+  <h3
+    class="font-[600] text-[24px] tracking-wide font-catamaran capitalize text-gray-900 dark:text-night-50"
+  >
+    Add new Staff
+  </h3>
+  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+    <div class="form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Fullname
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="text"
+          id="fullname"
+          [ngClass]="{
+            'is__invalid-input': staffForm.get('fullname').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter Fullname "
+          formControlName="fullname"
+          required
+        />
+      </div>
+
+      <div
+        *ngIf="staffForm.get('fullname').hasError('required')"
+        class="is__invalid-error"
+      >
+        Fullname is Required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Email
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          [ngClass]="{
+            'is__invalid-input':
+              staffForm.get('email').hasError('required') ||
+              staffForm.get('email').hasError('email'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="direna@mail.com "
+          formControlName="email"
+        />
+      </div>
+
+      <div
+        *ngIf="staffForm.get('email').hasError('required')"
+        class="is__invalid-error"
+      >
+        Email is required
+      </div>
+      <div
+        *ngIf="staffForm.get('email').hasError('email')"
+        class="is__invalid-error"
+      >
+        Email must be an email address valid
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Phone Number
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="text"
+          id="phone"
+          prefix="+255 "
+          mask="(000) 000 000"
+          [showMaskTyped]="true"
+          [validation]="true"
+          [ngClass]="{
+            'is__invalid-input': staffForm.get('phone').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          formControlName="phone"
+        />
+      </div>
+
+      <div
+        *ngIf="staffForm.get('phone').hasError('required')"
+        class="is__invalid-error"
+      >
+        Phone number is required
+      </div>
+      <div
+        *ngIf="staffForm.get('phone').hasError('mask')"
+        class="is__invalid-error"
+      >
+        Fill all inputs for the phone number
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label class="block text-sm font-medium text-gray-700"
+        >Gender <span class="text-[#e11d48]">*</span></label
+      >
+      <div class="mt-2 space-x-4">
+        <label class="inline-flex items-center">
+          <input
+            type="radio"
+            formControlName="gender"
+            value="male"
+            class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+          />
+          <span class="ml-2">Male</span>
+        </label>
+        <label class="inline-flex items-center">
+          <input
+            type="radio"
+            formControlName="gender"
+            value="female"
+            class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+          />
+          <span class="ml-2">Female</span>
+        </label>
+      </div>
+
+      <div
+        *ngIf="staffForm.get('gender').hasError('required')"
+        class="is__invalid-error"
+      >
+        Please select a gender
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label class="block mb-1 text-sm font-medium text-gray-700"
+        >Branch<span class="text-[#e11d48]">*</span></label
+      >
+      <SeachableSelect
+        [placeholder]="'Select Branch'"
+        [options]="transformToSelectOptions(branches())"
+        (selectionChange)="selectBranch($event)"
+        [canAdd]="true"
+        (onAdd)="openBranchModal()"
+        [buttonLabel]="'Add New Branch'"
+      ></SeachableSelect>
+    </div>
+  </div>
+  <div class="flex items-center justify-end gap-3 p-3">
+    <button
+      (click)="cancel()"
+      class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [disabled]="staffForm.invalid || staffLoading() || !selectedBranch"
+      (click)="submit()"
+      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      [ngClass]="{
+        'bg-green-500 hover:bg-green-700':
+          !staffForm.invalid && !staffLoading(),
+        'bg-gray-300': staffForm.invalid || staffLoading() || !selectedBranch,
+      }"
+    >
+      <svg
+        *ngIf="staffLoading()"
+        class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      {{ staffLoading() ? "Submitting..." : "Submit" }}
+    </button>
+  </div>
+</form>
+
+<add-branch-modal
+  [isModalOpen]="isBranchModalOpen()"
+  (onCancel)="closeBranchModal()"
+></add-branch-modal>
