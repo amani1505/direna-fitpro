@@ -35,8 +35,6 @@ export interface PackageInterface {
 
 export interface WorkoutPlanInterface {}
 
-
-
 export interface AttendanceInterface {
   id: string;
   member: Member;
@@ -65,13 +63,7 @@ export interface User {
   updated_at: Date;
 }
 
-export interface RoleInterface {
-  id: string;
-  name: string;
-  permissions: Array<string>;
-  created_at: Date;
-  updated_at: Date;
-}
+
 
 export interface Equipmemnt {
   id: string;
@@ -84,18 +76,6 @@ export interface Media {
   id: string;
   name: string;
   path: string;
-  created_at: Date;
-  updated_at: Date;
-}
-
-export interface Class {
-  id: string;
-  name: string;
-  category: string;
-  scheduled: string;
-  instractor: Staff;
-  max_participants: number;
-  member: Member;
   created_at: Date;
   updated_at: Date;
 }
