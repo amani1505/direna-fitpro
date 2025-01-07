@@ -71,7 +71,7 @@ export class StaffService {
 
   delete(id: string) {
     this._http
-      .delete<DeleteResponse>(`${environment.apiUrl}staff/${id}`)
+      .delete<DeleteResponse>(`${environment.apiUrl}staffs/${id}`)
       .subscribe({
         next: (response) => {
           console.log(response.message);
@@ -90,7 +90,7 @@ export class StaffService {
   create(data: any): Observable<any> {
     this._loading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}staff`, data).pipe(
+    return this._http.post<any>(`${environment.apiUrl}staffs`, data).pipe(
       map((response) => {
         this._toast.success('Staff created successfully.');
         this.findAll();
