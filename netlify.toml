@@ -1,6 +1,7 @@
 [build]
-  command = "npm run build:ssr"
+  command = "npm ci && npm run build && npm run serve:ssr:direna-fitpro"
   publish = "dist/direna-fitpro/browser"
+  functions = "dist/direna-fitpro/server"
 
 [build.environment]
   NODE_VERSION = "18.20.5"
