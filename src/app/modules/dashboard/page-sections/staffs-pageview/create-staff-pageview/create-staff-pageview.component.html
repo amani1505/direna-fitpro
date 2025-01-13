@@ -135,6 +135,76 @@
     </div>
 
     <div class="form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Fullname
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="text"
+          id="fullname"
+          [ngClass]="{
+            'is__invalid-input': staffForm.get('fullname').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter Fullname "
+          formControlName="fullname"
+          required
+        />
+      </div>
+
+      <div
+        *ngIf="staffForm.get('fullname').hasError('required')"
+        class="is__invalid-error"
+      >
+        Fullname is Required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Fullname
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="text"
+          id="fullname"
+          [ngClass]="{
+            'is__invalid-input': staffForm.get('fullname').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter Fullname "
+          formControlName="fullname"
+          required
+        />
+      </div>
+
+      <div
+        *ngIf="staffForm.get('fullname').hasError('required')"
+        class="is__invalid-error"
+      >
+        Fullname is Required
+      </div>
+    </div>
+
+
+
+    <div class="form__group">
+      <label class="block mb-1 text-sm font-medium text-gray-700"
+        >Branch<span class="text-[#e11d48]">*</span></label
+      >
+      <SeachableSelect
+        [placeholder]="'Select Branch'"
+        [options]="transformToSelectOptions(branches())"
+        (selectionChange)="selectBranch($event)"
+        [canAdd]="true"
+        (onAdd)="openBranchModal()"
+        [buttonLabel]="'Add New Branch'"
+      ></SeachableSelect>
+    </div>
+
+    <div class="form__group">
       <label class="block mb-1 text-sm font-medium text-gray-700"
         >Branch<span class="text-[#e11d48]">*</span></label
       >
