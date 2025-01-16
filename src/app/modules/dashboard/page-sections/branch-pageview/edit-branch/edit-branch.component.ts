@@ -1,24 +1,28 @@
 import { NgClass, NgIf } from '@angular/common';
 import {
   Component,
+  computed,
   EventEmitter,
   inject,
   input,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import {
   FormBuilder,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { ReusableModalComponent } from '@components/modal/reusable-modal/reusable-modal.component';
+import { Branch } from '@model/branch.interface';
 import { ModalConfig } from '@model/modal-config.interface';
 import { BranchesService } from '@service/modules/branches.service';
 
 @Component({
-  selector: 'add-branch-modal',
+  selector: 'edit-branch',
   standalone: true,
   imports: [
     ReusableModalComponent,
@@ -27,18 +31,35 @@ import { BranchesService } from '@service/modules/branches.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  templateUrl: './add-branch-modal.component.html',
-  styleUrl: './add-branch-modal.component.scss',
+  templateUrl: './edit-branch.component.html',
+  styleUrl: './edit-branch.component.scss',
 })
-export class AddBranchModalComponent {
+export class EditBranchComponent implements OnInit {
   isModalOpen = input.required<boolean>();
   @Input({ required: true }) refetchString: 'getAll' | 'findAll' = 'getAll';
+  @Input({ required: true }) branch: Branch = undefined;
 
   @Output() onCancel = new EventEmitter<any>();
 
   private _branchesService = inject(BranchesService);
   private _formBuilder = inject(FormBuilder);
+
   loading = this._branchesService.loading;
+
+  editBranchForm: FormGroup;
+
+  ngOnInit(): void {
+    if (this.branch) {
+      this.editBranchForm = this._formBuilder.group({
+        city: [this.branch.city, Validators.required],
+        country: [this.branch.country, Validators.required],
+        street: [this.branch.street, Validators.required],
+        district: [this.branch.district, Validators.required],
+        house_no: [this.branch.house_no, Validators.required],
+        road: [this.branch.road, Validators.required],
+      });
+    }
+  }
 
   modalConfig: ModalConfig = {
     title: 'Confirm Action',
@@ -49,23 +70,15 @@ export class AddBranchModalComponent {
     customClass: 'my-custom-modal',
   };
 
-  createBranchForm = this._formBuilder.group({
-    city: ['', Validators.required],
-    country: ['', Validators.required],
-    street: ['', Validators.required],
-    district: ['', Validators.required],
-    house_no: ['', Validators.required],
-    road: ['', Validators.required],
-  });
 
   submit() {
-    if (this.createBranchForm.invalid) {
+    if (this.editBranchForm.invalid) {
       return;
     }
     const { city, country, street, district, house_no, road } =
-      this.createBranchForm.value;
+      this.editBranchForm.value;
 
-    this._branchesService.create(this.refetchString, {
+    this._branchesService.update(this.refetchString, this.branch.id,{
       city,
       country,
       street,
@@ -74,7 +87,7 @@ export class AddBranchModalComponent {
       road,
     });
 
-    this.createBranchForm.reset();
+    this.editBranchForm.reset();
     this.onCancel.emit();
   }
 

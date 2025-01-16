@@ -137,58 +137,56 @@
     <div class="form__group">
       <div class="relative">
         <label class="block mb-1 text-sm font-medium text-gray-700"
-          >Fullname
+          >Address
           <span class="text-[#e11d48]">*</span>
         </label>
         <input
           type="text"
-          id="fullname"
+          id="address"
           [ngClass]="{
-            'is__invalid-input': staffForm.get('fullname').hasError('required'),
+            'is__invalid-input': staffForm.get('address').hasError('required'),
           }"
           class="block text-md peer input-field"
-          placeholder="Enter Fullname "
-          formControlName="fullname"
+          placeholder="Enter the address "
+          formControlName="address"
           required
         />
       </div>
 
       <div
-        *ngIf="staffForm.get('fullname').hasError('required')"
+        *ngIf="staffForm.get('address').hasError('required')"
         class="is__invalid-error"
       >
-        Fullname is Required
+        Address is Required
       </div>
     </div>
 
     <div class="form__group">
       <div class="relative">
         <label class="block mb-1 text-sm font-medium text-gray-700"
-          >Fullname
+          >City
           <span class="text-[#e11d48]">*</span>
         </label>
         <input
           type="text"
-          id="fullname"
+          id="city"
           [ngClass]="{
-            'is__invalid-input': staffForm.get('fullname').hasError('required'),
+            'is__invalid-input': staffForm.get('city').hasError('required'),
           }"
           class="block text-md peer input-field"
-          placeholder="Enter Fullname "
-          formControlName="fullname"
+          placeholder="Enter city "
+          formControlName="city"
           required
         />
       </div>
 
       <div
-        *ngIf="staffForm.get('fullname').hasError('required')"
+        *ngIf="staffForm.get('city').hasError('required')"
         class="is__invalid-error"
       >
-        Fullname is Required
+        City is Required
       </div>
     </div>
-
-
 
     <div class="form__group">
       <label class="block mb-1 text-sm font-medium text-gray-700"
@@ -206,7 +204,7 @@
 
     <div class="form__group">
       <label class="block mb-1 text-sm font-medium text-gray-700"
-        >Branch<span class="text-[#e11d48]">*</span></label
+        >Role<span class="text-[#e11d48]">*</span></label
       >
       <SeachableSelect
         [placeholder]="'Select Branch'"
@@ -265,4 +263,5 @@
 <add-branch-modal
   [isModalOpen]="isBranchModalOpen()"
   (onCancel)="closeBranchModal()"
+  [refetchString]="'getAll'"
 ></add-branch-modal>

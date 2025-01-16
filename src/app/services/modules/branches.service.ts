@@ -1,6 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
 import { Branch } from '@model/branch.interface';
+import { DeleteResponse } from '@model/delere-response.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
 
@@ -23,11 +28,23 @@ export class BranchesService {
   });
 
   private _allBranches = signal<Array<Branch>>([]);
+  private _branch = signal<Branch>({
+    id: '',
+    city: '',
+    country: '',
+    street: '',
+    district: '',
+    house_no: '',
+    road: '',
+    members: [],
+    created_at: undefined,
+    updated_at: undefined,
+  });
 
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
     page: 1,
-    limit: 2,
+    limit: 12,
     sortBy: 'created_at',
     sortOrder: 'DESC',
     withPagination: true,
@@ -35,6 +52,7 @@ export class BranchesService {
 
   branches: Signal<PaginationResponse<Branch>> = this._branches.asReadonly();
   allBranches: Signal<Array<Branch>> = this._allBranches.asReadonly();
+  branch: Signal<Branch> = this._branch.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -65,6 +83,22 @@ export class BranchesService {
           this._loading.set(false);
         },
       });
+  }
+
+  findOne(id: string) {
+    this._loading.set(true);
+
+    this._http.get<Branch>(`${environment.apiUrl}branch/${id}`).subscribe({
+      next: (response) => {
+        console.log("Response",response);
+        this._branch.set(response);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
   }
 
   getAllBranches(): void {
@@ -111,5 +145,60 @@ export class BranchesService {
         this._loading.set(false);
       },
     });
+  }
+
+
+  update(
+    type: string,
+    id:string,
+    data: {
+      city: string;
+      country: string;
+      street: string;
+      district: string;
+      house_no: string;
+      road: string;
+    },
+  ) {
+    this._loading.set(true);
+
+    this._http.patch<any>(`${environment.apiUrl}branch/${id}`, data).subscribe({
+      next: (response) => {
+        this._toast.success('Branch updated successfully.');
+        if (type === 'findAll') {
+          this.findAll();
+          this._loading.set(false);
+        } else if (type === 'getAll') {
+          this.getAllBranches();
+          this._loading.set(false);
+        }
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
+  }
+
+
+
+
+
+  delete(id: string) {
+    this._http
+      .delete<DeleteResponse>(`${environment.apiUrl}branch/${id}`)
+      .subscribe({
+        next: (response) => {
+          console.log(response.message);
+          this._toast.success(response.message);
+          this.findAll();
+        },
+        error: (err: HttpErrorResponse) => {
+          const errorMessage =
+            err.error instanceof ErrorEvent ? err.message : err.error.message;
+
+          this._toast.error(errorMessage);
+        },
+      });
   }
 }

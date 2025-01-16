@@ -1,0 +1,138 @@
+<div
+  class="text-gray-700 bg-white rounded-lg shadow dark:text-night-50 dark:bg-night-700"
+>
+  <div
+    class="flex items-center justify-between p-3 font-[500] capitalize text-md font-rubik"
+  >
+    <div class="flex items-end gap-1">
+      <div>
+        <svg-icon
+          src="assets/icons/heroicons/solid/building-office-2.svg"
+          [svgClass]="'w-6 h-6 text-primary-500'"
+          class="inline-block"
+        >
+        </svg-icon>
+      </div>
+      <div>{{ branch?.road || "N/A" }}</div>
+    </div>
+    <div class="flex gap-1">
+      <div
+        class="flex items-center justify-center w-6 h-6 text-blue-400 bg-blue-200 rounded-full cursor-pointer dark:bg-blue-500 dark:text-white"
+        (click)="openEditModal(branch.id)"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/outline/pencil.svg"
+          [svgClass]="'w-4 h-4'"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div
+        class="flex items-center justify-center w-6 h-6 text-red-400 bg-red-200 rounded-full cursor-pointer dark:bg-red-500 dark:text-white"
+        (click)="openDeleteModal()"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/outline/trash.svg"
+          [svgClass]="'w-4 h-4'"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+    </div>
+  </div>
+  <div class="border"></div>
+  <div class="p-3">
+    <div class="flex gap-x-1">
+      <div
+        class="flex items-center justify-center w-6 h-6 text-green-500 bg-green-100 rounded-md"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/solid/globe-europe-africa.svg"
+          [svgClass]="'w-4 h-4 '"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div>{{ branch?.country || "N/A" }}</div>
+    </div>
+
+    <div class="flex mt-2 gap-x-1">
+      <div
+        class="flex items-center justify-center w-6 h-6 text-green-500 bg-green-100 rounded-md"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/solid/globe-alt.svg"
+          [svgClass]="'w-4 h-4 '"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div>{{ branch?.city || "N/A" }}</div>
+    </div>
+
+    <div class="flex mt-2 gap-x-1">
+      <div
+        class="flex items-center justify-center w-6 h-6 text-green-500 bg-green-100 rounded-md"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/solid/home-modern.svg"
+          [svgClass]="'w-4 h-4 '"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div>{{ branch?.district || "N/A" }}</div>
+    </div>
+
+    <div class="flex mt-2 gap-x-1">
+      <div
+        class="flex items-center justify-center w-6 h-6 text-green-500 bg-green-100 rounded-md"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/solid/building-storefront.svg"
+          [svgClass]="'w-4 h-4 '"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div>{{ branch?.street || "N/A" }}</div>
+    </div>
+
+    <div class="flex mt-2 gap-x-1">
+      <div
+        class="flex items-center justify-center w-6 h-6 text-green-500 bg-green-100 rounded-md"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/solid/calculator.svg"
+          [svgClass]="'w-4 h-4 '"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div>{{ branch?.house_no || "N/A" }}</div>
+    </div>
+
+    <div class="flex items-center justify-between mt-3 text-sm">
+      <div>
+        Created At:
+        <p class="font-serif">{{ branch?.created_at | date: "fullDate" }}</p>
+      </div>
+      <div>
+        Updated At:
+        <p class="font-serif">
+          {{ branch?.updated_at | date: "fullDate" }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<Modal
+  [isOpen]="isDeleteModalOpen()"
+  (closeModalEvent)="closeDeleteModal()"
+  [title]="'Delete Confirmation'"
+  [content]="deleteContent"
+  [subContent]="deleteSubContent"
+  (submit)="delete()"
+></Modal>
+
+<edit-branch
+  *ngIf="isBranchModalOpen() && branch.id === branchId()"
+  [branch]="branch"
+  [isModalOpen]="isBranchModalOpen()"
+  (onCancel)="closeEditModal()"
+  [refetchString]="'findAll'"
+></edit-branch>

@@ -49,6 +49,8 @@ export class CreateStaffPageviewComponent implements OnInit {
     fullname: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', Validators.required],
+    address: ['', Validators.required],
+    city: ['', Validators.required],
     branchId: [''],
     gender: ['', Validators.required],
   });

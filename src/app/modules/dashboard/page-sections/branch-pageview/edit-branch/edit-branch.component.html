@@ -8,13 +8,13 @@
     <h2
       class="text-xl font-semibold text-gray-700 font-rubik dark:text-night-50 ms-2"
     >
-      Add New Branch
+      Edit Branch
     </h2>
   </ng-container>
 
   <!-- Modal content -->
   <ng-container modalContent>
-    <form [formGroup]="createBranchForm">
+    <form [formGroup]="editBranchForm">
       <div class="mb-3 form__group">
         <div class="relative">
           <label class="block mb-2 text-sm font-medium text-gray-700"
@@ -27,7 +27,7 @@
             class="block text-md peer input-field"
             placeholder="Enter Branch Country "
             [ngClass]="{
-              'is__invalid-input': createBranchForm
+              'is__invalid-input': editBranchForm
                 .get('country')
                 .hasError('required'),
             }"
@@ -35,7 +35,7 @@
           />
         </div>
         <div
-          *ngIf="createBranchForm.get('country').hasError('required')"
+          *ngIf="editBranchForm.get('country').hasError('required')"
           class="is__invalid-error"
         >
           Branch country is Required
@@ -53,7 +53,7 @@
             class="block text-md peer input-field"
             placeholder="Enter Branch City "
             [ngClass]="{
-              'is__invalid-input': createBranchForm
+              'is__invalid-input': editBranchForm
                 .get('city')
                 .hasError('required'),
             }"
@@ -61,7 +61,7 @@
           />
         </div>
         <div
-          *ngIf="createBranchForm.get('city').hasError('required')"
+          *ngIf="editBranchForm.get('city').hasError('required')"
           class="is__invalid-error"
         >
           Branch city is Required
@@ -80,7 +80,7 @@
             class="block text-md peer input-field"
             placeholder="Enter Branch district "
             [ngClass]="{
-              'is__invalid-input': createBranchForm
+              'is__invalid-input': editBranchForm
                 .get('district')
                 .hasError('required'),
             }"
@@ -88,7 +88,7 @@
           />
         </div>
         <div
-          *ngIf="createBranchForm.get('district').hasError('required')"
+          *ngIf="editBranchForm.get('district').hasError('required')"
           class="is__invalid-error"
         >
           Branch district is Required
@@ -106,7 +106,7 @@
             class="block text-md peer input-field"
             placeholder="Enter Branch Street "
             [ngClass]="{
-              'is__invalid-input': createBranchForm
+              'is__invalid-input': editBranchForm
                 .get('street')
                 .hasError('required'),
             }"
@@ -114,7 +114,7 @@
           />
         </div>
         <div
-          *ngIf="createBranchForm.get('street').hasError('required')"
+          *ngIf="editBranchForm.get('street').hasError('required')"
           class="is__invalid-error"
         >
           Branch street is Required
@@ -132,7 +132,7 @@
             class="block text-md peer input-field"
             placeholder="Enter Branch road "
             [ngClass]="{
-              'is__invalid-input': createBranchForm
+              'is__invalid-input': editBranchForm
                 .get('road')
                 .hasError('required'),
             }"
@@ -140,7 +140,7 @@
           />
         </div>
         <div
-          *ngIf="createBranchForm.get('road').hasError('required')"
+          *ngIf="editBranchForm.get('road').hasError('required')"
           class="is__invalid-error"
         >
           road is Required
@@ -158,7 +158,7 @@
             class="block text-md peer input-field"
             placeholder="Enter Branch House No "
             [ngClass]="{
-              'is__invalid-input': createBranchForm
+              'is__invalid-input': editBranchForm
                 .get('house_no')
                 .hasError('required'),
             }"
@@ -166,7 +166,7 @@
           />
         </div>
         <div
-          *ngIf="createBranchForm.get('house_no').hasError('required')"
+          *ngIf="editBranchForm.get('house_no').hasError('required')"
           class="is__invalid-error"
         >
           Branch House No is Required
@@ -185,13 +185,13 @@
       </button>
       <button
         type="submit"
-        [disabled]="createBranchForm.invalid || loading()"
+        [disabled]="editBranchForm.invalid || loading()"
         (click)="submit()"
         class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
         [ngClass]="{
           'bg-green-500 hover:bg-green-700':
-            !createBranchForm.invalid && !loading(),
-          'bg-gray-300': createBranchForm.invalid || loading(),
+            !editBranchForm.invalid && !loading(),
+          'bg-gray-300': editBranchForm.invalid || loading(),
         }"
       >
         <svg
