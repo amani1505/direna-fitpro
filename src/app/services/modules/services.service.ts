@@ -1,5 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
+import { DeleteResponse } from '@model/delere-response.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
 import { Services } from '@model/services.interface';
@@ -99,5 +104,49 @@ export class ServicesService {
         this._loading.set(false);
       },
     });
+  }
+  update(
+    type: string,
+    id: string,
+    data: { name: string; description: string },
+  ) {
+    this._loading.set(true);
+
+    this._http
+      .patch<any>(`${environment.apiUrl}service/${id}`, data)
+      .subscribe({
+        next: (response) => {
+          this._toast.success('Service updated successfully.');
+          if (type === 'findAll') {
+            this.findAll();
+            this._loading.set(false);
+          } else if (type === 'getAll') {
+            this.getAllServices();
+            this._loading.set(false);
+          }
+        },
+        error: (error) => {
+          this._toast.error(error.error.message);
+          this._loading.set(false);
+        },
+      });
+  }
+
+  delete(id: string) {
+    this._http
+      .delete<DeleteResponse>(`${environment.apiUrl}service/${id}`)
+      .subscribe({
+        next: (response) => {
+          console.log(response.message);
+          this._toast.success(response.message);
+          this.findAll();
+        },
+        error: (err: HttpErrorResponse) => {
+          const errorMessage =
+            err.error instanceof ErrorEvent ? err.message : err.error.message;
+
+          this._toast.error(errorMessage);
+        },
+      });
   }
 }

@@ -301,6 +301,7 @@
 <add-service-modal
   [isModalOpen]="isServiceModalOpen()"
   (onCancel)="closeServiceModal()"
+  [refetchString]="'getAll'"
 ></add-service-modal>
 <add-branch-modal
   [isModalOpen]="isBranchModalOpen()"

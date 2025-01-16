@@ -32,12 +32,12 @@ import { ServicesService } from '@service/modules/services.service';
 })
 export class AddServiceModalComponent {
   isModalOpen = input.required<boolean>();
-
+  @Input({ required: true }) refetchString: 'getAll' | 'findAll' = 'getAll';
   @Output() onCancel = new EventEmitter<any>();
 
   private _servicesService = inject(ServicesService);
   private _formBuilder = inject(FormBuilder);
-   loading = this._servicesService.loading;
+  loading = this._servicesService.loading;
 
   modalConfig: ModalConfig = {
     title: 'Confirm Action',
@@ -58,10 +58,8 @@ export class AddServiceModalComponent {
       return;
     }
     const { name, description } = this.createServiceForm.value;
-    this._servicesService.create('getAll', { name, description });
+    this._servicesService.create(this.refetchString, { name, description });
     this.onCancel.emit();
-
-
   }
 
   cancel() {

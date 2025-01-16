@@ -63,7 +63,7 @@ export class EditBranchComponent implements OnInit {
 
   modalConfig: ModalConfig = {
     title: 'Confirm Action',
-    size: 'lg',
+    size: 'xl',
     submitLabel: 'Submit',
     cancelLabel: 'Cancel',
     closeOnOverlayClick: true,
