@@ -14,6 +14,8 @@ import { StaffService } from '@service/modules/staff.service';
 import { BranchesService } from '@service/modules/branches.service';
 import { ToastService } from '@service/toast.service';
 import { Services } from '../../../../../models/services.interface';
+import { RolesService } from '@service/modules/roles.service';
+import { AddRoleComponent } from '../../roles-pageview/add-role/add-role.component';
 
 @Component({
   selector: 'create-staff-pageview',
@@ -26,6 +28,7 @@ import { Services } from '../../../../../models/services.interface';
     AngularSvgIconModule,
     SeachableSelectComponent,
     AddBranchModalComponent,
+    AddRoleComponent,
   ],
   templateUrl: './create-staff-pageview.component.html',
   styleUrl: './create-staff-pageview.component.scss',
@@ -34,16 +37,20 @@ export class CreateStaffPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);
   private _location = inject(Location);
   private _branchesService = inject(BranchesService);
+  private _rolesService = inject(RolesService);
   private _staffService = inject(StaffService);
   private _toast = inject(ToastService);
 
   branches = computed(() => this._branchesService.allBranches() || []);
+  roles = computed(() => this._rolesService.allRoles() || []);
 
   staffLoading = this._staffService.loading;
 
   isBranchModalOpen = signal<boolean>(false);
+  isRoleModalOpen = signal<boolean>(false);
 
   selectedBranch: string = '';
+  selectedRole: string = '';
 
   staffForm = this._formBuilder.group({
     fullname: ['', Validators.required],
@@ -52,27 +59,29 @@ export class CreateStaffPageviewComponent implements OnInit {
     address: ['', Validators.required],
     city: ['', Validators.required],
     branchId: [''],
+    role: [''],
     gender: ['', Validators.required],
   });
 
   ngOnInit(): void {
     this._branchesService.getAllBranches();
+    this._rolesService.getAllRolesExceptUser();
   }
 
-  transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
-    return apiData.map((item) => ({
-      label: item.name,
-      value: item.id,
-    }));
-  };
-
-  transformToSelectOptions = (
+  transformBranchToSelectOptions = (
     apiData: Array<any>,
   ): Array<{ label: string; value: string }> => {
     return apiData.map((item) => ({
       label: item.road,
+      value: item.id,
+    }));
+  };
+
+  transformRoleToSelectOptions = (
+    apiData: Array<any>,
+  ): Array<{ label: string; value: string }> => {
+    return apiData.map((item) => ({
+      label: item.name,
       value: item.id,
     }));
   };
@@ -87,11 +96,27 @@ export class CreateStaffPageviewComponent implements OnInit {
       branchId: id,
     });
   }
+
+  selectRole(id: any) {
+    this.selectedRole = id;
+    this.staffForm.patchValue({
+      role: id,
+    });
+  }
+
   openBranchModal() {
     this.isBranchModalOpen.set(true);
   }
+
+  openRoleModal() {
+    this.isRoleModalOpen.set(true);
+  }
+
   closeBranchModal() {
     this.isBranchModalOpen.set(false);
+  }
+  closeRoleModal() {
+    this.isRoleModalOpen.set(false);
   }
 
   submit() {

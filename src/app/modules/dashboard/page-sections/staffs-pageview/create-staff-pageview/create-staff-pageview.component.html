@@ -194,7 +194,7 @@
       >
       <SeachableSelect
         [placeholder]="'Select Branch'"
-        [options]="transformToSelectOptions(branches())"
+        [options]="transformBranchToSelectOptions(branches())"
         (selectionChange)="selectBranch($event)"
         [canAdd]="true"
         (onAdd)="openBranchModal()"
@@ -207,12 +207,12 @@
         >Role<span class="text-[#e11d48]">*</span></label
       >
       <SeachableSelect
-        [placeholder]="'Select Branch'"
-        [options]="transformToSelectOptions(branches())"
-        (selectionChange)="selectBranch($event)"
+        [placeholder]="'Select Role of the staff'"
+        [options]="transformRoleToSelectOptions(roles())"
+        (selectionChange)="selectRole($event)"
         [canAdd]="true"
-        (onAdd)="openBranchModal()"
-        [buttonLabel]="'Add New Branch'"
+        (onAdd)="openRoleModal()"
+        [buttonLabel]="'Add New Role'"
       ></SeachableSelect>
     </div>
   </div>
@@ -225,13 +225,13 @@
     </button>
     <button
       type="submit"
-      [disabled]="staffForm.invalid || staffLoading() || !selectedBranch"
+      [disabled]="staffForm.invalid || staffLoading() || !selectedBranch || !selectedRole"
       (click)="submit()"
       class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
       [ngClass]="{
         'bg-green-500 hover:bg-green-700':
           !staffForm.invalid && !staffLoading(),
-        'bg-gray-300': staffForm.invalid || staffLoading() || !selectedBranch,
+        'bg-gray-300': staffForm.invalid || staffLoading() || !selectedBranch || !selectRole,
       }"
     >
       <svg
@@ -265,3 +265,9 @@
   (onCancel)="closeBranchModal()"
   [refetchString]="'getAll'"
 ></add-branch-modal>
+
+<add-role-modal
+  [isModalOpen]="isRoleModalOpen()"
+  (onCancel)="closeRoleModal()"
+  [refetchString]="'getAll'"
+></add-role-modal>
