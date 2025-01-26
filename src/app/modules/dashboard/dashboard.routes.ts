@@ -1,4 +1,10 @@
 import { Routes } from '@angular/router';
+import { BranchesService } from '@service/modules/branches.service';
+import { ClassesServices } from '@service/modules/classes.service';
+import { MemberService } from '@service/modules/member.service';
+import { RolesService } from '@service/modules/roles.service';
+import { ServicesService } from '@service/modules/services.service';
+import { StaffService } from '@service/modules/staff.service';
 
 export default [
   {
@@ -8,10 +14,12 @@ export default [
   {
     path: 'members',
     loadChildren: () => import('./pages/members/members.routes'),
+    providers: [MemberService, BranchesService, ServicesService],
   },
   {
     path: 'staffs',
     loadChildren: () => import('./pages/staffs/staffs.routes'),
+    providers: [BranchesService, RolesService, StaffService],
   },
   {
     path: 'branches',
@@ -19,6 +27,7 @@ export default [
       import('./pages/branches/branches.component').then(
         (c) => c.BranchesComponent,
       ),
+    providers: [BranchesService],
   },
   {
     path: 'services',
@@ -26,6 +35,7 @@ export default [
       import('./pages/services/services.component').then(
         (c) => c.ServicesComponent,
       ),
+    providers: [ServicesService],
   },
 
   {
@@ -41,5 +51,6 @@ export default [
       import('./pages/classes/classes.component').then(
         (c) => c.ClassesComponent,
       ),
+    providers: [ClassesServices],
   },
 ] as Routes;

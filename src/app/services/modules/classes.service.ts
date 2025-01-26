@@ -4,20 +4,19 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { inject, Injectable, Signal, signal } from '@angular/core';
-import { Branch } from '@model/branch.interface';
+import { GymClass } from '@model/class.interface';
 import { DeleteResponse } from '@model/delere-response.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
-
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
 
 @Injectable()
-export class BranchesService {
+export class ClassesServices {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);
 
-  private _branches = signal<PaginationResponse<Branch>>({
+  private _classes = signal<PaginationResponse<GymClass>>({
     data: [],
     limit: 0,
     current_page: 1,
@@ -25,18 +24,19 @@ export class BranchesService {
     total_items: 0,
   });
 
-  private _allBranches = signal<Array<Branch>>([]);
-  private _branch = signal<Branch>({
+  private _allClasses = signal<GymClass[]>([]);
+  private _class = signal<GymClass>({
     id: '',
-    city: '',
-    country: '',
-    street: '',
-    district: '',
-    house_no: '',
-    road: '',
-    members: [],
-    created_at: undefined,
-    updated_at: undefined,
+    name: '',
+    description: '',
+    day: '',
+    color: '',
+    capacity: 0,
+    startTime: '',
+    endTime: '',
+    instructors: [],
+    createdAt: undefined,
+    updatedAt: undefined,
   });
 
   private _loading = signal<boolean>(false);
@@ -48,9 +48,9 @@ export class BranchesService {
     withPagination: true,
   });
 
-  branches: Signal<PaginationResponse<Branch>> = this._branches.asReadonly();
-  allBranches: Signal<Array<Branch>> = this._allBranches.asReadonly();
-  branch: Signal<Branch> = this._branch.asReadonly();
+  classes: Signal<PaginationResponse<GymClass>> = this._classes.asReadonly();
+  allClasses: Signal<GymClass[]> = this._allClasses.asReadonly();
+  class: Signal<GymClass> = this._class.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -68,12 +68,12 @@ export class BranchesService {
     });
 
     this._http
-      .get<PaginationResponse<Branch>>(`${environment.apiUrl}branch`, {
+      .get<PaginationResponse<GymClass>>(`${environment.apiUrl}classes`, {
         params: httpParams,
       })
       .subscribe({
         next: (response) => {
-          this._branches.set(response);
+          this._classes.set(response);
           this._loading.set(false);
         },
         error: (error) => {
@@ -86,10 +86,9 @@ export class BranchesService {
   findOne(id: string) {
     this._loading.set(true);
 
-    this._http.get<Branch>(`${environment.apiUrl}branch/${id}`).subscribe({
+    this._http.get<GymClass>(`${environment.apiUrl}classes/${id}`).subscribe({
       next: (response) => {
-        console.log("Response",response);
-        this._branch.set(response);
+        this._class.set(response);
         this._loading.set(false);
       },
       error: (error) => {
@@ -99,12 +98,12 @@ export class BranchesService {
     });
   }
 
-  getAllBranches(): void {
+  getAllClasses(): void {
     this._loading.set(true);
 
-    this._http.get<Array<Branch>>(`${environment.apiUrl}branch`).subscribe({
+    this._http.get<GymClass[]>(`${environment.apiUrl}classes`).subscribe({
       next: (response) => {
-        this._allBranches.set(response);
+        this._allClasses.set(response);
         this._loading.set(false);
       },
       error: (error) => {
@@ -117,24 +116,26 @@ export class BranchesService {
   create(
     type: string,
     data: {
-      city: string;
-      country: string;
-      street: string;
-      district: string;
-      house_no: string;
-      road: string;
+      name: string;
+      description?: string;
+      day: string;
+      color: string;
+      capacity: number;
+      startTime: string;
+      endTime: string;
+      staffIds: string[];
     },
   ) {
     this._loading.set(true);
 
-    this._http.post<Branch>(`${environment.apiUrl}branch`, data).subscribe({
-      next: (response) => {
-        this._toast.success('branch created successfully.');
+    this._http.post<GymClass>(`${environment.apiUrl}classes`, data).subscribe({
+      next: () => {
+        this._toast.success('gym class created successfully.');
         if (type === 'findAll') {
           this.findAll();
           this._loading.set(false);
         } else if (type === 'getAll') {
-          this.getAllBranches();
+          this.getAllClasses();
           this._loading.set(false);
         }
       },
@@ -144,50 +145,48 @@ export class BranchesService {
       },
     });
   }
-
 
   update(
     type: string,
-    id:string,
+    id: string,
     data: {
-      city: string;
-      country: string;
-      street: string;
-      district: string;
-      house_no: string;
-      road: string;
+      name: string;
+      description?: string;
+      day: string;
+      color: string;
+      capacity: number;
+      startTime: string;
+      endTime: string;
+      staffIds: string[];
     },
   ) {
     this._loading.set(true);
 
-    this._http.patch<any>(`${environment.apiUrl}branch/${id}`, data).subscribe({
-      next: (response) => {
-        this._toast.success('Branch updated successfully.');
-        if (type === 'findAll') {
-          this.findAll();
+    this._http
+      .patch<GymClass>(`${environment.apiUrl}classes/${id}`, data)
+      .subscribe({
+        next: () => {
+          this._toast.success('Gym Class  updated successfully.');
+          if (type === 'findAll') {
+            this.findAll();
+            this._loading.set(false);
+          } else if (type === 'getAll') {
+            this.getAllClasses();
+            this._loading.set(false);
+          }
+        },
+        error: (error) => {
+          this._toast.error(error.error.message);
           this._loading.set(false);
-        } else if (type === 'getAll') {
-          this.getAllBranches();
-          this._loading.set(false);
-        }
-      },
-      error: (error) => {
-        this._toast.error(error.error.message);
-        this._loading.set(false);
-      },
-    });
+        },
+      });
   }
-
-
-
-
 
   delete(id: string) {
     this._http
-      .delete<DeleteResponse>(`${environment.apiUrl}branch/${id}`)
+      .delete<DeleteResponse>(`${environment.apiUrl}classes/${id}`)
       .subscribe({
         next: (response) => {
-          console.log(response.message);
           this._toast.success(response.message);
           this.findAll();
         },

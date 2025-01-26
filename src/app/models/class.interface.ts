@@ -1,14 +1,15 @@
-import { Member, Staff } from './member.interface';
+import { Staff } from "./staff.interface";
 
-export interface Class {
+export interface GymClass {
   id: string;
   name: string;
-  category: string;
-  time: string;
-  instractor: Staff;
-  max_participants: number;
-  member: Member;
-  dayOfWeek: string;
-  created_at: Date;
-  updated_at: Date;
+  description: string;
+  day: string;
+  color: string;
+  capacity: number;
+  startTime: string;
+  endTime: string;
+  instructors: Staff[];
+  createdAt: Date;
+  updatedAt: Date;
 }

@@ -11,9 +11,7 @@ import { Roles } from '@model/role.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RolesService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);

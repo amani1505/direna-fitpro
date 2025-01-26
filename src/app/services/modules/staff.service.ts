@@ -12,9 +12,7 @@ import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
 import { catchError, map, Observable, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class StaffService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);

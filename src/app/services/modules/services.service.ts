@@ -11,9 +11,7 @@ import { Services } from '@model/services.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ServicesService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);

@@ -13,9 +13,7 @@ import { environment } from 'environments/environment';
 import { response } from 'express';
 import { catchError, map, Observable, of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class MemberService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);
