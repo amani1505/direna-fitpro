@@ -47,10 +47,7 @@ export default [
   },
   {
     path: 'classes',
-    loadComponent: () =>
-      import('./pages/classes/classes.component').then(
-        (c) => c.ClassesComponent,
-      ),
+    loadChildren: () => import('./pages/classes/classes.routes'),
     providers: [ClassesServices],
   },
 ] as Routes;

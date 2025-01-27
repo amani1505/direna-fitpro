@@ -45,4 +45,8 @@ export class ClassPageviewComponent implements OnInit {
     const b = Math.min(255, Math.floor((num & 0x0000ff) + 255 * percent));
     return `rgb(${r}, ${g}, ${b})`;
   }
+
+  addNew() {
+    this._router.navigate(['add'], { relativeTo: this._route });
+  }
 }
