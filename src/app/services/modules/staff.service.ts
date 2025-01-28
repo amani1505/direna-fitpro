@@ -24,6 +24,9 @@ export class StaffService {
     total_pages: 0,
     total_items: 0,
   });
+
+    private _allStaffs = signal<Staff[]>([]);
+
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
     page: 1,
@@ -34,6 +37,7 @@ export class StaffService {
   });
 
   staffs: Signal<PaginationResponse<Staff>> = this._staffs.asReadonly();
+  allStaffs: Signal<Staff[]> = this._allStaffs.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -66,6 +70,21 @@ export class StaffService {
         },
       });
   }
+
+    getAllStaffs(): void {
+      this._loading.set(true);
+
+      this._http.get<Staff[]>(`${environment.apiUrl}staffs/trainers`).subscribe({
+        next: (response) => {
+          this._allStaffs.set(response);
+          this._loading.set(false);
+        },
+        error: (error) => {
+          this._toast.error(error.error.message);
+          this._loading.set(false);
+        },
+      });
+    }
 
   delete(id: string) {
     this._http

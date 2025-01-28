@@ -20,6 +20,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 export class NormalSelectComponent {
   @Input({ required: true }) options: Array<{ label: string; value: string }> = [];
   @Input({ required: true }) placeholder: string = 'Select an option';
+  @Input() width = 'w-full';
   @Output() selectionChange = new EventEmitter<any>();
 
   selectedOption: string = '';

@@ -124,8 +124,7 @@ export class CreateStaffPageviewComponent implements OnInit {
       this._toast.error('Please fill in all required fields');
       return;
     }
-    console.log('submit', this.staffForm.value);
-    const data = {
+      const data = {
       ...this.staffForm.value,
     };
 
@@ -134,8 +133,7 @@ export class CreateStaffPageviewComponent implements OnInit {
         this.cancel();
       },
       error: () => {
-        // Error is already handled in the service
-        // Just stay on the form
+        this._toast.error('An error occurred will saving');
       },
     });
   }

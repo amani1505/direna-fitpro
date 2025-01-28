@@ -124,7 +124,7 @@ export class CreateMemberPageviewComponent implements OnInit {
       this._toast.error('Please fill in all required fields');
       return;
     }
-    console.log('submit', this.memberForm.value);
+  
     const data = {
       serviceIds: this.selectedServices,
       ...this.memberForm.value,

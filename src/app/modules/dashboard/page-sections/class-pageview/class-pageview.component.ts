@@ -1,24 +1,25 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalComponent } from '@components/modal/modal.component';
 import { GymClass } from '@model/class.interface';
-import { ClassesServices } from '@service/modules/classes.service';
+import { ClassesService } from '@service/modules/classes.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'ClassPageview',
   standalone: true,
-  imports: [],
+  imports: [AngularSvgIconModule, ModalComponent],
   templateUrl: './class-pageview.component.html',
   styleUrl: './class-pageview.component.scss',
 })
 export class ClassPageviewComponent implements OnInit {
-  private _classesService = inject(ClassesServices);
+  private _classesService = inject(ClassesService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
-  // isBranchModalOpen = signal<boolean>(false);
 
-  // searchBy = signal<string>('road');
-
-  classes = computed(() => this._classesService.allClasses() || []);
+  deleteContent = 'Are you sure you want to delete this Class?';
+  deleteSubContent =
+    'Deleting this member will permanently remove this class from your gym classes list';
 
   days: string[] = [
     'Monday',
@@ -29,6 +30,11 @@ export class ClassPageviewComponent implements OnInit {
     'Saturday',
     'Sunday',
   ];
+
+  classes = computed(() => this._classesService.allClasses() || []);
+  isDeleteModalOpen = signal<boolean>(false);
+
+  classId = signal<string>('');
 
   ngOnInit(): void {
     this._classesService.getAllClasses();
@@ -48,5 +54,21 @@ export class ClassPageviewComponent implements OnInit {
 
   addNew() {
     this._router.navigate(['add'], { relativeTo: this._route });
+  }
+  updateClass(id: string) {
+    this._router.navigate(['edit', id], { relativeTo: this._route });
+  }
+
+  openDeleteModal(id: string) {
+    this.classId.set(id);
+    this.isDeleteModalOpen.set(true);
+  }
+
+  delete() {
+    this._classesService.delete(this.classId());
+    this.isDeleteModalOpen.set(false);
+  }
+  closeDeleteModal() {
+    this.isDeleteModalOpen.set(false);
   }
 }

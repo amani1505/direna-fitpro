@@ -51,8 +51,8 @@
           @for (option of filteredOptions(); track option.value) {
             <a
               (click)="selectOption(option); $event.stopPropagation()"
-              class="block px-4 py-2 text-sm text-gray-700 rounded cursor-pointer"
-              [class.bg-gray-100]="
+              class="block px-4 py-2 text-sm text-gray-700 rounded cursor-pointer hover:bg-slate-200"
+              [class.bg-gray-200]="
                 selectedValuesSignal().includes(option.value)
               "
             >

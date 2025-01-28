@@ -1,12 +1,13 @@
 <div
   class="relative inline-block w-64 text-left border border-gray-300 rounded-md"
+  [ngClass]="width"
 >
   <!-- Dropdown Button -->
   <button
     (click)="toggleDropdown()"
     clickOutside
     (clickOutside)="dropdownOpen = false"
-    class="inline-flex justify-between w-full gap-1 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-primary-500"
+    class="inline-flex justify-between w-full gap-1 px-4 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-primary-500"
   >
     <span class="text-gray-400 capitalize truncate">{{
       selectedOption || placeholder

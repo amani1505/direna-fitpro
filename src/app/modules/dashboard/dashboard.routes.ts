@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { BranchesService } from '@service/modules/branches.service';
-import { ClassesServices } from '@service/modules/classes.service';
+import { ClassesService } from '@service/modules/classes.service';
 import { MemberService } from '@service/modules/member.service';
 import { RolesService } from '@service/modules/roles.service';
 import { ServicesService } from '@service/modules/services.service';
@@ -48,6 +48,6 @@ export default [
   {
     path: 'classes',
     loadChildren: () => import('./pages/classes/classes.routes'),
-    providers: [ClassesServices],
+    providers: [ClassesService,StaffService],
   },
 ] as Routes;

@@ -10,9 +10,10 @@ import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
+import { catchError, map, Observable } from 'rxjs';
 
 @Injectable()
-export class ClassesServices {
+export class ClassesService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);
 
@@ -35,8 +36,8 @@ export class ClassesServices {
     startTime: '',
     endTime: '',
     instructors: [],
-    createdAt: undefined,
-    updatedAt: undefined,
+    created_at: undefined,
+    updated_at: undefined,
   });
 
   private _loading = signal<boolean>(false);
@@ -100,50 +101,52 @@ export class ClassesServices {
 
   getAllClasses(): void {
     this._loading.set(true);
-
-    this._http.get<GymClass[]>(`${environment.apiUrl}classes`).subscribe({
-      next: (response) => {
-        this._allClasses.set(response);
-        this._loading.set(false);
-      },
-      error: (error) => {
-        this._toast.error(error.error.message);
-        this._loading.set(false);
+    const params = new HttpParams({
+      fromObject: {
+        'relations[]': ['instructors'], // Add as many relations as needed
       },
     });
+
+    this._http
+      .get<GymClass[]>(`${environment.apiUrl}classes`, { params })
+      .subscribe({
+        next: (response) => {
+          this._allClasses.set(response);
+          this._loading.set(false);
+        },
+        error: (error) => {
+          this._toast.error(error.error.message);
+          this._loading.set(false);
+        },
+      });
   }
 
-  create(
-    type: string,
-    data: {
-      name: string;
-      description?: string;
-      day: string;
-      color: string;
-      capacity: number;
-      startTime: string;
-      endTime: string;
-      staffIds: string[];
-    },
-  ) {
+
+  create(data: {
+    name: string;
+    description?: string;
+    day: string;
+    color: string;
+    capacity: number;
+    startTime: string;
+    endTime: string;
+    staffIds: string[];
+  }): Observable<any> {
     this._loading.set(true);
 
-    this._http.post<GymClass>(`${environment.apiUrl}classes`, data).subscribe({
-      next: () => {
+    return this._http.post<any>(`${environment.apiUrl}classes`, data).pipe(
+      map((response) => {
         this._toast.success('gym class created successfully.');
-        if (type === 'findAll') {
-          this.findAll();
-          this._loading.set(false);
-        } else if (type === 'getAll') {
-          this.getAllClasses();
-          this._loading.set(false);
-        }
-      },
-      error: (error) => {
-        this._toast.error(error.error.message);
+        this.getAllClasses();
         this._loading.set(false);
-      },
-    });
+        return response;
+      }),
+      catchError((error) => {
+        this._loading.set(false);
+        this._toast.error(error.error.message);
+        throw error; // Re-throw the error to be handled by the component
+      }),
+    );
   }
 
   update(
@@ -188,7 +191,7 @@ export class ClassesServices {
       .subscribe({
         next: (response) => {
           this._toast.success(response.message);
-          this.findAll();
+          this.getAllClasses();
         },
         error: (err: HttpErrorResponse) => {
           const errorMessage =
