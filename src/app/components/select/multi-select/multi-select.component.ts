@@ -33,7 +33,7 @@ export interface MultiSelectOption {
 export class MultiSelectComponent {
   // Signals for reactive state management
   private optionsSignal = signal<MultiSelectOption[]>([]);
-  public selectedValuesSignal = signal<string[]>([]);
+  @Input() selectedValuesSignal = signal<string[]>([]);
   private searchTermSignal = signal('');
 
   // Signals for UI state

@@ -1,3 +1,4 @@
+import { Branch } from './branch.interface';
 import { Services } from './services.interface';
 
 export enum PACKAGETYPES {
@@ -10,22 +11,25 @@ export interface Member {
   id: string;
   fullname: string;
   email: string;
+  phone: string;
+  gender: string;
   address: string;
   city: string;
   age: number;
-  weight: number;
-  height: number;
+  weight: string;
+  height: string;
   goal: string;
-  service: Array<Services>;
-  package: PackageInterface;
-  workout: WorkoutPlanInterface;
+  services: Array<Services>;
+  branch: Branch;
+  // package: PackageInterface;
+  // workout: WorkoutPlanInterface;
   created_at: Date;
   updated_at: Date;
 }
 
 export interface PackageInterface {
   id: string;
-  type: PACKAGETYPES;
+  type?: PACKAGETYPES;
   duration: string;
   fees: string;
   members: Array<Member>;
@@ -62,8 +66,6 @@ export interface User {
   created_at: Date;
   updated_at: Date;
 }
-
-
 
 export interface Equipmemnt {
   id: string;

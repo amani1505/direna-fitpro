@@ -8,7 +8,7 @@ export interface Branch {
   district: string;
   house_no: string;
   road: string;
-  members: Array<Member>;
+  members?: Member[];
   created_at: Date;
   updated_at: Date;
 }

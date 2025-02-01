@@ -4,8 +4,10 @@ import {
   Component,
   computed,
   EventEmitter,
+  input,
   Input,
   Output,
+  Signal,
   signal,
 } from '@angular/core';
 import { FormControl, FormsModule } from '@angular/forms';
@@ -30,9 +32,12 @@ export interface SearchableSelectOption {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SeachableSelectComponent {
-  // Signals for state management
   private optionsSignal = signal<SearchableSelectOption[]>([]);
-  public selectedValueSignal = signal<string | null>(null);
+
+  // selectedValueSignal = input.required<string | null>();
+
+  @Input() selectedValueSignal = signal<string>("");
+
   private searchTermSignal = signal('');
   dropdownOpenSignal = signal(false);
   isTouchedSignal = signal(false); // Tracks if the field is touched
@@ -65,7 +70,7 @@ export class SeachableSelectComponent {
 
   @Input({ required: true }) placeholder: string = 'Select an option';
   @Input({ required: true }) buttonLabel!: string;
-  @Input() canAdd: boolean=false;
+  @Input() canAdd: boolean = false;
   @Output() selectionChange = new EventEmitter<string>();
   @Output() validationChange = new EventEmitter<boolean>();
   @Output() search = new EventEmitter<string>();
