@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { GymClass } from '@model/class.interface';
 import { DeleteResponse } from '@model/delere-response.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
@@ -51,7 +51,7 @@ export class ClassesService {
 
   classes: Signal<PaginationResponse<GymClass>> = this._classes.asReadonly();
   allClasses: Signal<GymClass[]> = this._allClasses.asReadonly();
-  class: Signal<GymClass> = this._class.asReadonly();
+  gymClass = computed(() => this._class());
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -84,19 +84,27 @@ export class ClassesService {
       });
   }
 
-  findOne(id: string) {
+  findOne(id: string, classRelations = []) {
     this._loading.set(true);
 
-    this._http.get<GymClass>(`${environment.apiUrl}classes/${id}`).subscribe({
-      next: (response) => {
-        this._class.set(response);
-        this._loading.set(false);
-      },
-      error: (error) => {
-        this._toast.error(error.error.message);
-        this._loading.set(false);
+    const params = new HttpParams({
+      fromObject: {
+        'relations[]': classRelations, // Add as many relations as needed
       },
     });
+
+    this._http
+      .get<GymClass>(`${environment.apiUrl}classes/${id}`, { params })
+      .subscribe({
+        next: (response) => {
+          this._class.set(response);
+          this._loading.set(false);
+        },
+        error: (error) => {
+          this._toast.error(error.error.message);
+          this._loading.set(false);
+        },
+      });
   }
 
   getAllClasses(): void {
@@ -120,7 +128,6 @@ export class ClassesService {
         },
       });
   }
-
 
   create(data: {
     name: string;
@@ -150,7 +157,6 @@ export class ClassesService {
   }
 
   update(
-    type: string,
     id: string,
     data: {
       name: string;
@@ -162,27 +168,24 @@ export class ClassesService {
       endTime: string;
       staffIds: string[];
     },
-  ) {
+  ): Observable<any> {
     this._loading.set(true);
 
-    this._http
-      .patch<GymClass>(`${environment.apiUrl}classes/${id}`, data)
-      .subscribe({
-        next: () => {
-          this._toast.success('Gym Class  updated successfully.');
-          if (type === 'findAll') {
-            this.findAll();
-            this._loading.set(false);
-          } else if (type === 'getAll') {
-            this.getAllClasses();
-            this._loading.set(false);
-          }
-        },
-        error: (error) => {
-          this._toast.error(error.error.message);
+    return this._http
+      .patch<any>(`${environment.apiUrl}classes/${id}`, data)
+      .pipe(
+        map((response) => {
+          this._toast.success('Class  updated successfully.');
+
           this._loading.set(false);
-        },
-      });
+          return response;
+        }),
+        catchError((error) => {
+          this._loading.set(false);
+          this._toast.error(error.error.message);
+          throw error; // Re-throw the error to be handled by the component
+        }),
+      );
   }
 
   delete(id: string) {

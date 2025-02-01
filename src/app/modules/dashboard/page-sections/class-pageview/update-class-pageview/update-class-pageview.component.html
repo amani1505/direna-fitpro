@@ -1,1 +1,259 @@
-<p>update-class-pageview works!</p>
+<form [formGroup]="classForm">
+  <h3
+    class="font-[600] text-[24px] tracking-wide font-catamaran capitalize text-gray-900 dark:text-night-50"
+  >
+    Add new Claass
+  </h3>
+  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+    <div class="form__group">
+      <div class="relative">
+        <label for="name" class="block mb-1 text-sm font-medium text-gray-700"
+          >Class Name
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          [ngClass]="{
+            'is__invalid-input': classForm.get('name').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter Class name "
+          formControlName="name"
+          required
+        />
+      </div>
+
+      <div
+        *ngIf="classForm.get('name').hasError('required')"
+        class="is__invalid-error"
+      >
+        Class name is Required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label for="day" class="block mb-1 text-sm font-medium text-gray-700"
+          >Week Day
+          <span class="text-[#e11d48]">*</span>
+        </label>
+
+        <NormalSelect
+          [options]="dayOptions"
+          [placeholder]="'Select Weekday'"
+          (selectionChange)="selectWeekDay($event)"
+          [selectedOption]="selectedDay"
+        >
+        </NormalSelect>
+      </div>
+
+      <div
+        *ngIf="classForm.get('day').hasError('required')"
+        class="is__invalid-error"
+      >
+        Weekday is required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <label class="block mb-1 text-sm font-medium text-gray-700"
+        >Trainers<span class="text-[#e11d48]">*</span></label
+      >
+      <MultiSelect
+        [placeholder]="'Select the Staffs'"
+        [options]="transformToMultiSelectOptions(staffs())"
+        (selectionChange)="selectStaffs($event)"
+        (onAdd)="addNewTrainer()"
+        [canAdd]="true"
+        [selectedValuesSignal]="selectedStaff"
+        [buttonLabel]="'Add New Trainer'"
+      ></MultiSelect>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label
+          for="capacity"
+          class="block mb-1 text-sm font-medium text-gray-700"
+          >Capacity <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="number"
+          id="capacity"
+          [ngClass]="{
+            'is__invalid-input': classForm.get('capacity').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter the Capacity"
+          formControlName="capacity"
+        />
+      </div>
+
+      <div
+        *ngIf="classForm.get('capacity').hasError('required')"
+        class="is__invalid-error"
+      >
+        Capacity field is Required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label
+          for="start_time"
+          class="block mb-1 text-sm font-medium text-gray-700"
+          >Start Time <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="time"
+          id="start_time"
+          [ngClass]="{
+            'is__invalid-input': classForm
+              .get('startTime')
+              .hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter the Start Time"
+          formControlName="startTime"
+        />
+      </div>
+      <div
+        *ngIf="classForm.get('startTime').hasError('required')"
+        class="is__invalid-error"
+      >
+        Start time field is Required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label
+          for="end_time"
+          class="block mb-1 text-sm font-medium text-gray-700"
+          >End Time <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="time"
+          id="end_time"
+          [ngClass]="{
+            'is__invalid-input': classForm.get('endTime').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter the End Time"
+          formControlName="endTime"
+        />
+      </div>
+      <div
+        *ngIf="classForm.get('endTime').hasError('required')"
+        class="is__invalid-error"
+      >
+        End time field is Required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label
+          for="description"
+          class="block mb-2 text-sm font-medium text-gray-700"
+          >Description
+
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <textarea
+          rows="3"
+          id="description"
+          [ngClass]="{
+            'is__invalid-input': classForm
+              .get('description')
+              .hasError('required'),
+          }"
+          formControlName="description"
+        ></textarea>
+      </div>
+      <div
+        *ngIf="classForm.get('description').hasError('required')"
+        class="is__invalid-error"
+      >
+        Class description is required
+      </div>
+    </div>
+
+    <div class="form__group">
+      <div class="relative">
+        <label for="color" class="block mb-1 text-sm font-medium text-gray-700"
+          >Choose a color:
+          <span class="text-[#e11d48]">*</span>
+        </label>
+        <input
+          type="color"
+          id="color"
+          [ngClass]="{
+            'is__invalid-input': classForm.get('color').hasError('required'),
+          }"
+          class="block w-10 h-10 p-0 border rounded cursor-pointer text-md peer input-field focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          formControlName="color"
+        />
+      </div>
+
+      <div
+        *ngIf="classForm.get('color').hasError('required')"
+        class="is__invalid-error"
+      >
+        Color is required
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-end gap-3 p-3">
+    <button
+      (click)="cancel()"
+      class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [disabled]="
+        classForm.invalid ||
+        classLoading() ||
+        selectedStaff().length === 0 ||
+        !selectedDay()
+      "
+      (click)="submit()"
+      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      [ngClass]="{
+        'bg-green-500 hover:bg-green-700':
+          !classForm.invalid && !classLoading(),
+        'bg-gray-300':
+          classForm.invalid ||
+          classLoading() ||
+          selectedStaff().length === 0 ||
+          !selectedDay(),
+      }"
+    >
+      <svg
+        *ngIf="classLoading()"
+        class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+      {{ classLoading() ? "Submitting..." : "Submit" }}
+    </button>
+  </div>
+</form>
