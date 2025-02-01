@@ -20,7 +20,7 @@ export default [
 
   {
     path: 'edit/:id',
-    data: { title: 'Edit Member' },
+    data: { title: 'Edit Class' },
     loadChildren: () => import('./update-class/update-class.routes'),
   },
 ] as Routes;

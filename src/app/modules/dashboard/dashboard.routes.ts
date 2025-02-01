@@ -37,6 +37,10 @@ export default [
       ),
     providers: [ServicesService],
   },
+  {
+    path: 'equipments',
+    loadChildren: () => import('./pages/equipments/equipments.routes'),
+  },
 
   {
     path: 'packages',
@@ -48,6 +52,6 @@ export default [
   {
     path: 'classes',
     loadChildren: () => import('./pages/classes/classes.routes'),
-    providers: [ClassesService,StaffService],
+    providers: [ClassesService, StaffService],
   },
 ] as Routes;
