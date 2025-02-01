@@ -5,7 +5,7 @@ import { RowColumn } from '@model/TableColumn.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: '[app-table-row]',
+  selector: '[table-row]',
   standalone: true,
   imports: [FormsModule, AngularSvgIconModule, CommonModule],
   templateUrl: './row.component.html',

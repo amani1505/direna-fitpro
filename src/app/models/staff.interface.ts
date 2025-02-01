@@ -1,4 +1,5 @@
 import { Branch } from './branch.interface';
+import { Roles } from './role.interface';
 
 export interface Staff {
   id: string;
@@ -10,6 +11,7 @@ export interface Staff {
   isActive: boolean;
   gender: string;
   branch: Branch;
+  role: Roles;
   created_at: Date;
   updated_at: Date;
 }

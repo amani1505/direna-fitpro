@@ -3,7 +3,7 @@ import {
   HttpErrorResponse,
   HttpParams,
 } from '@angular/common/http';
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { DeleteResponse } from '@model/delere-response.interface';
 import { Staff } from '@model/staff.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
@@ -25,7 +25,21 @@ export class StaffService {
     total_items: 0,
   });
 
-    private _allStaffs = signal<Staff[]>([]);
+  private _allStaffs = signal<Staff[]>([]);
+  private _staff = signal<Staff>({
+    id: '',
+    fullname: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    isActive: false,
+    gender: '',
+    branch: undefined,
+    role: undefined,
+    created_at: undefined,
+    updated_at: undefined,
+  });
 
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
@@ -37,9 +51,28 @@ export class StaffService {
   });
 
   staffs: Signal<PaginationResponse<Staff>> = this._staffs.asReadonly();
+  staff = computed(() => this._staff());
   allStaffs: Signal<Staff[]> = this._allStaffs.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
+
+  create(data: any): Observable<any> {
+    this._loading.set(true);
+
+    return this._http.post<any>(`${environment.apiUrl}staffs`, data).pipe(
+      map((response) => {
+        this._toast.success('Staff created successfully.');
+        this.findAll();
+        this._loading.set(false);
+        return response;
+      }),
+      catchError((error) => {
+        this._loading.set(false);
+        this._toast.error(error.error.message);
+        throw error; // Re-throw the error to be handled by the component
+      }),
+    );
+  }
 
   findAll(params?: QueryParams): void {
     const mergedParams = {
@@ -71,12 +104,33 @@ export class StaffService {
       });
   }
 
-    getAllStaffs(): void {
-      this._loading.set(true);
+  getAllStaffs(): void {
+    this._loading.set(true);
 
-      this._http.get<Staff[]>(`${environment.apiUrl}staffs/trainers`).subscribe({
+    this._http.get<Staff[]>(`${environment.apiUrl}staffs/trainers`).subscribe({
+      next: (response) => {
+        this._allStaffs.set(response);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
+  }
+
+  findOne(id: string, staffRelations = []) {
+    this._loading.set(true);
+    const params = new HttpParams({
+      fromObject: {
+        'relations[]': staffRelations, // Add as many relations as needed
+      },
+    });
+    this._http
+      .get<Staff>(`${environment.apiUrl}staffs/${id}`, { params })
+      .subscribe({
         next: (response) => {
-          this._allStaffs.set(response);
+          this._staff.set(response);
           this._loading.set(false);
         },
         error: (error) => {
@@ -84,7 +138,27 @@ export class StaffService {
           this._loading.set(false);
         },
       });
-    }
+  }
+
+  update(id: string, data: any): Observable<any> {
+    this._loading.set(true);
+
+    return this._http
+      .patch<any>(`${environment.apiUrl}staffs/${id}`, data)
+      .pipe(
+        map((response) => {
+          this._toast.success('Staff updated successfully.');
+
+          this._loading.set(false);
+          return response;
+        }),
+        catchError((error) => {
+          this._loading.set(false);
+          this._toast.error(error.error.message);
+          throw error; // Re-throw the error to be handled by the component
+        }),
+      );
+  }
 
   delete(id: string) {
     this._http
@@ -102,23 +176,5 @@ export class StaffService {
           this._toast.error(errorMessage);
         },
       });
-  }
-
-  create(data: any): Observable<any> {
-    this._loading.set(true);
-
-    return this._http.post<any>(`${environment.apiUrl}staffs`, data).pipe(
-      map((response) => {
-        this._toast.success('Staff created successfully.');
-        this.findAll();
-        this._loading.set(false);
-        return response;
-      }),
-      catchError((error) => {
-        this._loading.set(false);
-        this._toast.error(error.error.message);
-        throw error; // Re-throw the error to be handled by the component
-      }),
-    );
   }
 }

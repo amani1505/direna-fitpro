@@ -26,6 +26,11 @@ export class Menu {
           route: '/admin/members',
         },
         {
+          icon: 'assets/icons/heroicons/solid/users.svg',
+          label: 'staffs',
+          route: '/admin/staffs',
+        },
+        {
           icon: 'assets/icons/heroicons/solid/briefcase.svg',
           label: 'Packages',
           route: '/admin/packages',
@@ -35,11 +40,7 @@ export class Menu {
           label: 'Classes',
           route: '/admin/classes',
         },
-        {
-          icon: 'assets/icons/heroicons/solid/users.svg',
-          label: 'staffs',
-          route: '/admin/staffs',
-        },
+
         {
           icon: 'assets/icons/heroicons/solid/swatch.svg',
           label: 'Equipments',

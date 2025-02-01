@@ -58,27 +58,27 @@
       </td>
     }
     @case ("button") {
-      <td class="flex justify-end gap-2">
-        @for (type of column.actionType; track $index) {
-          <button
-            class="flex items-center justify-center rounded-md h-7 w-7"
-            [ngClass]="{
-              'bg-green-200 text-green-400 dark:bg-green-500 dark:text-green-300':
-                type === 'view',
-              'bg-blue-200 text-blue-400 dark:bg-blue-500 dark:text-blue-300':
-                type === 'update',
-              'bg-red-200 text-red-400 dark:bg-red-500 dark:text-red-300':
-                type === 'delete',
-            }"
-            (click)="handleAction(type)"
-          >
-            <svg-icon [src]="getIconForAction(type)" [svgClass]="'h-5 w-5'">
-            </svg-icon>
-          </button>
-        }
+      <td>
+        <div class="flex items-center justify-end gap-x-2">
+          @for (type of column.actionType; track $index) {
+            <button
+              class="flex items-center justify-center rounded-md h-7 w-7"
+              [ngClass]="{
+                'bg-green-200 text-green-400 dark:bg-green-500 dark:text-green-300':
+                  type === 'view',
+                'bg-blue-200 text-blue-400 dark:bg-blue-500 dark:text-blue-300':
+                  type === 'update',
+                'bg-red-200 text-red-400 dark:bg-red-500 dark:text-red-300':
+                  type === 'delete',
+              }"
+              (click)="handleAction(type)"
+            >
+              <svg-icon [src]="getIconForAction(type)" [svgClass]="'h-5 w-5'">
+              </svg-icon>
+            </button>
+          }
+        </div>
       </td>
     }
   }
 }
-
-
