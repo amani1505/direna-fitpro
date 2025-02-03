@@ -1,1 +1,267 @@
-<p>create-equipmemnt-pageview works!</p>
+<form class="py-2 md:px-4" [formGroup]="equipmentForm">
+  <h3
+    class="font-[600] text-[24px] tracking-wide font-catamaran capitalize text-gray-900 dark:text-night-50"
+  >
+    Add new Equipment
+  </h3>
+  <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+    <div class="relative bg-white shadow dark:bg-night-600 rounded-xl">
+      <div class="">
+        <div
+          class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
+        >
+          Equipment image
+        </div>
+        <div class="p-5">
+          <div class="flex gap-2 overflow-x-auto has-scrollbar">
+            <image-uploader
+              [width]="'130px'"
+              [height]="'130px'"
+            ></image-uploader>
+            <image-uploader
+              [width]="'130px'"
+              [height]="'130px'"
+            ></image-uploader>
+            <image-uploader
+              [width]="'130px'"
+              [height]="'130px'"
+            ></image-uploader>
+            <image-uploader
+              [width]="'130px'"
+              [height]="'130px'"
+            ></image-uploader>
+          </div>
+
+          <div class="absolute bottom-4">
+            <div
+              class="flex items-center gap-2 mt-2 text-wrap dark:text-night-50"
+            >
+              <div>
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/information-circle.svg"
+                  [svgClass]="'w-5 h-5'"
+                >
+                </svg-icon>
+              </div>
+              <div class="flex-1 font-rubik text-[12px]">
+                You need atleast 4 images.Pay attention to the quality of the
+                picture you add (important)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-2">
+      <div class="bg-white shadow rounded-xl dark:bg-night-600">
+        <div
+          class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
+        >
+          Equipment Details
+        </div>
+        <div class="p-5">
+          <div class="grid grid-cols-1 gap-2 xl:grid-cols-3">
+            <div class="form__group">
+              <div class="relative">
+                <label class="block mb-1 text-sm font-medium text-gray-700"
+                  >Equipment Name
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="fullname"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('title')
+                      .hasError('required'),
+                  }"
+                  class="block text-md peer input-field"
+                  placeholder="Enter Equipment Name "
+                  formControlName="title"
+                  required
+                />
+              </div>
+
+              @if (equipmentForm.get("title").hasError("required")) {
+                <div class="is__invalid-error">Equipment Name is Required</div>
+              }
+            </div>
+            <div class="form__group">
+              <div class="relative">
+                <label class="block mb-1 text-sm font-medium text-gray-700"
+                  >Model Number
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="fullname"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('model')
+                      .hasError('required'),
+                  }"
+                  class="block text-md peer input-field"
+                  placeholder="Enter Model Number "
+                  formControlName="model"
+                  required
+                />
+              </div>
+
+              @if (equipmentForm.get("model").hasError("required")) {
+                <div class="is__invalid-error">Model number is Required</div>
+              }
+            </div>
+
+            <div class="form__group">
+              <div class="relative">
+                <label class="block mb-1 text-sm font-medium text-gray-700"
+                  >Serial Number
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="fullname"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('serial_number')
+                      .hasError('required'),
+                  }"
+                  class="block text-md peer input-field"
+                  placeholder="Enter Serial Number "
+                  formControlName="serial_number"
+                  required
+                />
+              </div>
+
+              @if (equipmentForm.get("serial_number").hasError("required")) {
+                <div class="is__invalid-error">Serial number is Required</div>
+              }
+            </div>
+
+            <div class="form__group">
+              <div class="relative">
+                <label
+                  for="purchase_date"
+                  class="block mb-1 text-sm font-medium text-gray-700"
+                  >Purchase Date
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+                <input
+                  type="date"
+                  id="purchase_date"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('purchase_date')
+                      .hasError('required'),
+                  }"
+                  class="block text-md peer input-field"
+                  placeholder="Enter Purchase Date"
+                  formControlName="purchase_date"
+                  required
+                />
+              </div>
+
+              @if (equipmentForm.get("purchase_date").hasError("required")) {
+                <div class="is__invalid-error">Purchase Date is Required</div>
+              }
+            </div>
+
+            <div class="form__group">
+              <div class="relative">
+                <label
+                  for="quantity"
+                  class="block mb-1 text-sm font-medium text-gray-700"
+                  >Quantity
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  min="1"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('quantity')
+                      .hasError('required'),
+                  }"
+                  class="block text-md peer input-field"
+                  placeholder="Enter Quantity"
+                  formControlName="quantity"
+                  required
+                />
+              </div>
+
+              @if (equipmentForm.get("quantity").hasError("required")) {
+                <div class="is__invalid-error">Quantity is Required</div>
+              }
+            </div>
+
+            <div class="form__group">
+              <div class="relative">
+                <label
+                  for="price"
+                  class="block mb-1 text-sm font-medium text-gray-700"
+                  >Price
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+                <input
+                  type="number"
+                  id="quantity"
+                  min="1"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('price')
+                      .hasError('required'),
+                  }"
+                  class="block text-md peer input-field"
+                  placeholder="Enter Price"
+                  formControlName="price"
+                  required
+                />
+              </div>
+
+              @if (equipmentForm.get("price").hasError("required")) {
+                <div class="is__invalid-error">Price is Required</div>
+              }
+            </div>
+          </div>
+          <div class="mt-2 form__group">
+            <div class="relative">
+              <label class="block mb-2 text-sm font-medium text-gray-700"
+                >Description
+
+                <span class="text-[#e11d48]">*</span>
+              </label>
+              <textarea
+                rows="3"
+                [ngClass]="{
+                  'is__invalid-input': equipmentForm
+                    .get('description')
+                    .hasError('required'),
+                }"
+                placeholder="Enter description..."
+                formControlName="description"
+              ></textarea>
+            </div>
+            @if (equipmentForm.get("description").hasError("required")) {
+              <div class="is__invalid-error">
+                Equipment description is required
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Inputs -->
+    <div class="mt-4 bg-white shadow rounded-xl dark:bg-night-600">
+      <div
+        class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
+      >
+        Status
+      </div>
+      <div class="p-5">
+        <NormalSelect [options]="options" [placeholder]="'select status'" />
+      </div>
+    </div>
+  </div>
+</form>
