@@ -126,9 +126,7 @@ export class EditStaffPageviewComponent implements OnInit {
     }));
   };
 
-  onValidationChange(isValid: boolean) {
-    // console.log('Is valid:', isValid);
-  }
+
 
   selectBranch(id: any) {
     this.selectedBranch.set(id);

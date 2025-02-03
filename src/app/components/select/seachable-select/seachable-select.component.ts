@@ -104,16 +104,6 @@ export class SeachableSelectComponent {
     this.dropdownOpenSignal.set(false);
   }
 
-  // Validation during form submission
-  handleSubmit() {
-    this.isTouchedSignal.set(true);
-    this.validationChange.emit(this.isValid());
-    if (!this.isValid()) {
-      console.error('Form submission blocked: Validation failed');
-    } else {
-      console.log('Form submitted successfully!');
-    }
-  }
 
   add() {
     this.onAdd.emit();

@@ -1,7 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalComponent } from '@components/modal/modal.component';
 import { TableComponent } from '@components/table/table.component';
 import { QueryParams } from '@model/QueryParams.interface';
 import {
@@ -10,7 +8,6 @@ import {
   TableActions,
 } from '@model/TableColumn.interface';
 import { MemberService } from '@service/modules/member.service';
-import { debounceTime, Subject } from 'rxjs';
 
 @Component({
   selector: 'members-pageview',
@@ -157,13 +154,6 @@ export class MembersPageviewComponent implements OnInit {
     });
   }
 
-  toggleUsers(checked: any) {
-    console.log('Checked', checked);
-  }
-  toggleUser(selected: any) {
-    console.log('Row', selected);
-    // const selectedUsers = this.data.filter((user) => user.selected);
-  }
   addNewMember() {
     this._router.navigate(['add'], { relativeTo: this._route });
   }

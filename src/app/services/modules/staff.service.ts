@@ -165,7 +165,6 @@ export class StaffService {
       .delete<DeleteResponse>(`${environment.apiUrl}staffs/${id}`)
       .subscribe({
         next: (response) => {
-          console.log(response.message);
           this._toast.success(response.message);
           this.findAll();
         },

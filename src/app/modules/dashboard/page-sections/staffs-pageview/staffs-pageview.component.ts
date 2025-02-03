@@ -146,13 +146,7 @@ export class StaffsPageviewComponent {
     });
   }
 
-  toggleUsers(checked: any) {
-    console.log('Checked', checked);
-  }
-  toggleUser(selected: any) {
-    console.log('Row', selected);
-    // const selectedUsers = this.data.filter((user) => user.selected);
-  }
+
   addNewStaff() {
     this._router.navigate(['add'], { relativeTo: this._route });
   }

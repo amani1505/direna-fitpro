@@ -48,14 +48,15 @@ export class MultiSelectComponent {
     const options = this.optionsSignal();
     const searchTerm = this.searchTermSignal().toLowerCase();
     return options.filter((option) =>
-      option.label.toLowerCase().includes(searchTerm)
+      option.label.toLowerCase().includes(searchTerm),
     );
   });
 
   selectedOptionDetails = computed(() =>
-    this.selectedValuesSignal().map((selectedValue) =>
-      this.optionsSignal().find((opt) => opt.value === selectedValue)!
-    )
+    this.selectedValuesSignal().map(
+      (selectedValue) =>
+        this.optionsSignal().find((opt) => opt.value === selectedValue)!,
+    ),
   );
 
   @Input({ required: true })
@@ -68,7 +69,7 @@ export class MultiSelectComponent {
 
   @Input({ required: true }) placeholder = 'Select an option';
   @Input() buttonLabel!: string;
-  @Input() canAdd: boolean=false;
+  @Input() canAdd: boolean = false;
   @Output() selectionChange = new EventEmitter<string[]>();
   @Output() validationChange = new EventEmitter<boolean>(); // Emit validation status
   @Output() search = new EventEmitter();
@@ -109,22 +110,11 @@ export class MultiSelectComponent {
     event.stopPropagation();
     const currentSelected = this.selectedValuesSignal();
     const newSelected = currentSelected.filter(
-      (selected) => selected !== optionValue
+      (selected) => selected !== optionValue,
     );
     this.selectedValuesSignal.set(newSelected);
     this.selectionChange.emit(newSelected);
     this.validationChange.emit(this.isValid());
-  }
-
-  // Submit handler
-  handleSubmit() {
-    this.isTouchedSignal.set(true); // Mark field as touched during submission
-    this.validationChange.emit(this.isValid());
-    if (!this.isValid()) {
-      console.error('Form submission blocked: Validation failed');
-    } else {
-      console.log('Form submitted successfully!');
-    }
   }
 
   add() {

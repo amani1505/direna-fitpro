@@ -58,8 +58,8 @@ export class CreateStaffPageviewComponent implements OnInit {
     phone: ['', Validators.required],
     address: ['', Validators.required],
     city: ['', Validators.required],
-    branchId: [''],
-    role: [''],
+    branchId: ['', Validators.required],
+    role: ['', Validators.required],
     gender: ['', Validators.required],
   });
 
@@ -85,10 +85,6 @@ export class CreateStaffPageviewComponent implements OnInit {
       value: item.id,
     }));
   };
-
-  onValidationChange(isValid: boolean) {
-    // console.log('Is valid:', isValid);
-  }
 
   selectBranch(id: any) {
     this.selectedBranch = id;
@@ -124,7 +120,7 @@ export class CreateStaffPageviewComponent implements OnInit {
       this._toast.error('Please fill in all required fields');
       return;
     }
-      const data = {
+    const data = {
       ...this.staffForm.value,
     };
 

@@ -143,7 +143,6 @@
         [placeholder]="'Select the Services'"
         [options]="transformToMultiSelectOptions(services())"
         (selectionChange)="selectService($event)"
-        (validationChange)="onValidationChange($event)"
         [canAdd]="true"
         (onAdd)="openServiceModal()"
         [buttonLabel]="'Add New Service'"
@@ -265,12 +264,13 @@
       class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
       [ngClass]="{
         'bg-green-500 hover:bg-green-700':
-          !memberForm.invalid && !memberLoading(),
+          !memberForm.invalid &&
+          !memberLoading() &&
+          selectedServices.length > 0,
         'bg-gray-300':
           memberForm.invalid ||
           memberLoading() ||
-          selectedServices.length === 0 ||
-          !selectedBranch,
+          selectedServices.length === 0,
       }"
     >
       <svg

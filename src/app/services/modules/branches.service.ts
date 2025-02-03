@@ -88,7 +88,6 @@ export class BranchesService {
 
     this._http.get<Branch>(`${environment.apiUrl}branch/${id}`).subscribe({
       next: (response) => {
-        console.log("Response",response);
         this._branch.set(response);
         this._loading.set(false);
       },
@@ -145,10 +144,9 @@ export class BranchesService {
     });
   }
 
-
   update(
     type: string,
-    id:string,
+    id: string,
     data: {
       city: string;
       country: string;
@@ -178,16 +176,11 @@ export class BranchesService {
     });
   }
 
-
-
-
-
   delete(id: string) {
     this._http
       .delete<DeleteResponse>(`${environment.apiUrl}branch/${id}`)
       .subscribe({
         next: (response) => {
-          console.log(response.message);
           this._toast.success(response.message);
           this.findAll();
         },

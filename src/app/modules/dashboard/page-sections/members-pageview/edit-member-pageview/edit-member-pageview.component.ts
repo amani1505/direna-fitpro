@@ -133,10 +133,6 @@ export class EditMemberPageviewComponent implements OnInit {
     }));
   };
 
-  onValidationChange(isValid: boolean) {
-    // console.log('Is valid:', isValid);
-  }
-
   selectService(ids: any) {
     this.selectedServices.set(ids);
   }

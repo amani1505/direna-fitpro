@@ -26,7 +26,6 @@ export class RolesService {
 
   private _allRoles = signal<Array<Roles>>([]);
 
-
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
     page: 1,
@@ -70,22 +69,6 @@ export class RolesService {
         },
       });
   }
-
-  // findOne(id: string) {
-  //   this._loading.set(true);
-
-  //   this._http.get<Branch>(`${environment.apiUrl}branch/${id}`).subscribe({
-  //     next: (response) => {
-  //       console.log("Response",response);
-  //       this._branch.set(response);
-  //       this._loading.set(false);
-  //     },
-  //     error: (error) => {
-  //       this._toast.error(error.error.message);
-  //       this._loading.set(false);
-  //     },
-  //   });
-  // }
 
   getAllRolesExceptUser(): void {
     this._loading.set(true);
@@ -164,7 +147,6 @@ export class RolesService {
       .delete<DeleteResponse>(`${environment.apiUrl}role/${id}`)
       .subscribe({
         next: (response) => {
-          console.log(response.message);
           this._toast.success(response.message);
           this.findAll();
         },

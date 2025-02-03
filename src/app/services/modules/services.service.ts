@@ -135,7 +135,6 @@ export class ServicesService {
       .delete<DeleteResponse>(`${environment.apiUrl}service/${id}`)
       .subscribe({
         next: (response) => {
-          console.log(response.message);
           this._toast.success(response.message);
           this.findAll();
         },

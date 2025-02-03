@@ -17,18 +17,22 @@
             <image-uploader
               [width]="'130px'"
               [height]="'130px'"
+              (imageSelected)="onImageSelected($event, 0)"
             ></image-uploader>
             <image-uploader
               [width]="'130px'"
               [height]="'130px'"
+              (imageSelected)="onImageSelected($event, 1)"
             ></image-uploader>
             <image-uploader
               [width]="'130px'"
               [height]="'130px'"
+              (imageSelected)="onImageSelected($event, 2)"
             ></image-uploader>
             <image-uploader
               [width]="'130px'"
               [height]="'130px'"
+              (imageSelected)="onImageSelected($event, 3)"
             ></image-uploader>
           </div>
 
@@ -136,6 +140,21 @@
               @if (equipmentForm.get("serial_number").hasError("required")) {
                 <div class="is__invalid-error">Serial number is Required</div>
               }
+            </div>
+
+            <div class="form__group">
+              <label class="block mb-1 text-sm font-medium text-gray-700"
+                >Equipment Categories<span class="text-[#e11d48]"
+                  >*</span
+                ></label
+              >
+              <MultiSelect
+                [placeholder]="'Select the Category'"
+                [options]="transformToMultiSelectOptions(categories())"
+                (selectionChange)="selectCategory($event)"
+                [canAdd]="true"
+                [buttonLabel]="'Add New Category'"
+              ></MultiSelect>
             </div>
 
             <div class="form__group">
@@ -248,6 +267,32 @@
               </div>
             }
           </div>
+
+          <div class="form__group">
+            <label class="block mt-2 text-sm font-medium text-gray-700"
+              >Publish</label
+            >
+            <div class="mt-2 space-x-4">
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  formControlName="isPublished"
+                  [value]="true"
+                  class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+                />
+                <span class="ml-2">Published</span>
+              </label>
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  formControlName="isPublished"
+                  [value]="false"
+                  class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+                />
+                <span class="ml-2">Unpublished</span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -260,8 +305,101 @@
         Status
       </div>
       <div class="p-5">
-        <NormalSelect [options]="options" [placeholder]="'select status'" />
+        <div class="mt-2">
+          <div class="form__group">
+            <label
+              for="equipment_status"
+              class="block mb-1 text-sm font-medium text-gray-700"
+              >Equipment Status<span class="text-[#e11d48]">*</span></label
+            >
+
+            <NormalSelect
+              [options]="status"
+              [placeholder]="'select status'"
+              (selectionChange)="selectStatus($event)"
+            />
+          </div>
+        </div>
+        <div class="mt-2">
+          <div class="form__group">
+            <label
+              for="used_For"
+              class="block mb-1 text-sm font-medium text-gray-700"
+              >Uses of The Equipmenst<span class="text-[#e11d48]"
+                >*</span
+              ></label
+            >
+
+            <NormalSelect
+              [options]="usedFor"
+              [placeholder]="'select Used for'"
+              (selectionChange)="selectUsedFor($event)"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="flex items-center justify-end gap-3 p-3">
+    <button
+      (click)="cancel()"
+      class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+    >
+      Cancel
+    </button>
+    <button
+      type="submit"
+      [disabled]="
+        equipmentForm.invalid ||
+        createLoading() ||
+        selectedCategories.length === 0 ||
+        !selectedStatus ||
+        !selectedUsedFor ||
+        selectedImages.length !== 4
+      "
+      (click)="submit()"
+      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      [ngClass]="{
+        'bg-green-500 hover:bg-green-700':
+          !equipmentForm.invalid &&
+          !createLoading() &&
+          selectedImages.length === 4 &&
+          selectedCategories.length > 0,
+        'bg-gray-300':
+          equipmentForm.invalid ||
+          createLoading() ||
+          selectedCategories.length === 0 ||
+          !selectedStatus ||
+          !selectedUsedFor ||
+          selectedImages.length !== 4,
+      }"
+    >
+      @if (createLoading()) {
+        <svg
+          class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      }
+
+      {{ createLoading() ? "Submitting..." : "Submit" }}
+    </button>
+  </div>
 </form>
+{{ selectedImages.length }}

@@ -16,26 +16,22 @@ import { QuillModule } from 'ngx-quill';
 export class BlogComponent {
   safeHtmlContent: SafeHtml;
 
-
-
-  constructor(private _blogForm: FormBuilder,private sanitizer: DomSanitizer) {
-
+  constructor(
+    private _blogForm: FormBuilder,
+    private sanitizer: DomSanitizer,
+  ) {
     const htmlContent = `
   <p><strong style=\"color: rgb(153, 51, 255); background-color: rgb(178, 107, 0);\">nmmx.NC&gt;Z:?KS</strong><strong style=\"color: rgb(255, 255, 255); background-color: rgb(178, 107, 0);\">n&lt;CM&gt;Cj;sdaklsa;dkflk;slflsfj xj jds d kldkdslds</strong><strong style=\"color: rgb(255, 255, 255); background-color: rgb(178, 107, 0);\" class=\"ql-font-monospace\">KJLDJ;ASKS;F;FJDJKDL</strong></p>
   `;
-  this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
-
-
+    this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
   }
   blogForm = this._blogForm.group({
     description: [''],
   });
 
-
   onSubmit() {
-    const blogData = this.blogForm.value;
+    this.blogForm.value;
     // Handle the submission of the form
-    console.log(blogData);
   }
 
   fitnessBlogPosts = [

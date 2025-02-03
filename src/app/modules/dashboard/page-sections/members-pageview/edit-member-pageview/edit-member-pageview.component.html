@@ -143,14 +143,16 @@
         [placeholder]="'Select the Services'"
         [options]="transformToMultiSelectOptions(services())"
         (selectionChange)="selectService($event)"
-        (validationChange)="onValidationChange($event)"
         [selectedValuesSignal]="selectedServices"
         [canAdd]="true"
         (onAdd)="openServiceModal()"
         [buttonLabel]="'Add New Service'"
       ></MultiSelect>
 
-      <div *ngIf="selectedServices().length === 0" class="mt-2 is__invalid-error">
+      <div
+        *ngIf="selectedServices().length === 0"
+        class="mt-2 is__invalid-error"
+      >
         Please select a atleast one service
       </div>
     </div>
@@ -169,12 +171,9 @@
         [buttonLabel]="'Add New Branch'"
       ></SeachableSelect>
 
-      <div
-      *ngIf="!selectedBranch()"
-      class="mb-1 is__invalid-error"
-    >
-      Please select a branch
-    </div>
+      <div *ngIf="!selectedBranch()" class="mb-1 is__invalid-error">
+        Please select a branch
+      </div>
     </div>
 
     <div class="form__group">

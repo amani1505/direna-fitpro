@@ -100,9 +100,6 @@ export class TableComponent {
   }
 
   onPageChange(page: number) {
-    // console.log('onPageChange', page);
-    // this.currentPage = page;
-    // Fetch data for the new page
     this.pageChange.emit(page);
   }
 

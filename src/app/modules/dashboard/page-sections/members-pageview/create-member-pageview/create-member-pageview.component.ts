@@ -62,7 +62,7 @@ export class CreateMemberPageviewComponent implements OnInit {
     fullname: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', Validators.required],
-    branchId: [''],
+    branchId: ['',Validators.required],
     gender: ['', Validators.required],
     age: [0],
     weight: ['', Validators.required],
@@ -93,9 +93,6 @@ export class CreateMemberPageviewComponent implements OnInit {
     }));
   };
 
-  onValidationChange(isValid: boolean) {
-    // console.log('Is valid:', isValid);
-  }
 
   selectService(ids: any) {
     this.selectedServices = ids;
@@ -124,7 +121,7 @@ export class CreateMemberPageviewComponent implements OnInit {
       this._toast.error('Please fill in all required fields');
       return;
     }
-  
+
     const data = {
       serviceIds: this.selectedServices,
       ...this.memberForm.value,

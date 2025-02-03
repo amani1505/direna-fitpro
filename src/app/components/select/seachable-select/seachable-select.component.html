@@ -6,7 +6,14 @@
     (clickOutside)="closeDropdown()"
     class="inline-flex justify-between w-full gap-1 px-4 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-primary-500"
   >
-    <span class="text-gray-400">
+    <span class="capitalize truncate"
+
+    [ngClass]="{
+      'text-neutral-700': selectedOptionDetail(),
+      'text-gray-400': !selectedOptionDetail()
+    }"
+
+    >
       {{ selectedOptionDetail()?.label || placeholder }}
     </span>
     <svg-icon
@@ -34,7 +41,7 @@
       <div
         *ngFor="let option of filteredOptions()"
         (click)="selectOption(option)"
-        class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100"
+        class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 text-neutral-700"
       >
         {{ option.label }}
       </div>

@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { BranchesService } from '@service/modules/branches.service';
 import { ClassesService } from '@service/modules/classes.service';
+import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
+import { EquipmentService } from '@service/modules/equipment.service';
 import { MemberService } from '@service/modules/member.service';
 import { RolesService } from '@service/modules/roles.service';
 import { ServicesService } from '@service/modules/services.service';
@@ -40,6 +42,7 @@ export default [
   {
     path: 'equipments',
     loadChildren: () => import('./pages/equipments/equipments.routes'),
+    providers: [EquipmemntCategoryService,EquipmentService],
   },
 
   {

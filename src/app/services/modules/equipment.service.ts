@@ -5,19 +5,21 @@ import {
 } from '@angular/common/http';
 import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { DeleteResponse } from '@model/delere-response.interface';
+import { Equipment } from '@model/equipment';
 import { Member } from '@model/member.interface';
 import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
-import { catchError, map, Observable } from 'rxjs';
+
+import { catchError, map, Observable, of } from 'rxjs';
 
 @Injectable()
-export class MemberService {
+export class EquipmentService {
   private _http = inject(HttpClient);
   private _toast = inject(ToastService);
 
-  private _members = signal<PaginationResponse<Member>>({
+  private _equipments = signal<PaginationResponse<Equipment>>({
     data: [],
     limit: 0,
     current_page: 1,
@@ -25,41 +27,22 @@ export class MemberService {
     total_items: 0,
   });
 
-  private _member = signal<Member>({
+  private _equipment = signal<Equipment>({
     id: '',
-    fullname: '',
-    email: '',
-    address: '',
-    city: '',
-    age: 0,
-    weight: '',
-    height: '',
-    goal: '',
-    phone: '',
-    gender: '',
-    services: [],
-    branch: {
-      id: '',
-      city: '',
-      country: '',
-      street: '',
-      district: '',
-      house_no: '',
-      road: '',
-      created_at: null,
-      updated_at: null,
-    },
-
-    // package: {
-    //   id: '',
-    //   type: PACKAGETYPES.SILVER,
-    //   duration: '',
-    //   fees: '',
-    //   created_at: null,
-    //   updated_at: null,
-    // },
-    created_at: new Date(),
-    updated_at: new Date(),
+    title: '',
+    description: '',
+    isPublished: false,
+    model: '',
+    serial_number: '',
+    used_for: '',
+    status: '',
+    purchase_date: null,
+    price: 1,
+    quantity: 1,
+    files: [],
+    categories: [],
+    created_at: null,
+    updated_at: null,
   });
 
   private _loading = signal<boolean>(false);
@@ -71,9 +54,9 @@ export class MemberService {
     withPagination: true,
   });
 
-  members: Signal<PaginationResponse<Member>> = this._members.asReadonly();
-  // member: Signal<Member> = this._member.asReadonly();
-  member = computed(() => this._member());
+  equipments: Signal<PaginationResponse<Equipment>> =
+    this._equipments.asReadonly();
+  equipment = computed(() => this._equipment());
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -91,12 +74,12 @@ export class MemberService {
     });
 
     this._http
-      .get<PaginationResponse<Member>>(`${environment.apiUrl}member`, {
+      .get<PaginationResponse<Equipment>>(`${environment.apiUrl}equipment`, {
         params: httpParams,
       })
       .subscribe({
         next: (response) => {
-          this._members.set(response);
+          this._equipments.set(response);
 
           this._loading.set(false);
         },
@@ -107,18 +90,18 @@ export class MemberService {
       });
   }
 
-  findOne(id: string, memberRelations = []) {
+  findOne(id: string, equipmentRelations = []) {
     this._loading.set(true);
     const params = new HttpParams({
       fromObject: {
-        'relations[]': memberRelations, // Add as many relations as needed
+        'relations[]': equipmentRelations, // Add as many relations as needed
       },
     });
     this._http
-      .get<Member>(`${environment.apiUrl}member/${id}`, { params })
+      .get<Equipment>(`${environment.apiUrl}equipment/${id}`, { params })
       .subscribe({
         next: (response) => {
-          this._member.set(response);
+          this._equipment.set(response);
           this._loading.set(false);
         },
         error: (error) => {
@@ -130,7 +113,7 @@ export class MemberService {
 
   delete(id: string) {
     this._http
-      .delete<DeleteResponse>(`${environment.apiUrl}member/${id}`)
+      .delete<DeleteResponse>(`${environment.apiUrl}equipment/${id}`)
       .subscribe({
         next: (response) => {
           this._toast.success(response.message);
@@ -148,9 +131,9 @@ export class MemberService {
   create(data: any): Observable<any> {
     this._loading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}member`, data).pipe(
+    return this._http.post<any>(`${environment.apiUrl}equipment`, data).pipe(
       map((response) => {
-        this._toast.success('Member created successfully.');
+        this._toast.success('Equipment created successfully.');
         this.findAll();
         this._loading.set(false);
         return response;
@@ -167,10 +150,10 @@ export class MemberService {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}member/${id}`, data)
+      .patch<any>(`${environment.apiUrl}equipment/${id}`, data)
       .pipe(
         map((response) => {
-          this._toast.success('Member updated successfully.');
+          this._toast.success('Equipment  updated successfully.');
 
           this._loading.set(false);
           return response;

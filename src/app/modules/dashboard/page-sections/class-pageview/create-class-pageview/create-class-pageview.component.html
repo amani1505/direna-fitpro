@@ -60,7 +60,7 @@
         >Trainers<span class="text-[#e11d48]">*</span></label
       >
       <MultiSelect
-        [placeholder]="'Select the Staffs'"
+        [placeholder]="'Select Trainers'"
         [options]="transformToMultiSelectOptions(staffs())"
         (selectionChange)="selectStaffs($event)"
         (onAdd)="addNewTrainer()"
@@ -222,7 +222,7 @@
       class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
       [ngClass]="{
         'bg-green-500 hover:bg-green-700':
-          !classForm.invalid && !classLoading(),
+          !classForm.invalid && !classLoading() && selectedStaff.length > 0,
         'bg-gray-300':
           classForm.invalid ||
           classLoading() ||
