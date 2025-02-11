@@ -22,6 +22,9 @@
         type="checkbox"
       />
     </ng-container>
+    <ng-container *ngSwitchCase="'image'">
+      {{ column.label }}
+    </ng-container>
 
     <!-- Text Header -->
     <ng-container *ngSwitchCase="'text'">

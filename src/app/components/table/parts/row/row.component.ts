@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule,DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input,  Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RowColumn } from '@model/TableColumn.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: '[table-row]',
@@ -12,6 +13,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   styleUrl: './row.component.scss',
 })
 export class RowComponent {
+  fileUrl = environment.staicUrl;
   @Input() data: any;
   @Input() hasImage: boolean = false;
   @Input({ required: true }) index: number = 0;
@@ -21,8 +23,6 @@ export class RowComponent {
   @Output() onView = new EventEmitter<any>();
   @Output() onUpdate = new EventEmitter<any>();
   @Output() onCheck = new EventEmitter<{ checked: boolean; row: any }>();
-
-  constructor() {}
 
   getIconForAction(action: string): string {
     switch (action) {

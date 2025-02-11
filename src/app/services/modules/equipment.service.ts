@@ -65,13 +65,26 @@ export class EquipmentService {
       ...this._queryParams(),
       ...params,
     };
+
+
     this._queryParams.set(mergedParams);
 
     this._loading.set(true);
 
-    const httpParams = new HttpParams({
-      fromObject: mergedParams as Record<string, string>,
+    let httpParams = new HttpParams();
+    Object.keys(mergedParams).forEach((key) => {
+      const value = mergedParams[key as keyof QueryParams];
+      if (Array.isArray(value)) {
+        // Handle arrays by appending each item with the key suffixed by `[]`
+        value.forEach((item) => {
+          httpParams = httpParams.append(`${key}[]`, item);
+        });
+      } else if (value !== null && value !== undefined) {
+        // Handle non-array values
+        httpParams = httpParams.append(key, value.toString());
+      }
     });
+
 
     this._http
       .get<PaginationResponse<Equipment>>(`${environment.apiUrl}equipment`, {
@@ -134,8 +147,7 @@ export class EquipmentService {
     return this._http.post<any>(`${environment.apiUrl}equipment`, data).pipe(
       map((response) => {
         this._toast.success('Equipment created successfully.');
-        this.findAll();
-        this._loading.set(false);
+          this._loading.set(false);
         return response;
       }),
       catchError((error) => {

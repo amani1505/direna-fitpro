@@ -1,1 +1,27 @@
-<p>equipments-pageview works!</p>
+<ListTable
+  [title]="'Equipments'"
+  [totalTitle]="'All Equipments'"
+  [totalValue]="totalItems()"
+  (onAdd)="addNewEquipment()"
+  [buttonLabel]="'Add Member'"
+  [deleteContent]="'Are you sure you want to delete this equipment?'"
+  [deleteSubContent]="
+    'Deleting this equipment will permanently remove this equipment from your equipments list'
+  "
+  [actions]="actions"
+  (onUpdate)="update($event)"
+  (onView)="view($event)"
+  (openDeleteModal)="deleteModal($event)"
+  (onDelete)="delete()"
+  [isModalOpen]="isModalOpen()"
+  (closeModalEvent)="closeModal()"
+  [data]="equipemnts()"
+  [headerColumns]="headerColumns"
+  [rowColumns]="rowColumns"
+  [itemsPerPage]="itemsPerPage"
+  [totalItems]="totalItems()"
+  [currentPage]="currentPage()"
+  [totalPages]="totalPages()"
+  (pageChange)="onPageChange($event)"
+  (itemsPerPageChange)="onItemPerPageChange($event)"
+></ListTable>

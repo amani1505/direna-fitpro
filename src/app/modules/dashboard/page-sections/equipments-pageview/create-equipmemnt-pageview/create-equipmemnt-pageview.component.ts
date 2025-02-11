@@ -96,7 +96,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
 
   ngOnInit(): void {
     this._equipmentCategoryService.getAllEquipmentCategory();
-    this._equipmemntService.findAll()
+
   }
 
   transformToMultiSelectOptions = (

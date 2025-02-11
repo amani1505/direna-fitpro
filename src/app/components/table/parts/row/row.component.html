@@ -13,6 +13,28 @@
         />
       </td>
     }
+    @case ("image") {
+      <td>
+        <!-- Handle files array -->
+        @if (column.key === "files[0].file_path") {
+          @if (data.files && data.files.length > 0) {
+            <img
+              class="object-cover w-10 h-10 rounded-full"
+              [src]="fileUrl + data.files[0].file_path"
+              alt=""
+            />
+          } @else {
+            <span>No Image</span>
+          }
+        } @else {
+          <img
+            class="object-cover w-10 h-10 rounded-full"
+            [src]="fileUrl + data[column.key]"
+            alt=""
+          />
+        }
+      </td>
+    }
     @case ("text") {
       <td>{{ data[column.key] || "-" }}</td>
     }
@@ -46,6 +68,10 @@
         </div>
       </td>
     }
+
+    @case ("date") {
+      <td>{{ (data[column.key] | date: "fullDate") || "-" }}</td>
+    }
     @case ("badge") {
       <td>
         @for (item of data[column.key]; track $index) {
@@ -57,6 +83,7 @@
         }
       </td>
     }
+
     @case ("button") {
       <td>
         <div class="flex items-center justify-end gap-x-2">
