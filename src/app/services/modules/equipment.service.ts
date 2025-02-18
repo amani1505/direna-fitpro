@@ -50,6 +50,7 @@ export class EquipmentService {
     page: 1,
     limit: 2,
     sortBy: 'created_at',
+    filterBy: 'title',
     sortOrder: 'DESC',
     withPagination: true,
   });
@@ -65,7 +66,6 @@ export class EquipmentService {
       ...this._queryParams(),
       ...params,
     };
-
 
     this._queryParams.set(mergedParams);
 
@@ -84,7 +84,6 @@ export class EquipmentService {
         httpParams = httpParams.append(key, value.toString());
       }
     });
-
 
     this._http
       .get<PaginationResponse<Equipment>>(`${environment.apiUrl}equipment`, {
@@ -147,7 +146,7 @@ export class EquipmentService {
     return this._http.post<any>(`${environment.apiUrl}equipment`, data).pipe(
       map((response) => {
         this._toast.success('Equipment created successfully.');
-          this._loading.set(false);
+        this._loading.set(false);
         return response;
       }),
       catchError((error) => {

@@ -1,0 +1,95 @@
+<div class="relative">
+  <input
+    type="search"
+    name="search"
+    class="text-[var(--onyx)] text-xm py-[10px] px-[15px] pr-[50px] border-[1px] border-[var(--cultured)] search-field"
+    placeholder="Enter your equipment name..."
+    [(ngModel)]="searchQuery"
+    (input)="onSearchChange($event)"
+    autocomplete="off"
+  />
+
+  <button class="search-btn">
+    <svg-icon
+      src="./assets/icons/heroicons/outline/search.svg"
+      [svgStyle]="{ 'width.px': 20 }"
+    ></svg-icon>
+  </button>
+
+  @if (searchQuery) {
+    <div
+      (clickOutside)="closeDropdown()"
+      class="absolute z-10 mt-2 w-full bg-white border border-[var(--cultured)] rounded-lg shadow-lg"
+    >
+      <div class="p-2">
+        @if (isLoading) {
+          <!-- Skeleton Loader with Fading Effect -->
+          @for (i of [1, 2, 3]; track $index) {
+            <div class="relative p-2">
+              <div class="flex gap-3">
+                <div>
+                  <div class="object-cover rounded h-36 w-36 skeleton"></div>
+                </div>
+                <div class="flex-1">
+                  <div class="h-6 mb-2 skeleton"></div>
+                  <div class="h-4 skeleton"></div>
+                  <div class="h-4 mt-2 skeleton"></div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+        <!-- @else if (hasError()) {
+          <!-- Error Message -
+          <div class="p-2 text-red-500">
+            An error occurred while fetching data.
+          </div>
+        } -->
+        @else if (data.length === 0) {
+          <!-- Empty State Message -->
+          <div
+            class="flex items-center justify-center py-4 text-lg text-center h-[10rem] bg-gray-50"
+          >
+            No Data found.
+          </div>
+        } @else {
+          <!-- Actual Data -->
+          @for (result of data; track $index) {
+            <div class="relative p-2 cursor-pointer hover:bg-gray-100">
+              <div class="flex gap-3">
+                <div>
+                  <img
+                    class="object-cover rounded h-36 w-36"
+                    [src]="fileUrl + result?.files[0].file_path"
+                    alt="{{ result?.title }}"
+                    srcset=""
+                  />
+                </div>
+                <div>
+                  <div
+                    class="mb-2 text-xl font-bold font-varela text-primary-500"
+                  >
+                    {{ result?.title }}
+                  </div>
+                  <div>
+                    {{
+                      result?.short_description ||
+                        "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
+                    }}
+                  </div>
+
+                  <div class="absolute bottom-0">
+                    <span class="text-secondary-500"> Added At:</span>
+                    <p class="font-serif">
+                      {{ result?.created_at | date: "fullDate" }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  }
+</div>

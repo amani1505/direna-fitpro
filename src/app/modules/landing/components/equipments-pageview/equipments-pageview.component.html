@@ -67,7 +67,7 @@
     </div>
   </div> -->
   </div>
-  <div class="relative xs:min-w-[300px] md:flex-grow-[1]">
+  <!-- <div class="relative xs:min-w-[300px] md:flex-grow-[1]">
     <input
       type="search"
       name="search"
@@ -81,7 +81,9 @@
         [svgStyle]="{ 'width.px': 20 }"
       ></svg-icon>
     </button>
-  </div>
+  </div> -->
+
+  <SearchDropdown (searchChange)="onSearch($event)" [data]="equipemnts()" [isLoading]="loading()"></SearchDropdown>
 
   <equipment-layout></equipment-layout>
 </section>
