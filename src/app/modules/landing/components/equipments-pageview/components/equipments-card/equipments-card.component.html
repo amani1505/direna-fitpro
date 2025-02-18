@@ -2,44 +2,60 @@
   <div class="relative w-full h-48">
     <!-- Default Image -->
     <img
-      [src]="defaultImage"
+      [src]="fileUrl + equipment?.files[0].file_path"
       alt="Product Image 1"
       class="absolute top-0 left-0 object-contain w-full h-full product-image default"
     />
     <!-- Hover Image -->
     <img
-      [src]="hoverImage"
+      [src]="fileUrl + equipment?.files[1].file_path"
       alt="Product Image 2"
       class="absolute top-0 left-0 object-contain w-full h-full opacity-0 product-image hover"
     />
     <!-- Badge -->
-    <div *ngIf="badgeText" class="absolute top-[15px] left-[15px] text-white px-[8px] rounded-[var(--border-radius-sm)] z-[3] showcase-badge" [ngStyle]="{ 'background-color': badgeColor }">
+    <div
+      *ngIf="badgeText"
+      class="absolute top-[15px] left-[15px] text-white px-[8px] rounded-[var(--border-radius-sm)] z-[3] showcase-badge"
+      [ngStyle]="{ 'background-color': badgeColor }"
+    >
       {{ badgeText }}
     </div>
     <!-- Buttons -->
     <div class="absolute opacity-0 top-2 right-2 icon-container">
       <button class="block btn-action" (click)="onHeartClick()">
-        <svg-icon src="./assets/icons/heroicons/outline/heart.svg" [svgStyle]="{ 'width.px': 15 }"></svg-icon>
+        <svg-icon
+          src="./assets/icons/heroicons/outline/heart.svg"
+          [svgStyle]="{ 'width.px': 15 }"
+        ></svg-icon>
       </button>
       <button class="block btn-action" (click)="onEyeClick()">
-        <svg-icon src="./assets/icons/heroicons/outline/eye.svg" [svgStyle]="{ 'width.px': 15 }"></svg-icon>
+        <svg-icon
+          src="./assets/icons/heroicons/outline/eye.svg"
+          [svgStyle]="{ 'width.px': 15 }"
+        ></svg-icon>
       </button>
       <button class="block btn-action" (click)="onBagClick()">
-        <svg-icon src="./assets/icons/heroicons/outline/bag-handle.svg" [svgStyle]="{ 'width.px': 15 }"></svg-icon>
+        <svg-icon
+          src="./assets/icons/heroicons/outline/bag-handle.svg"
+          [svgStyle]="{ 'width.px': 15 }"
+        ></svg-icon>
       </button>
     </div>
   </div>
   <!-- Description Section -->
   <div class="p-4 showcase-content">
-    <a href="#" class="showcase-category">{{ category }}</a>
+    <a href="#" class="showcase-category">{{ equipment.title }}</a>
     <h3>
-      <a href="#" class="showcase-title">{{ title }}</a>
+      <a href="#" class="showcase-title">{{
+         equipment?.short_description ||
+                        "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
+        }}</a>
     </h3>
     <!-- <div *ngIf="showRating" class="showcase-rating">
       <svg-icon *ngFor="let star of getRatingArray()" src="./assets/icons/heroicons/star.svg" class="remove-icon" [svgStyle]="{ 'width.px': 15 }"></svg-icon>
     </div> -->
     <div class="price-box">
-      <p class="price">{{ price }}</p>
+      <p class="price">{{ equipment.price }}</p>
       <del>{{ oldPrice }}</del>
     </div>
   </div>

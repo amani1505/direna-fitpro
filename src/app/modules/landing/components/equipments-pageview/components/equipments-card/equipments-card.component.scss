@@ -47,10 +47,12 @@
   border-color: var(--eerie-black);
 }
 .showcase-content {
-  width: calc(100% - 85px);
+  // width: calc(100% - 85px);
+
+  width: 100%;
 }
 .showcase-category {
-  color: var(--salmon-pink);
+  color: #ff4836;
   font-size: var(--fs-9);
   font-weight: var(--fw-500);
   text-transform: uppercase;
@@ -58,14 +60,16 @@
 }
 
 .showcase-category:hover {
-  color: var(--salmon-pink);
+  // color: var(--salmon-p;
+  @apply text-primary-600;
 }
 .showcase-title {
-  color: var(--sonic-silver);
+  color: var(--eerie-black);
   font-size: var(--fs-8);
   font-weight: var(--fw-300);
   text-transform: capitalize;
   letter-spacing: 1px;
+  line-height: 30px;
   margin-bottom: 10px;
   transition: var(--transition-timing);
 }

@@ -3,19 +3,19 @@
     <equipments-header></equipments-header>
   </div>
   <div class="my-3">
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <equipment-card
-        [defaultImage]="'./assets/images/products/jacket-3.jpg'"
-        [hoverImage]="'./assets/images/products/jacket-4.jpg'"
-        [badgeText]="'-20%'"
-        [badgeColor]="'var(--ocean-green)'"
-        [category]="'Jacket'"
-        [title]="'MEN Yarn Fleece Full-Zip Jacket'"
-        [price]="'$48.00'"
-        [oldPrice]="'$75.00'"
-        [showRating]="true"
-        [rating]="4"
-      ></equipment-card>
+    <div
+      class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5"
+    >
+      @for (equipment of data; track $index) {
+        <equipment-card
+          [badgeText]="'-20%'"
+          [badgeColor]="'var(--ocean-green)'"
+          [oldPrice]="'$75.00'"
+          [showRating]="true"
+          [rating]="4"
+          [equipment]="equipment"
+        ></equipment-card>
+      }
     </div>
   </div>
 </section>

@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Equipment } from '@model/equipment';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'equipment-card',
@@ -10,13 +12,15 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   styleUrl: './equipments-card.component.scss',
 })
 export class EquipmentsCardComponent {
-  @Input() defaultImage!: string;
-  @Input() hoverImage!: string;
+  @Input({ required: true }) equipment!: Equipment;
+  fileUrl = environment.staicUrl;
+
+  @Input() image!: string;
+  @Input() showHeart: boolean = false;
+  @Input() showEye: boolean = false;
+  @Input() showBag: boolean = false;
   @Input() badgeText!: string;
   @Input() badgeColor: string = 'var(--ocean-green)';
-  @Input() category!: string;
-  @Input() title!: string;
-  @Input() price!: string;
   @Input() oldPrice!: string;
   @Input() showRating: boolean = false;
   @Input() rating: number = 0;

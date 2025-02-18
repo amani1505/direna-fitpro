@@ -18,6 +18,7 @@ export interface Equipment {
   model: string;
   serial_number: string;
   used_for: string;
+  short_description:string
   status: string;
   purchase_date: Date;
   price: number;

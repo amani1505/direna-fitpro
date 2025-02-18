@@ -22,6 +22,7 @@ export class EquipmentsPageviewComponent {
       filterBy: 'title',
       search: query,
       relations: ['files'],
+      withPagination: false,
     });
   }
 }

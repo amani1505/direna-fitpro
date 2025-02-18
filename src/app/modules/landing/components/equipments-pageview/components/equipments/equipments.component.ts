@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { EquipmentsHeaderComponent } from '../equipments-header/equipments-header.component';
 import { EquipmentsCardComponent } from '../equipments-card/equipments-card.component';
+import { Equipment } from '@model/equipment';
 
 @Component({
   selector: 'equipments',
@@ -10,5 +11,6 @@ import { EquipmentsCardComponent } from '../equipments-card/equipments-card.comp
   styleUrl: './equipments.component.scss'
 })
 export class EquipmentsComponent {
+@Input({required: true}) data:Equipment[]=[]
 
 }

@@ -36,6 +36,7 @@ export class EquipmentService {
     serial_number: '',
     used_for: '',
     status: '',
+    short_description: '',
     purchase_date: null,
     price: 1,
     quantity: 1,

@@ -67,23 +67,12 @@
     </div>
   </div> -->
   </div>
-  <!-- <div class="relative xs:min-w-[300px] md:flex-grow-[1]">
-    <input
-      type="search"
-      name="search"
-      class="text-[var(--onyx)] text-xm py-[10px] px-[15px] pr-[50px] border-[1px] border-[var(--cultured)] search-field"
-      placeholder="Enter your equipment name..."
-    />
 
-    <button class="search-btn">
-      <svg-icon
-        src="./assets/icons/heroicons/outline/search.svg"
-        [svgStyle]="{ 'width.px': 20 }"
-      ></svg-icon>
-    </button>
-  </div> -->
-
-  <SearchDropdown (searchChange)="onSearch($event)" [data]="equipemnts()" [isLoading]="loading()"></SearchDropdown>
+  <SearchDropdown
+    (searchChange)="onSearch($event)"
+    [data]="equipemnts()"
+    [isLoading]="loading()"
+  ></SearchDropdown>
 
   <equipment-layout></equipment-layout>
 </section>
