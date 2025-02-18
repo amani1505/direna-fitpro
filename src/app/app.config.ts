@@ -8,6 +8,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideQuillConfig } from 'ngx-quill/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
+import hljs from 'highlight.js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,14 +19,15 @@ export const appConfig: ApplicationConfig = {
     provideEnvironmentNgxMask(),
     provideQuillConfig({
       modules: {
-        syntax: true,
+        syntax: false,
+        table: true,
         toolbar: [
           ['bold', 'italic', 'underline'], // toggled buttons
           [{ header: 1 }, { header: 2 }], // custom button values
           [{ list: 'ordered' }, { list: 'bullet' }],
           [{ script: 'sub' }, { script: 'super' }], // superscript/subscript
           [{ indent: '-1' }, { indent: '+1' }], // outdent/indent
-          [{ direction: 'rtl' }], // text direction
+          // [{ direction: 'ltr' }], // text direction
           [{ size: ['small', false, 'large', 'huge'] }], // custom dropdown
           [{ color: [] }, { background: [] }], // dropdown with defaults from theme
           [{ font: [] }],
@@ -34,6 +36,8 @@ export const appConfig: ApplicationConfig = {
           ['link'],
         ],
       },
+
+
     }),
     provideAnimationsAsync(),
     provideAnimationsAsync(),

@@ -1,11 +1,147 @@
-<div
+<!-- <div
   [ngClass]="
     isMenuOpen
       ? 'pointer-events-auto scale-100 animate-fade-in-up opacity-100 duration-200 z-10'
       : 'pointer-events-none scale-95 opacity-0 duration-100 ease-in'
   "
-  class="absolute mt-1 w-auto origin-top-right transform rounded-md bg-white py-4 shadow-custom ring-1 ring-transparent ring-opacity-5 transition focus:outline-none dark:bg-night-600"
+  class="absolute w-auto py-4 mt-1 transition origin-top-right transform bg-white rounded-md shadow-custom ring-1 ring-transparent ring-opacity-5 focus:outline-none dark:bg-night-600"
   style="overflow: visible;"
 >
   <ng-content></ng-content>
+</div> -->
+
+<div [class]="'relative ' + containerClass">
+  <!-- Custom Trigger Template -->
+  <ng-container *ngIf="triggerTemplate">
+    <div (click)="toggleMenu()" class="cursor-pointer">
+      <ng-container *ngTemplateOutlet="triggerTemplate"></ng-container>
+    </div>
+  </ng-container>
+
+  <!-- Default Trigger Options -->
+  <ng-container *ngIf="!triggerTemplate">
+    <button
+      (click)="toggleMenu()"
+      [class]="getTriggerClass()"
+      type="button"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-haspopup="true"
+    >
+      <!-- Avatar Trigger -->
+      <ng-container *ngIf="config.triggerType === 'avatar' && header?.image">
+        <img
+          [src]="header.image"
+          [alt]="header.title || ''"
+          class="object-cover rounded-md h-9 w-9"
+        />
+      </ng-container>
+
+      <!-- Icon Trigger -->
+      <ng-container *ngIf="config.triggerType === 'icon'">
+        <svg-icon
+          [src]="triggerIcon"
+          [svgClass]="'h-6 w-6 text-gray-400 dark:text-night-400'"
+        >
+        </svg-icon>
+      </ng-container>
+
+      <!-- Button Trigger -->
+      <ng-container *ngIf="config.triggerType === 'button'">
+        <span>{{ triggerText }}</span>
+      </ng-container>
+    </button>
+  </ng-container>
+
+  <!-- Dropdown Content -->
+  <div
+  *ngIf="isMenuOpen"
+    (clickOutside)="closeMenu()"
+    [class]="getDropdownClass()"
+    [ngClass]="getAnimationClass()"
+  >
+    <!-- Custom Header Template -->
+    <ng-container *ngIf="headerTemplate">
+      <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+    </ng-container>
+
+    <!-- Default Header -->
+    <ng-container *ngIf="!headerTemplate && header">
+      <div class="flex items-center px-4 pb-4">
+        <div *ngIf="header.image" class="w-10 shrink-0">
+          <img
+            class="rounded-md"
+            [src]="header.image"
+            [alt]="header.title || ''"
+          />
+        </div>
+        <div class="px-2 overflow-hidden">
+          <div class="text-sm font-semibold text-gray-700 dark:text-night-50">
+            {{ header.title }}
+          </div>
+          <p
+            *ngIf="header.subtitle"
+            class="text-xs font-semibold text-gray-400 truncate text-ellipsis dark:text-night-300"
+          >
+            {{ header.subtitle }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Sections -->
+    <ng-container *ngFor="let section of sections; let last = last">
+      <!-- Section Title -->
+      <div
+        *ngIf="section.title"
+        class="px-4 pt-2 pb-1 text-xs font-semibold text-gray-400 dark:text-night-300"
+      >
+        {{ section.title }}
+      </div>
+
+      <!-- Items -->
+      <ul class="my-2">
+        <ng-container *ngFor="let item of section.items">
+          <!-- Divider -->
+          <li
+            *ngIf="item.divider"
+            class="my-2 border-b border-gray-200 border-dashed dark:border-night-500"
+          ></li>
+
+          <!-- Menu Item -->
+          <li
+            *ngIf="!item.divider"
+            [routerLink]="item.route"
+            (click)="handleItemClick(item)"
+            [class]="getItemClass(item)"
+          >
+            <!-- <i  [class]="item.icon + ' mr-2'"></i> -->
+            <svg-icon
+              *ngIf="item.icon"
+              [src]="item.icon"
+              [svgClass]="'h-6 w-6 text-gray-400 dark:text-night-400 mr-2'"
+            ></svg-icon>
+            <span class="flex-grow">{{ item.label }}</span>
+            <span *ngIf="item.badge" [class]="getBadgeClass(item.badge.color)">
+              {{ item.badge.text }}
+            </span>
+          </li>
+        </ng-container>
+      </ul>
+
+      <!-- Section Divider -->
+      <div
+        *ngIf="!last"
+        class="border-b border-gray-200 border-dashed dark:border-night-500"
+      ></div>
+    </ng-container>
+
+    <!-- Footer Template -->
+    <ng-container *ngIf="footerTemplate">
+      <div
+        class="pt-2 mt-2 border-t border-gray-200 border-dashed dark:border-night-500"
+      >
+        <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+      </div>
+    </ng-container>
+  </div>
 </div>

@@ -39,9 +39,9 @@
   >
     <li class="mx-3">
       <a
-        class="cursor-pointer growing-underline hover:text-primary-500"
+        class="cursor-pointer growing-underline hover:font-semibold"
         [routerLink]="['/']"
-        routerLinkActive="  font-semibold"
+        routerLinkActive="font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
@@ -51,9 +51,10 @@
       </a>
     </li>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
+    <li class="mx-3 cursor-pointer ">
       <a
         href="#class"
+        [class.active]="'font-semibold growing-underline'"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
@@ -61,7 +62,7 @@
       >
     </li>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
+    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
       <a
         [routerLink]="['/blog']"
         routerLinkActive=" font-semibold"
@@ -73,7 +74,20 @@
         Blog</a
       >
     </li>
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
+
+    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
+      <a
+        [routerLink]="['/equipments']"
+        routerLinkActive="font-semibold"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [ngClass]="{
+          'text-black  transition duration-700 ease-in py-0': isScrolled,
+        }"
+      >
+        Equipments</a
+      >
+    </li>
+    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
       <a
         [routerLink]="['/about']"
         routerLinkActive=" font-semibold"
@@ -85,7 +99,7 @@
       >
     </li>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:text-primary-500">
+    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
       <a
         [routerLink]="['/contact-us']"
         routerLinkActive=" font-semibold"
@@ -167,6 +181,17 @@
         }"
       >
         Blog</a
+      >
+    </li>
+    <li class="my-6">
+      <a
+        id="hideMenu"
+        (click)="navigate('equipments')"
+        [ngClass]="{
+          'font-semibold border-b-2 border-secondary': isActiveRoute('/equipments'),
+        }"
+      >
+        Equipments</a
       >
     </li>
     <li class="my-6">

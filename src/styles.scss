@@ -85,6 +85,12 @@
   --white_10: hsl(0, 0%, 100%, 0.1);
   --black_10: hsl(0, 0%, 0%, 0.1);
   --white: hsl(0, 0%, 100%);
+  --sonic-silver: hsl(0, 0%, 47%);
+  --cultured: hsl(0, 0%, 93%);
+  --eerie-black: hsl(0, 0%, 13%);
+  --salmon-pink: #f472b6;
+  --sandy-brown: hsl(29, 90%, 65%);
+  --ocean-green: hsl(152, 51%, 52%);
 
   /**
    * typography
@@ -99,11 +105,15 @@
   --fs-4: 2rem;
   --fs-5: 1.8rem;
   --fs-6: 1.5rem;
+  --fs-7: 0.875rem;
+  --fs-8: 0.813rem;
+  --fs-9: 0.75rem;
 
   --fw-900: 900;
   --fw-800: 800;
   --fw-700: 700;
   --fw-500: 500;
+  --fw-300: 300;
 
   /**
    * spacing
@@ -134,6 +144,10 @@
   --transition-2: 0.5s ease;
   --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
   --cubic-out: cubic-bezier(0.33, 0.85, 0.4, 0.96);
+
+  --border-radius-sm: 5px;
+
+  --transition-timing: 0.2s ease;
 }
 
 /*-----------------------------------*\
@@ -162,6 +176,7 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
+
 
 li {
   list-style: none;

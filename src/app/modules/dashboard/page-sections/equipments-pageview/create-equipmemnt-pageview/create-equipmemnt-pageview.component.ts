@@ -13,6 +13,7 @@ import { EquipmemntCategoryService } from '@service/modules/equipment-category.s
 import { EquipmentService } from '@service/modules/equipment.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'create-equipmemnt-pageview',
@@ -25,6 +26,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     FormsModule,
     NgClass,
     MultiSelectComponent,
+    QuillModule,
   ],
   templateUrl: './create-equipmemnt-pageview.component.html',
   styleUrl: './create-equipmemnt-pageview.component.scss',
@@ -96,7 +98,6 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
 
   ngOnInit(): void {
     this._equipmentCategoryService.getAllEquipmentCategory();
-
   }
 
   transformToMultiSelectOptions = (
@@ -132,6 +133,10 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
     } else {
       this.selectedImages.splice(index, 1);
     }
+  }
+
+  onDescriptionChange(event: any) {
+    this.equipmentForm.get('description').setValue(event.html);
   }
 
   submit() {

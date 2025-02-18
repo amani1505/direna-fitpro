@@ -1,11 +1,13 @@
 <section
-  class="min-h-[35vh] xl:min-h-[25vh] flex justify-center items-end bg-dark has-bg-image pb-10"
+  class="min-h-[25vh] flex justify-center items-end bg-dark has-bg-image pb-10"
   style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
 >
-  <div class="text-white text-[2rem] md:text-[3rem]  capitalize font-[500] mb-2">blog</div>
+  <div class="text-white text-[2rem] md:text-[3rem] capitalize font-[500] mb-2">
+    blog
+  </div>
 </section>
 
-<section class=" md:px-[5rem] md:py-[5rem] ">
+<section class="md:px-[5rem] md:py-[5rem]">
   <section class="grid grid-cols-1 gap-6 p-8 md:grid-cols-2 lg:grid-cols-3">
     <BlogCard
       *ngFor="let news of fitnessBlogPosts; let i = index"

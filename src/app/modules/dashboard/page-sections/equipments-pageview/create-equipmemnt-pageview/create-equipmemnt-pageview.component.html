@@ -246,11 +246,11 @@
           <div class="mt-2 form__group">
             <div class="relative">
               <label class="block mb-2 text-sm font-medium text-gray-700"
-                >Description
+                >Description & Product Feature
 
                 <span class="text-[#e11d48]">*</span>
               </label>
-              <textarea
+              <!-- <textarea
                 rows="3"
                 [ngClass]="{
                   'is__invalid-input': equipmentForm
@@ -259,7 +259,18 @@
                 }"
                 placeholder="Enter description..."
                 formControlName="description"
-              ></textarea>
+              ></textarea> -->
+              <div>
+                <quill-editor
+                  (onContentChanged)="onDescriptionChange($event)"
+                  [styles]="{ height: '200px', width: '100%' }"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('description')
+                      .hasError('required'),
+                  }"
+                ></quill-editor>
+              </div>
             </div>
             @if (equipmentForm.get("description").hasError("required")) {
               <div class="is__invalid-error">
@@ -402,4 +413,3 @@
     </button>
   </div>
 </form>
-{{ selectedImages.length }}

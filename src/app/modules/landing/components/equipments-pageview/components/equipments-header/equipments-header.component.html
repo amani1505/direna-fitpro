@@ -1,0 +1,45 @@
+<div class="p-4 bg-white rounded shadow dark:bg-night-700 dark:text-night-50">
+  <div class="flex justify-between">
+    <div>
+      <Menu
+        [config]="sortConfig"
+        [sections]="sortSections"
+        [triggerText]="'Sort by: ' + sort"
+        (itemClick)="handleSortChange($event)"
+      >
+      </Menu>
+    </div>
+    <div class="flex items-center gap-3">
+      <div>
+        <Menu
+          [config]="countConfig"
+          [sections]="countSections"
+          [triggerText]="'Show: ' + itemsShowCount"
+          (itemClick)="handleCountChange($event)"
+        >
+        </Menu>
+      </div>
+
+      <button
+        (click)="onColumnsUpdate(1)"
+        class="p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/outline/list-bullet.svg"
+          [svgStyle]="{ 'width.px': 25 }"
+        ></svg-icon>
+      </button>
+
+      <button
+        (click)="onColumnsUpdate(3)"
+        class="p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/outline/squares.svg"
+          [svgStyle]="{ 'width.px': 25 }"
+        ></svg-icon>
+      </button>
+    </div>
+  </div>
+</div>
+

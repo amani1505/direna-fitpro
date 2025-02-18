@@ -23,7 +23,10 @@ export default [
         path: 'contact-us',
         loadChildren: () => import('./pages/contact-us/contact-us.routes'),
       },
+      {
+        path: 'equipments',
+        loadChildren: () => import('./pages/equipments/equipments.routes'),
+      },
     ],
   },
-
 ] as Routes;
