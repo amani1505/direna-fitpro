@@ -108,6 +108,16 @@ module.exports = {
           "0%": { transform: "translateY(0)" },
           "100%": { transform: "translateY(100%)" },
         },
+        "slide-left": {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        "slide-right": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+
+
       },
       animation: {
         wiggle: "wiggle 1s ease-in-out infinite",
@@ -117,6 +127,10 @@ module.exports = {
         "fade-out-up": "fade-out-up 0.3s ease-out",
         "slide-up": "slide-up 0.5s ease-out",
         "slide-down": "slide-down 0.5s ease-out",
+        "slide-left": "slide-left 0.5s ease-in-out",
+        "slide-right": "slide-right 0.5s ease-in-out",
+
+
       },
     },
   },

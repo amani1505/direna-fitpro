@@ -26,15 +26,15 @@ export class EquipmentsCardComponent {
   @Input() rating: number = 0;
 
   @Output() heartClicked = new EventEmitter<void>();
-  @Output() eyeClicked = new EventEmitter<void>();
+  @Output() singleView = new EventEmitter<string>();
   @Output() bagClicked = new EventEmitter<void>();
 
   onHeartClick() {
     this.heartClicked.emit();
   }
 
-  onEyeClick() {
-    this.eyeClicked.emit();
+  viewSingle(id: string) {
+    this.singleView.emit(id);
   }
 
   onBagClick() {

@@ -161,6 +161,10 @@ html {
   font-family: var(--ff-rubik);
   scroll-behavior: smooth;
 }
+.custom-container {
+  @apply p-[1rem] sm:p-[1.5rem] md:p-[2rem]  lg:p-[3rem]  xl:p-[4rem] w-full;
+}
+
 
 body {
   background-color: var(--white);
@@ -176,7 +180,6 @@ body {
   padding: 0;
   box-sizing: border-box;
 }
-
 
 li {
   list-style: none;

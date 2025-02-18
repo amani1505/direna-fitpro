@@ -1,14 +1,11 @@
 import { Component } from '@angular/core';
-import { EquipmentsPageviewComponent } from '@modules/landing/components/equipments-pageview/equipments-pageview.component';
-
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-equipments',
   standalone: true,
-  imports: [EquipmentsPageviewComponent],
+  imports: [RouterOutlet],
   templateUrl: './equipments.component.html',
-  styleUrl: './equipments.component.scss'
+  styleUrl: './equipments.component.scss',
 })
-export class EquipmentsComponent {
-
-}
+export class EquipmentsComponent {}

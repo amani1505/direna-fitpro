@@ -28,7 +28,7 @@
           [svgStyle]="{ 'width.px': 15 }"
         ></svg-icon>
       </button>
-      <button class="block btn-action" (click)="onEyeClick()">
+      <button class="block btn-action" (click)="viewSingle(equipment.id)">
         <svg-icon
           src="./assets/icons/heroicons/outline/eye.svg"
           [svgStyle]="{ 'width.px': 15 }"
@@ -44,12 +44,12 @@
   </div>
   <!-- Description Section -->
   <div class="p-4 showcase-content">
-    <a href="#" class="showcase-category">{{ equipment.title }}</a>
+    <button class="showcase-category" (click)="viewSingle(equipment.id)">{{ equipment.title }}</button>
     <h3>
       <a href="#" class="showcase-title">{{
-         equipment?.short_description ||
-                        "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
-        }}</a>
+        equipment?.short_description ||
+          "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
+      }}</a>
     </h3>
     <!-- <div *ngIf="showRating" class="showcase-rating">
       <svg-icon *ngFor="let star of getRatingArray()" src="./assets/icons/heroicons/star.svg" class="remove-icon" [svgStyle]="{ 'width.px': 15 }"></svg-icon>

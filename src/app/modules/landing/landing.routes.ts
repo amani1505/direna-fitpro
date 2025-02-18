@@ -25,6 +25,7 @@ export default [
         loadChildren: () => import('./pages/contact-us/contact-us.routes'),
       },
       {
+        
         path: 'equipments',
         loadChildren: () => import('./pages/equipments/equipments.routes'),
         providers: [EquipmentService],

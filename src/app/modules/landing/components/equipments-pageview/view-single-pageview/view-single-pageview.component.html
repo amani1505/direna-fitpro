@@ -1,0 +1,157 @@
+<div class="p-5 mt-10 dark:bg-night-900">
+  <div class="grid grid-cols-1 bg-white custom-container lg:grid-cols-2">
+    <!-- Image Gallery -->
+    <div class="flex flex-col p-4 sm:flex-row sm:col-span-1">
+      <!-- Thumbnails -->
+      <div class="flex overflow-x-auto sm:overflow-visible sm:flex-col lg:mr-4">
+        @for (image of equipment().files; track image.file_path) {
+          <div class="flex-shrink-0 w-16 mb-2 sm:w-20">
+            @if (image.file_path) {
+              <img
+                [src]="fileUrl + image.file_path"
+                class="w-full transition-opacity duration-300 ease-in-out cursor-pointer"
+                [ngClass]="{
+                  'opacity-50': selectedImage?.file_path !== image.file_path,
+                  'opacity-100 border-b-4 border-primary-400':
+                    selectedImage?.file_path === image.file_path,
+                }"
+                (click)="selectImage(image)"
+              />
+            } @else {
+              <!-- Shimmer Skeleton for Thumbnails -->
+              <div class="w-full h-20 bg-gray-200 shimmer"></div>
+            }
+          </div>
+        }
+      </div>
+
+      <!-- Main Image -->
+      <div class="relative flex-1 overflow-hidden w-full h-[400px]">
+        @if (selectedImage) {
+          <img
+            [src]="fileUrl + selectedImage.file_path"
+            [ngClass]="animationClass"
+            class="object-contain w-full h-full transition-transform duration-700 ease-in-out"
+          />
+        } @else {
+          <!-- Shimmer Skeleton for Main Image -->
+          <div class="w-full h-full bg-gray-200 shimmer"></div>
+        }
+      </div>
+    </div>
+
+    <div class="p-4 lg:col-span-1 lg:ml-4">
+      <div>
+        <div
+          class="bg-primary-300 w-28 rounded-full text-center text-sm capitalize text-white font-[500] mb-3 px2-"
+        >
+       {{equipment().status}}
+        </div>
+        <h2 class="mb-2 font-semibold tracking-wide capitalize text-xxl">
+          {{ equipment().title }}
+        </h2>
+        <div class="my-3 text-neutral-500">
+          {{
+            equipment()?.short_description ||
+              "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
+          }}
+        </div>
+
+        <div
+          class="flex flex-col gap-2 my-3 md:flex-row md:items-center md:gap-8"
+        >
+          <div class="uppercase font-[500]">Model :</div>
+          <div class="text-neutral-500">
+            {{ equipment()?.model }}
+          </div>
+        </div>
+
+        <p class="text-2xl font-bold text-secondary-600 font-raleway">
+          {{ equipment().price | currency }}
+        </p>
+
+        <!-- Quantity Selector -->
+        <div
+          class="flex flex-col gap-2 mt-3 md:flex-row md:items-center md:gap-8"
+        >
+          <div class="flex items-center gap-8">
+            <div class="capitalize font-[500]">quantity:</div>
+            <div class="col-span-2">
+              <div
+                class="flex gap-2 border-2 border-slate-200 p-[2px] rounded-md items-center"
+              >
+                <button
+                  class="w-8 h-8 font-semibold rounded bg-primary-50 text-secondary-600"
+                  (click)="decrease()"
+                >
+                  -
+                </button>
+                <div class="font-raleway">{{ quatity }}</div>
+                <button
+                  class="w-8 h-8 font-semibold rounded bg-primary-50 text-secondary-600"
+                  (click)="add()"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="text-gray-500 text-xm font-raleway text-nowrap">
+              Available: {{ equipment().quantity }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center gap-4 mt-5">
+          <button
+            class="bg-primary-500 text-white py-1 px-2 rounded-md text-sm font-[500]"
+          >
+            Add to cart
+          </button>
+          <button
+            class="bg-secondary-500 text-white py-1 px-2 rounded-md text-sm font-[500] capitalize"
+          >
+            Buy now
+          </button>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="mt-5">
+          <ul class="flex items-center gap-[5px]">
+            @for (item of icons; track $index) {
+              <li>
+                <a
+                  href="#"
+                  class="p-[5px] bg-[#f2f2f2] rounded-[var(--border-radius-sm)] flex text-[var(--sonic-silver)] transition-[ var(--transition-timing)] hover:bg-primary-500 hover:text-white"
+                >
+                  <svg-icon
+                    [src]="item"
+                    [svgStyle]="{ 'width.px': 20 }"
+                  ></svg-icon>
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Description Section -->
+  <div class="mt-5">
+    <div class="bg-white custom-container">
+      <div class="p-5">
+        <div class="py-1 border-b-2 border-primary-400">
+          <p class="font-poppins font-[500] text-lg capitalize">Description</p>
+        </div>
+        <div class="py-3 font-varela">
+          <quill-view-html
+            [content]="equipment().description"
+          ></quill-view-html>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
