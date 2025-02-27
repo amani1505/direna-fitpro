@@ -36,6 +36,8 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
   private _equipmemntService = inject(EquipmentService);
   private _equipmentCategoryService = inject(EquipmemntCategoryService);
   private _toast = inject(ToastService);
+  readonly MAX_IMAGES = 10;
+  readonly MIN_IMAGES = 4;
 
   private _location = inject(Location);
   categories = computed(
@@ -81,7 +83,8 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
   selectedCategories: Array<string> = [];
   selectedStatus: string = '';
   selectedUsedFor: string = '';
-  selectedImages: File[] = [];
+  selectedImages: File[] = new Array(this.MIN_IMAGES).fill(null); // Initialize with 4 null slots
+  imageUploaders: number[] = [0, 1, 2, 3];
 
   equipmentForm = this._formBuilder.group({
     title: ['', Validators.required],
@@ -91,6 +94,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
     serial_number: ['', Validators.required],
     purchase_date: ['', Validators.required],
     price: [1, Validators.required],
+    short_description: ['', Validators.required],
     quantity: [1, Validators.required],
     status: ['', Validators.required],
     used_for: ['', Validators.required],
@@ -98,6 +102,37 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
 
   ngOnInit(): void {
     this._equipmentCategoryService.getAllEquipmentCategory();
+  }
+
+  canAddMoreImages(): boolean {
+    return this.imageUploaders.length < this.MAX_IMAGES;
+  }
+
+  canRemoveUploader(index: number): boolean {
+    return this.imageUploaders.length > this.MIN_IMAGES;
+  }
+
+  addImageUploader(): void {
+    if (this.canAddMoreImages()) {
+      const newIndex = this.imageUploaders.length;
+      this.imageUploaders.push(newIndex);
+      this.selectedImages[newIndex] = null;
+    } else {
+      this._toast.warning(`Maximum of ${this.MAX_IMAGES} images allowed`);
+    }
+  }
+
+  removeImageUploader(index: number): void {
+    if (this.canRemoveUploader(index)) {
+      // Remove the uploader at this index
+      this.imageUploaders.splice(index, 1);
+      this.selectedImages.splice(index, 1);
+
+      // Reassign indices to match array positions
+      this.imageUploaders = this.imageUploaders.map((_, i) => i);
+    } else {
+      this._toast.warning(`Minimum of ${this.MIN_IMAGES} images required`);
+    }
   }
 
   transformToMultiSelectOptions = (
@@ -134,7 +169,9 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
       this.selectedImages.splice(index, 1);
     }
   }
-
+  getValidImageCount(): number {
+    return this.selectedImages.filter((img) => img !== null).length;
+  }
   onDescriptionChange(event: any) {
     this.equipmentForm.get('description').setValue(event.html);
   }
@@ -147,8 +184,8 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
 
     const validImages = this.selectedImages.filter((img) => img !== null);
 
-    if (validImages.length < 4) {
-      this._toast.error('You need at least 4 images');
+    if (validImages.length < this.MIN_IMAGES) {
+      this._toast.error(`You need at least ${this.MIN_IMAGES} images`);
       return;
     }
 

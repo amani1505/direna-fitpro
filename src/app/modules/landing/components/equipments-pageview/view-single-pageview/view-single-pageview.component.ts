@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Files } from '@model/files';
 import { EquipmentService } from '@service/modules/equipment.service';
@@ -18,7 +25,7 @@ interface Product {
 @Component({
   selector: 'view-single-pageview',
   standalone: true,
-  imports: [CommonModule, AngularSvgIconModule,QuillModule],
+  imports: [CommonModule, AngularSvgIconModule, QuillModule],
   templateUrl: './view-single-pageview.component.html',
   styleUrl: './view-single-pageview.component.scss',
 })
@@ -54,13 +61,27 @@ export class ViewSinglePageviewComponent implements OnInit {
     ],
   };
 
-  selectedImage: Files | null = null;
+  // selectedImage: Files | null = null;
+
+  selectedImage = signal<Files | null>(null);
+
+  constructor() {
+    effect(
+      () => {
+        const eq = this.equipment();
+        if (eq.files && eq.files.length > 0) {
+          this.selectedImage.set(eq.files[0]); // Set the first image as selected
+        } else {
+          this.selectedImage.set(null); // Reset if no files are available
+        }
+      },
+      { allowSignalWrites: true },
+    );
+  }
 
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
     this._equipmentsService.findOne(id, ['files']);
-    // Set the selected image after data is loaded
-    this.selectedImage = this.equipment().files[0];
   }
 
   selectImage(image: Files): void {
@@ -77,7 +98,7 @@ export class ViewSinglePageviewComponent implements OnInit {
     }
 
     this.currentIndex = newIndex;
-    this.selectedImage = image;
+    this.selectedImage.set(image);
 
     setTimeout(() => {
       this.animationClass = '';

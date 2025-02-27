@@ -13,30 +13,50 @@
           Equipment image
         </div>
         <div class="p-5">
-          <div class="flex gap-2 overflow-x-auto has-scrollbar">
-            <image-uploader
-              [width]="'130px'"
-              [height]="'130px'"
-              (imageSelected)="onImageSelected($event, 0)"
-            ></image-uploader>
-            <image-uploader
-              [width]="'130px'"
-              [height]="'130px'"
-              (imageSelected)="onImageSelected($event, 1)"
-            ></image-uploader>
-            <image-uploader
-              [width]="'130px'"
-              [height]="'130px'"
-              (imageSelected)="onImageSelected($event, 2)"
-            ></image-uploader>
-            <image-uploader
-              [width]="'130px'"
-              [height]="'130px'"
-              (imageSelected)="onImageSelected($event, 3)"
-            ></image-uploader>
+          <!-- Changed to flex-wrap to avoid overflow and scrolling -->
+          <div class="flex flex-wrap gap-2">
+            <!-- Render the image uploaders -->
+            @for (item of imageUploaders; track $index) {
+              <div class="relative">
+                <image-uploader
+                  [width]="'130px'"
+                  [height]="'130px'"
+                  (imageSelected)="onImageSelected($event, $index)"
+                ></image-uploader>
+
+                <!-- Remove button - Only show for uploaders above the minimum required -->
+                @if (canRemoveUploader($index)) {
+                  <button
+                    type="button"
+                    (click)="removeImageUploader($index)"
+                    class="absolute flex items-center justify-center w-6 h-6 text-white bg-red-500 rounded-full -top-2 -right-2 hover:bg-red-600"
+                    title="Remove image"
+                  >
+                    <svg-icon
+                      src="./assets/icons/heroicons/outline/x-mark.svg"
+                      [svgClass]="'w-4 h-4'"
+                    ></svg-icon>
+                  </button>
+                }
+              </div>
+            }
+
+            <!-- Add image button - Only show when below maximum -->
+            @if (canAddMoreImages()) {
+              <button
+                type="button"
+                (click)="addImageUploader()"
+                class="flex items-center justify-center w-[130px] h-[130px] border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 dark:border-night-400 dark:hover:border-night-300"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/plus.svg"
+                  [svgClass]="'w-6 h-6 text-gray-500 dark:text-night-200'"
+                ></svg-icon>
+              </button>
+            }
           </div>
 
-          <div class="absolute bottom-4">
+          <div class="mt-8">
             <div
               class="flex items-center gap-2 mt-2 text-wrap dark:text-night-50"
             >
@@ -48,14 +68,15 @@
                 </svg-icon>
               </div>
               <div class="flex-1 font-rubik text-[12px]">
-                You need atleast 4 images.Pay attention to the quality of the
-                picture you add (important)
+                You need at least 4 images (maximum 10). Pay attention to the
+                quality of the pictures you add (important)
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="col-span-2">
       <div class="bg-white shadow rounded-xl dark:bg-night-600">
         <div
@@ -242,6 +263,33 @@
                 <div class="is__invalid-error">Price is Required</div>
               }
             </div>
+
+            <div class="col-span-2 form__group">
+              <div class="relative">
+                <label class="block mb-1 text-sm font-medium text-gray-700"
+                  >Short Description
+                  <span class="text-[#e11d48]">*</span>
+                </label>
+
+                <textarea
+                  rows="2"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('short_description')
+                      .hasError('required'),
+                  }"
+                  formControlName="short_description"
+                ></textarea>
+              </div>
+
+              @if (
+                equipmentForm.get("short_description").hasError("required")
+              ) {
+                <div class="is__invalid-error">
+                  Short Description is Required
+                </div>
+              }
+            </div>
           </div>
           <div class="mt-2 form__group">
             <div class="relative">
@@ -367,7 +415,7 @@
         selectedCategories.length === 0 ||
         !selectedStatus ||
         !selectedUsedFor ||
-        selectedImages.length !== 4
+        getValidImageCount() < 4
       "
       (click)="submit()"
       class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
@@ -375,7 +423,7 @@
         'bg-green-500 hover:bg-green-700':
           !equipmentForm.invalid &&
           !createLoading() &&
-          selectedImages.length === 4 &&
+          getValidImageCount() >= 4 &&
           selectedCategories.length > 0,
         'bg-gray-300':
           equipmentForm.invalid ||
@@ -383,7 +431,7 @@
           selectedCategories.length === 0 ||
           !selectedStatus ||
           !selectedUsedFor ||
-          selectedImages.length !== 4,
+          getValidImageCount() < 4,
       }"
     >
       @if (createLoading()) {

@@ -11,9 +11,9 @@
                 [src]="fileUrl + image.file_path"
                 class="w-full transition-opacity duration-300 ease-in-out cursor-pointer"
                 [ngClass]="{
-                  'opacity-50': selectedImage?.file_path !== image.file_path,
+                  'opacity-50': selectedImage()?.file_path !== image.file_path,
                   'opacity-100 border-b-4 border-primary-400':
-                    selectedImage?.file_path === image.file_path,
+                    selectedImage()?.file_path === image.file_path,
                 }"
                 (click)="selectImage(image)"
               />
@@ -27,9 +27,9 @@
 
       <!-- Main Image -->
       <div class="relative flex-1 overflow-hidden w-full h-[400px]">
-        @if (selectedImage) {
+        @if (selectedImage()) {
           <img
-            [src]="fileUrl + selectedImage.file_path"
+            [src]="fileUrl + selectedImage()?.file_path"
             [ngClass]="animationClass"
             class="object-contain w-full h-full transition-transform duration-700 ease-in-out"
           />
@@ -45,16 +45,13 @@
         <div
           class="bg-primary-300 w-28 rounded-full text-center text-sm capitalize text-white font-[500] mb-3 px2-"
         >
-       {{equipment().status}}
+          {{ equipment().status }}
         </div>
         <h2 class="mb-2 font-semibold tracking-wide capitalize text-xxl">
           {{ equipment().title }}
         </h2>
         <div class="my-3 text-neutral-500">
-          {{
-            equipment()?.short_description ||
-              "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
-          }}
+          {{ equipment()?.short_description || "-" }}
         </div>
 
         <div

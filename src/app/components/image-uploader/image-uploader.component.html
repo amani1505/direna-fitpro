@@ -1,5 +1,5 @@
 <div
-  class="relative flex items-center justify-center rounded-md bg-gray-50 hover:bg-gray-100 dark:bg-night-300 border border-dashed cursor-pointer"
+  class="relative flex items-center justify-center border border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 dark:bg-night-300"
   [ngClass]="{ 'border-none': currentImage }"
   [style.width]="width"
   [style.height]="height"
@@ -7,7 +7,6 @@
   (drop)="onDrop($event)"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
- 
 >
   <!-- Display selected image -->
   <img
@@ -21,7 +20,7 @@
 
   <!-- Centered text and upload button -->
   <div
-    class="flex flex-col items-center justify-center absolute inset-0 text-neutral-600 px-2 font-raleway "
+    class="absolute inset-0 flex flex-col items-center justify-center px-2 text-neutral-600 font-raleway"
     *ngIf="!currentImage"
   >
     <svg-icon
@@ -32,7 +31,10 @@
     </svg-icon>
     <span class="text-[9px] dark:text-night-50 text-center"
       >Drag your image here or
-      <span class="underline cursor-pointer  text-blue-700 text-center"  (click)="fileInput.click()">
+      <span
+        class="text-center text-blue-700 underline cursor-pointer"
+        (click)="fileInput.click()"
+      >
         click to browser
       </span></span
     >
@@ -40,7 +42,7 @@
   <button
     *ngIf="currentImage"
     (click)="deleteImage()"
-    class="absolute flex items-center  bottom-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
+    class="absolute flex items-center p-1 text-white bg-red-600 rounded-full bottom-2 right-2 hover:bg-red-700"
   >
     <svg-icon
       src="./assets/icons/heroicons/outline/trash.svg"
