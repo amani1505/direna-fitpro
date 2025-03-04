@@ -39,17 +39,39 @@
       </span></span
     >
   </div>
-  <button
+
+  <!-- Edit and Delete Buttons -->
+  <div
     *ngIf="currentImage"
-    (click)="deleteImage()"
-    class="absolute flex items-center p-1 text-white bg-red-600 rounded-full bottom-2 right-2 hover:bg-red-700"
+    class="absolute flex items-center space-x-2 bottom-2 right-2"
   >
-    <svg-icon
-      src="./assets/icons/heroicons/outline/trash.svg"
-      [svgClass]="'w-4 h-4'"
+    <!-- Edit Icon (only shown in edit mode) -->
+    <button
+      *ngIf="editMode"
+      (click)="fileInput.click()"
+      class="flex items-center p-1 text-white bg-blue-600 rounded-full hover:bg-blue-700"
     >
-    </svg-icon>
-  </button>
+      <svg-icon
+        src="./assets/icons/heroicons/outline/pencil.svg"
+        [svgClass]="'w-4 h-4'"
+      >
+      </svg-icon>
+    </button>
+
+    @if (canDelete) {
+      <button
+        (click)="deleteImage()"
+        class="flex items-center p-1 text-white bg-red-600 rounded-full hover:bg-red-700"
+      >
+        <svg-icon
+          src="./assets/icons/heroicons/outline/trash.svg"
+          [svgClass]="'w-4 h-4'"
+        >
+        </svg-icon>
+      </button>
+    }
+  </div>
+
   <!-- Hidden file input -->
   <input
     type="file"

@@ -15,12 +15,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImageUploaderComponent } from '@components/image-uploader/image-uploader.component';
 import { MultiSelectComponent } from '@components/select/multi-select/multi-select.component';
 import { NormalSelectComponent } from '@components/select/normal-select/normal-select.component';
 import { ClassesService } from '@service/modules/classes.service';
 import { StaffService } from '@service/modules/staff.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { environment } from 'environments/environment';
 @Component({
   selector: 'update-class-pageview',
   standalone: true,
@@ -31,6 +33,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     MultiSelectComponent,
     AngularSvgIconModule,
     NormalSelectComponent,
+    ImageUploaderComponent,
   ],
   templateUrl: './update-class-pageview.component.html',
   styleUrl: './update-class-pageview.component.scss',
@@ -46,6 +49,7 @@ export class UpdateClassPageviewComponent implements OnInit {
 
   staffs = computed(() => this._staffService.allStaffs() || []);
   gymClass = computed(() => this._classesService.gymClass());
+  fileUrl = environment.staicUrl;
 
   loading = this._staffService.loading;
   classLoading = this._classesService.loading;
@@ -63,6 +67,8 @@ export class UpdateClassPageviewComponent implements OnInit {
   selectedStaff = signal<string[]>([]);
   selectedDay = signal<string>('');
   classId = signal<string>('');
+  selectedImage = signal<File | null>(null);
+  currentClassImage = signal<string | null>(null);
 
   classForm: FormGroup;
 
@@ -97,6 +103,8 @@ export class UpdateClassPageviewComponent implements OnInit {
           );
 
           this.selectedDay.set(gymClass.day || '');
+
+          this.currentClassImage.set(gymClass.image || null);
         }
       },
       { allowSignalWrites: true }, //
@@ -134,6 +142,20 @@ export class UpdateClassPageviewComponent implements OnInit {
     this._router.navigate(['/admin/staffs/add']);
   }
 
+  onImageSelected(file: File | null) {
+    this.selectedImage.set(file);
+    const formData = new FormData();
+
+    if (file) {
+      formData.append('class', file);
+      this._classesService
+        .uploadImage(this.classId(), formData)
+        .subscribe(() => {
+          this._classesService.findOne(this.classId(), ['instructors']);
+        });
+    }
+  }
+
   submit() {
     if (this.classForm.invalid) {
       this._toast.error('Please fill in all required fields');
@@ -146,7 +168,7 @@ export class UpdateClassPageviewComponent implements OnInit {
     };
 
     this._classesService
-      .update(this.classId(),{
+      .update(this.classId(), {
         name: data.name,
         description: data.description,
         day: data.day,

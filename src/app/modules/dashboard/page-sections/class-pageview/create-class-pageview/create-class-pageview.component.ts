@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ImageUploaderComponent } from '@components/image-uploader/image-uploader.component';
 import { MultiSelectComponent } from '@components/select/multi-select/multi-select.component';
 import { NormalSelectComponent } from '@components/select/normal-select/normal-select.component';
 import { ClassesService } from '@service/modules/classes.service';
@@ -26,6 +27,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     MultiSelectComponent,
     AngularSvgIconModule,
     NormalSelectComponent,
+    ImageUploaderComponent,
   ],
   templateUrl: './create-class-pageview.component.html',
   styleUrl: './create-class-pageview.component.scss',
@@ -42,6 +44,8 @@ export class CreateClassPageviewComponent implements OnInit {
 
   loading = this._staffService.loading;
   classLoading = this._classesService.loading;
+
+  selectedImage: File = null;
 
   dayOptions = [
     { label: 'Monday', value: 'Monday' },
@@ -61,7 +65,7 @@ export class CreateClassPageviewComponent implements OnInit {
     description: ['', Validators.required],
     day: ['', Validators.required],
     color: ['#ff4836'],
-    capacity: [0, Validators.required],
+    capacity: [1, Validators.required],
     startTime: ['', Validators.required],
     endTime: ['', Validators.required],
   });
@@ -91,37 +95,43 @@ export class CreateClassPageviewComponent implements OnInit {
   addNewTrainer() {
     this._router.navigate(['/admin/staffs/add']);
   }
-
+  onImageSelected(event: File) {
+    this.selectedImage = event;
+  }
   submit() {
     if (this.classForm.invalid) {
       this._toast.error('Please fill in all required fields');
       return;
     }
 
-    const data = {
+    const formValues = {
       staffIds: this.selectedStaff,
       ...this.classForm.value,
+      class: this.selectedImage,
     };
 
-    this._classesService
-      .create({
-        name: data.name,
-        description: data.description,
-        day: data.day,
-        color: data.color,
-        capacity: data.capacity,
-        startTime: data.startTime,
-        endTime: data.endTime,
-        staffIds: data.staffIds,
-      })
-      .subscribe({
-        next: () => {
-          this.cancel();
-        },
-        error: () => {
-          this._toast.error('An error occurred while saving the data!');
-        },
-      });
+    const formData = new FormData();
+
+    for (const key in formValues) {
+      if (formValues.hasOwnProperty(key)) {
+        if (key === 'staffIds') {
+          formValues.staffIds.forEach((id: string) => {
+            formData.append('staffIds[]', id);
+          });
+        } else {
+          formData.append(key, formValues[key]);
+        }
+      }
+    }
+
+    this._classesService.create(formData).subscribe({
+      next: () => {
+        this.cancel();
+      },
+      error: () => {
+        this._toast.error('An error occurred while saving the data!');
+      },
+    });
   }
 
   cancel() {

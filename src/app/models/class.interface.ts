@@ -1,4 +1,4 @@
-import { Staff } from "./staff.interface";
+import { Staff } from './staff.interface';
 
 export interface GymClass {
   id: string;
@@ -8,6 +8,7 @@ export interface GymClass {
   color: string;
   capacity: number;
   startTime: string;
+  image: string;
   endTime: string;
   instructors: Staff[];
   created_at: Date;

@@ -36,6 +36,7 @@ export class ClassesService {
     startTime: '',
     endTime: '',
     instructors: [],
+    image: '',
     created_at: undefined,
     updated_at: undefined,
   });
@@ -129,22 +130,12 @@ export class ClassesService {
       });
   }
 
-  create(data: {
-    name: string;
-    description?: string;
-    day: string;
-    color: string;
-    capacity: number;
-    startTime: string;
-    endTime: string;
-    staffIds: string[];
-  }): Observable<any> {
+  create(data: FormData): Observable<any> {
     this._loading.set(true);
 
     return this._http.post<any>(`${environment.apiUrl}classes`, data).pipe(
       map((response) => {
         this._toast.success('gym class created successfully.');
-        this.getAllClasses();
         this._loading.set(false);
         return response;
       }),
@@ -177,6 +168,25 @@ export class ClassesService {
         map((response) => {
           this._toast.success('Class  updated successfully.');
 
+          this._loading.set(false);
+          return response;
+        }),
+        catchError((error) => {
+          this._loading.set(false);
+          this._toast.error(error.error.message);
+          throw error; // Re-throw the error to be handled by the component
+        }),
+      );
+  }
+
+  uploadImage(id: string, image: FormData): Observable<any> {
+    this._loading.set(true);
+
+    return this._http
+      .patch<any>(`${environment.apiUrl}classes/file/${id}`, image)
+      .pipe(
+        map((response) => {
+          this._toast.success('Class image uploaded Successfully.');
           this._loading.set(false);
           return response;
         }),
