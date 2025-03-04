@@ -83,11 +83,19 @@ export class EquipmemntCategoryService {
       });
   }
 
-  findOne(id: string) {
+  findOne(id: string, equipmentRelations = []) {
     this._loading.set(true);
 
+    const params = new HttpParams({
+      fromObject: {
+        'relations[]': equipmentRelations, // Add as many relations as needed
+      },
+    });
+
     this._http
-      .get<EquipmentCategory>(`${environment.apiUrl}equipment-category/${id}`)
+      .get<EquipmentCategory>(`${environment.apiUrl}equipment-category/${id}`, {
+        params,
+      })
       .subscribe({
         next: (response) => {
           this._equipmentCategory.set(response);

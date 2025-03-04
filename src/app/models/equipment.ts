@@ -20,7 +20,7 @@ export interface Equipment {
   used_for: string;
   short_description:string
   status: string;
-  purchase_date: Date;
+  purchase_date: string;
   price: number;
   quantity: number;
  files: Files[];
