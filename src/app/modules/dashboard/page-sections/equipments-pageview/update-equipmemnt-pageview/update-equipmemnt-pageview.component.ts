@@ -236,20 +236,29 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  onImageSelected(event: any, index: number,id:string) {
+  onImageSelected(event: any, index: number, id: string) {
     if (event) {
       this.selectedImages()[index] = event;
       const formData = new FormData();
 
       formData.append('equipmentImages', event);
-      this._equipmemntService
-        .uploadImage(id, formData)
-        .subscribe(() => {
+      if (id) {
+        this._equipmemntService.updateImage(id, formData).subscribe(() => {
           this._equipmemntService.findOne(this.equipmentId(), [
             'files',
             'categories',
           ]);
         });
+      } else {
+        this._equipmemntService
+          .uploadImage(this.equipmentId(), formData)
+          .subscribe(() => {
+            this._equipmemntService.findOne(this.equipmentId(), [
+              'files',
+              'categories',
+            ]);
+          });
+      }
     } else {
       // Only allow deletion if the image is not from the API or if there are more than the minimum required images.
       if (

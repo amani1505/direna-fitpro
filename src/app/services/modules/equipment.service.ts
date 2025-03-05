@@ -178,11 +178,30 @@ export class EquipmentService {
       );
   }
 
-  uploadImage(id: string, image: FormData): Observable<any> {
+  updateImage(id: string, image: FormData): Observable<any> {
     this._loading.set(true);
 
     return this._http
       .patch<any>(`${environment.apiUrl}equipment/file/${id}`, image)
+      .pipe(
+        map((response) => {
+          this._toast.success('Equipment image uploaded Successfully.');
+          this._loading.set(false);
+          return response;
+        }),
+        catchError((error) => {
+          this._loading.set(false);
+          this._toast.error(error.error.message);
+          throw error; // Re-throw the error to be handled by the component
+        }),
+      );
+  }
+
+  uploadImage(id: string, image: FormData): Observable<any> {
+    this._loading.set(true);
+
+    return this._http
+      .post<any>(`${environment.apiUrl}equipment/file/${id}`, image)
       .pipe(
         map((response) => {
           this._toast.success('Equipment image uploaded Successfully.');
