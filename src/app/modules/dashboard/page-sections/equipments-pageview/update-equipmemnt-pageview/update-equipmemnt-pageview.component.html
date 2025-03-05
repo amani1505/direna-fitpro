@@ -29,7 +29,13 @@
                   [editMode]="true"
                   [canDelete]="canRemoveUploader($index)"
                   [isFromApi]="!!selectedImages()[$index]?.file_path"
-                  (imageSelected)="onImageSelected($event, $index)"
+                  (imageSelected)="
+                    onImageSelected(
+                      $event,
+                      $index,
+                      selectedImages()[$index]?.id || null
+                    )
+                  "
                 ></image-uploader>
 
                 <!-- Delete Button (Conditional) -->
@@ -429,7 +435,7 @@
       [disabled]="
         equipmentForm.invalid ||
         createLoading() ||
-        selectedCategories.length === 0 ||
+        selectedCategories().length === 0 ||
         !selectedStatus() ||
         !selectedUsedFor()
       "
@@ -439,11 +445,13 @@
         'bg-green-500 hover:bg-green-700':
           !equipmentForm.invalid &&
           !createLoading() &&
-          selectedCategories.length > 0,
+          selectedCategories().length > 0 &&
+          selectedStatus() &&
+          selectedUsedFor(),
         'bg-gray-300':
           equipmentForm.invalid ||
           createLoading() ||
-          selectedCategories.length === 0 ||
+          selectedCategories().length === 0 ||
           !selectedStatus() ||
           !selectedUsedFor(),
       }"

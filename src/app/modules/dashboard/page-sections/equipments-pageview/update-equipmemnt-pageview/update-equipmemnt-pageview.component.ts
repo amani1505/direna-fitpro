@@ -4,6 +4,7 @@ import {
   computed,
   effect,
   inject,
+  OnDestroy,
   OnInit,
   signal,
 } from '@angular/core';
@@ -26,6 +27,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 import { QuillModule } from 'ngx-quill';
 import Quill from 'quill';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'update-equipmemnt-pageview',
@@ -43,14 +45,17 @@ import Quill from 'quill';
   templateUrl: './update-equipmemnt-pageview.component.html',
   styleUrl: './update-equipmemnt-pageview.component.scss',
 })
-export class UpdateEquipmemntPageviewComponent implements OnInit {
+export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);
   private _equipmemntService = inject(EquipmentService);
   private _equipmentCategoryService = inject(EquipmemntCategoryService);
   private _toast = inject(ToastService);
   private _route = inject(ActivatedRoute);
-
   private quillInstance: Quill | null = null;
+  private isSettingContent = false;
+  private quillChangeHandler: (() => void) | null = null;
+  private isUpdatingContent = false;
+
   fileUrl = environment.staicUrl;
 
   readonly MAX_IMAGES = 10;
@@ -81,7 +86,6 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
   selectedCategories = signal<Array<string>>([]);
   selectedStatus = signal<string>('');
   selectedUsedFor = signal<string>('');
-
   selectedImages = signal<Files[]>(new Array(this.MIN_IMAGES).fill(null));
   imageUploaders: number[] = [0, 1, 2, 3];
   equipmentId = signal<string>('');
@@ -108,7 +112,6 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
         const equipment = this.equipment();
 
         if (equipment) {
-          this.equipmentForm.get('description').setValue(equipment.description);
           const formattedPurchaseDate = this.formatDateForInput(
             equipment.purchase_date,
           );
@@ -134,9 +137,10 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
           this.selectedUsedFor.set(equipment.used_for || '');
 
           this.selectedImages.set(equipment.files || null);
-
           if (this.quillInstance) {
-            this.quillInstance.root.innerHTML = equipment.description;
+            this.isSettingContent = true;
+            this.quillInstance.setText(equipment.description || '');
+            this.isSettingContent = false;
           }
         }
       },
@@ -232,9 +236,20 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
     });
   }
 
-  onImageSelected(event: any, index: number) {
+  onImageSelected(event: any, index: number,id:string) {
     if (event) {
       this.selectedImages()[index] = event;
+      const formData = new FormData();
+
+      formData.append('equipmentImages', event);
+      this._equipmemntService
+        .uploadImage(id, formData)
+        .subscribe(() => {
+          this._equipmemntService.findOne(this.equipmentId(), [
+            'files',
+            'categories',
+          ]);
+        });
     } else {
       // Only allow deletion if the image is not from the API or if there are more than the minimum required images.
       if (
@@ -257,20 +272,69 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
   onEditorCreated(quill: Quill) {
     this.quillInstance = quill;
 
-    const currentDescription = this.equipmentForm.get('description').value;
-    if (currentDescription) {
-      quill.root.innerHTML = currentDescription;
+    // Remove any existing change handler to prevent multiple listeners
+    if (this.quillChangeHandler) {
+      this.quillChangeHandler();
+      this.quillChangeHandler = null;
+    }
+
+    const textChangeHandler = (delta: any, oldDelta: any, source: string) => {
+      // Only handle user-initiated changes
+      if (source === 'user' && !this.isUpdatingContent) {
+        this.updateDescriptionFromQuill(quill);
+      }
+    };
+
+    // Add the event listener
+    quill.on('text-change', textChangeHandler);
+
+    // Store the cleanup function
+    this.quillChangeHandler = () => {
+      quill.off('text-change', textChangeHandler);
+    };
+  }
+
+  private updateDescriptionFromQuill(quill: Quill) {
+    try {
+      // Prevent recursive updates
+      this.isUpdatingContent = true;
+
+      // Get the HTML content from Quill
+      const htmlContent = quill.root.innerHTML;
+
+      // Update form control without triggering events
+      this.equipmentForm.get('description').setValue(htmlContent, {
+        emitEvent: false,
+        onlySelf: true,
+      });
+    } catch (error) {
+      console.error('Error updating description:', error);
+      this._toast.error('Could not update description');
+    } finally {
+      // Always reset the flag
+      this.isUpdatingContent = false;
     }
   }
 
-  onDescriptionChange(event: any) {
-    this.equipmentForm.get('description').setValue(event.html);
+  onDescriptionChange(event: { html: string }) {
+    // Only update Quill if not already updating
+    if (!this.isUpdatingContent && this.quillInstance) {
+      try {
+        this.isUpdatingContent = true;
+
+        // Directly set HTML content using clipboard method
+        this.quillInstance.clipboard.dangerouslyPasteHTML(event.html);
+      } catch (error) {
+        this._toast.error('Could not set description');
+      } finally {
+        this.isUpdatingContent = false;
+      }
+    }
   }
 
   submit() {
     if (this.equipmentForm.invalid) {
       this._toast.error('Please fill in all required fields');
-      console.log('Please fill', this.equipmentForm);
       return;
     }
 
@@ -279,10 +343,24 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
       ...this.equipmentForm.value,
     };
 
-    this._equipmemntService.update(this.equipmentId(), formValues);
+    this._equipmemntService.update(this.equipmentId(), formValues).subscribe({
+      next: () => {
+        this.cancel();
+      },
+      error: (error) => {
+        this._toast.error('An error occurred while updating equipment');
+      },
+    });
   }
 
   cancel() {
     this._location.back();
+  }
+  ngOnDestroy() {
+    // Clean up Quill change handler
+    if (this.quillChangeHandler) {
+      this.quillChangeHandler();
+      this.quillChangeHandler = null;
+    }
   }
 }
