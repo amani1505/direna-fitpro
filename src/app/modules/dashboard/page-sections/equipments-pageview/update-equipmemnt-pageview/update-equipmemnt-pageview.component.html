@@ -5,26 +5,38 @@
     Update Equipment
   </h3>
   <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+    <!-- Equipment Image Section -->
     <div class="relative bg-white shadow dark:bg-night-600 rounded-xl">
-      <div class="">
+      <div>
         <div
           class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
         >
-          Equipment image
+          Equipment Image
         </div>
         <div class="p-5">
           <div class="flex flex-wrap gap-2">
+            <!-- Loop through image uploaders -->
             @for (item of imageUploaders; track $index) {
               <div class="relative">
                 <image-uploader
                   [width]="'130px'"
                   [height]="'130px'"
-                  [initialImage]="fileUrl + selectedImages()[$index]?.file_path"
+                  [initialImage]="
+                    selectedImages()[$index]
+                      ? fileUrl + selectedImages()[$index]?.file_path
+                      : null
+                  "
                   [editMode]="true"
+                  [canDelete]="canRemoveUploader($index)"
+                  [isFromApi]="!!selectedImages()[$index]?.file_path"
                   (imageSelected)="onImageSelected($event, $index)"
                 ></image-uploader>
 
-                @if (canRemoveUploader($index)) {
+                <!-- Delete Button (Conditional) -->
+                @if (
+                  canRemoveUploader($index) &&
+                  !selectedImages()[$index]?.file_path
+                ) {
                   <button
                     type="button"
                     (click)="removeImageUploader($index)"
@@ -40,6 +52,7 @@
               </div>
             }
 
+            <!-- Add New Image Button (Conditional) -->
             @if (canAddMoreImages()) {
               <button
                 type="button"
@@ -54,6 +67,7 @@
             }
           </div>
 
+          <!-- Image Upload Instructions -->
           <div class="mt-8">
             <div
               class="flex items-center gap-2 mt-2 text-wrap dark:text-night-50"
@@ -75,6 +89,7 @@
       </div>
     </div>
 
+    <!-- Equipment Details Section -->
     <div class="col-span-2">
       <div class="bg-white shadow rounded-xl dark:bg-night-600">
         <div
@@ -84,6 +99,7 @@
         </div>
         <div class="p-5">
           <div class="grid grid-cols-1 gap-2 xl:grid-cols-3">
+            <!-- Equipment Name -->
             <div class="form__group">
               <div class="relative">
                 <label class="block mb-1 text-sm font-medium text-gray-700"
@@ -109,6 +125,8 @@
                 <div class="is__invalid-error">Equipment Name is Required</div>
               }
             </div>
+
+            <!-- Model Number -->
             <div class="form__group">
               <div class="relative">
                 <label class="block mb-1 text-sm font-medium text-gray-700"
@@ -135,6 +153,7 @@
               }
             </div>
 
+            <!-- Serial Number -->
             <div class="form__group">
               <div class="relative">
                 <label class="block mb-1 text-sm font-medium text-gray-700"
@@ -161,6 +180,7 @@
               }
             </div>
 
+            <!-- Equipment Categories -->
             <div class="form__group">
               <label class="block mb-1 text-sm font-medium text-gray-700"
                 >Equipment Categories<span class="text-[#e11d48]"
@@ -177,6 +197,7 @@
               ></MultiSelect>
             </div>
 
+            <!-- Purchase Date -->
             <div class="form__group">
               <div class="relative">
                 <label
@@ -205,6 +226,7 @@
               }
             </div>
 
+            <!-- Quantity -->
             <div class="form__group">
               <div class="relative">
                 <label
@@ -234,6 +256,7 @@
               }
             </div>
 
+            <!-- Price -->
             <div class="form__group">
               <div class="relative">
                 <label
@@ -263,6 +286,7 @@
               }
             </div>
 
+            <!-- Short Description -->
             <div class="col-span-2 form__group">
               <div class="relative">
                 <label class="block mb-1 text-sm font-medium text-gray-700"
@@ -290,6 +314,8 @@
               }
             </div>
           </div>
+
+          <!-- Description & Product Feature -->
           <div class="mt-2 form__group">
             <div class="relative">
               <label class="block mb-2 text-sm font-medium text-gray-700"
@@ -298,13 +324,15 @@
               </label>
               <div>
                 <quill-editor
-                (onContentChanged)="onDescriptionChange($event)"
-                [styles]="{ height: '200px', width: '100%' }"
-                [ngClass]="{
-                  'is__invalid-input': equipmentForm.get('description').hasError('required'),
-                }"
-                formControlName="description"
-              ></quill-editor>
+                  (onContentChanged)="onDescriptionChange($event)"
+                  [styles]="{ height: '200px', width: '100%' }"
+                  [ngClass]="{
+                    'is__invalid-input': equipmentForm
+                      .get('description')
+                      .hasError('required'),
+                  }"
+                  formControlName="description"
+                ></quill-editor>
               </div>
             </div>
             @if (equipmentForm.get("description").hasError("required")) {
@@ -314,6 +342,7 @@
             }
           </div>
 
+          <!-- Publish Status -->
           <div class="form__group">
             <label class="block mt-2 text-sm font-medium text-gray-700"
               >Publish</label
@@ -343,6 +372,7 @@
       </div>
     </div>
 
+    <!-- Equipment Status Section -->
     <div class="mt-4 bg-white shadow rounded-xl dark:bg-night-600">
       <div
         class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
@@ -386,6 +416,7 @@
     </div>
   </div>
 
+  <!-- Form Actions -->
   <div class="flex items-center justify-end gap-3 p-3">
     <button
       (click)="cancel()"
@@ -400,8 +431,7 @@
         createLoading() ||
         selectedCategories.length === 0 ||
         !selectedStatus() ||
-        !selectedUsedFor() ||
-        getValidImageCount() < 4
+        !selectedUsedFor()
       "
       (click)="submit()"
       class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
@@ -409,15 +439,13 @@
         'bg-green-500 hover:bg-green-700':
           !equipmentForm.invalid &&
           !createLoading() &&
-          getValidImageCount() >= 4 &&
           selectedCategories.length > 0,
         'bg-gray-300':
           equipmentForm.invalid ||
           createLoading() ||
           selectedCategories.length === 0 ||
           !selectedStatus() ||
-          !selectedUsedFor() ||
-          getValidImageCount() < 4,
+          !selectedUsedFor(),
       }"
     >
       @if (createLoading()) {

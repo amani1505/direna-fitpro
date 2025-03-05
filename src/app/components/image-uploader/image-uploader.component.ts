@@ -23,10 +23,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 export class ImageUploaderComponent implements OnInit, OnChanges {
   @Input() width: string = '200px';
   @Input() height: string = '200px';
-  @Input() initialImage: string | null = null; // New input for initial image
-  @Input() editMode: boolean = false; // New input to control edit mode
+  @Input() initialImage: string | null = null;
+  @Input() editMode: boolean = false;
   @Input() canDelete: boolean = true;
-
+  @Input() isFromApi: boolean = false;
   @Output() imageSelected = new EventEmitter<File>();
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
@@ -35,16 +35,18 @@ export class ImageUploaderComponent implements OnInit, OnChanges {
   isDragOver: boolean = false;
 
   ngOnInit() {
-    // Set initial image if provided
     if (this.initialImage) {
       this.currentImage = this.initialImage;
     }
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Update current image if initialImage changes
-    if (changes['initialImage'] && changes['initialImage'].currentValue) {
-      this.currentImage = changes['initialImage'].currentValue;
+    if (changes['initialImage']) {
+      if (!changes['initialImage'].currentValue) {
+        this.currentImage = null;
+      } else {
+        this.currentImage = changes['initialImage'].currentValue;
+      }
     }
   }
 

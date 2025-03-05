@@ -8,7 +8,6 @@
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
 >
-  <!-- Display selected image -->
   <img
     *ngIf="currentImage"
     [src]="currentImage"
@@ -18,7 +17,6 @@
     class="rounded-md"
   />
 
-  <!-- Centered text and upload button -->
   <div
     class="absolute inset-0 flex flex-col items-center justify-center px-2 text-neutral-600 font-raleway"
     *ngIf="!currentImage"
@@ -40,12 +38,10 @@
     >
   </div>
 
-  <!-- Edit and Delete Buttons -->
   <div
     *ngIf="currentImage"
     class="absolute flex items-center space-x-2 bottom-2 right-2"
   >
-    <!-- Edit Icon (only shown in edit mode) -->
     <button
       *ngIf="editMode"
       (click)="fileInput.click()"
@@ -58,7 +54,7 @@
       </svg-icon>
     </button>
 
-    @if (canDelete) {
+    @if (canDelete && !isFromApi) {
       <button
         (click)="deleteImage()"
         class="flex items-center p-1 text-white bg-red-600 rounded-full hover:bg-red-700"
@@ -72,7 +68,6 @@
     }
   </div>
 
-  <!-- Hidden file input -->
   <input
     type="file"
     #fileInput

@@ -51,16 +51,13 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
   private _route = inject(ActivatedRoute);
 
   private quillInstance: Quill | null = null;
-  // Environment configuration
   fileUrl = environment.staicUrl;
 
-  // Image constraints
   readonly MAX_IMAGES = 10;
   readonly MIN_IMAGES = 4;
 
   private _location = inject(Location);
 
-  // Computed signals for categories and equipment
   categories = computed(
     () => this._equipmentCategoryService.allEquipmentCategories() || [],
   );
@@ -68,7 +65,6 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
   equipment = computed(() => this._equipmemntService.equipment());
   createLoading = this._equipmentCategoryService.loading;
 
-  // Predefined status and usage options
   status = [
     { label: 'New Arrival', value: 'new arrival' },
     { label: 'Out of Stock', value: 'out of stock' },
@@ -82,25 +78,17 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
     { label: 'Personal', value: 'personal' },
   ];
 
-  // Signals to manage form state
   selectedCategories = signal<Array<string>>([]);
   selectedStatus = signal<string>('');
   selectedUsedFor = signal<string>('');
 
-  // Signal for managing selected images (initialized with 4 null slots)
   selectedImages = signal<Files[]>(new Array(this.MIN_IMAGES).fill(null));
-
-  // Array to manage image uploader slots
   imageUploaders: number[] = [0, 1, 2, 3];
-
-  // Signal to store current equipment ID
   equipmentId = signal<string>('');
 
-  // Reactive form group
   equipmentForm: FormGroup;
 
   constructor() {
-    // Initialize the form with validators
     this.equipmentForm = this._formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -115,14 +103,15 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
       used_for: ['', Validators.required],
     });
 
-    // Effect to populate form when equipment data is loaded
     effect(
       () => {
         const equipment = this.equipment();
 
         if (equipment) {
           this.equipmentForm.get('description').setValue(equipment.description);
-          const formattedPurchaseDate = this.formatDateForInput(equipment.purchase_date);
+          const formattedPurchaseDate = this.formatDateForInput(
+            equipment.purchase_date,
+          );
           this.equipmentForm.patchValue({
             title: equipment.title,
             description: equipment.description || '',
@@ -137,16 +126,13 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
             used_for: equipment.used_for,
           });
 
-          // Set selected categories
           this.selectedCategories.set(
             equipment.categories?.map((category) => category.id),
           );
 
-          // Set selected status and used for
           this.selectedStatus.set(equipment.status || '');
           this.selectedUsedFor.set(equipment.used_for || '');
 
-          // Set selected images
           this.selectedImages.set(equipment.files || null);
 
           if (this.quillInstance) {
@@ -157,62 +143,68 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
       { allowSignalWrites: true },
     );
   }
+
   private formatDateForInput(isoDate: string): string {
-    if (!isoDate) return ''; // Handle empty or invalid dates
+    if (!isoDate) return '';
     const date = new Date(isoDate);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+
   ngOnInit(): void {
-    // Get equipment ID from route
     const id = this._route.snapshot.paramMap.get('id');
     this.equipmentId.set(id);
 
-    // Fetch equipment categories
     this._equipmentCategoryService.getAllEquipmentCategory();
-
-    // Fetch specific equipment details with related files and categories
     this._equipmemntService.findOne(id, ['files', 'categories']);
   }
 
-  // Method to check if more image uploaders can be added
   canAddMoreImages(): boolean {
     return this.imageUploaders.length < this.MAX_IMAGES;
   }
 
-  // Method to check if an uploader can be removed
   canRemoveUploader(index: number): boolean {
-    return this.imageUploaders.length > this.MIN_IMAGES;
+    // Allow deletion only if:
+    // 1. There are more than the minimum required images, OR
+    // 2. The image at the current index is a newly uploaded image (not from the API).
+    return (
+      this.imageUploaders.length > this.MIN_IMAGES ||
+      !this.selectedImages()[index]?.file_path // Check if the image is not from the API
+    );
   }
 
-  // Add a new image uploader
   addImageUploader(): void {
     if (this.canAddMoreImages()) {
       const newIndex = this.imageUploaders.length;
       this.imageUploaders.push(newIndex);
-      this.selectedImages()[newIndex] = null;
+      this.selectedImages()[newIndex] = null; // Initialize new slot as null
     } else {
       this._toast.warning(`Maximum of ${this.MAX_IMAGES} images allowed`);
     }
   }
 
-  // Remove an image uploader
   removeImageUploader(index: number): void {
     if (this.canRemoveUploader(index)) {
-      // Remove the uploader at this index
-      this.imageUploaders.splice(index, 1);
-      this.selectedImages().splice(index, 1);
-
-      // Reassign indices to match array positions
-      this.imageUploaders = this.imageUploaders.map((_, i) => i);
+      // Only remove the image if it's not from the API or if there are more than the minimum required images.
+      if (
+        this.imageUploaders.length > this.MIN_IMAGES ||
+        !this.selectedImages()[index]?.file_path
+      ) {
+        this.imageUploaders.splice(index, 1);
+        this.selectedImages().splice(index, 1);
+        this.imageUploaders = this.imageUploaders.map((_, i) => i);
+      } else {
+        this._toast.warning(
+          'You cannot delete this image unless you upload a new one.',
+        );
+      }
     } else {
       this._toast.warning(`Minimum of ${this.MIN_IMAGES} images required`);
     }
   }
 
-  // Transform categories for multi-select
   transformToMultiSelectOptions = (
     apiData: Array<any>,
   ): Array<{ label: string; value: string }> => {
@@ -222,12 +214,10 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
     }));
   };
 
-  // Select categories
   selectCategory(ids: any) {
     this.selectedCategories.set(ids);
   }
 
-  // Select status
   selectStatus(status: string) {
     this.selectedStatus.set(status);
     this.equipmentForm.patchValue({
@@ -235,7 +225,6 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
     });
   }
 
-  // Select used for
   selectUsedFor(status: string) {
     this.selectedUsedFor.set(status);
     this.equipmentForm.patchValue({
@@ -243,16 +232,24 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
     });
   }
 
-  // Handle image selection
   onImageSelected(event: any, index: number) {
     if (event) {
       this.selectedImages()[index] = event;
     } else {
-      this.selectedImages().splice(index, 1);
+      // Only allow deletion if the image is not from the API or if there are more than the minimum required images.
+      if (
+        this.imageUploaders.length > this.MIN_IMAGES ||
+        !this.selectedImages()[index]?.file_path
+      ) {
+        this.selectedImages().splice(index, 1);
+      } else {
+        this._toast.warning(
+          'You cannot delete this image unless you upload a new one.',
+        );
+      }
     }
   }
 
-  // Get count of valid images
   getValidImageCount(): number {
     return this.selectedImages().filter((img) => img !== null).length;
   }
@@ -270,32 +267,21 @@ export class UpdateEquipmemntPageviewComponent implements OnInit {
     this.equipmentForm.get('description').setValue(event.html);
   }
 
-  // Submit form
   submit() {
     if (this.equipmentForm.invalid) {
       this._toast.error('Please fill in all required fields');
+      console.log('Please fill', this.equipmentForm);
       return;
     }
 
     const formValues = {
       equipmentCategoryIds: this.selectedCategories(),
       ...this.equipmentForm.value,
-      images: this.selectedImages().filter((img) => img !== null),
     };
 
-    this._equipmemntService.update(this.equipmentId(), formValues).subscribe({
-      next: () => {
-        this._toast.success('Equipment updated successfully');
-        this.cancel();
-      },
-      error: (error) => {
-        console.error('Update error:', error);
-        this._toast.error('An error occurred while updating equipment');
-      },
-    });
+    this._equipmemntService.update(this.equipmentId(), formValues);
   }
 
-  // Cancel and go back
   cancel() {
     this._location.back();
   }
