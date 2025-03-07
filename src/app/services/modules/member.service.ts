@@ -38,6 +38,7 @@ export class MemberService {
     phone: '',
     gender: '',
     services: [],
+    isActive: false,
     branch: {
       id: '',
       city: '',
@@ -170,8 +171,6 @@ export class MemberService {
       .patch<any>(`${environment.apiUrl}member/${id}`, data)
       .pipe(
         map((response) => {
-          this._toast.success('Member updated successfully.');
-
           this._loading.set(false);
           return response;
         }),

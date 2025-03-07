@@ -1,1 +1,240 @@
-<p>view-member-pageview works!</p>
+<section
+  class="p-6 mb-6 text-gray-700 bg-white dark:text-night-50 dark:bg-night-700 rounded-2xl gym-glassmorphism animate-fade-in"
+>
+  <div
+    class="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between"
+  >
+    <div class="flex flex-col items-start md:items-center gap-7 md:flex-row">
+      <div class="relative">
+        <div
+          class="w-24 h-24 overflow-hidden border-4 rounded-full md:h-32 md:w-32 border-gym ring-4 ring-secondary-500"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3"
+            alt="avatar"
+            class="object-cover w-full h-full"
+          />
+        </div>
+        <div
+          class="absolute bottom-0 right-0 w-6 h-6 border-2 border-white rounded-full"
+          [ngClass]="{
+            'bg-green-500': member().isActive === true,
+            'bg-red-500': member().isActive === false,
+          }"
+        ></div>
+      </div>
+      <div>
+        <div>
+          <span
+            class="rounded-[30px] bg-primary-50 px-2 py-0.5 text-xs font-medium text-primary-500 m-[1px] border-primary-500 border me-2"
+          >
+            Member #MEM001
+          </span>
+
+          <span
+            class="rounded-[30px] px-2 py-0.5 text-xs m-[1px] border capitalize font-[500]"
+            [ngClass]="{
+              'bg-green-50  text-green-500 border-green-500':
+                member().isActive === true,
+              'bg-red-50  text-red-500 border-red-500':
+                member().isActive === false,
+            }"
+          >
+            {{ member().isActive ? "active" : "inactive" }}
+          </span>
+        </div>
+        <div>
+          <h1 class="mt-2 text-xl font-[500] md:text-2xl">
+            {{ member().fullname }}
+          </h1>
+          <div class="text-gray-500 capitalize">
+            {{ member().gender }}
+          </div>
+          <div
+            class="flex flex-col gap-1 mt-1 text-gray-500 md:flex-row md:items-center md:gap-4"
+          >
+            <span>{{ member().email }}</span>
+            <span class="hidden md:inline">•</span>
+            <span>{{ member().phone }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="flex rounded-md bg-gray-200 px-4 py-2.5 text-xs text-gray-500 hover:bg-gray-300 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 capitalize items-center gap-2"
+    >
+      <div>
+        <svg-icon
+          src="./assets/icons/heroicons/solid/calender-days.svg"
+          [svgClass]="'w-7 h-7 text-primary-500'"
+          class="inline-block"
+        ></svg-icon>
+      </div>
+      <div>
+        <div class="text-sm">Member since</div>
+        <div class="text-xs text-gray-500">
+          {{ member().created_at | date: "fullDate" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div
+      class="space-y-6 bg-white rounded-lg shadow dark:text-night-50 dark:bg-night-700"
+    >
+      <!--================ MEMBER DETAILS CARD================-->
+      <div class="">
+        <div class="p-4 rounded-t-lg bg-primary-50">
+          <div class="flex items-center gap-2 text-gym-dark">
+            <svg-icon
+              src="./assets/icons/heroicons/solid/user.svg"
+              [svgClass]="'w-7 h-7 text-primary-500'"
+              class="inline-block"
+            ></svg-icon>
+            <span class="text-primary-500 font-[500] text-xl"
+              >Member Details</span
+            >
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div
+              class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-night-600 dark:text-night-200"
+            >
+              <div
+                class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full dark:bg-night-400 dark:text-night-200"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/solid/building-office-2.svg"
+                  [svgClass]="'w-6 h-6 text-primary-500'"
+                  class="inline-block"
+                ></svg-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 dark:text-night-200">Branch</p>
+                <p class="font-medium">
+                  {{ member().branch.road + ", " + member().branch.city }}
+                </p>
+              </div>
+            </div>
+            <div
+              class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-night-600 dark:text-night-200"
+            >
+              <div
+                class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full dark:bg-night-400 dark:text-night-200"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/solid/calender-days.svg"
+                  [svgClass]="'w-6 h-6 text-primary-500'"
+                  class="inline-block"
+                ></svg-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 dark:text-night-200">Age</p>
+                <p class="font-medium">{{ member().age }} years</p>
+              </div>
+            </div>
+
+            <div
+              class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-night-600 dark:text-night-200"
+            >
+              <div
+                class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full dark:bg-night-400"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/arrow-trending-up.svg"
+                  [svgClass]="'w-6 h-6 text-primary-500'"
+                  class="inline-block"
+                ></svg-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 dark:text-night-200">Height</p>
+                <p class="font-medium">{{ member().height }}</p>
+              </div>
+            </div>
+
+            <div
+              class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-night-600 dark:text-night-200"
+            >
+              <div
+                class="flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full dark:bg-night-400"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/arrow-trending-up.svg"
+                  [svgClass]="'w-7 h-7 text-primary-500'"
+                  class="inline-block"
+                ></svg-icon>
+              </div>
+              <div>
+                <p class="text-sm text-gray-500 dark:text-night-200">Weight</p>
+                <p class="font-medium">{{ member().weight }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="p-4 mt-4 rounded-lg bg-gray-50 dark:bg-night-600 dark:text-night-200"
+          >
+            <div class="flex items-start gap-3">
+              <div
+                class="flex items-center justify-center w-8 h-8 mt-1 bg-gray-100 rounded-full dark:bg-night-400"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/fire.svg"
+                  [svgClass]="'w-7 h-7 text-primary-500'"
+                  class="inline-block"
+                ></svg-icon>
+              </div>
+              <div>
+                <p class="mb-1 text-sm text-gray-500 dark:text-night-200">
+                  Fitness Goal
+                </p>
+                <p class="font-medium text-balance">{{ member().goal }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="space-y-6 bg-white rounded-lg shadow dark:text-night-50 dark:bg-night-700"
+    >
+      <!--================ SERVICVES CARD================-->
+      <div class="">
+        <div class="p-4 rounded-t-lg bg-primary-50">
+          <div class="flex items-center gap-2 text-gym-dark">
+            <svg-icon
+              src="./assets/icons/heroicons/solid/wrench-screwdriver.svg"
+              [svgClass]="'w-7 h-7 text-primary-500'"
+              class="inline-block"
+            ></svg-icon>
+            <span class="text-primary-500 font-[500] text-xl">Services</span>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="">
+            <div
+              class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-night-600 dark:text-night-200"
+            >
+              @for (service of member().services; track $index) {
+                <div>
+                  <p class="font-medium">
+                    {{ service.name }}
+                  </p>
+                  <p class="text-sm text-gray-500 dark:text-night-200">
+                    {{service.description}}
+                  </p>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

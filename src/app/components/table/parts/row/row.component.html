@@ -42,6 +42,7 @@
       <td class="">
         <div
           class="relative inline-flex items-center cursor-pointer"
+          (click)="column.action(data)"
           [ngClass]="{
             'opacity-50': data[column.key] !== true,
             'opacity-100': data[column.key] === true,

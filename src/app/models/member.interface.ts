@@ -21,6 +21,7 @@ export interface Member {
   goal: string;
   services: Array<Services>;
   branch: Branch;
+  isActive: boolean;
   // package: PackageInterface;
   // workout: WorkoutPlanInterface;
   created_at: Date;

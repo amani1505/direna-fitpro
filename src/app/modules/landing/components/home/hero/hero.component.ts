@@ -21,6 +21,6 @@ export class HeroComponent {
     image: './assets/images/hero-banner.png',
     title: 'Work Hard To Get Better Life',
     subtitle:
-      'Duis mollis felis quis libero dictum vehicula. Duis dictum lorem mi, a faucibus nisi eleifend eu.',
+      'Achieve your health goals with modern equipment and tailored workout programs',
   };
 }

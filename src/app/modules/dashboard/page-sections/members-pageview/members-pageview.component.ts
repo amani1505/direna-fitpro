@@ -8,6 +8,7 @@ import {
   TableActions,
 } from '@model/TableColumn.interface';
 import { MemberService } from '@service/modules/member.service';
+import { ToastService } from '@service/toast.service';
 
 @Component({
   selector: 'members-pageview',
@@ -20,6 +21,7 @@ export class MembersPageviewComponent implements OnInit {
   private _memberService = inject(MemberService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
+  private _toast = inject(ToastService);
 
   isModalOpen = signal<boolean>(false);
   memberId: string = '';
@@ -57,7 +59,23 @@ export class MembersPageviewComponent implements OnInit {
     { key: 'weight', type: 'text' },
     { key: 'height', type: 'text' },
     { key: 'goal', type: 'text' },
-    { key: 'isActive', type: 'status' },
+    {
+      key: 'isActive',
+      type: 'status',
+      action: (data: any) => {
+        this._memberService
+          .update(data.id, { isActive: !data.isActive })
+          .subscribe({
+            next: () => {
+              this._toast.success('Member Status updated successfully.');
+              this._memberService.findAll()
+            },
+            error: () => {
+              this._toast.error('Failed to update the Status');
+            },
+          });
+      },
+    },
     {
       key: 'action',
       type: 'button',

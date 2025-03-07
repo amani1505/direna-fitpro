@@ -21,6 +21,7 @@ export interface RowColumn extends BaseTableColumn {
   alt?: string;
   actionType?: Array<'delete' | 'update' | 'view'>;
   icon?: string;
+  action?: Function;
 }
 
 export interface TableActions {

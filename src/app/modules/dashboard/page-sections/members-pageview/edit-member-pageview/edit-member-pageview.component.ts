@@ -168,6 +168,7 @@ export class EditMemberPageviewComponent implements OnInit {
 
     this._memberService.update(this.memberId(), data).subscribe({
       next: () => {
+        this._toast.success('Member updated successfully.');
         this.cancel();
       },
       error: () => {

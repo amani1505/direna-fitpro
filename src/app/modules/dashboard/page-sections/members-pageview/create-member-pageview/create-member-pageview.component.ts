@@ -62,7 +62,7 @@ export class CreateMemberPageviewComponent implements OnInit {
     fullname: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', Validators.required],
-    branchId: ['',Validators.required],
+    branchId: ['', Validators.required],
     gender: ['', Validators.required],
     age: [0],
     weight: ['', Validators.required],
@@ -93,7 +93,6 @@ export class CreateMemberPageviewComponent implements OnInit {
     }));
   };
 
-
   selectService(ids: any) {
     this.selectedServices = ids;
   }
@@ -119,6 +118,7 @@ export class CreateMemberPageviewComponent implements OnInit {
   submit() {
     if (this.memberForm.invalid) {
       this._toast.error('Please fill in all required fields');
+
       return;
     }
 

@@ -212,8 +212,6 @@
           type="text"
           id="height"
           suffix=" cm"
-          mask="0000"
-          [validation]="true"
           class="block text-md peer input-field"
           placeholder="Enter Height "
           formControlName="height"
@@ -266,11 +264,13 @@
         'bg-green-500 hover:bg-green-700':
           !memberForm.invalid &&
           !memberLoading() &&
-          selectedServices.length > 0,
+          selectedServices.length > 0 &&
+          selectedBranch,
         'bg-gray-300':
           memberForm.invalid ||
           memberLoading() ||
-          selectedServices.length === 0,
+          selectedServices.length === 0 ||
+          !selectedBranch,
       }"
     >
       <svg

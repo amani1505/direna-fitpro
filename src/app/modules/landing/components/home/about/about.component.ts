@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 interface AboutInterface {
   id: string;
@@ -14,7 +15,7 @@ interface AboutInterface {
 @Component({
   selector: 'about',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })
@@ -23,9 +24,9 @@ export class AboutComponent {
     id: '1',
     title: 'Welcome To Our Fitness Gym',
     description:
-      '  Nam ut hendrerit leo. Aenean vel ipsum nunc. Curabitur in tellus vitae nisi aliquet dapibus non et erat. Pellentesqueporta sapien non accumsan dignissim curabitur sagittis nulla sit amet dolor feugiat.',
+      'Direna FitPro, a division of Direna Solution Group, specializes in supplying top-quality sports equipment and gym solutions both locally and internationally. We are committed to enhancing health and wellness with state-of-the-art products and services.',
     subDescription:
-      'Integer placerat vitae metus posuere tincidunt. Nullam suscipit ante ac aliquet viverra vestibulum ante ipsum primis.',
+      'With 5+ years of experience, we provide top-quality fitness equipment, expert advice, installation, and maintenance services.',
     ownerImage: './assets/images/about-coach.jpg',
     ownerName: 'Trainer Kinunda',
     ownerPosition: 'CEO, Direna Fitness Gym.',
