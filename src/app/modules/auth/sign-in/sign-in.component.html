@@ -1,5 +1,5 @@
 <!-- login form -->
-<form class="my-10 space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="my-10 space-y-6" [formGroup]="authForm" (ngSubmit)="onSubmit()">
   <div class="text-center">
     <h2
       class="flex justify-center gap-3 mb-1 text-3xl font-semibold text-gray-700 dark:text-white"
@@ -37,12 +37,18 @@
           placeholder="your@email.com"
         />
       </div>
-      <div
-        class="text-xs text-red-500"
-        *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
-      >
-        <div *ngIf="f['email'].errors['required']">Required field</div>
-        <div *ngIf="f['email'].errors['email']">
+
+      <div *ngIf="authForm.get('email')?.touched">
+        <div
+          *ngIf="authForm.get('email').hasError('required')"
+          class="is__invalid-error"
+        >
+          Email is Required
+        </div>
+        <div
+          *ngIf="authForm.get('email').hasError('email')"
+          class="is__invalid-error"
+        >
           Email must be an email address valid
         </div>
       </div>
@@ -53,9 +59,9 @@
         <label for="password" class="text-sm font-medium text-gray-700"
           >Password</label
         >
-        <a href="#" class="text-xs text-[#ff4836] hover:underline"
+        <!-- <a href="#" class="text-xs text-[#ff4836] hover:underline"
           >Forgot Password?</a
-        >
+        > -->
       </div>
       <div class="relative">
         <div
@@ -97,28 +103,61 @@
           </svg-icon>
         </span>
       </div>
-      <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
-        <div *ngIf="f['password'].errors['required']">Required field</div>
+
+      <div
+        *ngIf="
+          authForm.get('password')?.touched &&
+          authForm.get('password').hasError('required')
+        "
+        class="is__invalid-error"
+      >
+        Password Field is Required
       </div>
     </div>
   </div>
 
-
-
   <!-- Submit Button -->
   <button
-    class="relative flex justify-center w-full px-4 py-2 mb-10 font-medium text-white border border-transparent rounded-md group bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400"
+    type="submit"
+    class="relative flex justify-center w-full px-4 py-2 mb-10 font-medium border border-transparent rounded-md group"
+    [disabled]="authForm.invalid || loading"
+    [ngClass]="{
+      ' hover:bg-primary-400  bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-white': !authForm.invalid && !loading,
+      'bg-gray-300': authForm.invalid || loading,
+    }"
   >
-    Sign in
+    <svg
+      *ngIf="loading"
+      class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"
+      ></circle>
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+
+    {{ loading ? "Submitting..." : "Sign in" }}
   </button>
 
   <!-- Sign-up -->
-  <div class="flex gap-3 text-gray-400 dark:text-night-200">
+  <!-- <div class="flex gap-3 text-gray-400 dark:text-night-200">
     Not a Member yet?
     <a
       routerLink="/auth/sign-up"
       class="text-primary-500 hover:text-primary-400"
       >Sign up</a
     >
-  </div>
+  </div> -->
 </form>

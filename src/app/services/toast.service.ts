@@ -48,5 +48,20 @@ export class ToastService {
       },
     });
   }
-  
+
+  info(message: string) {
+    this._toast.info(message, {
+      position: 'top-right',
+      style: {
+        borderLeft: '4px solid #3b82f6',  // Blue border
+        padding: '10px',
+        color: '#1e40af',  // Dark blue text
+        backgroundColor: '#dbeafe',  // Light blue background
+        fontWeight: 400,
+        fontSize: '12px',
+      },
+    });
+  }
+
+
 }

@@ -4,18 +4,23 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { provideQuillConfig } from 'ngx-quill/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import hljs from 'highlight.js';
+import { authInterceptor } from '@modules/auth/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(AngularSvgIconModule.forRoot()),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideEnvironmentNgxMask(),
     provideQuillConfig({
       modules: {
@@ -36,8 +41,6 @@ export const appConfig: ApplicationConfig = {
           ['link'],
         ],
       },
-
-
     }),
     provideAnimationsAsync(),
     provideAnimationsAsync(),

@@ -1,5 +1,5 @@
-import { CommonModule, NgClass, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Location, NgClass, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@service/auth.service';
+import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
@@ -18,46 +20,58 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     ReactiveFormsModule,
     RouterLink,
     AngularSvgIconModule,
-    NgClass,
     NgIf,
+    NgClass,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
 })
-export class SignInComponent implements OnInit {
-  form!: FormGroup;
-  submitted = false;
+export class SignInComponent {
+  private _authService = inject(AuthService);
+  private readonly _formBuilder = inject(FormBuilder);
+  private readonly _router = inject(Router);
+  private _toast = inject(ToastService);
+  private _location = inject(Location);
+
   passwordTextType!: boolean;
+  loading = false;
 
-  constructor(
-    private readonly _formBuilder: FormBuilder,
-    private readonly _router: Router,
-  ) {}
-
-  ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
-
-  get f() {
-    return this.form.controls;
-  }
+  authForm = this._formBuilder.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  });
 
   togglePasswordTextType() {
     this.passwordTextType = !this.passwordTextType;
   }
 
   onSubmit() {
-    this.submitted = true;
-    const { email, password } = this.form.value;
+    if (this.authForm.invalid) {
+      this._toast.error('Please fill in all required fields');
 
-    // stop here if form is invalid
-    if (this.form.invalid) {
       return;
     }
+    this.loading = true;
+    const { email, password } = this.authForm.value;
 
-    this._router.navigate(['/']);
+    this._authService.signIn({ username: email, password }).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.authForm.reset();
+        console.log(response);
+        if (response.role.name === 'Super Admin') {
+          this._router.navigate(['/admin']);
+        } else {
+          this._location.back()
+        }
+      },
+      error: (error) => {
+        this.loading = false;
+        this.authForm.reset();
+        this._toast.error(
+          `An error occurred while Login: ${error.error.message}`,
+        );
+      },
+    });
   }
 }
