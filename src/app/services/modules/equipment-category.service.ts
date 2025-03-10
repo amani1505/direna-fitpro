@@ -28,6 +28,7 @@ export class EquipmemntCategoryService {
   private _equipmentCategory = signal<EquipmentCategory>({
     id: '',
     category_name: '',
+    image:'',
     equipmemnts: [],
     created_at: undefined,
     updated_at: undefined,

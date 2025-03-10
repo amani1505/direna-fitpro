@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 
 import { LandingComponent } from './landing.component';
 import { EquipmentService } from '@service/modules/equipment.service';
+import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
 
 export default [
   {
@@ -25,10 +26,9 @@ export default [
         loadChildren: () => import('./pages/contact-us/contact-us.routes'),
       },
       {
-        
         path: 'equipments',
         loadChildren: () => import('./pages/equipments/equipments.routes'),
-        providers: [EquipmentService],
+        providers: [EquipmentService, EquipmemntCategoryService],
       },
     ],
   },

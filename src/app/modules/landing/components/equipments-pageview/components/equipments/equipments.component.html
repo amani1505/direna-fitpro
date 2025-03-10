@@ -3,20 +3,46 @@
     <equipments-header></equipments-header>
   </div>
   <div class="my-3">
-    <div
-      class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5"
-    >
-      @for (equipment of data; track $index) {
-        <equipment-card
-          [badgeText]="'-20%'"
-          [badgeColor]="'var(--ocean-green)'"
-          [oldPrice]="'$75.00'"
-          [showRating]="true"
-          [rating]="4"
-          [equipment]="equipment"
-          (singleView)="view($event)"
-        ></equipment-card>
-      }
-    </div>
+    <!-- Loader -->
+    @if (isLoading) {
+    <!-- loader.component.html -->
+<div class="loader-container">
+  <div class="loader"></div>
+</div>
+    }
+    <!-- No Data Found -->
+    @else if (!isLoading && (!data || data.length === 0)) {
+      <div class="bg-gray-100 no-data-container">
+        <p class="no-data-text">No Equipment Found</p>
+      </div>
+    }
+    <!-- Data Grid -->
+    @else {
+      <div
+        class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-5"
+      >
+        @for (equipment of data; track $index) {
+          <equipment-card
+            [badgeText]="'-20%'"
+            [badgeColor]="'var(--ocean-green)'"
+            [oldPrice]="'$75.00'"
+            [showRating]="true"
+            [rating]="4"
+            [equipment]="equipment"
+            (singleView)="view($event)"
+          ></equipment-card>
+        }
+      </div>
+    }
   </div>
+
+  @if (totalPages < 1) {
+    <div class="mt-4">
+      <Pagination
+        [totalPages]="totalPages"
+        [currentPage]="currentPage"
+        (pageChange)="onPageChange($event)"
+      ></Pagination>
+    </div>
+  }
 </section>

@@ -3,22 +3,28 @@ import { EquipmentsComponent } from '../components/equipments/equipments.compone
 import { ActivatedRoute, Router } from '@angular/router';
 import { EquipmentService } from '@service/modules/equipment.service';
 import { QueryParams } from '@model/QueryParams.interface';
+import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
+import { environment } from 'environments/environment';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'equipment-layout',
   standalone: true,
-  imports: [EquipmentsComponent],
+  imports: [EquipmentsComponent,AngularSvgIconModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent implements OnInit {
   private _equipmentsService = inject(EquipmentService);
+  private _equipmentCategoryService = inject(EquipmemntCategoryService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
+    fileUrl = environment.staicUrl;
 
   currentPage = signal(1);
 
   equipemnts = computed(() => this._equipmentsService.equipments()?.data || []);
+  categories= computed(() => this._equipmentCategoryService.allEquipmentCategories() || []);
   totalItems = computed(
     () => this._equipmentsService.equipments()?.total_items || 0,
   );
@@ -45,6 +51,7 @@ export class LayoutComponent implements OnInit {
       this.currentPage.set(queryParams.page);
 
       this._equipmentsService.findAll(queryParams);
+      this._equipmentCategoryService.getAllEquipmentCategory()
     });
   }
 
@@ -71,4 +78,6 @@ export class LayoutComponent implements OnInit {
   onItemPerPageChange(limit: number) {
     this.updateRouteAndFetch({ limit: limit });
   }
+
+
 }

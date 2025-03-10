@@ -3,6 +3,7 @@ import { Files } from "./files";
 export interface EquipmentCategory {
   id: string;
   category_name: string;
+  image:string;
   equipmemnts: Equipment[];
   created_at: Date;
   updated_at: Date;
