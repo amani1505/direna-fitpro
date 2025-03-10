@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
@@ -18,7 +18,6 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     ReactiveFormsModule,
     RouterLink,
     AngularSvgIconModule,
-    NgClass,
     NgIf,
   ],
   templateUrl: './sign-up.component.html',
@@ -26,14 +25,18 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 })
 export class SignUpComponent implements OnInit {
   form!: FormGroup;
-  passwordTextType!: boolean;
   submitted = false;
+  passwordTextType!: boolean;
 
-  constructor(private readonly _formBuilder: FormBuilder) {}
+  constructor(
+    private readonly _formBuilder: FormBuilder,
+    private readonly _router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.form = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
     });
   }
 
@@ -41,5 +44,19 @@ export class SignUpComponent implements OnInit {
     return this.form.controls;
   }
 
-  onSubmit() {}
+  togglePasswordTextType() {
+    this.passwordTextType = !this.passwordTextType;
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    const { email, password } = this.form.value;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
+    }
+
+    this._router.navigate(['/']);
+  }
 }

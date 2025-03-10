@@ -1,49 +1,124 @@
+<!-- login form -->
 <form class="my-10 space-y-6" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="text-center">
-    <h2 class="flex justify-center gap-3 mb-1 text-3xl font-semibold text-gray-700 dark:text-white">
-      Sign Up <span class="text-primary-500">!</span>
+    <h2
+      class="flex justify-center gap-3 mb-1 text-3xl font-semibold text-gray-700 dark:text-white"
+    >
+      Welcome To our Platform <span class="text-primary-500">!</span>
     </h2>
-    <p class="text-gray-400 text-md dark:text-night-200">Let's get started with your daily Fitness program</p>
+    <p class="text-gray-400 dark:text-night-200">
+      Enter your Details to start working with our Platform.
+    </p>
+  </div>
+  <div class="text-left space-y-9">
+    <div class="space-y-2">
+      <label for="email" class="text-sm font-medium text-gray-700">Email</label>
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 text-gray-400"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+            />
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+          </svg>
+        </div>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="pl-10 w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+          placeholder="your@email.com"
+        />
+      </div>
+      <div
+        class="text-xs text-red-500"
+        *ngIf="form.get('email')?.touched && form.get('email')?.invalid"
+      >
+        <div *ngIf="f['email'].errors['required']">Required field</div>
+        <div *ngIf="f['email'].errors['email']">
+          Email must be an email address valid
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <div class="flex justify-between">
+        <label for="password" class="text-sm font-medium text-gray-700"
+          >Password</label
+        >
+        <a href="#" class="text-xs text-[#ff4836] hover:underline"
+          >Forgot Password?</a
+        >
+      </div>
+      <div class="relative">
+        <div
+          class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 text-gray-400"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </div>
+        <input
+          [type]="passwordTextType ? 'text' : 'password'"
+          id="password"
+          formControlName="password"
+          class="pl-10 w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+          placeholder="••••••••"
+        />
+
+        <span
+          class="absolute text-gray-400 cursor-pointer top-3 right-5 dark:text-night-300"
+          (click)="togglePasswordTextType()"
+        >
+          <svg-icon
+            [src]="
+              !passwordTextType
+                ? 'assets/icons/heroicons/outline/eye-off.svg'
+                : 'assets/icons/heroicons/outline/eye.svg'
+            "
+            [svgClass]="'h-5  w-5'"
+          >
+          </svg-icon>
+        </span>
+      </div>
+      <div *ngIf="submitted && f['password'].errors" class="is__invalid-error">
+        <div *ngIf="f['password'].errors['required']">Required field</div>
+      </div>
+    </div>
   </div>
 
-  <div class="my-2 form__group">
-    <div class="relative">
-      <input
-        type="text"
-        id="email"
-        [ngClass]="{ 'is__invalid-input': submitted && f['email'].errors }"
-        class="block text-md peer input-field"
-        placeholder="Enter your email "
-        formControlName="email" />
-
-    </div>
-    <div *ngIf="submitted && f['email'].errors" class="is__invalid-error">
-      <div *ngIf="f['email'].errors['required']">Required field</div>
-      <div *ngIf="f['email'].errors['email']">Email must be an email address valid</div>
-    </div>
-  </div>
-
-  <div class="flex items-center justify-between space-x-3">
-    <div class="flex items-center">
-      <input id="accept-term" name="accept-term" type="checkbox" />
-      <label for="accept-term" class="flex gap-3 ml-2 text-gray-400 text-md dark:text-night-200">
-        I Accept the
-        <a class="font-medium text-primary-500 hover:text-primary-400"> Terms </a>
-      </label>
-    </div>
-  </div>
 
 
   <!-- Submit Button -->
   <button
-    type="button"
-    routerLink="/dashboard"
-    class="relative flex justify-center w-full px-4 py-2 mb-10 font-medium text-white border border-transparent rounded-md text-md group bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400">
+    class="relative flex justify-center w-full px-4 py-2 mb-10 font-medium text-white border border-transparent rounded-md group bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 hover:bg-primary-400"
+  >
     Sign up
   </button>
 
   <!-- Sign-up -->
-  <div class="flex gap-3 text-gray-400 text-md dark:text-night-200">
-    Already have an Account? <a routerLink="/auth" class="text-primary-500 hover:text-primary-400">Sign in</a>
+  <div class="flex gap-3 text-gray-400 dark:text-night-200">
+    Already a Member?
+    <a
+      routerLink="/auth"
+      class="text-primary-500 hover:text-primary-400"
+      >Sign in</a
+    >
   </div>
 </form>

@@ -1,0 +1,147 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Ensure no scrollbars appear */
+}
+
+
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  height: 100dvh;
+  background: linear-gradient(to bottom right, #1a1a1a, #000000);
+  z-index: 99999999999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease-out;
+  overflow: hidden;
+}
+
+.splash-bg-elements {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Ensure background elements don't cause scrolling */
+  clip-path: inset(0 0 0 0);
+}
+.splash-logo {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 30px;
+}
+
+.splash-outer-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 8px solid #ff4836;
+  animation: spin 10s linear infinite;
+}
+
+.splash-middle-ring {
+  position: absolute;
+  inset: 16px;
+  border-radius: 50%;
+  border: 6px solid #2d6f17;
+  animation: spin-reverse 8s linear infinite;
+}
+
+.splash-inner-circle {
+  position: absolute;
+  inset: 32px;
+  border-radius: 50%;
+  background-color: #ff4836;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+}
+
+.splash-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 16px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.splash-title-primary {
+  color: #ff4836;
+}
+
+.splash-title-secondary {
+  color: #2d6f17;
+}
+
+.splash-loading-bar {
+  width: 200px;
+  height: 12px;
+  background-color: #4a4a4a;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.splash-loading-progress {
+  height: 100%;
+  background: linear-gradient(to right, #2d6f17, #ff4836);
+  width: 0%;
+  animation: loading 2.5s ease-in-out forwards;
+  border-radius: 6px;
+}
+
+.splash-loading-text {
+  color: white;
+  font-size: 1.2rem;
+  margin-top: 16px;
+  opacity: 0;
+  animation: fade-in 0.5s ease-out 0.5s forwards;
+  font-family: 'Roboto', sans-serif;
+}
+
+.splash-bg-element {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: pulse-bg 4s infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes pulse-bg {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 0.5; }
+}
+
+@keyframes loading {
+  0% { width: 0%; }
+  20% { width: 20%; }
+  50% { width: 60%; }
+  80% { width: 85%; }
+  100% { width: 100%; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
