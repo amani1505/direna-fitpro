@@ -10,7 +10,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 @Component({
   selector: 'equipment-layout',
   standalone: true,
-  imports: [EquipmentsComponent,AngularSvgIconModule],
+  imports: [EquipmentsComponent, AngularSvgIconModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
 })
@@ -19,24 +19,27 @@ export class LayoutComponent implements OnInit {
   private _equipmentCategoryService = inject(EquipmemntCategoryService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
-    fileUrl = environment.staicUrl;
+  fileUrl = environment.staicUrl;
 
   currentPage = signal(1);
-
   equipemnts = computed(() => this._equipmentsService.equipments()?.data || []);
-  categories= computed(() => this._equipmentCategoryService.allEquipmentCategories() || []);
-  totalItems = computed(
-    () => this._equipmentsService.equipments()?.total_items || 0,
-  );
-  totalPages = computed(
-    () => this._equipmentsService.equipments()?.total_pages || 1,
-  );
+  categories = computed(() => this._equipmentCategoryService.allEquipmentCategories() || []);
+  totalItems = computed(() => this._equipmentsService.equipments()?.total_items || 0);
+  totalPages = computed(() => this._equipmentsService.equipments()?.total_pages || 1);
   loading = this._equipmentsService.loading;
-
   itemsPerPage = 10;
+
+  /** Track selected category as a signal (updates immediately) */
+  selectedCategory = signal<string | null>(null);
+
+  /** Compute if any filter is applied */
+  isFiltered = computed(() => !!this.selectedCategory());
 
   ngOnInit(): void {
     this._route.queryParams.subscribe((params) => {
+      const category = params['filterBy'] === 'category' ? params['search'] : null;
+      this.selectedCategory.set(category);
+
       const queryParams: QueryParams = {
         page: +params['page'] || 1,
         limit: +params['limit'] || this.itemsPerPage,
@@ -49,19 +52,19 @@ export class LayoutComponent implements OnInit {
       };
 
       this.currentPage.set(queryParams.page);
-
       this._equipmentsService.findAll(queryParams);
-      this._equipmentCategoryService.getAllEquipmentCategory()
+      this._equipmentCategoryService.getAllEquipmentCategory();
     });
   }
 
   private updateRouteAndFetch(params: Partial<QueryParams>) {
     const queryParams = { ...params };
 
+    // Remove empty values
     Object.keys(queryParams).forEach((key) => {
       const value = queryParams[key as keyof QueryParams];
-      if (value === '') {
-        (queryParams[key as keyof QueryParams] as any) = null;
+      if (value === '' || value === null || value === undefined) {
+        delete queryParams[key as keyof QueryParams];
       }
     });
 
@@ -75,9 +78,31 @@ export class LayoutComponent implements OnInit {
   onPageChange(page: number) {
     this.updateRouteAndFetch({ page });
   }
+
   onItemPerPageChange(limit: number) {
     this.updateRouteAndFetch({ limit: limit });
   }
 
+  onCategoryChange(category: string) {
+    this.selectedCategory.set(category); // Update signal immediately
+    this.updateRouteAndFetch({ filterBy: 'category', search: category });
+  }
 
+  /** Clear filters when "All Equipments" is selected */
+  clearFilters() {
+    this.selectedCategory.set(null); // Immediately update UI
+    this.updateRouteAndFetch({ filterBy: null, search: null });
+
+    // Fetch all equipment after clearing filters
+    this._equipmentsService.findAll({
+      page: this.currentPage(),
+      limit: this.itemsPerPage,
+      sortBy: 'created_at',
+      sortOrder: 'DESC',
+      search: '',
+      filterBy: '',
+      relations: ['files'],
+      withPagination: true,
+    });
+  }
 }

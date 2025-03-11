@@ -1,5 +1,11 @@
 <div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-5">
   <div class="p-4 rounded-lg shadow">
+    <div class="flex items-center gap-3 mb-3">
+      <div>
+        <input type="radio" name="category" [checked]="!isFiltered()" (change)="clearFilters()" />
+      </div>
+      <div>All Equipments</div>
+    </div>
     @for (category of categories(); track $index) {
       <div class="flex items-center justify-between mb-3">
         <div class="flex items-center gap-3">
@@ -10,12 +16,23 @@
               class="object-cover rounded-lg w-14 h-14"
             />
           </div>
-          <div class="text-sm cursor-pointer hover:underline">
+          <div
+            class="text-sm cursor-pointer hover:underline hover:text-primary-500"
+            [class.text-primary-500]="selectedCategory() === category.category_name"
+            [class.underline]="selectedCategory() === category.category_name"
+            (click)="onCategoryChange(category.category_name)"
+          >
             {{ category.category_name }}
           </div>
         </div>
-        <div class="cursor-pointer">
-          <svg-icon [src]="'assets/icons/chevron.svg'" [svgClass]="'h-4  w-4'">
+        <div
+          class="flex items-center justify-center w-5 h-5 rounded-full cursor-pointer hover:bg-primary-50"
+          (click)="onCategoryChange(category.category_name)"
+        >
+          <svg-icon
+            [src]="'assets/icons/chevron.svg'"
+            [svgClass]="'h-4  w-4 text-primary-500'"
+          >
           </svg-icon>
         </div>
       </div>
@@ -27,7 +44,7 @@
       [isLoading]="loading()"
       [currentPage]="currentPage()"
       [totalPages]="totalPages()"
-      (pageChange) = "onPageChange($event)"
+      (pageChange)="onPageChange($event)"
     ></equipments>
   </div>
 </div>

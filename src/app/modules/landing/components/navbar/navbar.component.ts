@@ -7,7 +7,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, AngularSvgIconModule,ButtonComponent],
+  imports: [CommonModule, RouterModule, AngularSvgIconModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })

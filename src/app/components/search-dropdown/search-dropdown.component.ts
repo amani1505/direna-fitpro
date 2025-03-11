@@ -18,6 +18,7 @@ export class SearchDropdownComponent {
   @Input() isLoading = false;
   searchQuery: string = '';
   @Output() searchChange = new EventEmitter<string>();
+  @Output() navigateTo = new EventEmitter<string>();
   fileUrl = environment.staicUrl;
 
   onSearchChange(event: Event): void {
@@ -29,5 +30,8 @@ export class SearchDropdownComponent {
   closeDropdown(): void {
     this.searchQuery = ''; // Clear the search query to close the dropdown
     this.searchChange.emit(this.searchQuery); // Emit the empty search query
+  }
+  onNavigate(id:string){
+    this.navigateTo.emit(id)
   }
 }

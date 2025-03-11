@@ -55,14 +55,16 @@
         } @else {
           <!-- Actual Data -->
           @for (result of data; track $index) {
-            <div class="relative p-2 cursor-pointer hover:bg-gray-100">
+            <div
+              class="relative p-2 cursor-pointer hover:bg-gray-100"
+              (click)="onNavigate(result.id)"
+            >
               <div class="flex gap-3">
                 <div>
                   <img
                     class="object-cover rounded h-36 w-36"
                     [src]="fileUrl + result?.files[0].file_path"
                     alt="{{ result?.title }}"
-                    
                     srcset=""
                   />
                 </div>
@@ -73,10 +75,7 @@
                     {{ result?.title }}
                   </div>
                   <div>
-                    {{
-                      result?.short_description ||
-                        "A treadmill is a fitness machine with a moving belt, allowing users to walk, jog, or run indoors at adjustable speeds and inclines."
-                    }}
+                    {{ result?.short_description }}
                   </div>
 
                   <div class="absolute bottom-0">
