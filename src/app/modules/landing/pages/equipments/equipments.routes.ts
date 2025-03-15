@@ -9,6 +9,7 @@ export default [
     children: [
       {
         path: '',
+
         loadComponent: () =>
           import(
             '../../components/equipments-pageview/equipments-pageview.component'
@@ -16,6 +17,7 @@ export default [
       },
       {
         path: ':id',
+        data: { title: 'View Equipment' },
         loadChildren: () => import('./view-single/view-single.routes'),
       },
     ],

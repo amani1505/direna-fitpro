@@ -4,7 +4,7 @@
       <Menu
         [config]="sortConfig"
         [sections]="sortSections"
-        [triggerText]="'Sort by: ' + sort"
+        [triggerText]="'Sort by: ' + sortName"
         (itemClick)="handleSortChange($event)"
       >
       </Menu>
@@ -20,7 +20,7 @@
         </Menu>
       </div>
 
-      <button
+      <!-- <button
         (click)="onColumnsUpdate(1)"
         class="hidden p-2 text-sm font-medium text-gray-700 rounded-full md:block hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
       >
@@ -38,7 +38,7 @@
           src="./assets/icons/heroicons/outline/squares.svg"
           [svgStyle]="{ 'width.px': 25 }"
         ></svg-icon>
-      </button>
+      </button> -->
     </div>
   </div>
 </div>

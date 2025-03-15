@@ -125,7 +125,7 @@ export class MenuPopupComponent {
   }
 
   closeMenu(): void {
-    console.log('Clicked to close menu');
+
     this.isMenuOpen = false;
   }
 

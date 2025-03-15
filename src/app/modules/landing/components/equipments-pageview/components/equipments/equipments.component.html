@@ -1,14 +1,17 @@
 <section class="my-2">
   <div>
-    <equipments-header></equipments-header>
+    <equipments-header
+      (itemsCountChange)="onItemCountChange($event)"
+      (sortChange)="onSortChange($event)"
+    ></equipments-header>
   </div>
   <div class="my-3">
     <!-- Loader -->
     @if (isLoading) {
-    <!-- loader.component.html -->
-<div class="loader-container">
-  <div class="loader"></div>
-</div>
+      <!-- loader.component.html -->
+      <div class="loader-container">
+        <div class="loader"></div>
+      </div>
     }
     <!-- No Data Found -->
     @else if (!isLoading && (!data || data.length === 0)) {

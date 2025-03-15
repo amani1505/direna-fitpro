@@ -23,9 +23,15 @@ export class LayoutComponent implements OnInit {
 
   currentPage = signal(1);
   equipemnts = computed(() => this._equipmentsService.equipments()?.data || []);
-  categories = computed(() => this._equipmentCategoryService.allEquipmentCategories() || []);
-  totalItems = computed(() => this._equipmentsService.equipments()?.total_items || 0);
-  totalPages = computed(() => this._equipmentsService.equipments()?.total_pages || 1);
+  categories = computed(
+    () => this._equipmentCategoryService.allEquipmentCategories() || [],
+  );
+  totalItems = computed(
+    () => this._equipmentsService.equipments()?.total_items || 0,
+  );
+  totalPages = computed(
+    () => this._equipmentsService.equipments()?.total_pages || 1,
+  );
   loading = this._equipmentsService.loading;
   itemsPerPage = 10;
 
@@ -37,7 +43,8 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this._route.queryParams.subscribe((params) => {
-      const category = params['filterBy'] === 'category' ? params['search'] : null;
+      const category =
+        params['filterBy'] === 'category' ? params['search'] : null;
       this.selectedCategory.set(category);
 
       const queryParams: QueryParams = {
@@ -57,17 +64,32 @@ export class LayoutComponent implements OnInit {
     });
   }
 
+  // private updateRouteAndFetch(params: Partial<QueryParams>) {
+  //   const queryParams = { ...params };
+
+  //   // Remove empty values
+  //   Object.keys(queryParams).forEach((key) => {
+  //     const value = queryParams[key as keyof QueryParams];
+  //     if (value === '' || value === null || value === undefined) {
+  //       delete queryParams[key as keyof QueryParams];
+  //     }
+  //   });
+
+  //   this._router.navigate([], {
+  //     relativeTo: this._route,
+  //     queryParams: queryParams,
+  //     queryParamsHandling: 'merge',
+  //   });
+  // }
+
   private updateRouteAndFetch(params: Partial<QueryParams>) {
     const queryParams = { ...params };
 
-    // Remove empty values
-    Object.keys(queryParams).forEach((key) => {
-      const value = queryParams[key as keyof QueryParams];
-      if (value === '' || value === null || value === undefined) {
-        delete queryParams[key as keyof QueryParams];
-      }
-    });
+    if (queryParams.page === 1) {
+      delete queryParams.page;
+    }
 
+    // Navigate with the new query params, allowing Angular to handle null values
     this._router.navigate([], {
       relativeTo: this._route,
       queryParams: queryParams,
@@ -79,8 +101,12 @@ export class LayoutComponent implements OnInit {
     this.updateRouteAndFetch({ page });
   }
 
-  onItemPerPageChange(limit: number) {
+  onItemCountChange(limit: number) {
     this.updateRouteAndFetch({ limit: limit });
+  }
+
+  onSortChange(sort: 'DESC' | 'ASC') {
+    this.updateRouteAndFetch({ sortOrder: sort });
   }
 
   onCategoryChange(category: string) {
@@ -91,18 +117,12 @@ export class LayoutComponent implements OnInit {
   /** Clear filters when "All Equipments" is selected */
   clearFilters() {
     this.selectedCategory.set(null); // Immediately update UI
-    this.updateRouteAndFetch({ filterBy: null, search: null });
-
-    // Fetch all equipment after clearing filters
-    this._equipmentsService.findAll({
-      page: this.currentPage(),
-      limit: this.itemsPerPage,
-      sortBy: 'created_at',
-      sortOrder: 'DESC',
-      search: '',
-      filterBy: '',
-      relations: ['files'],
-      withPagination: true,
+    this.updateRouteAndFetch({
+      filterBy: null,
+      search: null,
+      sortOrder: null,
+      limit: null,
+      page: 1, // Reset to the first page
     });
   }
 }

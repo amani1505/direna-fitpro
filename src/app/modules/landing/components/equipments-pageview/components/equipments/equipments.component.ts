@@ -29,6 +29,8 @@ export class EquipmentsComponent {
   @Input({ required: true }) totalPages =1
   @Input({ required: true }) currentPage = 1
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
+  @Output() itemsCountChange = new EventEmitter<number>();
+  @Output() sortChange = new EventEmitter<'DESC' | 'ASC'>();
 
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
@@ -38,5 +40,12 @@ export class EquipmentsComponent {
   }
   onPageChange(event: any) {
     this.pageChange.emit(event);
+  }
+  onItemCountChange(event: number) {
+    this.itemsCountChange.emit(event)
+  }
+
+  onSortChange(event: 'DESC' | 'ASC') {
+    this.sortChange.emit(event)
   }
 }

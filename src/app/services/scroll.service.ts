@@ -41,16 +41,7 @@ export class ScrollService {
       setInterval(() => this.updateScrollInfo(), 1000);
     });
 
-    // Diagnostic interval - logs scroll state every 3 seconds
-    setInterval(() => {
-      console.log('Scroll service state:', {
-        position: this.scrollPositionSubject.value,
-        isScrolled: this.isScrolledSubject.value,
-        progress: this.scrollProgressSubject.value.toFixed(2) + '%',
-        documentHeight: document.documentElement.scrollHeight,
-        windowHeight: window.innerHeight
-      });
-    }, 3000);
+  
   }
 
   private updateScrollInfo(): void {

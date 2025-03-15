@@ -1,9 +1,9 @@
 <section
-  class="min-h-[25vh] xl:min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-10 md:pb-0"
+  class="min-h-[25vh] xl:min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-0 md:pb-0"
   style="background-image: url('./assets/images/footer-bg.png'); background-size: cover; background-position: center;"
 >
   <!-- Title -->
-  <div class="mb-3 text-3xl font-medium text-center text-white capitalize md:text-5xl lg:text-6xl">
+  <div class="mb-2 text-3xl font-medium text-center text-white capitalize md:text-5xl lg:text-6xl">
     Equipments
   </div>
 
@@ -11,6 +11,7 @@
   <p class="hidden px-4 text-sm text-center text-gray-300 sm:text-base md:text-lg lg:text-xl sm:block">
     Here are Equipments that are available in our GYM Store
   </p>
+  <BreadCrumbs [isEquipment]="true"></BreadCrumbs>
 </section>
 
 <router-outlet></router-outlet>

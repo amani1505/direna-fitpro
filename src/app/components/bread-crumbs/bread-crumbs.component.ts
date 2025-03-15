@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -18,7 +18,9 @@ import { filter, interval, Subscription } from 'rxjs';
   styleUrl: './bread-crumbs.component.scss',
 })
 export class BreadCrumbsComponent implements OnInit, OnDestroy {
+  @Input() isEquipment: boolean = false;
   breadcrumbs: Breadcrumb[] = [];
+
   currentUrl: string = '';
   currentDateTime: string = '';
 
@@ -126,5 +128,5 @@ export class BreadCrumbsComponent implements OnInit, OnDestroy {
     }
 
     return breadcrumbs;
-  } 
+  }
 }

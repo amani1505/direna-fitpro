@@ -2,7 +2,12 @@
   <div class="p-4 rounded-lg shadow">
     <div class="flex items-center gap-3 mb-3">
       <div>
-        <input type="radio" name="category" [checked]="!isFiltered()" (change)="clearFilters()" />
+        <input
+          type="radio"
+          name="category"
+          [checked]="!isFiltered()"
+          (change)="clearFilters()"
+        />
       </div>
       <div>All Equipments</div>
     </div>
@@ -18,7 +23,9 @@
           </div>
           <div
             class="text-sm cursor-pointer hover:underline hover:text-primary-500"
-            [class.text-primary-500]="selectedCategory() === category.category_name"
+            [class.text-primary-500]="
+              selectedCategory() === category.category_name
+            "
             [class.underline]="selectedCategory() === category.category_name"
             (click)="onCategoryChange(category.category_name)"
           >
@@ -45,6 +52,8 @@
       [currentPage]="currentPage()"
       [totalPages]="totalPages()"
       (pageChange)="onPageChange($event)"
+      (itemsCountChange)="onItemCountChange($event)"
+      (sortChange)="onSortChange($event)"
     ></equipments>
   </div>
 </div>
