@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { EquipmentsPageviewComponent } from '@modules/landing/components/equipments-pageview/equipments-pageview.component';
 import { EquipmentsComponent } from './equipments.component';
 
 export default [
@@ -14,6 +13,11 @@ export default [
           import(
             '../../components/equipments-pageview/equipments-pageview.component'
           ).then((c) => c.EquipmentsPageviewComponent),
+      },
+      {
+        path: 'cart',
+        data: { title: 'Cart' },
+        loadChildren: () => import('./cart/cart.routes'),
       },
       {
         path: ':id',

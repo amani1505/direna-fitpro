@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Files } from '@model/files';
+import { CartService } from '@service/modules/cart.service';
 import { EquipmentService } from '@service/modules/equipment.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
@@ -32,6 +33,7 @@ interface Product {
 export class ViewSinglePageviewComponent implements OnInit {
   private _equipmentsService = inject(EquipmentService);
   private _route = inject(ActivatedRoute);
+  private _cartService = inject(CartService);
 
   equipment = computed(() => this._equipmentsService.equipment());
   fileUrl = environment.staicUrl;
@@ -119,5 +121,16 @@ export class ViewSinglePageviewComponent implements OnInit {
     if (this.quatity > 0) {
       --this.quatity;
     }
+  }
+
+  addToCart() {
+    this._cartService.addToCart(this.equipment().id, this.quatity).subscribe({
+      next: (cart) => {
+        console.log(cart);
+      },
+      error: (error) => {
+        console.error('Error clearing cart', error);
+      },
+    });
   }
 }

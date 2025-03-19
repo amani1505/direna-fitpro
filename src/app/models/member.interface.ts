@@ -68,12 +68,6 @@ export interface User {
   updated_at: Date;
 }
 
-export interface Equipmemnt {
-  id: string;
-  name: string;
-  description: string;
-  image: Array<Media>;
-}
 
 export interface Media {
   id: string;

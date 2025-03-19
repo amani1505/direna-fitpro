@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { LandingComponent } from './landing.component';
 import { EquipmentService } from '@service/modules/equipment.service';
 import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
+import { CartService } from '@service/modules/cart.service';
 
 export default [
   {
@@ -28,7 +29,7 @@ export default [
       {
         path: 'equipments',
         loadChildren: () => import('./pages/equipments/equipments.routes'),
-        providers: [EquipmentService, EquipmemntCategoryService],
+        providers: [EquipmentService, EquipmemntCategoryService, CartService],
       },
     ],
   },
