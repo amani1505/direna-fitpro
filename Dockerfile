@@ -21,5 +21,6 @@ COPY --from=builder /app/dist/direna-fitpro/browser /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 80
-EXPOSE 443
+# In your Dockerfile
+EXPOSE 80 443
 CMD ["nginx", "-g", "daemon off;"]
