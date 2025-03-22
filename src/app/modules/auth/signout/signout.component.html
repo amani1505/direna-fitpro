@@ -1,0 +1,138 @@
+<section
+  class="flex items-center justify-center h-screen p-4 overflow-hidden bg-gray-50"
+>
+  <!-- Decorative blobs -->
+  <div class="blob bg-primary opacity-10"></div>
+  <div class="blob bg-secondary opacity-10"></div>
+
+  <div
+    class="relative w-full max-w-md p-8 overflow-hidden bg-white shadow card rounded-2xl"
+  >
+    <!-- Success checkmark icon at the top -->
+    <div class="flex justify-center mb-6">
+      <svg
+        class="w-20 h-20 text-primary animate-bounce"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </div>
+
+    <h1 class="mb-2 text-3xl font-bold text-center text-gray-800">
+      You've Been Signed Out
+    </h1>
+    <p class="mb-8 text-center text-gray-600">
+      Thank you for using our service
+    </p>
+
+    <div class="space-y-6">
+      <!-- Wave icon with text -->
+      <div class="flex items-center space-x-4 icon-text">
+        <div class="flex-shrink-0 wave-icon">
+          <svg
+            class="w-10 h-10 text-primary"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-800">See You Soon!</h3>
+          <p class="text-gray-600">We hope to see you back again</p>
+        </div>
+      </div>
+
+      <!-- Security icon with text -->
+      <div class="flex items-center space-x-4 icon-success">
+        <div class="flex-shrink-0">
+          <svg
+            class="w-10 h-10 text-secondary"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-800">Securely Logged Out</h3>
+          <p class="text-gray-600">Your session has been terminated</p>
+        </div>
+      </div>
+
+      <!-- Info icon with text -->
+      <div class="flex items-center space-x-4 icon-info">
+        <div class="flex-shrink-0">
+          <svg
+            class="w-10 h-10 text-primary"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </div>
+        <div>
+          <h3 class="text-lg font-medium text-gray-800">Need Help?</h3>
+          <p class="text-gray-600">Contact our support team</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-4 mt-10 sm:flex-row">
+      <button
+        (click)="signOut()"
+        class="w-full px-6 py-3 font-medium text-center text-white rounded-lg btn-primary sm:w-1/2"
+      >
+        Sign Out
+      </button>
+      <button
+        (click)="goBack()"
+        class="w-full px-6 py-3 font-medium text-center text-white rounded-lg cursor-pointer btn-secondary sm:w-1/2"
+      >
+        Go Back
+      </button>
+    </div>
+
+    <div class="absolute bottom-0 right-0 -mb-2 -mr-2 -z-10">
+      <svg
+        class="w-24 h-24 text-secondary opacity-10"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        ></path>
+      </svg>
+    </div>
+  </div>
+</section>

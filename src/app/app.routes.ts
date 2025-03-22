@@ -10,9 +10,14 @@ export const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('@modules/auth/auth.routes'),
   },
+
   {
     path: 'admin',
     loadChildren: () => import('@modules/layout/layout.routes'),
+  },
+  {
+    path: 'signout',
+    loadChildren: () => import('@modules/auth/signout/signout.routes'),
   },
   {
     path: '**',

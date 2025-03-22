@@ -25,7 +25,8 @@
       "@utils/*": ["app/utils/*"],
       "@model/*": ["app/models/*"],
       "@service/*": ["app/services/*"],
-      "@directive/*": ["app/directives/*"]
+      "@directive/*": ["app/directives/*"],
+      "@core/*": ["app/core/*"]
     },
     "lib": ["ES2022", "dom"]
   },

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { EquipmentsComponent } from './equipments.component';
+import { AuthGuard } from '@core/guards/auth.guard';
 
 export default [
   {
@@ -16,6 +17,7 @@ export default [
       },
       {
         path: 'cart',
+        canActivateChild: [AuthGuard],
         data: { title: 'Cart' },
         loadChildren: () => import('./cart/cart.routes'),
       },

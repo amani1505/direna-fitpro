@@ -57,7 +57,7 @@ export class MenuPopupComponent {
       case 'avatar':
         return `${baseClass} rounded-full bg-gray-800 text-sm`;
       case 'icon':
-        return `${baseClass} rounded-lg p-2 hover:bg-gray-100 dark:hover:bg-night-500`;
+        return `${baseClass} lg:text-[var(--onyx)] lg:p-[5px] p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500`;
       case 'button':
         return `${baseClass} rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500`;
       default:
@@ -72,7 +72,7 @@ export class MenuPopupComponent {
       center: 'left-1/2 -translate-x-1/2',
     }[this.config.position || 'right'];
 
-    return `absolute mt-2 ${this.config.width} origin-top-right transform rounded-md bg-white py-4 shadow-custom ring-1 ring-transparent ring-opacity-5 transition focus:outline-none dark:bg-night-600 ${position}`;
+    return `absolute mt-2 ${this.config.width} origin-top-right transform rounded-md bg-white py-4 shadow ring-1 ring-transparent ring-opacity-5 transition focus:outline-none dark:bg-night-600 ${position}`;
   }
 
   getAnimationClass(): string {
@@ -125,7 +125,6 @@ export class MenuPopupComponent {
   }
 
   closeMenu(): void {
-
     this.isMenuOpen = false;
   }
 

@@ -1,14 +1,4 @@
-<!-- <div
-  [ngClass]="
-    isMenuOpen
-      ? 'pointer-events-auto scale-100 animate-fade-in-up opacity-100 duration-200 z-10'
-      : 'pointer-events-none scale-95 opacity-0 duration-100 ease-in'
-  "
-  class="absolute w-auto py-4 mt-1 transition origin-top-right transform bg-white rounded-md shadow-custom ring-1 ring-transparent ring-opacity-5 focus:outline-none dark:bg-night-600"
-  style="overflow: visible;"
->
-  <ng-content></ng-content>
-</div> -->
+
 
 <div [class]="'relative ' + containerClass">
   <!-- Custom Trigger Template -->
@@ -38,11 +28,7 @@
 
       <!-- Icon Trigger -->
       <ng-container *ngIf="config.triggerType === 'icon'">
-        <svg-icon
-          [src]="triggerIcon"
-          [svgClass]="'h-6 w-6 text-gray-400 dark:text-night-400'"
-        >
-        </svg-icon>
+        <svg-icon [src]="triggerIcon" [svgClass]="'h-6 w-6  '"> </svg-icon>
       </ng-container>
 
       <!-- Button Trigger -->
@@ -54,7 +40,7 @@
 
   <!-- Dropdown Content -->
   <div
-  *ngIf="isMenuOpen"
+    *ngIf="isMenuOpen"
     (clickOutside)="closeMenu()"
     [class]="getDropdownClass()"
     [ngClass]="getAnimationClass()"

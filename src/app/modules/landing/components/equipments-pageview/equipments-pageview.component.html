@@ -16,61 +16,26 @@
 
     <button
       class="relative lg:text-[var(--onyx)] lg:p-[5px] p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
+      routerLink="/equipments/cart"
     >
       <svg-icon
-        src="./assets/icons/heroicons/outline/bag-handle.svg"
+        src="./assets/icons/heroicons/outline/shopping-cart.svg"
         [svgStyle]="{ 'width.px': 24 }"
       ></svg-icon>
 
       <span
         class="count absolute -top-[2px] lg:-right-[3px] bg-primary-500 text-white lg:py-[2px] lg:px-[4px] rounded-full w-4 h-4 flex items-center justify-center text-sm"
-        >0</span
       >
-    </button>
-    <button
-      class="lg:relative lg:text-[var(--onyx)] lg:p-[5px] p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
-    >
-      <svg-icon
-        src="./assets/icons/heroicons/outline/person.svg"
-        [svgStyle]="{ 'width.px': 24 }"
-      ></svg-icon>
-    </button>
-
-    <!-- <button
-      class="lg:relative lg:text-[var(--onyx)] lg:p-[5px] text-gray-400 dark:text-yellow-400"
-      (click)="toggleTheme()"
-    >
-      <svg-icon
-        [src]="
-          themeService.isDark
-            ? './assets/icons/heroicons/sun-outline.svg'
-            : './assets/icons/heroicons/moon-outline.svg'
-        "
-        [svgClass]="'h-5 w-5 '"
-      >
-      </svg-icon>
-    </button> -->
-    <!-- <div
-    (click)="toggleTheme()"
-    class="flex items-center justify-start p-2 rounded cursor-pointer group h-9 hover:bg-gray-100 dark:hover:bg-night-600">
-    <svg-icon
-      [src]="
-        themeService.isDark ? 'assets/icons/heroicons/outline/sun.svg' : 'assets/icons/heroicons/outline/moon.svg'
-      "
-      [svgClass]="'h-5 w-5 text-gray-400 dark:text-night-400'">
-    </svg-icon>
-
-    <a class="ml-3 text-xs font-semibold tracking-wide text-gray-600 truncate focus:outline-none dark:text-night-100">
-      {{ themeService.isDark ? 'Light Theme' : 'Dark Theme' }}
-    </a>
-
-    <div class="fixed w-full" *ngIf="!menuService.showSideBar">
-      <span
-        class="absolute w-auto p-2 text-xs font-bold text-white transition-all duration-200 origin-left scale-0 bg-black rounded-md shadow-md z-1 left-12 -top-4 min-w-max group-hover:scale-100 dark:bg-white dark:text-night-900">
-        Theme
+        {{ cart()?.items?.length || 0 }}
       </span>
-    </div>
-  </div> -->
+    </button>
+    <Menu
+      [triggerIcon]="'./assets/icons/heroicons/outline/person.svg'"
+      [config]="profileConfig"
+      [sections]="profileSections"
+      [containerClass]="'rounded-full'"
+    >
+    </Menu>
   </div>
 
   <SearchDropdown

@@ -44,6 +44,9 @@
   }
 }
 
+.hot-toast-container  {
+  z-index: 2147483647 !important; /* Ensures it's always on top */
+}
 /** Scroll bar **/
 @supports selector(::-webkit-scrollbar) {
   .supports-scrollbars\: pr-2 {
@@ -91,6 +94,8 @@
   --salmon-pink: #f472b6;
   --sandy-brown: hsl(29, 90%, 65%);
   --ocean-green: hsl(152, 51%, 52%);
+  --primary-color: #ff4836;
+  --secondary-color: #2d6f17;
 
   /**
    * typography

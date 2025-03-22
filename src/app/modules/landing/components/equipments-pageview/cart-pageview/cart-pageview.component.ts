@@ -1,35 +1,96 @@
-import { NgFor, NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+
 import { Cart, CartItem } from '@model/cart.interface';
 import { CartService } from '@service/modules/cart.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
+import { CartLoaderComponent } from './cart-loader/cart-loader.component';
+import { CartItemComponent } from './cart-item/cart-item.component';
+import { ToastService } from '@service/toast.service';
+import { AuthService } from '@service/auth.service';
+import { DropdownConfig, DropdownSection } from '@model/dropdown';
+import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component';
 
 @Component({
   selector: 'cart-pageview',
   standalone: true,
-  imports: [NgIf, NgFor, AngularSvgIconModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    AngularSvgIconModule,
+    CartLoaderComponent,
+    CartItemComponent,
+    MenuPopupComponent,
+  ],
   templateUrl: './cart-pageview.component.html',
   styleUrl: './cart-pageview.component.scss',
 })
 export class CartPageviewComponent implements OnInit {
-  cart: Cart | null = null;
+  cart = signal<Cart | null>(null);
+
   isLoading = false;
   private _cartService = inject(CartService);
+  private _toastService = inject(ToastService);
   private _router = inject(Router);
+  private _authService = inject(AuthService);
   fileUrl = environment.staicUrl;
 
   error = this._cartService.error;
+  loading = this._cartService.loading;
 
+  currentRoute: string = '';
+  isAuthenticated = this._authService.authenticated;
   ngOnInit(): void {
     this._cartService.cart$.subscribe((cart) => {
-      this.cart = cart;
+      this.cart.set(cart);
     });
+
+    this.currentRoute = this._router.url;
   }
 
+  profileConfig: DropdownConfig = {
+    triggerType: 'icon',
+    width: 'w-56',
+    position: 'right',
+    animation: 'fade',
+  };
+
+  profileSections: DropdownSection[] = [
+    {
+      items: [
+        {
+          label: 'Profile',
+          icon: './assets/icons/heroicons/outline/user-circle.svg',
+          action: () => this._router.navigateByUrl(`/profile`),
+        },
+        {
+          label: 'Sign in',
+          disabled: this.isAuthenticated(),
+          icon: './assets/icons/heroicons/outline/lock-closed.svg',
+          action: () =>
+            this._router.navigateByUrl(`auth?redirectURL=${this.currentRoute}`),
+        },
+        {
+          label: 'Sign out',
+          icon: './assets/icons/heroicons/outline/logout.svg',
+          disabled: !this.isAuthenticated(),
+          action: () =>
+            this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
+        },
+      ],
+    },
+  ];
+
   get isEmpty(): boolean {
-    return !this.cart || this.cart.items.length === 0;
+    return !this.cart || this.cart()?.items.length === 0;
   }
 
   get total(): number {
@@ -52,20 +113,23 @@ export class CartPageviewComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error updating item quantity', error);
+        this._toastService.error(error.message);
         this.isLoading = false;
       },
     });
   }
 
   incrementQuantity(item: CartItem): void {
-    if (item.quantity < item.equipment.quantity) {
+    if (
+      item.quantity < item.equipment.quantity &&
+      item.quantity < item.equipment.quantity
+    ) {
       this.updateQuantity(item, item.quantity + 1);
     }
   }
 
   decrementQuantity(item: CartItem): void {
-    if (item.quantity > 1) {
+    if (item.quantity > 1 || item.quantity === item.equipment.quantity) {
       this.updateQuantity(item, item.quantity - 1);
     } else {
       this.removeItem(item);
@@ -73,14 +137,13 @@ export class CartPageviewComponent implements OnInit {
   }
 
   removeItem(item: CartItem): void {
-    console.log(item);
     this.isLoading = true;
     this._cartService.removeCartItem(item.id).subscribe({
       next: () => {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error removing item from cart', error);
+        this._toastService.error(error.message);
         this.isLoading = false;
       },
     });
@@ -93,7 +156,6 @@ export class CartPageviewComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error clearing cart', error);
         this.isLoading = false;
       },
     });
@@ -101,5 +163,8 @@ export class CartPageviewComponent implements OnInit {
 
   proceedToCheckout(): void {
     this._router.navigate(['/checkout']);
+  }
+  backToShop() {
+    this._router.navigate(['/equipments']);
   }
 }

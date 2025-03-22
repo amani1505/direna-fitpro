@@ -14,9 +14,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import hljs from 'highlight.js';
 import { authInterceptor } from '@modules/auth/auth.interceptor';
+import { authInitializerProvider } from '@service/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    authInitializerProvider,
     provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(AngularSvgIconModule.forRoot()),

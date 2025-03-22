@@ -44,8 +44,8 @@
       if (contentHeight <= viewportHeight) {
         // If content is too short, add a dummy element to make it scrollable for testing
         const dummy = document.createElement("div");
-        dummy.style.height = "100vh";
-        dummy.style.marginTop = "100vh";
+        dummy.style.height = "100dvh";
+        dummy.style.marginTop = "100dvh";
         dummy.style.width = "100%";
         dummy.id = "scroll-test-element";
         document.body.appendChild(dummy);

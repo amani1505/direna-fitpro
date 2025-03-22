@@ -1,6 +1,13 @@
-import { inject, Injectable, Signal, signal } from '@angular/core';
+import { effect, inject, Injectable, Signal, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  Subscription,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from 'environments/environment';
 import { Cart, CartItem } from '@model/cart.interface';
 import { ToastService } from '@service/toast.service';
@@ -14,19 +21,27 @@ export class CartService {
   private _toast = inject(ToastService);
   private _loading = signal<boolean>(false);
   private _error = signal<boolean>(false);
+  private _authService = inject(AuthService);
 
   loading: Signal<boolean> = this._loading.asReadonly();
   error: Signal<boolean> = this._error.asReadonly();
 
-  constructor(
-    private _http: HttpClient,
-    private _authService: AuthService,
-  ) {
-    if (this._authService.accessToken) {
+  constructor(private _http: HttpClient) {
+    if (this._authService.authenticated()) {
       this.loadCart();
-    } else {
-      this._error.set(true);
     }
+
+    // ✅ Use effect() with `allowSignalWrites: true`
+    effect(
+      () => {
+        if (this._authService.authenticated()) {
+          this.loadCart(); // Load cart when user logs in
+        } else {
+          this.cartSubject.next(null); // Clear cart when user logs out
+        }
+      },
+      { allowSignalWrites: true }, // ✅ This allows modifying state inside effect()
+    );
   }
 
   get cartId(): string | null {
@@ -51,52 +66,47 @@ export class CartService {
   }
 
   loadCart(): void {
-    if (!this._authService.accessToken) {
-      this._error.set(true);
-      console.log('Errorrrrrrr');
+    this._loading.set(true);
+    this._http.get<Cart>(this.apiUrl).subscribe({
+      next: (cart) => {
+        this.cartSubject.next(cart);
+        this._error.set(false); // ✅ Reset error only after a successful response
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(true); // ✅ Error only set if request actually fails
+        this._loading.set(false);
+        if (error.status !== 401) {
+          this._toast.error('Failed to load cart.');
+        }
+      },
+    });
+  }
+
+  addToCart(equipmentId: string, quantity: number = 1): Observable<Cart> {
+    if (!this._authService.authenticated()) {
+      return throwError(() => new Error('Login in order to manage your cart'));
     }
 
-    try {
-      this._loading.set(true);
-      this._http.get<Cart>(this.apiUrl).subscribe({
-        next: (cart) => {
-          this.cartSubject.next(cart);
-          this._loading.set(false);
-        },
-        error: (error) => {
-          // No need to handle 401 here (handled globally by interceptor)
-          this._error.set(true);
-          this._loading.set(false);
-          if (error.status !== 401) {
-            // Avoid duplicate toasts
-            this._toast.error('Failed to load cart.');
-          }
-        },
-      });
-    } catch (err) {
-      this._error.set(true);
-      this._toast.error('Internal error loading cart.');
-      this._loading.set(false);
-    }
-  }
-  addToCart(equipmentId: string, quantity: number = 1): Observable<Cart> {
     const cartId = this.cartId;
     if (!cartId) {
       this._toast.error('Cart ID is not available');
-      throw new Error('Cart ID is not available');
+      return throwError(() => new Error('Cart ID is not available'));
     }
 
     return this._http
       .post<Cart>(`${this.apiUrl}/${cartId}/items`, { equipmentId, quantity })
       .pipe(
         tap((cart) => {
-          console.log('Add to cart', cart);
-          this.cartSubject.next(cart);
-          this._toast.success('Item added  successfully.');
+          this.cartSubject.next({ ...cart });
+          this._toast.success('Item added successfully.');
+        }),
+        catchError((error) => {
+          this._toast.error('Failed to add item to cart.');
+          return throwError(() => error);
         }),
       );
   }
-
   updateCartItem(itemId: string, quantity: number): Observable<Cart> {
     const cartId = this.cartId;
     if (!cartId) {
@@ -108,7 +118,7 @@ export class CartService {
       .put<Cart>(`${this.apiUrl}/${cartId}/items/${itemId}`, { quantity })
       .pipe(
         tap((cart) => {
-          this.cartSubject.next(cart);
+          this.cartSubject.next({ ...cart });
           this._toast.success('Item updated successfully.');
         }),
       );

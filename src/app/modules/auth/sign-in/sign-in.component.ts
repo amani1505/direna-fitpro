@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '@service/auth.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -18,7 +18,6 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterLink,
     AngularSvgIconModule,
     NgIf,
     NgClass,
@@ -30,6 +29,7 @@ export class SignInComponent {
   private _authService = inject(AuthService);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _router = inject(Router);
+  private _activatedRoute = inject(ActivatedRoute);
   private _toast = inject(ToastService);
   private _location = inject(Location);
 
@@ -58,11 +58,13 @@ export class SignInComponent {
       next: (response) => {
         this.loading = false;
         this.authForm.reset();
-        console.log(response);
+        const redirectURL =
+          this._activatedRoute.snapshot.queryParamMap.get('redirectURL') ||
+          '/signed-in-redirect';
         if (response.role.name === 'Super Admin') {
-          this._router.navigate(['/admin']);
+          this._router.navigateByUrl(redirectURL);
         } else {
-          this._location.back()
+          this._router.navigateByUrl(redirectURL);
         }
       },
       error: (error) => {

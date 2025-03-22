@@ -1,4 +1,11 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  Injectable,
+  Inject,
+  PLATFORM_ID,
+  signal,
+  Signal,
+  APP_INITIALIZER,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of, switchMap, throwError, catchError } from 'rxjs';
@@ -9,16 +16,28 @@ import { AuthUtils } from '@utils/auth.util';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private _authenticated: boolean = false;
+  _authenticated = signal<boolean>(false);
   private userRoles: Roles[] = [];
+
+  authenticated: Signal<boolean> = this._authenticated.asReadonly();
 
   constructor(
     private _http: HttpClient,
     private _toast: ToastService,
     @Inject(PLATFORM_ID) private platformId: Object, // Inject PLATFORM_ID
-  ) {}
+  ) {
+    this.initAuthentication();
+  }
 
-  // ✅ Safely access localStorage only in the browser
+  private initAuthentication(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = this.accessToken;
+      if (token && !AuthUtils.isTokenExpired(token)) {
+        this._authenticated.set(true);
+      }
+    }
+  }
+
   private getLocalStorageItem(key: string): string | null {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem(key);
@@ -41,6 +60,7 @@ export class AuthService {
   // ✅ Accessors for localStorage
   set accessToken(token: string) {
     this.setLocalStorageItem('accessToken', token);
+    this._authenticated.set(!!token);
   }
 
   get accessToken(): string {
@@ -62,14 +82,12 @@ export class AuthService {
     //   return throwError(() => new Error('User is already logged in.'));
     // }
 
-    return this._http.post(`${environment.apiUrl}auth/login`, credentials, { withCredentials: true }).pipe(
+    return this._http.post(`${environment.apiUrl}auth/login`, credentials).pipe(
       switchMap((response: any) => {
         this.accessToken = response.accessToken;
         // this.role = JSON.stringify(  response.role)
         this.role = response.role.name;
-
-
-        this._authenticated = true;
+        this._authenticated.set(true);
         return of(response);
       }),
     );
@@ -78,10 +96,12 @@ export class AuthService {
   signInUsingToken(): Observable<any> {
     // Sign in using the token
     return this._http.get(`${environment.apiUrl}auth/signInWithToken`).pipe(
-      catchError(() =>
-        // Return false
-        of(false),
-      ),
+      catchError(() => {
+        this.removeLocalStorageItem('accessToken');
+        this.removeLocalStorageItem('role');
+        this._authenticated.set(false);
+        return of(false);
+      }),
       switchMap((response: any) => {
         // Replace the access token with the new one if it's available on
         // the response object.
@@ -96,7 +116,7 @@ export class AuthService {
         }
 
         // Set the authenticated flag to true
-        this._authenticated = true;
+        this._authenticated.set(true);
 
         // Store the user on the user service
         // this._userService.user = response;
@@ -109,17 +129,44 @@ export class AuthService {
 
   // ✅ Sign out method
   signOut(): Observable<any> {
-    this.removeLocalStorageItem('accessToken');
-    this.removeLocalStorageItem('role');
-    this._authenticated = false;
-    return of(true);
+    return this._http.post(`${environment.apiUrl}auth/logout`, null).pipe(
+      switchMap(() => {
+        this.removeLocalStorageItem('accessToken');
+        this.removeLocalStorageItem('role');
+        this._authenticated.set(false);
+        return of(true);
+      }),
+    );
   }
 
-  // ✅ Check if user is authenticated
   check(): Observable<boolean> {
-    if (this._authenticated) return of(true);
+    // First check if we already know the user is authenticated
+    if (this._authenticated()) return of(true);
+
+    // Then check if we have a token that's not expired
     if (!this.accessToken) return of(false);
     if (AuthUtils.isTokenExpired(this.accessToken)) return of(false);
+
+    // If we have a valid token but _authenticated is false, update it
+    this._authenticated.set(true);
+
+    // Optionally, verify the token with the server
     return this.signInUsingToken();
   }
 }
+
+export function initializeAuth(
+  authService: AuthService,
+): () => Observable<boolean> {
+  return () => authService.check();
+}
+
+// Provider for APP_INITIALIZER
+export const authInitializerProvider = {
+  provide: APP_INITIALIZER,
+  useFactory: (authService: AuthService) => () => {
+    return authService.check().toPromise();
+  },
+  deps: [AuthService],
+  multi: true,
+};

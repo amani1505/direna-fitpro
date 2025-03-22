@@ -7,39 +7,52 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterModule,
+} from '@angular/router';
+import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component';
+import { Cart } from '@model/cart.interface';
+import { DropdownConfig, DropdownSection } from '@model/dropdown';
 import { Files } from '@model/files';
+import { AuthService } from '@service/auth.service';
 import { CartService } from '@service/modules/cart.service';
 import { EquipmentService } from '@service/modules/equipment.service';
+import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 import { QuillModule } from 'ngx-quill';
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  images: { url: string }[];
-}
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'view-single-pageview',
   standalone: true,
-  imports: [CommonModule, AngularSvgIconModule, QuillModule],
+  imports: [
+    CommonModule,
+    AngularSvgIconModule,
+    QuillModule,
+    RouterModule,
+    MenuPopupComponent,
+  ],
   templateUrl: './view-single-pageview.component.html',
   styleUrl: './view-single-pageview.component.scss',
 })
 export class ViewSinglePageviewComponent implements OnInit {
+  cart = signal<Cart | null>(null);
   private _equipmentsService = inject(EquipmentService);
   private _route = inject(ActivatedRoute);
+  private _router = inject(Router);
   private _cartService = inject(CartService);
+  private _toastService = inject(ToastService);
+  private _authService = inject(AuthService);
 
   equipment = computed(() => this._equipmentsService.equipment());
   fileUrl = environment.staicUrl;
 
   currentIndex: number = 0;
-  quatity: number = 0;
+  quantity: number = 0;
   available: number = 12;
   animationClass: string = '';
   colors: string[] = ['#FF5722', '#F44336', '#4CAF50', '#2196F3']; // Define colors here
@@ -50,22 +63,12 @@ export class ViewSinglePageviewComponent implements OnInit {
     '/assets/icons/ionicons/logo-instagram.svg',
     './assets/icons/ionicons/logo-linkedin.svg',
   ];
-  product: Product = {
-    id: 1,
-    name: 'Product Name',
-    description: 'Product description goes here.',
-    price: 99.99,
-    images: [
-      { url: '../../../../../assets/images/products/jacket-3.jpg' },
-      { url: '../../../../../assets/images/products/jacket-4.jpg' },
-      { url: '../../../../../assets/images/products/shirt-1.jpg' },
-      // Add more images as needed
-    ],
-  };
-
-  // selectedImage: Files | null = null;
 
   selectedImage = signal<Files | null>(null);
+
+  currentRoute: string = '';
+
+  isAuthenticated = this._authService.authenticated;
 
   constructor() {
     effect(
@@ -84,7 +87,55 @@ export class ViewSinglePageviewComponent implements OnInit {
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
     this._equipmentsService.findOne(id, ['files']);
+
+    this._cartService.cart$.subscribe((cart) => {
+      this.cart.set(cart);
+    });
+
+    // Get the initial route
+    this.currentRoute = this._router.url;
+
+    // Subscribe to route changes
+    // this._router.events
+    //   .pipe(filter((event) => event instanceof NavigationEnd))
+    //   .subscribe((event: NavigationEnd) => {
+    //     this.currentRoute = event.url; // Update the current route
+    //     console.log('Current Route:', this.currentRoute);
+    //   });
   }
+
+  profileConfig: DropdownConfig = {
+    triggerType: 'icon',
+    width: 'w-56',
+    position: 'right',
+    animation: 'fade',
+  };
+
+  profileSections: DropdownSection[] = [
+    {
+      items: [
+        {
+          label: 'Profile',
+          icon: './assets/icons/heroicons/outline/user-circle.svg',
+          action: () => this._router.navigateByUrl(`/profile`),
+        },
+        {
+          label: 'Sign in',
+          disabled: this.isAuthenticated(),
+          icon: './assets/icons/heroicons/outline/lock-closed.svg',
+          action: () =>
+            this._router.navigateByUrl(`auth?redirectURL=${this.currentRoute}`),
+        },
+        {
+          label: 'Sign out',
+          icon: './assets/icons/heroicons/outline/logout.svg',
+          disabled: !this.isAuthenticated(),
+          action: () =>
+            this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
+        },
+      ],
+    },
+  ];
 
   selectImage(image: Files): void {
     const newIndex = this.equipment().files.indexOf(image);
@@ -112,25 +163,29 @@ export class ViewSinglePageviewComponent implements OnInit {
   }
 
   add() {
-    if (this.equipment().quantity > this.quatity) {
-      ++this.quatity;
+    if (this.equipment().quantity > this.quantity) {
+      ++this.quantity;
     }
   }
 
   decrease() {
-    if (this.quatity > 0) {
-      --this.quatity;
+    if (this.quantity > 0) {
+      --this.quantity;
     }
   }
 
   addToCart() {
-    this._cartService.addToCart(this.equipment().id, this.quatity).subscribe({
+    this._cartService.addToCart(this.equipment().id, 1).subscribe({
       next: (cart) => {
-        console.log(cart);
+        this.cart.set(cart);
       },
       error: (error) => {
-        console.error('Error clearing cart', error);
+        this._toastService.error(error.message);
       },
     });
+  }
+
+  goToYouCart(){
+    this._router.navigateByUrl('/equipments/cart');
   }
 }
