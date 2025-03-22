@@ -10,18 +10,16 @@ RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build
 
-# Production stage (Serve Angular app using Node.js with HTTPS)
-FROM node:18 AS production
-WORKDIR /app
+# Production Image with NGINX
+FROM nginx:alpine AS production
+WORKDIR /usr/share/nginx/html
 
 # Copy built Angular files
-COPY --from=builder /app/dist/direna-fitpro/browser ./dist
+COPY --from=builder /app/dist/direna-fitpro/browser /usr/share/nginx/html
 
-# Install a simple HTTP server to serve the Angular app
-RUN npm install -g http-server
+# NGINX Config
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 443 for HTTPS
-EXPOSE 443
-
-# Serve the Angular app with HTTPS
-CMD ["http-server", "dist", "-p", "443", "--ssl", "--cert", "/etc/letsencrypt/live/direna.romanixtz.com/fullchain.pem", "--key", "/etc/letsencrypt/live/direna.romanixtz.com/privkey.pem", "--proxy", "https://node_server:4000?"]
+# Expose port 80
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

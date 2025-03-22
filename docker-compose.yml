@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   direna_fitpro:
     build:
@@ -8,9 +6,7 @@ services:
     container_name: direna_fitpro
     restart: always
     ports:
-      - "443:443"  # Map host port 443 to container port 443
-    volumes:
-      - ./letsencrypt/live/direna.romanixtz.com:/etc/letsencrypt/live/direna.romanixtz.com
+      - "443:443"
     depends_on:
       - node_server
 
