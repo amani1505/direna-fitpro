@@ -9,9 +9,10 @@ services:
     restart: always
     ports:
       - "443:443"  # Map host port 443 to container port 443
+    volumes:
+      - ./letsencrypt/live/direna.romanixtz.com:/etc/letsencrypt/live/direna.romanixtz.com
     depends_on:
       - node_server
-      - certbot
 
   node_server:
     image: node:18
@@ -24,11 +25,3 @@ services:
       - "4000:4000"
     environment:
       - NODE_ENV=production
-
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./letsencrypt:/etc/letsencrypt
-      - ./letsencrypt/log:/var/log/letsencrypt
-    command: certonly --webroot -w /var/www/html -d direna.romanixtz.com --email amanideveloper1505@gmail.com --agree-tos --non-interactive --keep-until-expiring
