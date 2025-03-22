@@ -9,6 +9,8 @@ services:
       - "443:443"
     depends_on:
       - node_server
+    networks:
+      - direna_network
 
   node_server:
     image: node:18
@@ -21,3 +23,9 @@ services:
       - "4000:4000"
     environment:
       - NODE_ENV=production
+    networks:
+      - direna_network
+
+networks:
+  direna_network:
+    driver: bridge
