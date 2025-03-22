@@ -11,9 +11,7 @@ services:
       - node_server
     networks:
       - direna_network
-    volumes:
-      - ./ssl:/etc/nginx/ssl
-      
+
   node_server:
     image: node:18
     container_name: node_server
