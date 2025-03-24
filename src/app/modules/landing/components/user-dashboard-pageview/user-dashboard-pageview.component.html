@@ -1,0 +1,98 @@
+<!-- dashboard.component.html -->
+<div class="min-h-screen p-4">
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-3">
+    @for (stat of dashboardStats; track $index) {
+      <div
+        class="p-6 bg-white border rounded-lg"
+        [ngClass]="{
+          'border-blue-500': stat.label === 'Orders',
+          'border-red-500 ': stat.label === 'Wishlist',
+          'border-green-500   ': stat.label === 'Recently Viewed',
+        }"
+      >
+        <div class="flex items-center gap-1">
+          <div
+            class="p-1 rounded"
+            [ngClass]="{
+              'text-blue-500 bg-blue-100': stat.label === 'Orders',
+              'text-red-500 bg-red-100': stat.label === 'Wishlist',
+              'text-green-500 bg-green-100  ': stat.label === 'Recently Viewed',
+            }"
+          >
+            <svg-icon
+              [src]="stat.icon"
+              [svgStyle]="{ 'width.px': 24 }"
+            ></svg-icon>
+          </div>
+          <div
+            class="text-xl font-[500]"
+            [ngClass]="{
+              'text-blue-500': stat.label === 'Orders',
+              'text-red-500 ': stat.label === 'Wishlist',
+              'text-green-500   ': stat.label === 'Recently Viewed',
+            }"
+          >
+            {{ stat.label }}
+          </div>
+        </div>
+        <p class="mb-2 text-sm text-gray-400">
+          <ng-container *ngIf="stat.label === 'Orders'"
+            >Track your recent orders</ng-container
+          >
+          <ng-container *ngIf="stat.label === 'Wishlist'"
+            >Items saved for later</ng-container
+          >
+          <ng-container *ngIf="stat.label === 'Recently Viewed'"
+            >Products you've checked out</ng-container
+          >
+        </p>
+        <h3 class="mb-2 text-3xl font-[400]">{{ stat.count }}</h3>
+        <a href="#" class="text-sm text-primary-400 hover:underline">{{
+          stat.link
+        }}</a>
+      </div>
+    }
+  </div>
+
+  <!-- User Info Sidebar and Recent Orders -->
+  <div class="flex flex-col gap-4 md:flex-row">
+    <div class="h-auto p-6 rounded-lg bg-gray-50 md:w-1/4">
+      <div class="flex flex-col items-center mb-6">
+        <div
+          class="flex items-center justify-center w-16 h-16 mb-2 rounded-full text-primary-500 bg-primary-100"
+        >
+          <svg-icon
+            [src]="'/assets/icons/heroicons/outline/person.svg'"
+            [svgStyle]="{ 'width.px': 30 }"
+          ></svg-icon>
+        </div>
+        <h3 class="text-xl font-[500] text-neutral-700">{{ user.name }}</h3>
+        <p class="text-sm text-gray-400">{{ user.email }}</p>
+      </div>
+      <nav class="space-y-1">
+        @for (link of dashboardLinks; track $index) {
+          <a
+            [routerLink]="[link.link]"
+            routerLinkActive="bg-gray-100 text-primary-500"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="flex items-center gap-1 p-2 rounded-lg text-neutral-700 hover:bg-gray-100 font-catamaran"
+          >
+            <div>
+              <svg-icon
+                [src]="link.icon"
+                [svgStyle]="{ 'width.px': 24 }"
+              ></svg-icon>
+            </div>
+            <div>
+              {{ link.label }}
+            </div>
+          </a>
+        }
+      </nav>
+    </div>
+    <div class="flex-1">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

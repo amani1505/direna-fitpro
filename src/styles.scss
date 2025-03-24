@@ -44,7 +44,7 @@
   }
 }
 
-.hot-toast-container  {
+.hot-toast-container {
   z-index: 2147483647 !important; /* Ensures it's always on top */
 }
 /** Scroll bar **/
@@ -170,7 +170,6 @@ html {
   @apply p-[1rem] sm:p-[1.5rem] md:p-[2rem]  lg:p-[3rem]  xl:p-[4rem] w-full;
 }
 
-
 body {
   background-color: var(--white);
   color: var(--sonic-silver);
@@ -212,12 +211,6 @@ ol {
 
 img {
   height: auto;
-}
-
-button {
-  background: none;
-  border: none;
-  font: inherit;
 }
 
 button {

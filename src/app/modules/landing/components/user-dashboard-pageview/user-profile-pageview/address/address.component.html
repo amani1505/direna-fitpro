@@ -1,0 +1,70 @@
+<div class="flex items-center gap-1">
+  <div class="p-1 text-green-500 bg-green-100 rounded-md">
+    <svg-icon
+      [src]="'/assets/icons/heroicons/outline/building-office-2.svg'"
+      [svgStyle]="{ 'width.px': 24 }"
+    ></svg-icon>
+  </div>
+  <div class="text-xl font-bold">Addresses</div>
+</div>
+
+<p class="mt-4 mb-6 text-gray-400">
+  Manage your shipping and billing addresses
+</p>
+
+<div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
+  @for (address of addresses; track $index) {
+    <div class="p-4 border rounded-lg dark:bg-night-600">
+      <div class="flex items-start justify-between mb-2">
+        <h5 class="text-lg font-[500]">{{ address.type }}</h5>
+        <span
+          *ngIf="address.isDefault"
+          class="px-2 py-1 text-xs text-blue-600 border border-blue-600 rounded-full bg-blue-50"
+          >Default</span
+        >
+      </div>
+
+      <div class="mb-4 font-[300] text-neutral-500">
+        <p>{{ address.name }}</p>
+        <p>{{ address.street }}</p>
+        <p *ngIf="address.apt">{{ address.apt }}</p>
+        <p *ngIf="address.suite">{{ address.suite }}</p>
+        <p>{{ address.city }}, {{ address.state }} {{ address.zip }}</p>
+        <p>{{ address.country }}</p>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <button
+          (click)="editAddress(address.id)"
+          class="px-4 py-1 transition-colors duration-200 bg-transparent border border-blue-600 rounded dark:bg-night-500 dark:text-night-200 hover:bg-blue-600 hover:text-white"
+        >
+          Edit
+        </button>
+
+        <button
+          (click)="deleteAddress(address.id)"
+          class="px-4 py-1 transition-colors duration-200 bg-transparent border border-red-600 rounded hover:bg-red-600 dark:text-night-200 hover:text-white"
+        >
+          Delete
+        </button>
+
+        <button
+          *ngIf="!address.isDefault"
+          (click)="setDefaultAddress(address.id)"
+          class="px-4 py-1 transition-colors duration-200 bg-transparent border border-green-600 rounded hover:text-white hover:bg-green-600 dark:bg-night-500 dark:text-night-2000"
+        >
+          Set as Default
+        </button>
+      </div>
+    </div>
+  }
+</div>
+
+<div class="flex items-center justify-end">
+  <button
+  (click)="addNewAddress()"
+  class="px-6 py-2 text-white transition-colors duration-200 rounded-lg bg-primary-600 hover:bg-primary-700"
+>
+  Add New Address
+</button>
+</div>

@@ -31,6 +31,16 @@ export default [
         loadChildren: () => import('./pages/equipments/equipments.routes'),
         providers: [EquipmentService, EquipmemntCategoryService, CartService],
       },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./pages/user-dashboard/user-dashboard.routes'),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./pages/user-dashboard/profile/profile.routes'),
+      },
     ],
   },
 ] as Routes;
