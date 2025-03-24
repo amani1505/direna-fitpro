@@ -59,7 +59,7 @@ export class EquipmentsPageviewComponent implements OnInit {
         {
           label: 'Profile',
           icon: './assets/icons/heroicons/outline/user-circle.svg',
-          action: () => this._router.navigateByUrl(`/profile`),
+          action: () => this._router.navigateByUrl(`/dashboard/profile`),
         },
         {
           label: 'Sign in',

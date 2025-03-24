@@ -14,8 +14,23 @@ export default [
           ).then((c) => c.PersonalDashboardComponent),
       },
       {
+        path: 'orders',
+        loadComponent: () =>
+          import(
+            '@modules/landing/components//user-dashboard-pageview/my-orders/my-orders.component'
+          ).then((c) => c.MyOrdersComponent),
+      },
+
+      {
         path: 'profile',
         loadChildren: () => import('./profile/profile.routes'),
+      },
+      {
+        path: 'wishlist',
+        loadComponent: () =>
+          import(
+            '@modules/landing/components//user-dashboard-pageview/my-wishlist/my-wishlist.component'
+          ).then((c) => c.MyWishlistComponent),
       },
     ],
   },

@@ -1,13 +1,27 @@
 <section
-class="min-h-[25vh]  flex flex-col justify-end items-center bg-dark has-bg-image pb-10 md:pb-0"
-  style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
+  class="min-h-[25vh] xl:min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-0 md:pb-0"
+  style="
+    background-image: url(&quot;./assets/images/footer-bg.png&quot;);
+    background-size: cover;
+    background-position: center;
+  "
 >
-<div class="text-white text-[2rem] md:text-[3rem]  capitalize font-[500] mb-3">Dashboard</div>
-  <p class="text-[14px] xl:text-[16px] lg:text-[12px] text-center">
+  <!-- Title -->
+  <div
+    class="mb-2 text-3xl font-medium text-center text-white capitalize md:text-5xl lg:text-6xl"
+  >
+    Dashboard
+  </div>
+
+  <!-- Description -->
+  <p
+    class="hidden px-4 text-sm text-center text-gray-300 text-[14px] xl:text-[16px] lg:text-[12px] sm:block"
+  >
     Welcome back! Manage your account and orders
   </p>
   <BreadCrumbs [isEquipment]="true"></BreadCrumbs>
 </section>
+
 <section class="custom-container dark:bg-night-800">
   <user-dashboard-pageview></user-dashboard-pageview>
 </section>

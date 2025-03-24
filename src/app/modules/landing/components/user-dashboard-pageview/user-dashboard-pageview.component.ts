@@ -46,7 +46,7 @@ export class UserDashboardPageviewComponent {
     {
       icon: './assets/icons/heroicons/outline/cube.svg',
       label: 'My Orders',
-      link: '/orders',
+      link: '/dashboard/orders',
     },
     {
       icon: './assets/icons/heroicons/outline/person.svg',
@@ -56,7 +56,7 @@ export class UserDashboardPageviewComponent {
     {
       icon: './assets/icons/heroicons/outline/heart.svg',
       label: 'Wishlist',
-      link: '/orders',
+      link: '/dashboard/wishlist',
     },
     {
       icon: './assets/icons/heroicons/outline/cog-8-tooth.svg',
