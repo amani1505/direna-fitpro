@@ -48,7 +48,7 @@
           >
         </p>
         <h3 class="mb-2 text-3xl font-[400]">{{ stat.count }}</h3>
-        <a href="#" class="text-sm text-primary-400 hover:underline">{{
+        <a [routerLink]="stat?.navigationLink" class="text-sm text-primary-400 hover:underline">{{
           stat.link
         }}</a>
       </div>

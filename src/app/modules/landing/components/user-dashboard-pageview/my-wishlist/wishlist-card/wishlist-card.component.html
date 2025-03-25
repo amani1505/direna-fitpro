@@ -1,0 +1,43 @@
+<div class="p-1 space-y-3 border rounded-lg">
+  <div class="grid grid-cols-3 gap-2 md:grid-cols-10 tems-start">
+    <div class="rounded-lg">
+      <img
+        [src]="wishlist.image"
+        [alt]="wishlist.name"
+        class="object-cover w-full h-full rounded-lg"
+      />
+    </div>
+    <div class="col-span-2 md:col-span-9">
+      <h5
+        class="font-[400] md:text-2xl text-lg text-neutral-700 font-catamaran"
+      >
+        {{ wishlist.name }}
+      </h5>
+
+      <p class="mb-4 text-gray-400 font-catamaran">
+        Price: ${{ wishlist.price.toFixed(2) }}
+      </p>
+
+      <div class="flex items-center justify-start gap-x-2">
+        <button
+          class="flex items-center justify-center rounded-md text-sky-500 bg-sky-200 h-7 w-7 dark:bg-sky-500 dark:text-sky-300"
+        >
+          <svg-icon
+            [src]="'./assets/icons/heroicons/outline/shopping-cart.svg'"
+            [svgClass]="'h-5 w-5'"
+          >
+          </svg-icon>
+        </button>
+        <button
+          class="flex items-center justify-center text-red-500 bg-red-200 rounded-md h-7 w-7 dark:bg-red-500 dark:text-red-300"
+        >
+          <svg-icon
+            [src]="'assets/icons/heroicons/outline/trash.svg'"
+            [svgClass]="'h-5 w-5'"
+          >
+          </svg-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

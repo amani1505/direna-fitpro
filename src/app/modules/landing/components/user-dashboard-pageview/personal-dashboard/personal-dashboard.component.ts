@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Order {
   id: string;
@@ -14,9 +15,11 @@ interface Order {
   standalone: true,
   imports: [NgClass],
   templateUrl: './personal-dashboard.component.html',
-  styleUrl: './personal-dashboard.component.scss'
+  styleUrl: './personal-dashboard.component.scss',
 })
 export class PersonalDashboardComponent {
+  private readonly _router = inject(Router);
+  private _route = inject(ActivatedRoute);
 
   recentOrders: Order[] = [
     {
@@ -48,8 +51,6 @@ export class PersonalDashboardComponent {
   }
 
   viewAllOrders(): void {
-    console.log('Viewing all orders');
-    // Navigate to orders page
+    this._router.navigate(['orders'], { relativeTo: this._route });
   }
-
 }

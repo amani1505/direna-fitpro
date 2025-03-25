@@ -1,6 +1,6 @@
-import { NgClass, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { OrdersTableRowComponent } from "./orders-table-row/orders-table-row.component";
+import { OrdersCardComponent } from "./orders-card/orders-card.component";
 interface Order {
   id: string;
   date: string;
@@ -12,7 +12,7 @@ interface Order {
 @Component({
   selector: 'app-my-orders',
   standalone: true,
-  imports: [NgClass, NgFor, OrdersTableRowComponent],
+  imports: [OrdersTableRowComponent, OrdersCardComponent],
   templateUrl: './my-orders.component.html',
   styleUrl: './my-orders.component.scss',
 })

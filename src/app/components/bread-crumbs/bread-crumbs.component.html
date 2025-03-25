@@ -1,7 +1,11 @@
 <div class="flex flex-col">
   <nav
     *ngIf="breadcrumbs.length > 1"
-    class="flex items-center justify-start mt-5 text-gray-700 bg-green-40"
+    class="flex items-center justify-start text-gray-700 "
+    [ngClass]="{
+      'mt-0': isEquipment,
+      'mt-5': !isEquipment,
+    }"
   >
     <ul class="flex items-center space-x-2">
       <li
@@ -15,7 +19,7 @@
         <ng-container *ngIf="first">
           <a
             [routerLink]="breadcrumb.url"
-            class="flex items-center space-x-1"
+            class="flex items-center "
             [ngClass]="{
               'text-primary-500': isEquipment,
               'text-gray-900 dark:text-night-50': !isEquipment,
@@ -45,8 +49,8 @@
     </ul>
   </nav>
   <div
-    *ngIf="breadcrumbs.length > 1"
-    class="px-6 mb-10 text-sm text-gray-900 dark:text-night-50"
+    *ngIf="breadcrumbs.length > 1 && !isEquipment"
+    class="mb-10 text-sm text-gray-900  dark:text-night-50"
   >
     {{ currentDateTime }}
   </div>

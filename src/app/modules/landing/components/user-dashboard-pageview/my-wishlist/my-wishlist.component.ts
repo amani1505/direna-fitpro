@@ -1,5 +1,6 @@
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
+import { WishlistCardComponent } from "./wishlist-card/wishlist-card.component";
 
 interface WishlistItem {
   id: number;
@@ -10,12 +11,12 @@ interface WishlistItem {
 @Component({
   selector: 'app-my-wishlist',
   standalone: true,
-  imports: [NgFor],
+  imports: [ WishlistCardComponent],
   templateUrl: './my-wishlist.component.html',
   styleUrl: './my-wishlist.component.scss',
 })
 export class MyWishlistComponent {
-  wishlistItems: WishlistItem[] = [
+  wishlists: WishlistItem[] = [
     {
       id: 1,
       name: 'Wireless Headphones',

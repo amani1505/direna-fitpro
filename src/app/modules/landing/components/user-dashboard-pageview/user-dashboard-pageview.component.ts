@@ -22,18 +22,21 @@ export class UserDashboardPageviewComponent {
       label: 'Orders',
       count: 5,
       link: 'View order history',
+      navigationLink: '/dashboard/orders',
     },
     {
       icon: './assets/icons/heroicons/outline/heart.svg',
       label: 'Wishlist',
       count: 12,
       link: 'View wishlist',
+      navigationLink: '/dashboard/wishlist',
     },
     {
       icon: './assets/icons/heroicons/outline/clock.svg',
       label: 'Recently Viewed',
       count: 8,
       link: 'See all',
+      navigationLink: '/dashboard/orders',
     },
   ];
 
@@ -58,10 +61,10 @@ export class UserDashboardPageviewComponent {
       label: 'Wishlist',
       link: '/dashboard/wishlist',
     },
-    {
-      icon: './assets/icons/heroicons/outline/cog-8-tooth.svg',
-      label: 'Account Settings',
-      link: '/orders',
-    },
+    // {
+    //   icon: './assets/icons/heroicons/outline/cog-8-tooth.svg',
+    //   label: 'Account Settings',
+    //   link: '/orders',
+    // },
   ];
 }
