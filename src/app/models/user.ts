@@ -7,8 +7,13 @@ export interface User {
 
 export interface Profile {
   id: string;
+  first_name: string
+  middle_name: string;
+  last_name: string;
   avatar?: string;
   username: string;
+  phone_number: string;
+  gender: string;
   email: string;
   // blog: Array<Blog>;
   role: Roles;

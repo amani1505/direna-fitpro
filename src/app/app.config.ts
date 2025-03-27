@@ -8,11 +8,11 @@ import {
   provideHttpClient,
   withFetch,
   withInterceptors,
+  withXsrfConfiguration,
 } from '@angular/common/http';
 import { provideQuillConfig } from 'ngx-quill/config';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
-import hljs from 'highlight.js';
 import { authInterceptor } from '@modules/auth/auth.interceptor';
 import { authInitializerProvider } from '@service/auth.service';
 
@@ -22,7 +22,14 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(AngularSvgIconModule.forRoot()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor]),
+      withXsrfConfiguration({
+        cookieName: 'XSRF-TOKEN',
+        headerName: 'X-XSRF-TOKEN',
+      }),
+    ),
     provideEnvironmentNgxMask(),
     provideQuillConfig({
       modules: {

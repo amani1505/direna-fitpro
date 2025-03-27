@@ -58,21 +58,21 @@ export class SignInComponent {
       next: (response) => {
         this.loading = false;
         this.authForm.reset();
+
         const redirectURL =
           this._activatedRoute.snapshot.queryParamMap.get('redirectURL') ||
           '/signed-in-redirect';
-        if (response.role.name === 'Super Admin') {
+        if (response.user.role.name === 'Super Admin') {
           this._router.navigateByUrl(redirectURL);
+          this._toast.success('Welcome, Super Admin!');
         } else {
           this._router.navigateByUrl(redirectURL);
+          this._toast.success('Welcome, User!');
         }
       },
       error: (error) => {
         this.loading = false;
-        console.log(error);
-        this._toast.error(
-          `An error occurred while Login: ${error.error.message}`,
-        );
+        this._toast.error(`An error occurred while Login: ${error.message}`);
       },
     });
   }

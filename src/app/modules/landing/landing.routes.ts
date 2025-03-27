@@ -6,6 +6,7 @@ import { EquipmemntCategoryService } from '@service/modules/equipment-category.s
 import { CartService } from '@service/modules/cart.service';
 import { AuthGuard } from '@core/guards/auth.guard';
 import { AuthService } from '@service/auth.service';
+import { UserService } from '@service/modules/user.service';
 
 export default [
   {
@@ -36,7 +37,7 @@ export default [
       {
         path: 'dashboard',
         canActivateChild: [AuthGuard],
-        providers: [AuthService],
+        providers: [UserService],
         loadChildren: () =>
           import('./pages/user-dashboard/user-dashboard.routes'),
       },

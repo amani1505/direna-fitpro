@@ -27,7 +27,7 @@
     *ngIf="activeTab === 'personal'"
     class="p-6 text-black rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200 font-catamaran"
   >
-    <personal-information></personal-information>
+    <personal-information [user]="user?.profile"></personal-information>
   </div>
 
   <!-- Addresses Tab -->

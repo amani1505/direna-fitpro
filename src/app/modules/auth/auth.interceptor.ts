@@ -1,128 +1,67 @@
-// import {
-//   HttpErrorResponse,
-//   HttpEvent,
-//   HttpHandlerFn,
-//   HttpRequest,
-// } from '@angular/common/http';
-// import { inject } from '@angular/core';
-// import { AuthService } from '@service/auth.service';
-
-// import { catchError, Observable, throwError } from 'rxjs';
-
-// /**
-//  * Intercept
-//  *
-//  * @param req
-//  * @param next
-//  */
-// export const authInterceptor = (
-//   req: HttpRequest<unknown>,
-//   next: HttpHandlerFn
-// ): Observable<HttpEvent<unknown>> => {
-//   const authService = inject(AuthService);
-//   // Clone the request object
-//   let newReq = req.clone();
-
-//   // Request
-//   //
-//   // If the access token didn't expire, add the Authorization header.
-//   // We won't add the Authorization header if the access token expired.
-//   // This will force the server to return a "401 Unauthorized" response
-//   // for the protected API routes which our response interceptor will
-//   // catch and delete the access token from the local storage while logging
-//   // the user out from the app.
-//   if (authService.accessToken) {
-//     newReq = req.clone({
-//       headers: req.headers.set(
-//         'Authorization',
-//         'Bearer ' + authService.accessToken
-//       ),
-//     });
-//   }
-
-//   // Response
-//   return next(newReq).pipe(
-//     catchError((error) => {
-
-//          // Catch "401 Unauthorized" responses
-//       if (error instanceof HttpErrorResponse && error.status === 401) {
-//         // Sign out
-//         authService.signOut();
-
-//         // Reload the app
-//         location.reload();
-//       }
-
-//       return throwError(error);
-//     })
-//   );
-// };
-
-import {
-  HttpInterceptorFn,
-  HttpRequest,
-  HttpHandlerFn,
-  HttpEvent,
-  HttpErrorResponse
-} from '@angular/common/http';
-import { PLATFORM_ID, inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { inject, Injector } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AuthService } from '@service/auth.service';
+import { isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
+  const injector = inject(Injector);
   const platformId = inject(PLATFORM_ID);
 
-  // Helper function to safely get localStorage item
-  const getLocalStorageItem = (key: string): string | null => {
-    if (isPlatformBrowser(platformId)) {
-      return localStorage.getItem(key);
-    }
-    return null;
-  };
+  // Get token from localStorage directly (only in browser)
+  let accessToken: string | null = null;
+  if (isPlatformBrowser(platformId)) {
+    accessToken = localStorage.getItem('accessToken');
+  }
 
-  // Helper function to safely remove localStorage item
-  const removeLocalStorageItem = (key: string): void => {
-    if (isPlatformBrowser(platformId)) {
-      localStorage.removeItem(key);
-    }
-  };
-
-  // Get token from localStorage directly
-  const accessToken = getLocalStorageItem('accessToken');
-
-  // Clone the request object
+  // Clone the request with auth header if token exists
   let newReq = req.clone();
-
-  // Add Authorization header if token exists
   if (accessToken) {
     newReq = req.clone({
-      headers: req.headers.set(
-        'Authorization',
-        'Bearer ' + accessToken
-      ),
+      headers: req.headers
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('X-XSRF-TOKEN', getCookie('XSRF-TOKEN') || '') // CSRF token for protected routes
     });
   }
 
-  // Response handling
   return next(newReq).pipe(
-    catchError((error) => {
-      // Catch "401 Unauthorized" responses
-      if (error instanceof HttpErrorResponse && error.status === 401) {
-        // Clear authentication state
-        removeLocalStorageItem('accessToken');
-        removeLocalStorageItem('role');
-
-        // Reload the app (only on browser)
-        if (isPlatformBrowser(platformId)) {
-          window.location.reload();
-        }
+    catchError((error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        const authService = injector.get(AuthService);
+        return authService.refreshToken().pipe(
+          switchMap((newToken) => {
+            if (newToken) {
+              const retriedReq = req.clone({
+                headers: req.headers
+                  .set('Authorization', `Bearer ${newToken}`)
+                  .set('X-XSRF-TOKEN', getCookie('XSRF-TOKEN') || '')
+              });
+              return next(retriedReq);
+            }
+            return throwError(() => error);
+          }),
+          catchError(() => {
+            authService.signOut().subscribe();
+            return throwError(() => error);
+          })
+        );
       }
-
       return throwError(() => error);
     })
   );
 };
+
+// Helper function to get cookie value
+function getCookie(name: string): string | null {
+  if (typeof document !== 'undefined') {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  }
+  return null;
+}

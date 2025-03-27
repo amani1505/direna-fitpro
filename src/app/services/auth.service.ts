@@ -230,19 +230,29 @@ import {
   signal,
   Signal,
   APP_INITIALIZER,
+  inject,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, switchMap, BehaviorSubject, catchError } from 'rxjs';
+import {
+  Observable,
+  of,
+  switchMap,
+  BehaviorSubject,
+  catchError,
+  map,
+} from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthUtils } from '@utils/auth.util';
 import { User } from '@model/user';
+import { ToastService } from './toast.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   _authenticated = signal<boolean>(false);
   private _user = signal<User | null>(null);
   private _userLoadedSubject = new BehaviorSubject<boolean>(false);
+  private _toastService = inject(ToastService);
 
   authenticated: Signal<boolean> = this._authenticated.asReadonly();
   user: Signal<User | null> = this._user.asReadonly();
@@ -319,6 +329,27 @@ export class AuthService {
       }),
     );
   }
+  refreshToken(): Observable<string | null> {
+    return this._http
+      .post<{
+        accessToken: string;
+      }>(`${environment.apiUrl}auth/refresh-token`, {})
+      .pipe(
+        map((response) => {
+          if (response.accessToken) {
+            this.accessToken = response.accessToken;
+            return response.accessToken;
+          }
+          return null;
+        }),
+        catchError((error) => {
+          console.error('Token refresh failed', error);
+          this._toastService.error(`Token refresh failed: ${error}`);
+          this.signOut();
+          return of(null);
+        }),
+      );
+  }
 
   signOut(): Observable<any> {
     return this._http.post(`${environment.apiUrl}auth/logout`, null).pipe(
@@ -349,7 +380,7 @@ export class AuthService {
       .get<User>(`${environment.apiUrl}me`)
       .pipe(
         catchError((error) => {
-          console.error('Failed to load user profile', error);
+          this._toastService.error(`Failed to load user profile: ${error}`);
           this._userLoadedSubject.next(false);
           return of(null);
         }),

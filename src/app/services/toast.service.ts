@@ -27,6 +27,7 @@ export class ToastService {
       position: 'top-right',
       style: {
         borderLeft: '4px solid #4ade80',
+      
         padding: '10px',
         color: '#16a34a',
         backgroundColor: '#dcfce7',
