@@ -1,29 +1,39 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PersonalInformationComponent } from "./personal-information/personal-information.component";
-import { AddressComponent } from "./address/address.component";
-import { SecurityComponent } from "./security/security.component";
-
-
+import { PersonalInformationComponent } from './personal-information/personal-information.component';
+import { AddressComponent } from './address/address.component';
+import { SecurityComponent } from './security/security.component';
+import { ActivatedRoute } from '@angular/router';
+import { Profile, User } from '@model/user';
+import { AuthService } from '@service/auth.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'user-profile-pageview',
   standalone: true,
-  imports: [CommonModule, FormsModule, PersonalInformationComponent, AddressComponent, SecurityComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PersonalInformationComponent,
+    AddressComponent,
+    SecurityComponent,
+  ],
   templateUrl: './user-profile-pageview.component.html',
   styleUrl: './user-profile-pageview.component.scss',
 })
-export class UserProfilePageviewComponent {
+export class UserProfilePageviewComponent implements OnInit, OnDestroy {
+  private _authService = inject(AuthService);
+  private destroy$ = new Subject<void>();
+  user: User | null = null;
+
+
   activeTab:
     | 'personal'
     | 'addresses'
     | 'payment'
     | 'notifications'
     | 'security' = 'personal';
-
-
-
 
   tabs: Array<{
     title: string;
@@ -63,9 +73,19 @@ export class UserProfilePageviewComponent {
     this.activeTab = tab;
   }
 
+   ngOnInit() {
+     // Subscribe to user loaded status
+     this._authService.userLoaded$
+       .pipe(takeUntil(this.destroy$))
+       .subscribe((loaded) => {
+         if (loaded) {
+           this.user = this._authService.user();
+         }
+       });
+   }
 
-
-
-
-
+   ngOnDestroy() {
+     this.destroy$.next();
+     this.destroy$.complete();
+   }
 }

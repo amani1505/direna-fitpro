@@ -69,7 +69,7 @@ export class SignInComponent {
       },
       error: (error) => {
         this.loading = false;
-        this.authForm.reset();
+        console.log(error);
         this._toast.error(
           `An error occurred while Login: ${error.error.message}`,
         );

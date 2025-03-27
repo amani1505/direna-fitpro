@@ -1,5 +1,5 @@
 <!-- dashboard.component.html -->
-<div class="p-4 ">
+<div class="p-4">
   <!-- Stats Cards -->
   <div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-3">
     @for (stat of dashboardStats; track $index) {
@@ -48,9 +48,11 @@
           >
         </p>
         <h3 class="mb-2 text-3xl font-[400]">{{ stat.count }}</h3>
-        <a [routerLink]="stat?.navigationLink" class="text-sm text-primary-400 hover:underline">{{
-          stat.link
-        }}</a>
+        <a
+          [routerLink]="stat?.navigationLink"
+          class="text-sm text-primary-400 hover:underline"
+          >{{ stat.link }}</a
+        >
       </div>
     }
   </div>
@@ -67,8 +69,10 @@
             [svgStyle]="{ 'width.px': 30 }"
           ></svg-icon>
         </div>
-        <h3 class="text-xl font-[500] text-neutral-700">{{ user.name }}</h3>
-        <p class="text-sm text-gray-400">{{ user.email }}</p>
+        <h3 class="text-xl font-[500] text-neutral-700">
+          {{ user?.profile?.username }}
+        </h3>
+        <p class="text-sm text-gray-400">{{ user?.profile?.email }}</p>
       </div>
       <nav class="space-y-1">
         @for (link of dashboardLinks; track $index) {

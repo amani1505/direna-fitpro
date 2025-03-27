@@ -4,6 +4,8 @@ import { LandingComponent } from './landing.component';
 import { EquipmentService } from '@service/modules/equipment.service';
 import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
 import { CartService } from '@service/modules/cart.service';
+import { AuthGuard } from '@core/guards/auth.guard';
+import { AuthService } from '@service/auth.service';
 
 export default [
   {
@@ -33,13 +35,10 @@ export default [
       },
       {
         path: 'dashboard',
+        canActivateChild: [AuthGuard],
+        providers: [AuthService],
         loadChildren: () =>
           import('./pages/user-dashboard/user-dashboard.routes'),
-      },
-      {
-        path: 'profile',
-        loadChildren: () =>
-          import('./pages/user-dashboard/profile/profile.routes'),
       },
     ],
   },

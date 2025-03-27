@@ -1,7 +1,10 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { User } from '@model/user';
+import { AuthService } from '@service/auth.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'user-dashboard-pageview',
@@ -10,11 +13,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   templateUrl: './user-dashboard-pageview.component.html',
   styleUrl: './user-dashboard-pageview.component.scss',
 })
-export class UserDashboardPageviewComponent {
-  user = {
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-  };
+export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
+  private _authService = inject(AuthService);
+  private destroy$ = new Subject<void>();
+  user: User | null = null;
 
   dashboardStats = [
     {
@@ -67,4 +69,20 @@ export class UserDashboardPageviewComponent {
     //   link: '/orders',
     // },
   ];
+
+  ngOnInit() {
+    // Subscribe to user loaded status
+    this._authService.userLoaded$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loaded) => {
+        if (loaded) {
+          this.user = this._authService.user();
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
