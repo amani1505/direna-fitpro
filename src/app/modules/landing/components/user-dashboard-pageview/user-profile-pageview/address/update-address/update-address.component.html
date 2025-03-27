@@ -1,0 +1,183 @@
+<ReusableModal
+  [isOpen]="isModalOpen()"
+  [config]="modalConfig"
+  (closeModalEvent)="onCancel()"
+>
+  <!-- Custom header -->
+  <ng-container modalHeader>
+    <h2
+      class="text-xl font-semibold text-gray-700 font-catamaran dark:text-night-50 ms-2"
+    >
+      Add New Branch
+    </h2>
+  </ng-container>
+
+  <!-- Modal content -->
+  <ng-container modalContent>
+    <form
+      [formGroup]="addressForm"
+      class="grid grid-cols-1 gap-6 md:grid-cols-2"
+    >
+      <div class="">
+        <label for="type" class="block mb-2"
+          >Address Type <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="text"
+          id="type"
+          formControlName="type"
+          class="input-field"
+        />
+
+        @if (addressForm.get("type")?.touched) {
+          @if (addressForm.get("type").hasError("required")) {
+            <div class="is__invalid-error">Address Type is Required</div>
+          }
+        }
+      </div>
+
+      <div class="">
+        <label for="type" class="block mb-2"
+          >Address Street <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="text"
+          id="street"
+          formControlName="street"
+          class="input-field"
+        />
+
+        @if (addressForm.get("street")?.touched) {
+          @if (addressForm.get("street").hasError("required")) {
+            <div class="is__invalid-error">Address Street is Required</div>
+          }
+        }
+      </div>
+
+      <div class="">
+        <label for="district" class="block mb-2"
+          >Address District<span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="text"
+          id="district"
+          formControlName="district"
+          class="input-field"
+        />
+
+        @if (addressForm.get("district")?.touched) {
+          @if (addressForm.get("district").hasError("required")) {
+            <div class="is__invalid-error">District is Required</div>
+          }
+        }
+      </div>
+
+      <div class="">
+        <label for="city" class="block mb-2"
+          >Address City <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="text"
+          id="city"
+          formControlName="city"
+          class="input-field"
+        />
+
+        @if (addressForm.get("city")?.touched) {
+          @if (addressForm.get("city").hasError("required")) {
+            <div class="is__invalid-error">Address City is Required</div>
+          }
+        }
+      </div>
+
+      <div class="">
+        <label for="state" class="block mb-2">Address State</label>
+        <input
+          type="text"
+          id="state"
+          formControlName="state"
+          class="input-field"
+        />
+      </div>
+
+      <div class="">
+        <label for="country" class="block mb-2"
+          >Address Country <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="text"
+          id="country"
+          formControlName="country"
+          class="input-field"
+        />
+
+        @if (addressForm.get("country")?.touched) {
+          @if (addressForm.get("country").hasError("required")) {
+            <div class="is__invalid-error">Address Country is Required</div>
+          }
+        }
+      </div>
+
+      <div class="">
+        <label for="zip_code" class="block mb-2">Zip Code</label>
+        <input
+          type="text"
+          id="zip_code"
+          formControlName="zip_code"
+          class="input-field"
+        />
+      </div>
+
+      <div class="">
+        <label for="is_default" class="block mb-2">Default </label>
+        <input type="checkbox" id="is_default" formControlName="is_default" />
+      </div>
+    </form>
+  </ng-container>
+  <ng-container modalFooter>
+    <div class="flex items-center justify-end gap-3 p-3">
+      <button
+        type="submit"
+        (click)="onCancel()"
+        class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="addressForm.invalid || loading()"
+        (click)="submit()"
+        class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+        [ngClass]="{
+          'bg-green-500 hover:bg-green-700': !addressForm.invalid && !loading(),
+          'bg-gray-300': addressForm.invalid || loading(),
+        }"
+      >
+        @if (loading()) {
+          <svg
+            class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        }
+
+        {{ loading() ? "Submitting..." : "Submit" }}
+      </button>
+    </div>
+  </ng-container>
+</ReusableModal>

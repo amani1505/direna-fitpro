@@ -25,7 +25,7 @@ export class BranchCardComponent {
 
   deleteContent: string = 'Are you sure you want to delete this Branch?';
   deleteSubContent: string =
-    'Deleting this member will permanently remove this branch from your branches list';
+    'Deleting this Branch will permanently remove this branch from your branches list';
 
   isDeleteModalOpen = signal<boolean>(false);
   isBranchModalOpen = signal<boolean>(false);

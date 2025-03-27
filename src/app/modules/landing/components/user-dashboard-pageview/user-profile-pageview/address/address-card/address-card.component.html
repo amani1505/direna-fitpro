@@ -1,0 +1,58 @@
+<div class="p-4 border rounded-lg dark:bg-night-600">
+  <div class="flex items-start justify-between mb-2">
+    <h5 class="text-lg font-[500]">{{ address.type }}</h5>
+    <span
+      *ngIf="address.is_default"
+      class="px-2 py-1 text-xs text-blue-600 border border-blue-600 rounded-full bg-blue-50"
+      >Default</span
+    >
+  </div>
+
+  <div class="mb-4 font-[300] text-neutral-500">
+    <p>{{ address.district }}</p>
+    <p>{{ address.city }}, {{ address.state }} {{ address.zip_code }}</p>
+    <p>{{ address.street }}</p>
+
+    <p>{{ address.country }}</p>
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    <button
+      (click)="openEditModal(address.id)"
+      class="px-4 py-1 transition-colors duration-200 bg-transparent border border-blue-600 rounded dark:bg-night-500 dark:text-night-200 hover:bg-blue-600 hover:text-white"
+    >
+      Edit
+    </button>
+
+    <button
+      (click)="openDeleteModal()"
+      class="px-4 py-1 transition-colors duration-200 bg-transparent border border-red-600 rounded hover:bg-red-600 dark:text-night-200 hover:text-white"
+    >
+      Delete
+    </button>
+
+    <button
+      *ngIf="!address.is_default"
+      (click)="setDefaultAddress(address.id)"
+      class="px-4 py-1 transition-colors duration-200 bg-transparent border border-green-600 rounded hover:text-white hover:bg-green-600 dark:bg-night-500 dark:text-night-2000"
+    >
+      Set as Default
+    </button>
+  </div>
+</div>
+
+<Modal
+  [isOpen]="isDeleteModalOpen()"
+  (closeModalEvent)="closeDeleteModal()"
+  [title]="'Delete Confirmation'"
+  [content]="deleteContent"
+  [subContent]="deleteSubContent"
+  (submit)="delete()"
+></Modal>
+
+<update-address
+  *ngIf="isModalOpen() && address.id === addressId()"
+  [address]="address"
+  [isModalOpen]="isModalOpen()"
+  (onCancel)="closeModal()"
+></update-address>

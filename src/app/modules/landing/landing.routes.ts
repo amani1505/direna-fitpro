@@ -7,6 +7,7 @@ import { CartService } from '@service/modules/cart.service';
 import { AuthGuard } from '@core/guards/auth.guard';
 import { AuthService } from '@service/auth.service';
 import { UserService } from '@service/modules/user.service';
+import { AddressService } from '@service/modules/address.service';
 
 export default [
   {
@@ -37,7 +38,7 @@ export default [
       {
         path: 'dashboard',
         canActivateChild: [AuthGuard],
-        providers: [UserService],
+        providers: [UserService, AddressService],
         loadChildren: () =>
           import('./pages/user-dashboard/user-dashboard.routes'),
       },
