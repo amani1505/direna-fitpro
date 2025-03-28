@@ -241,6 +241,8 @@ import {
   BehaviorSubject,
   catchError,
   map,
+  tap,
+  throwError,
 } from 'rxjs';
 import { environment } from 'environments/environment';
 import { AuthUtils } from '@utils/auth.util';
@@ -253,10 +255,14 @@ export class AuthService {
   private _user = signal<User | null>(null);
   private _userLoadedSubject = new BehaviorSubject<boolean>(false);
   private _toastService = inject(ToastService);
+  private _updatePasswordLoading = signal<boolean>(false);
+
+
 
   authenticated: Signal<boolean> = this._authenticated.asReadonly();
   user: Signal<User | null> = this._user.asReadonly();
   userLoaded$ = this._userLoadedSubject.asObservable();
+  updatePasswordLoading: Signal<boolean> = this._updatePasswordLoading.asReadonly();
 
   constructor(
     private _http: HttpClient,
@@ -343,12 +349,30 @@ export class AuthService {
           return null;
         }),
         catchError((error) => {
-          console.error('Token refresh failed', error);
           this._toastService.error(`Token refresh failed: ${error}`);
           this.signOut();
           return of(null);
         }),
       );
+  }
+
+  updatePassword(data: {
+    password: string;
+    newPassword: string;
+  }): Observable<any> {
+    this._updatePasswordLoading.set(true);
+
+    return this._http.post<any>(`${environment.apiUrl}auth/change-password`, data).pipe(
+      tap((response) => {
+        this._toastService.success('Password successfuly updated.');
+        this._updatePasswordLoading.set(false);
+      }),
+      catchError((error) => {
+      
+        this._updatePasswordLoading.set(false);
+        return throwError(() => error);
+      }),
+    );
   }
 
   signOut(): Observable<any> {

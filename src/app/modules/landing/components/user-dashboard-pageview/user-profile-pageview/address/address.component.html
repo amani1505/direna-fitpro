@@ -12,11 +12,29 @@
   Manage your shipping and billing addresses
 </p>
 
-<div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
-  @for (address of addresses(); track $index) {
- <address-card [address]="address"></address-card>
+@if (loading()) {
+  <div class="flex items-center justify-center h-32">
+    <span class="loader"></span>
+  </div>
+} @else {
+  <!-- Empty State -->
+  @if (addresses().length === 0) {
+    <div
+      class="flex flex-col items-center justify-center h-32 p-6 mb-3 bg-gray-100 rounded-lg"
+    >
+      <p class="text-gray-500">
+        No addresses found. Add a new address to get started.
+      </p>
+    </div>
+  } @else {
+    <!-- Address List -->
+    <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
+      @for (address of addresses(); track $index) {
+        <address-card [address]="address"></address-card>
+      }
+    </div>
   }
-</div>
+}
 
 <div class="flex items-center justify-end">
   <button

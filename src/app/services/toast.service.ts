@@ -10,6 +10,8 @@ export class ToastService {
   error(message: string) {
     this._toast.error(message, {
       position: 'top-right',
+      dismissible: true,
+      autoClose: false,
       style: {
         borderLeft: '4px solid #fb7185',
         padding: '10px',
@@ -25,9 +27,9 @@ export class ToastService {
   success(message: string) {
     this._toast.success(message, {
       position: 'top-right',
+
       style: {
         borderLeft: '4px solid #4ade80',
-      
         padding: '10px',
         color: '#16a34a',
         backgroundColor: '#dcfce7',
@@ -41,6 +43,8 @@ export class ToastService {
   warning(message: string) {
     this._toast.success(message, {
       position: 'top-right',
+      dismissible: true,
+      autoClose: false,
       style: {
         borderLeft: '4px solid #facc15',
         padding: '10px',
@@ -56,6 +60,7 @@ export class ToastService {
   info(message: string) {
     this._toast.info(message, {
       position: 'top-right',
+      autoClose: false,
       style: {
         borderLeft: '4px solid #3b82f6', // Blue border
         padding: '10px',

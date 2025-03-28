@@ -27,8 +27,6 @@ export class PersonalInformationComponent implements OnInit {
   userForm: FormGroup;
 
   ngOnInit(): void {
-    console.log(this.user);
-
     this.userForm = this._formBuilder.group({
       first_name: [this.user?.first_name, Validators.required],
       middle_name: [this.user?.middle_name],

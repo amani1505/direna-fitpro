@@ -68,17 +68,17 @@ export class UpdateAddressComponent implements OnInit {
       return;
     }
 
-    this._addressService.update(this.address.id, this.addressForm.value);
-    this.cancel.emit();
-    // .subscribe({
-    //   next: () => {
-    //     this.addressForm.reset();
-    //     this.cancel.emit(); // Only close on success
-    //   },
-    //   error: (error) => {
-    //     this._toastService.error(error.error.message);
-    //   },
-    // });
+    this._addressService
+      .update(this.address.id, this.addressForm.value)
+      .subscribe({
+        next: () => {
+          this.addressForm.reset();
+          this.cancel.emit(); // Only close on success
+        },
+        error: (error) => {
+          this._toastService.error(error.error.message);
+        },
+      });
   }
 
   onCancel() {

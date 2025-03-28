@@ -72,7 +72,7 @@ export class SignInComponent {
       },
       error: (error) => {
         this.loading = false;
-        this._toast.error(`An error occurred while Login: ${error.message}`);
+        this._toast.error(` ${error.error.message}`);
       },
     });
   }

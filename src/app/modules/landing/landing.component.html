@@ -10,7 +10,7 @@
 </section>
 
 <app-footer></app-footer>
-<div
+<button
   *ngIf="isScrolled"
   class="fixed bottom-0 right-0 flex items-center justify-center mb-5 mr-5 text-black border-2 border-black rounded-full shadow-lg z- bg-primary-500 w-10 h-10 animate-bounce z-[99999999]"
   (click)="backToTheTop()"
@@ -19,4 +19,4 @@
     src="./assets/icons/play.svg"
     [svgClass]="'h-5 w-5 !text-3xl font-extrabold -rotate-90'"
   ></svg-icon>
-</div>
+</button>

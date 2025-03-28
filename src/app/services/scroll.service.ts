@@ -41,7 +41,7 @@ export class ScrollService {
       setInterval(() => this.updateScrollInfo(), 1000);
     });
 
-  
+
   }
 
   private updateScrollInfo(): void {
@@ -76,12 +76,25 @@ export class ScrollService {
     });
   }
 
-  scrollToTop(): void {
-    if (this.isBrowser) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }
+  scrollToTop(options?: ScrollToOptions): void {
+    if (!this.isBrowser) return;
 
+    this.ngZone.runOutsideAngular(() => {
+      // Ensure we're using the most compatible scrolling method
+      window.scrollTo({
+        top: 0,
+        behavior: options?.behavior || 'smooth'
+      });
+
+      // Fallback for browsers that might not support smooth scrolling
+      try {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      } catch (error) {
+        console.warn('Fallback scroll method failed', error);
+      }
+    });
+  }
   scrollToPosition(position: number, smooth: boolean = true): void {
     if (this.isBrowser) {
       window.scrollTo({

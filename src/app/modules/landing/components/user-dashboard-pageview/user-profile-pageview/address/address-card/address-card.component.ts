@@ -29,7 +29,7 @@ export class AddressCardComponent {
 
 
   setDefaultAddress(id: string): void {
-    this._addressService.update(id, { is_default: true });
+    this._addressService.setDefault(id, { is_default: true });
   }
 
   openDeleteModal() {

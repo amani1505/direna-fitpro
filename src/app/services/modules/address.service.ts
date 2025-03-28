@@ -47,7 +47,7 @@ export class AddressService {
     );
   }
 
-  update(id: string, data: any) {
+  setDefault(id: string, data: any) {
     this._loading.set(true);
     this._http
       .patch<Address>(`${environment.apiUrl}address/${id}`, data)
@@ -63,6 +63,26 @@ export class AddressService {
         },
       });
   }
+
+  update(id: string, data: any): Observable<Address> {
+    this._loading.set(true);
+
+    return this._http.patch<Address>(`${environment.apiUrl}address/${id}`, data).pipe(
+      tap((response) => {
+        this._toast.success('Address created successfully.');
+        this.findAll();
+        this._loading.set(false);
+      }),
+      catchError((error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+        return throwError(() => error);
+      }),
+    );
+  }
+
+
+
 
   delete(id: string) {
     this._loading.set(true);

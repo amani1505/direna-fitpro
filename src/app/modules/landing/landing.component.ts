@@ -32,6 +32,7 @@ export class LandingComponent implements OnInit {
       // Subscribe to scroll service
       this._scrollService.isScrolled$.subscribe(scrolled => {
         this.isScrolled = scrolled;
+        
       });
 
       this._scrollService.scrollProgress$.subscribe(progress => {

@@ -31,16 +31,14 @@ export class AddressComponent implements OnInit {
 
   isModalOpen = signal<boolean>(false);
   addresses = computed(() => this._addressService.addresses() || []);
+  loading = this._addressService.loading;
   ngOnInit(): void {
     this._addressService.findAll();
   }
 
-
-
   addNewAddress(): void {
     this.isModalOpen.set(true);
   }
-
 
   closeModal() {
     this.isModalOpen.set(false);
