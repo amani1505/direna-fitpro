@@ -1,0 +1,20 @@
+<section class="py-3">
+  <div>
+    <h6 class="capitalize font-pt-serif">
+      {{ greeting
+      }}<span>{{
+        user?.profile?.first_name + " " + user?.profile?.last_name
+      }}</span>
+    </h6>
+  </div>
+  <div class="grid grid-cols-12 gap-3">
+    <div class="col-span-8">
+      <header-cards></header-cards>
+      <dashboard-equipment></dashboard-equipment>
+    </div>
+    <div class="col-span-4">
+      <dashboard-branches></dashboard-branches>
+      <dashboard-services></dashboard-services>
+    </div>
+  </div>
+</section>

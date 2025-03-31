@@ -1,0 +1,50 @@
+<div class="grid grid-cols-3 gap-3 font-catamaran">
+  @for (stat of dashboardStats; track $index) {
+    <div
+      class="p-3 bg-white border rounded-lg"
+      [ngClass]="{
+        'border-blue-500': stat.label === 'Banches',
+        'border-red-500 ': stat.label === 'Services',
+        'border-green-500   ': stat.label === 'Members',
+        'border-primary-500 ': stat.label === 'Staffs',
+        'border-violet-500   ': stat.label === 'Equipments',
+      }"
+    >
+      <div>
+        <div class="flex items-center gap-2">
+          <div
+            class="p-1 rounded"
+            [ngClass]="{
+              'text-blue-500 bg-blue-100': stat.label === 'Banches',
+              'text-red-500 bg-red-100': stat.label === 'Services',
+              'text-green-500 bg-green-100  ': stat.label === 'Members',
+              'text-primary-500 bg-primary-100 ': stat.label === 'Staffs',
+              'text-violet-500 bg-violet-100   ': stat.label === 'Equipments',
+            }"
+          >
+            <svg-icon
+              [src]="stat.icon"
+              [svgStyle]="{ 'width.px': 24 }"
+            ></svg-icon>
+          </div>
+          <div class="text-xl font-[500] text-primary-500"
+            [ngClass]="{
+              'text-blue-500': stat.label === 'Banches',
+              'text-red-500 ': stat.label === 'Services',
+              'text-green-500   ': stat.label === 'Members',
+              'text-primary-500 ': stat.label === 'Staffs',
+              'text-violet-500   ': stat.label === 'Equipments',
+            }"
+
+          >{{stat.label}}</div>
+        </div>
+        <p class="mt-1 text-sm">{{stat.subtitle}}</p>
+      </div>
+      <h3 class="mb-2 text-3xl font-[400]">{{stat.count}}</h3>
+
+      <div>
+        <a [routerLink]="[stat.navigationLink]"   class="text-primary-500 hover:underline">View More</a>
+      </div>
+    </div>
+  }
+</div>
