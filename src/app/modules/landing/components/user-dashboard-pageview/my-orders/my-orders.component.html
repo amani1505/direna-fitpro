@@ -53,10 +53,14 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr
+              @for (order of myOrders(); track $index) {
+                <tr
                 orders-table-row
+                [order]="order"
                 class="transition-colors duration-200 hover:bg-gray-50"
               ></tr>
+              }
+
             </tbody>
           </table>
         </div>

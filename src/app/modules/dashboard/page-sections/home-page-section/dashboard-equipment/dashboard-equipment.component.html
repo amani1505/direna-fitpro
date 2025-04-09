@@ -5,6 +5,7 @@
         <div class="flex items-center justify-between p-2 m-3">
           <div class="text-md">Equipments</div>
           <a
+            [routerLink]="['/admin/equipments']"
             class="text-sm capitalize cursor-pointer hover:underline text-primary-500"
             >view all</a
           >
@@ -46,59 +47,69 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <tr class="transition-colors duration-200 hover:bg-gray-50">
-                @if (order) {
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium">{{ order.name }}</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500">
-                      {{ order.model_no }}
-                    </div>
-                  </td>
-                  <td class="px-6 py-4">
-                    <div class="flex -space-x-2">
-                      @for (image of order.images.slice(0, 2); track $index) {
-                        <img
-                          class="w-8 h-8 rounded-full ring-2 ring-white"
-                          [src]="image"
-                          alt="Equipment"
-                        />
-                      }
-                      @if (order.images.length > 2) {
-                        <span
-                          class="flex items-center justify-center w-8 h-8 text-xs font-medium bg-gray-200 rounded-full ring-2 ring-white"
-                        >
-                          +{{ order.images.length - 2 }}
-                        </span>
-                      }
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm font-medium">{{ order.quantity }}</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <span
-                      class="inline-flex px-3 py-1 text-xs font-semibold leading-5 rounded-full"
-                    >
-                      {{ order.price }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
-                    <div class="flex items-center justify-start gap-x-2">
-                      <button
-                        class="flex items-center justify-center text-gray-400 bg-gray-200 rounded-md h-7 w-7 dark:bg-gray-500 dark:text-gray-300"
+              @for (equipment of equipments; track $index) {
+                <tr class="transition-colors duration-200 hover:bg-gray-50">
+                  @if (equipment) {
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium">
+                        {{ equipment.title }}
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm text-gray-500">
+                        {{ equipment.model }}
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex -space-x-2">
+                        @for (
+                          image of equipment.files.slice(0, 3);
+                          track $index
+                        ) {
+                          <img
+                            class="w-8 h-8 rounded-full ring-2 ring-white"
+                            [src]="fileUrl + image.file_path"
+                            alt="Equipment"
+                          />
+                        }
+                        @if (equipment.files.length > 3) {
+                          <span
+                            class="flex items-center justify-center w-8 h-8 text-xs font-medium bg-gray-200 rounded-full ring-2 ring-white"
+                          >
+                            +{{ equipment.files.length - 3 }}
+                          </span>
+                        }
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="text-sm font-medium">
+                        {{ equipment.quantity }}
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span
+                        class="inline-flex px-3 py-1 text-xs font-semibold leading-5 rounded-full"
                       >
-                        <svg-icon
-                          [src]="'assets/icons/chevron.svg'"
-                          [svgClass]="'h-5 w-5'"
+                        {{ equipment.price }}
+                      </span>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                      <div class="flex items-center justify-start gap-x-2">
+                        <button
+                          class="flex items-center justify-center text-gray-400 bg-gray-200 rounded-md h-7 w-7 dark:bg-gray-500 dark:text-gray-300"
+                          (click)="view(equipment.id)"
                         >
-                        </svg-icon>
-                      </button>
-                    </div>
-                  </td>
-                }
-              </tr>
+                          <svg-icon
+                            [src]="'assets/icons/chevron.svg'"
+                            [svgClass]="'h-5 w-5'"
+                          >
+                          </svg-icon>
+                        </button>
+                      </div>
+                    </td>
+                  }
+                </tr>
+              }
             </tbody>
           </table>
         </div>

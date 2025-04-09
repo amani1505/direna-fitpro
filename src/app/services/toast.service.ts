@@ -27,7 +27,7 @@ export class ToastService {
   success(message: string) {
     this._toast.success(message, {
       position: 'top-right',
-
+      autoClose: true,
       style: {
         borderLeft: '4px solid #4ade80',
         padding: '10px',
@@ -44,7 +44,7 @@ export class ToastService {
     this._toast.success(message, {
       position: 'top-right',
       dismissible: true,
-      autoClose: false,
+      autoClose: true,
       style: {
         borderLeft: '4px solid #facc15',
         padding: '10px',

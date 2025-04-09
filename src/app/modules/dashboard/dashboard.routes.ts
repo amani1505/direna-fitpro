@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { BranchesService } from '@service/modules/branches.service';
 import { ClassesService } from '@service/modules/classes.service';
+import { DashboardService } from '@service/modules/dashboard.service';
 import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
 import { EquipmentService } from '@service/modules/equipment.service';
 import { MemberService } from '@service/modules/member.service';
@@ -11,6 +12,7 @@ import { StaffService } from '@service/modules/staff.service';
 export default [
   {
     path: '',
+    providers:[DashboardService],
     loadChildren: () => import('./pages/home/home.routes'),
   },
   {

@@ -115,13 +115,21 @@ export class ViewSinglePageviewComponent implements OnInit {
     {
       items: [
         {
+          label: 'Dashboard',
+          hide: !this.isAuthenticated(),
+          icon: './assets/icons/heroicons/solid/chart-pie.svg',
+          action: () => this._router.navigateByUrl(`/dashboard`),
+        },
+        {
           label: 'Profile',
+          hide: !this.isAuthenticated(),
           icon: './assets/icons/heroicons/outline/user-circle.svg',
           action: () => this._router.navigateByUrl(`/dashboard/profile`),
         },
+
         {
           label: 'Sign in',
-          disabled: this.isAuthenticated(),
+          hide: this.isAuthenticated(),
           icon: './assets/icons/heroicons/outline/lock-closed.svg',
           action: () =>
             this._router.navigateByUrl(`auth?redirectURL=${this.currentRoute}`),
@@ -129,7 +137,7 @@ export class ViewSinglePageviewComponent implements OnInit {
         {
           label: 'Sign out',
           icon: './assets/icons/heroicons/outline/logout.svg',
-          disabled: !this.isAuthenticated(),
+          hide: !this.isAuthenticated(),
           action: () =>
             this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
         },

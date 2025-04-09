@@ -99,6 +99,10 @@ export class MenuPopupComponent {
   }
 
   getItemClass(item: DropdownItem): string {
+    if (item.hide) {
+      return 'hidden'; // This will hide the item completely using CSS
+    }
+
     return `flex items-center rounded-md px-3 py-2 text-sm
       ${
         item.disabled

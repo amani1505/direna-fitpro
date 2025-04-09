@@ -9,12 +9,12 @@
   </div>
   <div class="grid grid-cols-12 gap-3">
     <div class="col-span-8">
-      <header-cards></header-cards>
-      <dashboard-equipment></dashboard-equipment>
+      <header-cards [dashboardStats]="dashboardStatstics()"></header-cards>
+      <dashboard-equipment [equipments]="equipments()"></dashboard-equipment>
     </div>
     <div class="col-span-4">
-      <dashboard-branches></dashboard-branches>
-      <dashboard-services></dashboard-services>
+      <dashboard-branches [branches]="branches()"></dashboard-branches>
+      <dashboard-services [services]="services()"></dashboard-services>
     </div>
   </div>
 </section>

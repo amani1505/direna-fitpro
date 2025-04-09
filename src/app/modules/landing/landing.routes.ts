@@ -8,6 +8,7 @@ import { AuthGuard } from '@core/guards/auth.guard';
 import { AuthService } from '@service/auth.service';
 import { UserService } from '@service/modules/user.service';
 import { AddressService } from '@service/modules/address.service';
+import { OrderService } from '@service/modules/order.service';
 
 export default [
   {
@@ -33,7 +34,7 @@ export default [
       {
         path: 'equipments',
         loadChildren: () => import('./pages/equipments/equipments.routes'),
-        providers: [EquipmentService, EquipmemntCategoryService, CartService],
+        providers: [EquipmentService, EquipmemntCategoryService, CartService,OrderService],
       },
       {
         path: 'dashboard',

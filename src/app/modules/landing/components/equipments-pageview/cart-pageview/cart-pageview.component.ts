@@ -18,6 +18,7 @@ import { ToastService } from '@service/toast.service';
 import { AuthService } from '@service/auth.service';
 import { DropdownConfig, DropdownSection } from '@model/dropdown';
 import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component';
+import { OrderService } from '@service/modules/order.service';
 
 @Component({
   selector: 'cart-pageview',
@@ -38,6 +39,7 @@ export class CartPageviewComponent implements OnInit {
 
   isLoading = false;
   private _cartService = inject(CartService);
+  private _orderService = inject(OrderService);
   private _toastService = inject(ToastService);
   private _router = inject(Router);
   private _authService = inject(AuthService);
@@ -45,6 +47,7 @@ export class CartPageviewComponent implements OnInit {
 
   error = this._cartService.error;
   loading = this._cartService.loading;
+  orderLoading = this._orderService.loading;
 
   currentRoute: string = '';
   isAuthenticated = this._authService.authenticated;
@@ -67,13 +70,21 @@ export class CartPageviewComponent implements OnInit {
     {
       items: [
         {
+          label: 'Dashboard',
+          hide: !this.isAuthenticated(),
+          icon: './assets/icons/heroicons/solid/chart-pie.svg',
+          action: () => this._router.navigateByUrl(`/dashboard`),
+        },
+        {
           label: 'Profile',
+          hide: !this.isAuthenticated(),
           icon: './assets/icons/heroicons/outline/user-circle.svg',
           action: () => this._router.navigateByUrl(`/dashboard/profile`),
         },
+
         {
           label: 'Sign in',
-          disabled: this.isAuthenticated(),
+          hide: this.isAuthenticated(),
           icon: './assets/icons/heroicons/outline/lock-closed.svg',
           action: () =>
             this._router.navigateByUrl(`auth?redirectURL=${this.currentRoute}`),
@@ -81,7 +92,7 @@ export class CartPageviewComponent implements OnInit {
         {
           label: 'Sign out',
           icon: './assets/icons/heroicons/outline/logout.svg',
-          disabled: !this.isAuthenticated(),
+          hide: !this.isAuthenticated(),
           action: () =>
             this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
         },
@@ -161,8 +172,16 @@ export class CartPageviewComponent implements OnInit {
     });
   }
 
-  proceedToCheckout(): void {
-    this._router.navigate(['/checkout']);
+  createOrder(cartId: string) {
+    this._orderService.create(cartId).subscribe({
+      next: () => {
+        this._toastService.success('Order created successfully.');
+        this._cartService.loadCart();
+      },
+      error: (error) => {
+        this._toastService.error(error.error.message);
+      },
+    });
   }
   backToShop() {
     this._router.navigate(['/equipments']);

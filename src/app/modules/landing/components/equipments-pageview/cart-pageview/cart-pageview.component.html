@@ -265,7 +265,9 @@
         </div>
         <div class="mt-5">
           <button
-            class="flex items-center justify-center w-full gap-1 py-2 text-white capitalize transition duration-500 ease-in-out rounded-md bg-primary-400 hover:bg-primary-500"
+            class="flex items-center justify-center w-full gap-1 py-2 text-white capitalize transition duration-500 ease-in-out rounded-md bg-primary-400 hover:bg-primary-500 disabled:bg-gray-300"
+            (click)="createOrder(cart().id)"
+            [disabled]="cart()?.items?.length === 0"
           >
             <div class="font-bold">
               <svg-icon

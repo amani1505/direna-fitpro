@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { UserDashboardComponent } from './user-dashboard.component';
+import { OrderService } from '@service/modules/order.service';
 
 export default [
   {
@@ -15,6 +16,7 @@ export default [
       },
       {
         path: 'orders',
+        providers: [OrderService],
         loadComponent: () =>
           import(
             '@modules/landing/components//user-dashboard-pageview/my-orders/my-orders.component'

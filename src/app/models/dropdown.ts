@@ -18,6 +18,7 @@ export interface DropdownItem {
   route?: string;
   action?: () => void;
   disabled?: boolean;
+  hide?:boolean;
   badge?: {
     text: string;
     color?: string;

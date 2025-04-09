@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { OrdersTableRowComponent } from "./orders-table-row/orders-table-row.component";
 import { OrdersCardComponent } from "./orders-card/orders-card.component";
+import { OrderService } from '@service/modules/order.service';
 interface Order {
   id: string;
   date: string;
@@ -16,7 +17,13 @@ interface Order {
   templateUrl: './my-orders.component.html',
   styleUrl: './my-orders.component.scss',
 })
-export class MyOrdersComponent {
+export class MyOrdersComponent implements OnInit {
+private _ordersService = inject(OrderService);
+
+  myOrders = computed(() => this._ordersService.orders() || []);
+
+
+
   orders: Order[] = [
     {
       id: '#ORD-5288',
@@ -47,4 +54,7 @@ export class MyOrdersComponent {
       image: 'https://picsum.photos/200/200?random=4',
     },
   ];
+  ngOnInit() {
+this._ordersService.getUserOrders()
+  }
 }

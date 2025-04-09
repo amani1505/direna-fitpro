@@ -3,11 +3,11 @@
     <div
       class="p-3 bg-white border rounded-lg"
       [ngClass]="{
-        'border-blue-500': stat.label === 'Banches',
-        'border-red-500 ': stat.label === 'Services',
-        'border-green-500   ': stat.label === 'Members',
-        'border-primary-500 ': stat.label === 'Staffs',
-        'border-violet-500   ': stat.label === 'Equipments',
+        'border-blue-500': stat.title === 'Branches',
+        'border-red-500 ': stat.title === 'Services',
+        'border-green-500   ': stat.title === 'Members',
+        'border-primary-500 ': stat.title === 'Staffs',
+        'border-violet-500   ': stat.title === 'Equipments',
       }"
     >
       <div>
@@ -15,11 +15,11 @@
           <div
             class="p-1 rounded"
             [ngClass]="{
-              'text-blue-500 bg-blue-100': stat.label === 'Banches',
-              'text-red-500 bg-red-100': stat.label === 'Services',
-              'text-green-500 bg-green-100  ': stat.label === 'Members',
-              'text-primary-500 bg-primary-100 ': stat.label === 'Staffs',
-              'text-violet-500 bg-violet-100   ': stat.label === 'Equipments',
+              'text-blue-500 bg-blue-100': stat.title === 'Branches',
+              'text-red-500 bg-red-100': stat.title === 'Services',
+              'text-green-500 bg-green-100  ': stat.title === 'Members',
+              'text-primary-500 bg-primary-100 ': stat.title === 'Staffs',
+              'text-violet-500 bg-violet-100   ': stat.title === 'Equipments',
             }"
           >
             <svg-icon
@@ -29,21 +29,21 @@
           </div>
           <div class="text-xl font-[500] text-primary-500"
             [ngClass]="{
-              'text-blue-500': stat.label === 'Banches',
-              'text-red-500 ': stat.label === 'Services',
-              'text-green-500   ': stat.label === 'Members',
-              'text-primary-500 ': stat.label === 'Staffs',
-              'text-violet-500   ': stat.label === 'Equipments',
+              'text-blue-500': stat.title === 'Branches',
+              'text-red-500 ': stat.title === 'Services',
+              'text-green-500   ': stat.title === 'Members',
+              'text-primary-500 ': stat.title === 'Staffs',
+              'text-violet-500   ': stat.title === 'Equipments',
             }"
 
-          >{{stat.label}}</div>
+          >{{stat.title}}</div>
         </div>
         <p class="mt-1 text-sm">{{stat.subtitle}}</p>
       </div>
       <h3 class="mb-2 text-3xl font-[400]">{{stat.count}}</h3>
 
       <div>
-        <a [routerLink]="[stat.navigationLink]"   class="text-primary-500 hover:underline">View More</a>
+        <a [routerLink]="[stat.link]"   class="text-primary-500 hover:underline">View More</a>
       </div>
     </div>
   }

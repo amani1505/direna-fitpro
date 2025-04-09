@@ -1,23 +1,42 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
 import { User } from '@model/user';
 import { AuthService } from '@service/auth.service';
 import { Subject, takeUntil } from 'rxjs';
-import { HeaderCardsComponent } from "./header-cards/header-cards.component";
-import { DashboardBranchesComponent } from "./dashboard-branches/dashboard-branches.component";
-import { DashboardServicesComponent } from "./dashboard-services/dashboard-services.component";
-import { DashboardEquipmentComponent } from "./dashboard-equipment/dashboard-equipment.component";
+import { HeaderCardsComponent } from './header-cards/header-cards.component';
+import { DashboardBranchesComponent } from './dashboard-branches/dashboard-branches.component';
+import { DashboardServicesComponent } from './dashboard-services/dashboard-services.component';
+import { DashboardEquipmentComponent } from './dashboard-equipment/dashboard-equipment.component';
+import { DashboardService } from '@service/modules/dashboard.service';
 
 @Component({
   selector: 'home-page-section',
   standalone: true,
-  imports: [HeaderCardsComponent, DashboardBranchesComponent, DashboardServicesComponent, DashboardEquipmentComponent],
+  imports: [
+    HeaderCardsComponent,
+    DashboardBranchesComponent,
+    DashboardServicesComponent,
+    DashboardEquipmentComponent,
+  ],
   templateUrl: './home-page-section.component.html',
   styleUrl: './home-page-section.component.scss',
 })
 export class HomePageSectionComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);
+  private _dashboardService = inject(DashboardService);
   private destroy$ = new Subject<void>();
   user: User | null = null;
+  dashboardStatstics = computed(
+    () => this._dashboardService.dashboard().counts || [],
+  );
+  equipments = computed(
+    () => this._dashboardService.dashboard().latestEquipments || [],
+  );
+  branches = computed(
+    () => this._dashboardService.dashboard().latestBranches || [],
+  );
+  services = computed(
+    () => this._dashboardService.dashboard().latestServices || [],
+  );
 
   greeting: string = '';
   currentTime: Date = new Date();
@@ -31,6 +50,7 @@ export class HomePageSectionComponent implements OnInit, OnDestroy {
         }
       });
     this.updateGreeting();
+    this._dashboardService.findDashboardData();
 
     // Update greeting every minute for client-side changes
     if (typeof window !== 'undefined') {
