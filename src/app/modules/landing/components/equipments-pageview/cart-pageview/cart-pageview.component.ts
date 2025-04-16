@@ -55,6 +55,9 @@ export class CartPageviewComponent implements OnInit {
   currentRoute: string = '';
   isAuthenticated = this._authService.authenticated;
   ngOnInit(): void {
+    this._cartService.loadCart();
+    this._wishlistService.loadWishlist();
+
     this._cartService.cart$.subscribe((cart) => {
       this.cart.set(cart);
     });

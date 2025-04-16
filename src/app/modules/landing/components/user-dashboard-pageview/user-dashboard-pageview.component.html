@@ -2,13 +2,13 @@
 <div class="p-4">
   <!-- Stats Cards -->
   <div class="grid grid-cols-1 gap-4 mb-8 md:grid-cols-3">
-    @for (stat of dashboardStats; track $index) {
+    @for (stat of dashboardStats(); track $index) {
       <div
         class="p-6 bg-white border rounded-lg"
         [ngClass]="{
           'border-blue-500': stat.label === 'Orders',
           'border-red-500 ': stat.label === 'Wishlist',
-          'border-green-500   ': stat.label === 'Recently Viewed',
+          'border-green-500   ': stat.label === 'Cart',
         }"
       >
         <div class="flex items-center gap-1">
@@ -17,7 +17,7 @@
             [ngClass]="{
               'text-blue-500 bg-blue-100': stat.label === 'Orders',
               'text-red-500 bg-red-100': stat.label === 'Wishlist',
-              'text-green-500 bg-green-100  ': stat.label === 'Recently Viewed',
+              'text-green-500 bg-green-100  ': stat.label === 'Cart',
             }"
           >
             <svg-icon
@@ -30,7 +30,7 @@
             [ngClass]="{
               'text-blue-500': stat.label === 'Orders',
               'text-red-500 ': stat.label === 'Wishlist',
-              'text-green-500   ': stat.label === 'Recently Viewed',
+              'text-green-500   ': stat.label === 'Cart',
             }"
           >
             {{ stat.label }}
@@ -43,8 +43,8 @@
           <ng-container *ngIf="stat.label === 'Wishlist'"
             >Items saved for later</ng-container
           >
-          <ng-container *ngIf="stat.label === 'Recently Viewed'"
-            >Products you've checked out</ng-container
+          <ng-container *ngIf="stat.label === 'Cart'"
+            >Products you've added in the Cart</ng-container
           >
         </p>
         <h3 class="mb-2 text-3xl font-[400]">{{ stat.count }}</h3>

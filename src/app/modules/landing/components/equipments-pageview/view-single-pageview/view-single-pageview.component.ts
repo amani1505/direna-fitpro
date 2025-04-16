@@ -191,8 +191,8 @@ export class ViewSinglePageviewComponent implements OnInit {
 
   addToCart() {
     this._cartService.addToCart(this.equipment().id, 1).subscribe({
-      next: (cart) => {
-        this.cart.set(cart);
+      next: () => {
+        this._toastService.success('Item added successfully.');
       },
       error: (error) => {
         this._toastService.error(error.message);

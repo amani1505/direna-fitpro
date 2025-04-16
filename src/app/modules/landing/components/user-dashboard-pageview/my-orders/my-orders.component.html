@@ -12,10 +12,23 @@
           <div class="block sm:hidden">
             <div class="space-y-4">
               <div class="p-2">
-                @for (order of myOrders(); track $index) {
-                  <orders-card [order]="order"></orders-card>
+                @if (loading()) {
+                  <div class="loader-container">
+                    <div class="loader"></div>
+                  </div>
+                } @else if (
+                  !loading() && (!myOrders() || myOrders().length === 0)
+                ) {
+                  <div
+                    class="flex bg-gray-100 items-center justify-center w-full h-[300px]"
+                  >
+                    <p class="no-data-text">Your Have No any Order</p>
+                  </div>
+                } @else {
+                  @for (order of myOrders(); track $index) {
+                    <orders-card [order]="order"></orders-card>
+                  }
                 }
-
               </div>
             </div>
           </div>
@@ -56,17 +69,40 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              @for (order of myOrders(); track $index) {
-                <tr
-                  orders-table-row
-                  [order]="order"
-                  class="transition-colors duration-200 hover:bg-gray-50"
-                ></tr>
+              @if (loading()) {
+                <tr>
+                  <td colspan="6">
+                    <div class="loader-container">
+                      <div class="loader"></div>
+                    </div>
+                  </td>
+                </tr>
+              } @else if (
+                !loading() && (!myOrders || myOrders().length === 0)
+              ) {
+                <tr>
+                  <td colspan="6">
+                    <div
+                      class="flex bg-gray-100 items-center justify-center w-full h-[300px]"
+                    >
+                      <p class="no-data-text">Your Have No any Order</p>
+                    </div>
+                  </td>
+                </tr>
+              } @else {
+                @for (order of myOrders(); track $index) {
+                  <tr
+                    orders-table-row
+                    [order]="order"
+                    (cancelOrder)="onDeleteOrder($event)"
+                    class="transition-colors duration-200 hover:bg-gray-50"
+                  ></tr>
+                }
               }
             </tbody>
           </table>
         </div>
-        <div class="px-6 py-4 border-t border-gray-200">
+        <!-- <div class="px-6 py-4 border-t border-gray-200">
           <div class="flex items-center justify-between">
             <div class="text-sm text-gray-500">
               Showing <span class="font-medium">1</span> to
@@ -87,7 +123,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </main>
   </div>

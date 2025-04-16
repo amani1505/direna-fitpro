@@ -1,49 +1,42 @@
-import { NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { DatePipe, NgClass } from '@angular/common';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-interface Order {
-  id: string;
-  date: string;
-  items: number;
-  total: number;
-  status: 'Delivered' | 'Processing' | 'Shipped';
-}
+import { Order } from '@model/order.interface';
+import { User } from '@model/user';
+import { AuthService } from '@service/auth.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'personal-dashboard',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, DatePipe],
   templateUrl: './personal-dashboard.component.html',
   styleUrl: './personal-dashboard.component.scss',
 })
-export class PersonalDashboardComponent {
+export class PersonalDashboardComponent implements OnInit, OnDestroy {
   private readonly _router = inject(Router);
   private _route = inject(ActivatedRoute);
+  private _authService = inject(AuthService);
+  private destroy$ = new Subject<void>();
+  user: User | null = null;
+  orderHistory = signal<Order[]>([]);
+  loading = signal<boolean>(false);
 
-  recentOrders: Order[] = [
-    {
-      id: '18765',
-      date: 'May 3, 2023',
-      items: 3,
-      total: 199.99,
-      status: 'Delivered',
-    },
-    {
-      id: '28765',
-      date: 'May 6, 2023',
-      items: 3,
-      total: 299.99,
-      status: 'Shipped',
-    },
-    {
-      id: '38765',
-      date: 'May 9, 2023',
-      items: 3,
-      total: 399.99,
-      status: 'Processing',
-    },
-  ];
+  ngOnInit() {
+    // Subscribe to user loaded status
+    this._authService.userLoaded$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loaded) => {
+        this.loading.set(true);
+        if (loaded) {
+          this.user = this._authService.user();
+
+          this.orderHistory.set(this._authService.user().orderHistory);
+
+          this.loading.set(false);
+        }
+      });
+  }
 
   viewOrder(orderId: string): void {
     console.log(`Viewing order: ${orderId}`);
@@ -52,5 +45,10 @@ export class PersonalDashboardComponent {
 
   viewAllOrders(): void {
     this._router.navigate(['orders'], { relativeTo: this._route });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

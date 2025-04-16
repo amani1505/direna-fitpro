@@ -6,11 +6,33 @@
     <p class="font-catamaran">Manage your personal wishlist</p>
   </div>
 
-
-  @for (wishlist of wishlists; track $index) {
-    <div class="mb-3">
-    <wishlist-card [wishlist]="wishlist"></wishlist-card>
+  @if (loading()) {
+    <div class="loader-container">
+      <div class="loader"></div>
     </div>
+  } @else if (!loading() && (!wishlists || wishlists().length === 0)) {
+    <div class="flex bg-gray-100 items-center justify-center w-full h-[300px]">
+      <p class="no-data-text">Your Wishlist is Empty</p>
+    </div>
+  } @else {
+    @for (wishlist of wishlists(); track $index) {
+      <div class="mb-3">
+        <wishlist-card
+          [wishlist]="wishlist"
+          (removeFromWishlist)="removeFromWishlist($event)"
+          (addToCart)="addToCart($event)"
+        ></wishlist-card>
+      </div>
+    }
   }
 
+  <!-- @for (wishlist of wishlists(); track $index) {
+    <div class="mb-3">
+      <wishlist-card
+        [wishlist]="wishlist"
+        (removeFromWishlist)="removeFromWishlist($event)"
+        (addToCart)="addToCart($event)"
+      ></wishlist-card>
+    </div>
+  } -->
 </div>

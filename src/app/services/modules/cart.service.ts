@@ -99,7 +99,7 @@ export class CartService {
       .pipe(
         tap((cart) => {
           this.cartSubject.next({ ...cart });
-          this._toast.success('Item added successfully.');
+        
         }),
         catchError((error) => {
           return throwError(() => error.error);

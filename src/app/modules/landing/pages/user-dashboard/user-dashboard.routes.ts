@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { UserDashboardComponent } from './user-dashboard.component';
 import { OrderService } from '@service/modules/order.service';
+import { WishlistService } from '@service/modules/wishlist.service';
+import { CartService } from '@service/modules/cart.service';
 
 export default [
   {
@@ -29,6 +31,7 @@ export default [
       },
       {
         path: 'wishlist',
+        providers: [WishlistService, CartService],
         loadComponent: () =>
           import(
             '@modules/landing/components//user-dashboard-pageview/my-wishlist/my-wishlist.component'

@@ -9,7 +9,7 @@ import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 @Injectable()
 export class WishlistService {
   private apiUrl = `${environment.apiUrl}wishlist`;
-  private wishlistSubject = new BehaviorSubject<Wishlist[] | []>(null);
+  private wishlistSubject = new BehaviorSubject<Wishlist[] | []>([]);
   public wishlist$ = this.wishlistSubject.asObservable();
   private _toast = inject(ToastService);
   private _loading = signal<boolean>(false);
@@ -38,9 +38,9 @@ export class WishlistService {
 
   loadWishlist(): void {
     this._loading.set(true);
-    this._http.get<Wishlist>(`${this.apiUrl}/mine`).subscribe({
+    this._http.get<Wishlist[]>(`${this.apiUrl}/mine`).subscribe({
       next: (wishlist) => {
-        this.wishlistSubject.next([wishlist]);
+        this.wishlistSubject.next(wishlist);
         this._error.set(false); // ✅ Reset error only after a successful response
         this._loading.set(false);
       },
@@ -60,13 +60,12 @@ export class WishlistService {
         () => new Error('Login in order to manage your wishlist'),
       );
     }
-
     return this._http
       .post<Wishlist>(this.apiUrl, { equipment_id: equipmentId })
       .pipe(
         tap((wishlist) => {
-          this.wishlistSubject.next([{ ...wishlist }]);
-          this._toast.success('Equipment added successfully.');
+          const currentWishlist = this.wishlistSubject.getValue();
+          this.wishlistSubject.next([...currentWishlist, wishlist]);
         }),
         catchError((error) => {
           return throwError(() => error.error);
@@ -80,14 +79,18 @@ export class WishlistService {
       throw new Error('Wishlist ID is not available');
     }
 
-    return this._http
-      .delete<Wishlist>(`${this.apiUrl}/${wishlistId}`)
-      .pipe(
-        tap((wishlist) => {
-          this.wishlistSubject.next([wishlist]);
-          this._toast.success('Equipment removed successfully.');
-        }),
-      );
-  }
+    return this._http.delete<Wishlist>(`${this.apiUrl}/${wishlistId}`).pipe(
+      tap(
+        () => {
+          const currentWishlist = this.wishlistSubject.getValue();
+          const updatedWishlist = currentWishlist.filter((item:Wishlist) => item.id !== wishlistId);
+          this.wishlistSubject.next(updatedWishlist);
+        },
 
+        catchError((error) => {
+          return throwError(() => error.error);
+        }),
+      ),
+    );
+  }
 }

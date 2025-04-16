@@ -38,30 +38,33 @@ export class OrderService {
   //   return this._http.get<Order[]>(`${this._apiUrl}`);
   // }
 
-
   getUserOrders(): void {
     this._loading.set(true);
 
-
-    this._http
-      .get<Order[]>(`${this._apiUrl}`, )
-      .subscribe({
-        next: (response) => {
-          this._orders.set(response);
-          this._loading.set(false);
-        },
-        error: (error) => {
-          this._toast.error(error.error.message);
-          this._loading.set(false);
-        },
-      });
+    this._http.get<Order[]>(`${this._apiUrl}`).subscribe({
+      next: (response) => {
+        this._orders.set(response);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
+      },
+    });
   }
-
-
-
-
 
   getOrderById(id: number): Observable<Order> {
     return this._http.get<Order>(`${this._apiUrl}/${id}`);
+  }
+
+  cancelOrder(id: string): Observable<Order> {
+    return this._http.delete<Order>(`${this._apiUrl}/${id}`).pipe(
+      tap((response) => {
+        this. getUserOrders();
+      }),
+      catchError((error) => {
+        return throwError(() => error);
+      }),
+    );
   }
 }

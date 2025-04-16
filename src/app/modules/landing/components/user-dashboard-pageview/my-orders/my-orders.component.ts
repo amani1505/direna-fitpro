@@ -1,7 +1,8 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
-import { OrdersTableRowComponent } from "./orders-table-row/orders-table-row.component";
-import { OrdersCardComponent } from "./orders-card/orders-card.component";
+import { OrdersTableRowComponent } from './orders-table-row/orders-table-row.component';
+import { OrdersCardComponent } from './orders-card/orders-card.component';
 import { OrderService } from '@service/modules/order.service';
+import { ToastService } from '@service/toast.service';
 interface Order {
   id: string;
   date: string;
@@ -18,43 +19,25 @@ interface Order {
   styleUrl: './my-orders.component.scss',
 })
 export class MyOrdersComponent implements OnInit {
-private _ordersService = inject(OrderService);
+  private _ordersService = inject(OrderService);
+  private _toast = inject(ToastService);
 
   myOrders = computed(() => this._ordersService.orders() || []);
 
+  loading = this._ordersService.loading;
 
-
-  orders: Order[] = [
-    {
-      id: '#ORD-5288',
-      date: 'June 10, 2023',
-      amount: 129.0,
-      status: 'Processing',
-      image: 'https://picsum.photos/200/200?random=1',
-    },
-    {
-      id: '#ORD-5287',
-      date: 'June 05, 2023',
-      amount: 189.99,
-      status: 'Delivered',
-      image: 'https://picsum.photos/200/200?random=2',
-    },
-    {
-      id: '#ORD-5286',
-      date: 'May 28, 2023',
-      amount: 79.99,
-      status: 'Cancelled',
-      image: 'https://picsum.photos/200/200?random=3',
-    },
-    {
-      id: '#ORD-5285',
-      date: 'May 22, 2023',
-      amount: 349.99,
-      status: 'Delivered',
-      image: 'https://picsum.photos/200/200?random=4',
-    },
-  ];
   ngOnInit() {
-this._ordersService.getUserOrders()
+    this._ordersService.getUserOrders();
+  }
+
+  onDeleteOrder(orderId: string): void {
+    this._ordersService.cancelOrder(orderId).subscribe({
+      next: () => {
+        this._toast.success('Order canceled successfully.');
+      },
+      error: (error) => {
+        this._toast.error(error.error.message || 'Failed to cancel the order.');
+      },
+    });
   }
 }

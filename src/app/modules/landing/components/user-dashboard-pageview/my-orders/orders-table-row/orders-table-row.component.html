@@ -3,7 +3,7 @@
     <div class="text-sm font-medium">{{ order?.order_number }}</div>
   </td>
   <td class="px-6 py-4 whitespace-nowrap">
-    <div class="text-sm text-gray-500">{{ order?.created_at }}</div>
+    <div class="text-sm text-gray-500">{{ order?.created_at | date:'fullDate' }}</div>
   </td>
   <td class="px-6 py-4">
     <div class="flex -space-x-2">
@@ -30,14 +30,14 @@
   </td>
   <td class="px-6 py-4 whitespace-nowrap">
     <span
-      class="inline-flex px-3 py-1 text-xs font-semibold leading-5 text-yellow-800 bg-yellow-100 rounded-full"
+      class="inline-flex px-3 py-1 text-xs font-semibold leading-5 text-yellow-800 capitalize bg-yellow-100 rounded-full"
     >
       {{ order.status }}
     </span>
   </td>
   <td class="px-6 py-4 text-sm font-medium whitespace-nowrap">
     <div class="flex items-center justify-start gap-x-2">
-      <button
+      <!-- <button
         class="flex items-center justify-center text-green-400 bg-green-200 rounded-md h-7 w-7 dark:bg-green-500 dark:text-green-300"
       >
         <svg-icon
@@ -45,9 +45,10 @@
           [svgClass]="'h-5 w-5'"
         >
         </svg-icon>
-      </button>
+      </button> -->
       <button
         class="flex items-center justify-center text-red-400 bg-red-200 rounded-md h-7 w-7 dark:bg-red-500 dark:text-red-300"
+        (click)="onDeleteOrder(order.id)"
       >
         <svg-icon
           [src]="'assets/icons/heroicons/outline/trash.svg'"

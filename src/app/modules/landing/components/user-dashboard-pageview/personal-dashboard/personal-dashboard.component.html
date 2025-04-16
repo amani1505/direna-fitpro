@@ -1,49 +1,61 @@
-
-  <h2 class="mb-4 text-2xl font-[500] font-catamaran text-neutral-700">
-    Recent Orders
-  </h2>
-  <div class="space-y-4">
-    @for (order of recentOrders; track $index) {
+<h2 class="mb-4 text-2xl font-[500] font-catamaran text-neutral-700">
+  Recent Orders
+</h2>
+<div class="space-y-4">
+  @if (loading()) {
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+  } @else if (!loading() && (!orderHistory() || orderHistory().length === 0)) {
+    <div class="flex bg-gray-100 items-center justify-center w-full h-[300px]">
+      <p class="no-data-text">Your Have No any Order</p>
+    </div>
+  } @else {
+    @for (order of orderHistory(); track $index) {
       <div class="p-6 border border-gray-300 rounded-lg">
         <div class="flex justify-between mb-2">
           <div>
-            <h5 class="font-[400] font-catamaran text-xl">
-              Order #{{ order.id }}
+            <h5 class="font-[400] font-varela text-xl">
+              {{ order.order_number }}
             </h5>
-            <p class="text-sm text-gray-400">{{ order.date }}</p>
+            <p class="text-sm text-gray-400">
+              {{ order.created_at | date: "fullDate" }}
+            </p>
           </div>
           <div>
             <span
-              class="px-2 py-1 text-xs border rounded-full"
+              class="px-2 py-1 text-xs capitalize border rounded-full"
               [ngClass]="{
                 'bg-green-50  border-green-600 text-green-600 ':
-                  order.status === 'Delivered',
+                  order.status === 'delivered',
                 'bg-yellow-50  border-yellow-600 text-yellow-600':
-                  order.status === 'Shipped',
+                  order.status === 'shipped',
                 'bg-blue-50 border-blue-600 text-blue-600  ':
-                  order.status === 'Processing',
+                  order.status === 'pending',
               }"
               >{{ order.status }}</span
             >
           </div>
         </div>
         <p class="mb-4 text-gray-400">
-          {{ order.items }} items • Total: ${{ order.total.toFixed(2) }}
+          {{ order.items.length }} items • Total:{{
+            " " + order.total_amount + " TZS "
+          }}
         </p>
 
-        <button
-          (click)="viewOrder(order.id)"
-          class="px-4 py-2 bg-transparent border border-gray-400 rounded-md hover:bg-gray-400 text-neutral-700 hover:text-white"
-        >
-          View Order
-        </button>
+        <!-- <button
+            (click)="viewOrder(order.id)"
+            class="px-4 py-2 bg-transparent border border-gray-400 rounded-md hover:bg-gray-400 text-neutral-700 hover:text-white"
+          >
+            View Order
+          </button> -->
       </div>
     }
-  </div>
-  <button
-    (click)="viewAllOrders()"
-    class="w-full px-4 py-3 mt-4 text-center bg-gray-100 rounded-md hover:bg-gray-300 text-neutral-700"
-  >
-    View All Orders
-  </button>
-
+  }
+</div>
+<button
+  (click)="viewAllOrders()"
+  class="w-full px-4 py-3 mt-4 text-center bg-gray-100 rounded-md hover:bg-gray-300 text-neutral-700"
+>
+  View All Orders
+</button>

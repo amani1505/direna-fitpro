@@ -53,7 +53,7 @@ export class EquipmentsComponent {
   addToCart(id: string) {
     this._cartService.addToCart(id, 1).subscribe({
       next: (cart) => {
-        this.cart.set(cart);
+        this._toastService.success('Item added successfully.');
       },
       error: (error) => {
         this._toastService.error(error.message);
@@ -63,8 +63,8 @@ export class EquipmentsComponent {
 
   addToWishlist(id: string) {
     this._wishlistService.addToWishlist(id).subscribe({
-      next: (wishlist) => {
-        this.wishlist.set(wishlist);
+      next: () => {
+        this._toastService.success('Equipment added successfully.');
       },
       error: (error) => {
         this._toastService.error(error.message);

@@ -35,7 +35,13 @@ export default [
       {
         path: 'equipments',
         loadChildren: () => import('./pages/equipments/equipments.routes'),
-        providers: [EquipmentService, EquipmemntCategoryService, CartService,OrderService,WishlistService],
+        providers: [
+          EquipmentService,
+          EquipmemntCategoryService,
+          CartService,
+          OrderService,
+          WishlistService,
+        ],
       },
       {
         path: 'dashboard',

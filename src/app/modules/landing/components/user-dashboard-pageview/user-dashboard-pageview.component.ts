@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { User } from '@model/user';
 import { AuthService } from '@service/auth.service';
@@ -18,30 +18,33 @@ export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   user: User | null = null;
 
-  dashboardStats = [
+  orderCount = signal<number>(0);
+  wishlistCount = signal<number>(0);
+  cartItemsCount = signal<number>(0);
+
+  dashboardStats = computed(() => [
     {
       icon: './assets/icons/heroicons/outline/cube.svg',
       label: 'Orders',
-      count: 5,
+      count: this.orderCount(),
       link: 'View order history',
       navigationLink: '/dashboard/orders',
     },
     {
       icon: './assets/icons/heroicons/outline/heart.svg',
       label: 'Wishlist',
-      count: 12,
+      count: this.wishlistCount(),
       link: 'View wishlist',
       navigationLink: '/dashboard/wishlist',
     },
     {
       icon: './assets/icons/heroicons/outline/clock.svg',
-      label: 'Recently Viewed',
-      count: 8,
-      link: 'See all',
-      navigationLink: '/dashboard/orders',
+      label: 'Cart',
+      count: this.cartItemsCount(),
+      link: 'View Cart',
+      navigationLink: '/equipments/cart',
     },
-  ];
-
+  ]);
   dashboardLinks = [
     {
       icon: './assets/icons/heroicons/outline/chart-pie.svg',
@@ -77,6 +80,10 @@ export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
       .subscribe((loaded) => {
         if (loaded) {
           this.user = this._authService.user();
+
+          this.orderCount.set(this._authService.user().ordersCount);
+          this.wishlistCount.set(this._authService.user().wishlistCount);
+          this.cartItemsCount.set(this._authService.user().cartItemsCount);
         }
       });
   }

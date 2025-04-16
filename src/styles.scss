@@ -1642,6 +1642,13 @@ address {
   @apply w-full px-4 py-2 dark:text-white dark:bg-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500;
 }
 
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* Adjust height as needed */
+}
 .loader {
   animation: rotate 1s infinite;
   height: 50px;
