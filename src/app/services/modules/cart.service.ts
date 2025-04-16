@@ -102,8 +102,7 @@ export class CartService {
           this._toast.success('Item added successfully.');
         }),
         catchError((error) => {
-          this._toast.error('Failed to add item to cart.');
-          return throwError(() => error);
+          return throwError(() => error.error);
         }),
       );
   }

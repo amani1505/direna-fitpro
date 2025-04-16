@@ -9,6 +9,7 @@ import { AuthService } from '@service/auth.service';
 import { UserService } from '@service/modules/user.service';
 import { AddressService } from '@service/modules/address.service';
 import { OrderService } from '@service/modules/order.service';
+import { WishlistService } from '@service/modules/wishlist.service';
 
 export default [
   {
@@ -34,7 +35,7 @@ export default [
       {
         path: 'equipments',
         loadChildren: () => import('./pages/equipments/equipments.routes'),
-        providers: [EquipmentService, EquipmemntCategoryService, CartService,OrderService],
+        providers: [EquipmentService, EquipmemntCategoryService, CartService,OrderService,WishlistService],
       },
       {
         path: 'dashboard',

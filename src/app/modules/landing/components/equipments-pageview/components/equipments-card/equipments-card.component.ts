@@ -25,19 +25,19 @@ export class EquipmentsCardComponent {
   @Input() showRating: boolean = false;
   @Input() rating: number = 0;
 
-  @Output() heartClicked = new EventEmitter<void>();
+  @Output() addToWishlist = new EventEmitter<string>();
   @Output() singleView = new EventEmitter<string>();
-  @Output() bagClicked = new EventEmitter<void>();
-
-  onHeartClick() {
-    this.heartClicked.emit();
-  }
+  @Output() addToCart = new EventEmitter<string>();
 
   viewSingle(id: string) {
     this.singleView.emit(id);
   }
 
-  onBagClick() {
-    this.bagClicked.emit();
+  onAddToCart(id: string) {
+    this.addToCart.emit(id);
+  }
+
+  onAddToWishlist(id: string) {
+    this.addToWishlist.emit(id);
   }
 }

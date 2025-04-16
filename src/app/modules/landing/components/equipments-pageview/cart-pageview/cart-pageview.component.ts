@@ -19,6 +19,8 @@ import { AuthService } from '@service/auth.service';
 import { DropdownConfig, DropdownSection } from '@model/dropdown';
 import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component';
 import { OrderService } from '@service/modules/order.service';
+import { WishlistService } from '@service/modules/wishlist.service';
+import { Wishlist } from '@model/wishlist.interface';
 
 @Component({
   selector: 'cart-pageview',
@@ -36,9 +38,10 @@ import { OrderService } from '@service/modules/order.service';
 })
 export class CartPageviewComponent implements OnInit {
   cart = signal<Cart | null>(null);
-
+  wishlist = signal<Wishlist[] | []>([]);
   isLoading = false;
   private _cartService = inject(CartService);
+  private _wishlistService = inject(WishlistService);
   private _orderService = inject(OrderService);
   private _toastService = inject(ToastService);
   private _router = inject(Router);
@@ -54,6 +57,10 @@ export class CartPageviewComponent implements OnInit {
   ngOnInit(): void {
     this._cartService.cart$.subscribe((cart) => {
       this.cart.set(cart);
+    });
+
+    this._wishlistService.wishlist$.subscribe((wishlist) => {
+      this.wishlist.set(wishlist);
     });
 
     this.currentRoute = this._router.url;
@@ -94,7 +101,9 @@ export class CartPageviewComponent implements OnInit {
           icon: './assets/icons/heroicons/outline/logout.svg',
           hide: !this.isAuthenticated(),
           action: () =>
-            this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
+            this._router.navigateByUrl(
+              `signout?redirectURL=${this.currentRoute}`,
+            ),
         },
       ],
     },

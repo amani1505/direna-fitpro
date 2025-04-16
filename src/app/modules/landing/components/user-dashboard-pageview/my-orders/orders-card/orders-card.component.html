@@ -2,48 +2,52 @@
   <div
     class="p-6 border rounded-lg"
     [ngClass]="{
-      ' border-green-600': order.status === 'Delivered',
-      ' border-yellow-600 ': order.status === 'Shipped',
-      ' border-blue-600  ': order.status === 'Processing',
+      ' border-green-600': order.status === 'delivered',
+      ' border-yellow-600 ': order.status === 'shipped',
+      ' border-blue-600  ': order.status === 'processing',
     }"
   >
     <div class="flex justify-between">
       <div>
-        <h5 class="font-[400] font-catamaran text-xl">{{ order.id }}</h5>
-        <p class="text-sm text-gray-400">{{ order.date }}</p>
+        <h5 class="font-[400] font-catamaran text-xl">{{ order.order_number}}</h5>
+        <p class="text-sm text-gray-400">
+          {{ order.created_at | date: "fullDate" }}
+        </p>
       </div>
       <div>
         <span
           class="px-2 py-1 text-xs border rounded-full"
           [ngClass]="{
             'bg-green-50  border-green-600 text-green-600 ':
-              order.status === 'Delivered',
+              order.status === 'delivered',
             'bg-yellow-50  border-yellow-600 text-yellow-600':
-              order.status === 'Shipped',
+              order.status === 'shipped',
             'bg-blue-50 border-blue-600 text-blue-600  ':
-              order.status === 'Processing',
+              order.status === 'processing',
           }"
           >{{ order.status }}</span
         >
       </div>
     </div>
     <div class="flex -space-x-2">
-      @for (image of order.images.slice(0, 2); track $index) {
-        <img
-          class="w-8 h-8 rounded-full ring-2 ring-white"
-          [src]="image"
-          alt="Equipment"
-        />
-      }
-      @if (order.images.length > 2) {
-        <span
-          class="flex items-center justify-center w-8 h-8 text-xs font-medium bg-gray-200 rounded-full ring-2 ring-white"
-        >
-          +{{ order.images.length - 2 }}
-        </span>
+      @for (item of order?.items; track $index) {
+        @for (image of item.equipment.files.slice(0, 2); track $index) {
+          <img
+            class="w-8 h-8 rounded-full ring-2 ring-white"
+            [src]="fileUrl + image.file_path"
+            alt="Equipment"
+          />
+        }
+        @if (item.equipment.files.length > 2) {
+          <span
+            class="flex items-center justify-center w-8 h-8 text-xs font-medium bg-gray-200 rounded-full ring-2 ring-white"
+          >
+            +{{ item.equipment.files.length - 2 }}
+          </span>
+        }
       }
     </div>
-    <div class="my-2 text-sm font-medium">{{ order.amount }}</div>
+    <div class="my-2 text-sm font-medium">{{ order?.total_amount }}</div>
     <div class="flex items-center justify-end gap-x-2">
       <button
         class="flex items-center justify-center text-green-400 bg-green-200 rounded-md h-7 w-7 dark:bg-green-500 dark:text-green-300"

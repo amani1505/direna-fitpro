@@ -22,7 +22,7 @@
     </div>
     <!-- Buttons -->
     <div class="absolute opacity-0 top-2 right-2 icon-container">
-      <button class="block btn-action" (click)="onHeartClick()">
+      <button class="block btn-action" (click)="onAddToWishlist(equipment.id)">
         <svg-icon
           src="./assets/icons/heroicons/outline/heart.svg"
           [svgStyle]="{ 'width.px': 15 }"
@@ -34,9 +34,9 @@
           [svgStyle]="{ 'width.px': 15 }"
         ></svg-icon>
       </button>
-      <button class="block btn-action" (click)="onBagClick()">
+      <button class="block btn-action" (click)="onAddToCart(equipment.id)">
         <svg-icon
-          src="./assets/icons/heroicons/outline/bag-handle.svg"
+          src="./assets/icons/heroicons/outline/shopping-cart.svg"
           [svgStyle]="{ 'width.px': 15 }"
         ></svg-icon>
       </button>

@@ -9,6 +9,8 @@ import { Cart } from '@model/cart.interface';
 import { DropdownConfig, DropdownSection } from '@model/dropdown';
 import { AuthService } from '@service/auth.service';
 import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component';
+import { WishlistService } from '@service/modules/wishlist.service';
+import { Wishlist } from '@model/wishlist.interface';
 
 @Component({
   selector: 'equipments-pageview',
@@ -18,16 +20,18 @@ import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component'
     LayoutComponent,
     SearchDropdownComponent,
     RouterLink,
-     MenuPopupComponent,
+    MenuPopupComponent,
   ],
   templateUrl: './equipments-pageview.component.html',
   styleUrl: './equipments-pageview.component.scss',
 })
 export class EquipmentsPageviewComponent implements OnInit {
   cart = signal<Cart | null>(null);
+  wishlist = signal<Wishlist[] | []>([]);
   private _equipmentsService = inject(EquipmentService);
   private _authService = inject(AuthService);
   private _cartService = inject(CartService);
+  private _wishlistService = inject(WishlistService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
 
@@ -35,15 +39,18 @@ export class EquipmentsPageviewComponent implements OnInit {
   loading = this._equipmentsService.loading;
 
   currentRoute: string = '';
-  isAuthenticated =this._authService.authenticated
+  isAuthenticated = this._authService.authenticated;
 
   ngOnInit(): void {
     this._cartService.cart$.subscribe((cart) => {
       this.cart.set(cart);
     });
 
-    this.currentRoute = this._router.url;
+    this._wishlistService.wishlist$.subscribe((wishlist) => {
+      this.wishlist.set(wishlist);
+    });
 
+    this.currentRoute = this._router.url;
   }
 
   profileConfig: DropdownConfig = {
@@ -81,7 +88,9 @@ export class EquipmentsPageviewComponent implements OnInit {
           icon: './assets/icons/heroicons/outline/logout.svg',
           hide: !this.isAuthenticated(),
           action: () =>
-            this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
+            this._router.navigateByUrl(
+              `signout?redirectURL=${this.currentRoute}`,
+            ),
         },
       ],
     },

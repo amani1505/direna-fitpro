@@ -8,7 +8,7 @@
   <td class="px-6 py-4">
     <div class="flex -space-x-2">
       @for (item of order?.items; track $index) {
-        @for (image of item.equipment.files; track $index) {
+        @for (image of item.equipment.files.slice(0,2); track $index) {
           <img
             class="w-8 h-8 rounded-full ring-2 ring-white"
             [src]="fileUrl + image.file_path"

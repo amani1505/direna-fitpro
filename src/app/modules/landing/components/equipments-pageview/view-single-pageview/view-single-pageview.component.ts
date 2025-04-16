@@ -17,9 +17,11 @@ import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component'
 import { Cart } from '@model/cart.interface';
 import { DropdownConfig, DropdownSection } from '@model/dropdown';
 import { Files } from '@model/files';
+import { Wishlist } from '@model/wishlist.interface';
 import { AuthService } from '@service/auth.service';
 import { CartService } from '@service/modules/cart.service';
 import { EquipmentService } from '@service/modules/equipment.service';
+import { WishlistService } from '@service/modules/wishlist.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
@@ -41,10 +43,12 @@ import { filter } from 'rxjs';
 })
 export class ViewSinglePageviewComponent implements OnInit {
   cart = signal<Cart | null>(null);
+    wishlist = signal<Wishlist[] | []>([]);
   private _equipmentsService = inject(EquipmentService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
   private _cartService = inject(CartService);
+    private _wishlistService = inject(WishlistService);
   private _toastService = inject(ToastService);
   private _authService = inject(AuthService);
 
@@ -92,6 +96,9 @@ export class ViewSinglePageviewComponent implements OnInit {
       this.cart.set(cart);
     });
 
+    this._wishlistService.wishlist$.subscribe((wishlist) => {
+      this.wishlist.set(wishlist);
+    });
     // Get the initial route
     this.currentRoute = this._router.url;
 
