@@ -1,25 +1,27 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MenuItem, SubMenuItem } from '@model/menu.model';
 import { Menu } from 'app/constant/menu';
 import { Subscription } from 'rxjs';
+import { AuthService } from '@service/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
+  private authService = inject(AuthService);
   private _showSidebar = signal(true);
   private _showMobileMenu = signal(false);
   private _pagesMenu = signal<MenuItem[]>([]);
   private _subscription = new Subscription();
 
   constructor(private router: Router) {
-    /** Set dynamic menu */
-    this._pagesMenu.set(Menu.pages);
+    // Set filtered menu based on user role
+    this.updateMenuForRole();
 
     let sub = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        /** Expand menu base on active route */
+        // Expand menu based on active route
         this._pagesMenu().forEach((menu) => {
           let activeGroup = false;
           menu.items.forEach((subMenu) => {
@@ -82,6 +84,29 @@ export class MenuService {
       fragment: 'ignored',
       matrixParams: 'ignored',
     });
+  }
+
+  private updateMenuForRole() {
+    const userRole = this.authService.role;
+    if (!userRole) {
+      this._pagesMenu.set([]); // No role, empty menu
+      return;
+    }
+
+    // Filter menu items based on user role
+    const filteredMenu = Menu.pages.map((menu) => ({
+      ...menu,
+      items: menu.items.filter(
+        (item) => item.roles && item.roles.includes(userRole)
+      ),
+    }));
+
+    this._pagesMenu.set(filteredMenu);
+  }
+
+  // Call this if the user's role changes (e.g., after login or profile update)
+  public refreshMenu() {
+    this.updateMenuForRole();
   }
 
   ngOnDestroy(): void {

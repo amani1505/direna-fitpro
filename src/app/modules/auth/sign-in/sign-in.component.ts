@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '@service/auth.service';
+import { MenuService } from '@service/menu.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
@@ -27,6 +28,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 })
 export class SignInComponent {
   private _authService = inject(AuthService);
+  private _menuService = inject(MenuService);
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _router = inject(Router);
   private _activatedRoute = inject(ActivatedRoute);
@@ -48,7 +50,6 @@ export class SignInComponent {
   onSubmit() {
     if (this.authForm.invalid) {
       this._toast.error('Please fill in all required fields');
-
       return;
     }
     this.loading = true;
@@ -59,16 +60,15 @@ export class SignInComponent {
         this.loading = false;
         this.authForm.reset();
 
+        // Refresh menu to reflect new role
+        this._menuService.refreshMenu();
+
+        // Default redirect to /dashboard; RoleGuard will handle further redirection
         const redirectURL =
           this._activatedRoute.snapshot.queryParamMap.get('redirectURL') ||
-          '/signed-in-redirect';
-        if (response.user.role.name === 'Super Admin') {
-          this._router.navigateByUrl(redirectURL);
-          this._toast.success('Welcome, Super Admin!');
-        } else {
-          this._router.navigateByUrl(redirectURL);
-          this._toast.success('Welcome, User!');
-        }
+          '/dashboard';
+        this._router.navigateByUrl(redirectURL);
+        this._toast.success(`Welcome, ${response.user.role.name}!`);
       },
       error: (error) => {
         this.loading = false;

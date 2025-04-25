@@ -10,6 +10,7 @@ import { UserService } from '@service/modules/user.service';
 import { AddressService } from '@service/modules/address.service';
 import { OrderService } from '@service/modules/order.service';
 import { WishlistService } from '@service/modules/wishlist.service';
+import { RoleGuard } from '@core/guards/role.guard';
 
 export default [
   {
@@ -45,7 +46,9 @@ export default [
       },
       {
         path: 'dashboard',
-        canActivateChild: [AuthGuard],
+        canActivate: [AuthGuard],
+        canActivateChild: [RoleGuard],
+        data: { roles: ['User'] },
         providers: [UserService, AddressService],
         loadChildren: () =>
           import('./pages/user-dashboard/user-dashboard.routes'),
