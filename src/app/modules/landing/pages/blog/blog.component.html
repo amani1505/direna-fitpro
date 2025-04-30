@@ -1,21 +1,22 @@
 <section
-  class="min-h-[25vh] flex justify-center items-end bg-dark has-bg-image pb-10"
-  style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
+  class="min-h-[25vh] xl:min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-3"
+  style="background-image: url('./assets/images/footer-bg.png'); background-size: cover; background-position: center;"
 >
-  <div class="text-white text-[2rem] md:text-[3rem] capitalize font-[500] mb-2">
-    blog
+  <!-- Title -->
+  <div class="mb-2 text-3xl font-medium text-center text-white capitalize md:text-5xl lg:text-6xl">
+    Blogs
   </div>
+
+  <!-- Description -->
+  <!-- <p class="hidden px-4 text-sm text-center text-gray-300 text-[14px] xl:text-[16px] lg:text-[12px] sm:block">
+    Here are Equipments that are available in our GYM Store
+  </p> -->
+  <BreadCrumbs [isEquipment]="true"></BreadCrumbs>
 </section>
 
 <section class="md:px-[5rem] md:py-[5rem]">
-  <section class="grid grid-cols-1 gap-6 p-8 md:grid-cols-2 lg:grid-cols-3">
-    <BlogCard
-      *ngFor="let news of fitnessBlogPosts; let i = index"
-      [blog]="news"
-      [large]="isPrime(i)"
-    >
-    </BlogCard>
-  </section>
+
+  <router-outlet></router-outlet>
 </section>
 
 <!-- <section class="container">

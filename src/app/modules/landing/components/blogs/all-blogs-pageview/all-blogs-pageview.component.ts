@@ -1,43 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { RouterOutlet } from '@angular/router';
-import { BlogCardComponent } from '@modules/landing/components/blogs/all-blogs-pageview/blog-card/blog-card.component';
+import { Component } from '@angular/core';
 import { isPrime } from '@utils/check-prime-number';
-import { QuillModule } from 'ngx-quill';
-import { BreadCrumbsComponent } from "../../../../components/bread-crumbs/bread-crumbs.component";
+import { BlogCardComponent } from './blog-card/blog-card.component';
 
 @Component({
-  selector: 'app-blog',
+  selector: 'all-blogs-pageview',
   standalone: true,
-  imports: [CommonModule, QuillModule, ReactiveFormsModule, RouterOutlet, BreadCrumbsComponent],
-  templateUrl: './blog.component.html',
-  styleUrl: './blog.component.scss',
+  imports: [BlogCardComponent],
+  templateUrl: './all-blogs-pageview.component.html',
+  styleUrl: './all-blogs-pageview.component.scss',
 })
-export class BlogComponent {
-  safeHtmlContent: SafeHtml;
-
-  constructor(
-    private _blogForm: FormBuilder,
-    private sanitizer: DomSanitizer,
-  ) {
-    const htmlContent = `
-  <p><strong style=\"color: rgb(153, 51, 255); background-color: rgb(178, 107, 0);\">nmmx.NC&gt;Z:?KS</strong><strong style=\"color: rgb(255, 255, 255); background-color: rgb(178, 107, 0);\">n&lt;CM&gt;Cj;sdaklsa;dkflk;slflsfj xj jds d kldkdslds</strong><strong style=\"color: rgb(255, 255, 255); background-color: rgb(178, 107, 0);\" class=\"ql-font-monospace\">KJLDJ;ASKS;F;FJDJKDL</strong></p>
-  `;
-    this.safeHtmlContent = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
-  }
-  blogForm = this._blogForm.group({
-    description: [''],
-  });
-
-  onSubmit() {
-    this.blogForm.value;
-    // Handle the submission of the form
-  }
-
+export class AllBlogsPageviewComponent {
   fitnessBlogPosts = [
     {
+      id: 1,
       title: 'The Benefits of Strength Training',
       description:
         'Strength training is essential for building muscle, increasing metabolism, and improving overall health. In this article, we explore the various benefits of incorporating strength training into your fitness routine, including enhanced bone density and better joint health.',
@@ -46,6 +21,7 @@ export class BlogComponent {
       date: '2024-10-01',
     },
     {
+      id: 2,
       title: '10 Tips for Effective Weight Loss',
       description:
         'Losing weight can be a challenging journey. Here are ten proven tips to help you achieve your weight loss goals, from dietary changes to exercise strategies and maintaining motivation throughout the process.',
@@ -54,6 +30,7 @@ export class BlogComponent {
       date: '2024-10-05',
     },
     {
+      id: 3,
       title: 'How to Stay Motivated at the Gym',
       description:
         'Staying motivated to work out can be tough. This article discusses effective strategies to keep your motivation high, such as setting goals, tracking progress, and finding a workout buddy.',
@@ -62,6 +39,7 @@ export class BlogComponent {
       date: '2024-09-28',
     },
     {
+      id: 4,
       title: 'The Importance of Hydration for Fitness',
       description:
         'Proper hydration is crucial for optimal performance and recovery in fitness. In this post, we dive into the importance of staying hydrated, how much water you should drink, and the effects of dehydration on your workout.',
@@ -70,6 +48,7 @@ export class BlogComponent {
       date: '2024-09-20',
     },
     {
+      id: 5,
       title: 'Yoga: A Path to Flexibility and Mindfulness',
       description:
         "Yoga is not just about flexibility; it's also about mindfulness and stress relief. Explore the different styles of yoga and how they can contribute to your overall fitness and mental health.",

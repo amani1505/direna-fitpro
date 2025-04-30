@@ -64,14 +64,14 @@
 
     <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
       <a
-        [routerLink]="['/blog']"
+        [routerLink]="['/blogs']"
         routerLinkActive=" font-semibold"
         [routerLinkActiveOptions]="{ exact: true }"
         [ngClass]="{
           'text-black  transition duration-700 ease-in py-0': isScrolled,
         }"
       >
-        Blog</a
+        Blogs</a
       >
     </li>
 
@@ -175,12 +175,12 @@
     <li class="my-6">
       <a
         id="hideMenu"
-        (click)="navigate('blog')"
+        (click)="navigate('blogs')"
         [ngClass]="{
-          'font-semibold border-b-2 border-secondary': isActiveRoute('/blog'),
+          'font-semibold border-b-2 border-secondary': isActiveRoute('/blogs'),
         }"
       >
-        Blog</a
+        Blogs</a
       >
     </li>
     <li class="my-6">

@@ -26,7 +26,7 @@ export default [
         loadChildren: () => import('./pages/about/about.routes'),
       },
       {
-        path: 'blog',
+        path: 'blogs',
         loadChildren: () => import('./pages/blog/blog.routes'),
       },
       {

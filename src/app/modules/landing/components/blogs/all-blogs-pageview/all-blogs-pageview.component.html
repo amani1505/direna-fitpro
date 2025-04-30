@@ -1,0 +1,5 @@
+<section class="grid grid-cols-1 gap-6 p-8 md:grid-cols-2 lg:grid-cols-3">
+  @for (news of fitnessBlogPosts; track $index) {
+    <BlogCard [blog]="news" [large]="isPrime($index)"> </BlogCard>
+  }
+</section>
