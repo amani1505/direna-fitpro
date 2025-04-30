@@ -15,10 +15,9 @@ export class BlogCardComponent {
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
 
-  view(id: string, title: string) {
+  view(id: string) {
     this._router.navigate([id], {
       relativeTo: this._route,
-      queryParams: { title: title },
     });
   }
 }

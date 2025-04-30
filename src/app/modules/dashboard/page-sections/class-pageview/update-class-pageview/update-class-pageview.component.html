@@ -15,7 +15,8 @@
     ></image-uploader>
   </div>
 
-  <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+
+  <div class="grid gap-3 md:grid-cols-2 ">
     <div class="form__group">
       <div class="relative">
         <label for="name" class="block mb-1 text-sm font-medium text-gray-700"
@@ -43,7 +44,7 @@
       </div>
     </div>
 
-    <div class="form__group">
+    <!-- <div class="form__group">
       <div class="relative">
         <label for="day" class="block mb-1 text-sm font-medium text-gray-700"
           >Week Day
@@ -65,9 +66,9 @@
       >
         Weekday is required
       </div>
-    </div>
+    </div> -->
 
-    <div class="form__group">
+    <!-- <div class="form__group">
       <label class="block mb-1 text-sm font-medium text-gray-700"
         >Trainers<span class="text-[#e11d48]">*</span></label
       >
@@ -80,7 +81,7 @@
         [selectedValuesSignal]="selectedStaff"
         [buttonLabel]="'Add New Trainer'"
       ></MultiSelect>
-    </div>
+    </div> -->
 
     <div class="form__group">
       <div class="relative">
@@ -109,7 +110,7 @@
       </div>
     </div>
 
-    <div class="form__group">
+    <!-- <div class="form__group">
       <div class="relative">
         <label
           for="start_time"
@@ -135,9 +136,9 @@
       >
         Start time field is Required
       </div>
-    </div>
+    </div> -->
 
-    <div class="form__group">
+    <!-- <div class="form__group">
       <div class="relative">
         <label
           for="end_time"
@@ -161,9 +162,9 @@
       >
         End time field is Required
       </div>
-    </div>
+    </div> -->
 
-    <div class="form__group">
+    <div class="col-span-2 form__group">
       <div class="relative">
         <label
           for="description"
@@ -191,7 +192,7 @@
       </div>
     </div>
 
-    <div class="form__group">
+    <!-- <div class="form__group">
       <div class="relative">
         <label for="color" class="block mb-1 text-sm font-medium text-gray-700"
           >Choose a color:
@@ -214,7 +215,7 @@
       >
         Color is required
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="flex items-center justify-end gap-3 p-3">
     <button
@@ -225,22 +226,13 @@
     </button>
     <button
       type="submit"
-      [disabled]="
-        classForm.invalid ||
-        classLoading() ||
-        selectedStaff().length === 0 ||
-        !selectedDay()
-      "
+      [disabled]="classForm.invalid || classLoading()"
       (click)="submit()"
       class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
       [ngClass]="{
         'bg-green-500 hover:bg-green-700':
           !classForm.invalid && !classLoading(),
-        'bg-gray-300':
-          classForm.invalid ||
-          classLoading() ||
-          selectedStaff().length === 0 ||
-          !selectedDay(),
+        'bg-gray-300': classForm.invalid || classLoading(),
       }"
     >
       <svg

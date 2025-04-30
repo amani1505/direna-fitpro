@@ -24,15 +24,13 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     ReactiveFormsModule,
     NgClass,
     NgIf,
-    MultiSelectComponent,
     AngularSvgIconModule,
-    NormalSelectComponent,
     ImageUploaderComponent,
   ],
   templateUrl: './create-class-pageview.component.html',
   styleUrl: './create-class-pageview.component.scss',
 })
-export class CreateClassPageviewComponent implements OnInit {
+export class CreateClassPageviewComponent {
   private readonly _formBuilder = inject(FormBuilder);
   private readonly _router = inject(Router);
   private _location = inject(Location);
@@ -47,54 +45,54 @@ export class CreateClassPageviewComponent implements OnInit {
 
   selectedImage: File = null;
 
-  dayOptions = [
-    { label: 'Monday', value: 'Monday' },
-    { label: 'Tuesday', value: 'Tuesday' },
-    { label: 'Wednesday', value: 'Wednesday' },
-    { label: 'Thursday', value: 'Thursday' },
-    { label: 'Friday', value: 'Friday' },
-    { label: 'Saturday', value: 'Saturday' },
-    { label: 'Sunday', value: 'Sunday' },
-  ];
+  // dayOptions = [
+  //   { label: 'Monday', value: 'Monday' },
+  //   { label: 'Tuesday', value: 'Tuesday' },
+  //   { label: 'Wednesday', value: 'Wednesday' },
+  //   { label: 'Thursday', value: 'Thursday' },
+  //   { label: 'Friday', value: 'Friday' },
+  //   { label: 'Saturday', value: 'Saturday' },
+  //   { label: 'Sunday', value: 'Sunday' },
+  // ];
 
-  selectedStaff: Array<string> = [];
-  selectedDay = '';
+  // selectedStaff: Array<string> = [];
+  // selectedDay = '';
 
   classForm = this._formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
-    day: ['', Validators.required],
-    color: ['#ff4836'],
+    // day: ['', Validators.required],
+    // color: ['#ff4836'],
     capacity: [1, Validators.required],
-    startTime: ['', Validators.required],
-    endTime: ['', Validators.required],
+    // startTime: ['', Validators.required],
+    // endTime: ['', Validators.required],
   });
-  ngOnInit(): void {
-    this._staffService.getAllStaffs();
-  }
+  // ngOnInit(): void {
+  //   this._staffService.getAllStaffs();
+  // }
 
-  transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
-    return apiData.map((item) => ({
-      label: item.fullname,
-      value: item.id,
-    }));
-  };
+  // transformToMultiSelectOptions = (
+  //   apiData: Array<any>,
+  // ): Array<{ label: string; value: string }> => {
+  //   return apiData.map((item) => ({
+  //     label: item.fullname,
+  //     value: item.id,
+  //   }));
+  // };
 
-  selectStaffs(ids: any) {
-    this.selectedStaff = ids;
-  }
-  selectWeekDay(value: string) {
-    this.selectedDay = value;
-    this.classForm.patchValue({
-      day: value,
-    });
-  }
+  // selectStaffs(ids: any) {
+  //   this.selectedStaff = ids;
+  // }
+  // selectWeekDay(value: string) {
+  //   this.selectedDay = value;
+  //   this.classForm.patchValue({
+  //     day: value,
+  //   });
+  // }
 
-  addNewTrainer() {
-    this._router.navigate(['/admin/staffs/add']);
-  }
+  // addNewTrainer() {
+  //   this._router.navigate(['/admin/staffs/add']);
+  // }
   onImageSelected(event: File) {
     this.selectedImage = event;
   }
@@ -105,7 +103,6 @@ export class CreateClassPageviewComponent implements OnInit {
     }
 
     const formValues = {
-      staffIds: this.selectedStaff,
       ...this.classForm.value,
       class: this.selectedImage,
     };
@@ -114,13 +111,13 @@ export class CreateClassPageviewComponent implements OnInit {
 
     for (const key in formValues) {
       if (formValues.hasOwnProperty(key)) {
-        if (key === 'staffIds') {
-          formValues.staffIds.forEach((id: string) => {
-            formData.append('staffIds[]', id);
-          });
-        } else {
+        // if (key === 'staffIds') {
+        //   formValues.staffIds.forEach((id: string) => {
+        //     formData.append('staffIds[]', id);
+        //   });
+        // } else {
           formData.append(key, formValues[key]);
-        }
+        // }
       }
     }
 

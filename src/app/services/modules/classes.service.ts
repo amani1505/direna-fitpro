@@ -88,46 +88,42 @@ export class ClassesService {
   findOne(id: string, classRelations = []) {
     this._loading.set(true);
 
-    const params = new HttpParams({
-      fromObject: {
-        'relations[]': classRelations, // Add as many relations as needed
+    // const params = new HttpParams({
+    //   fromObject: {
+    //     'relations[]': classRelations, // Add as many relations as needed
+    //   },
+    // });
+
+    this._http.get<GymClass>(`${environment.apiUrl}classes/${id}`).subscribe({
+      next: (response) => {
+        this._class.set(response);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
       },
     });
-
-    this._http
-      .get<GymClass>(`${environment.apiUrl}classes/${id}`, { params })
-      .subscribe({
-        next: (response) => {
-          this._class.set(response);
-          this._loading.set(false);
-        },
-        error: (error) => {
-          this._toast.error(error.error.message);
-          this._loading.set(false);
-        },
-      });
   }
 
   getAllClasses(): void {
     this._loading.set(true);
-    const params = new HttpParams({
-      fromObject: {
-        'relations[]': ['instructors'], // Add as many relations as needed
+    // const params = new HttpParams({
+    //   fromObject: {
+    //     'relations[]': ['instructors'], // Add as many relations as needed
+    //   },
+    // });
+
+    this._http.get<GymClass[]>(`${environment.apiUrl}classes`).subscribe({
+      next: (response) => {
+        this._allClasses.set(response);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._toast.error(error.error.message);
+        this._loading.set(false);
       },
     });
-
-    this._http
-      .get<GymClass[]>(`${environment.apiUrl}classes`, { params })
-      .subscribe({
-        next: (response) => {
-          this._allClasses.set(response);
-          this._loading.set(false);
-        },
-        error: (error) => {
-          this._toast.error(error.error.message);
-          this._loading.set(false);
-        },
-      });
   }
 
   create(data: FormData): Observable<any> {
@@ -152,12 +148,8 @@ export class ClassesService {
     data: {
       name: string;
       description?: string;
-      day: string;
-      color: string;
+
       capacity: number;
-      startTime: string;
-      endTime: string;
-      staffIds: string[];
     },
   ): Observable<any> {
     this._loading.set(true);

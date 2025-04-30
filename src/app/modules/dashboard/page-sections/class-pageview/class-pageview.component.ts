@@ -4,6 +4,7 @@ import { ModalComponent } from '@components/modal/modal.component';
 import { GymClass } from '@model/class.interface';
 import { ClassesService } from '@service/modules/classes.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'ClassPageview',
@@ -16,7 +17,7 @@ export class ClassPageviewComponent implements OnInit {
   private _classesService = inject(ClassesService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
-
+fileUrl = environment.staicUrl;
   deleteContent = 'Are you sure you want to delete this Class?';
   deleteSubContent =
     'Deleting this member will permanently remove this class from your gym classes list';

@@ -30,9 +30,7 @@ import { environment } from 'environments/environment';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MultiSelectComponent,
     AngularSvgIconModule,
-    NormalSelectComponent,
     ImageUploaderComponent,
   ],
   templateUrl: './update-class-pageview.component.html',
@@ -44,28 +42,28 @@ export class UpdateClassPageviewComponent implements OnInit {
   private _route = inject(ActivatedRoute);
   private _location = inject(Location);
   private _classesService = inject(ClassesService);
-  private _staffService = inject(StaffService);
+  // private _staffService = inject(StaffService);
   private _toast = inject(ToastService);
 
-  staffs = computed(() => this._staffService.allStaffs() || []);
+  // staffs = computed(() => this._staffService.allStaffs() || []);
   gymClass = computed(() => this._classesService.gymClass());
   fileUrl = environment.staicUrl;
 
-  loading = this._staffService.loading;
+  // loading = this._staffService.loading;
   classLoading = this._classesService.loading;
 
-  dayOptions = [
-    { label: 'Monday', value: 'Monday' },
-    { label: 'Tuesday', value: 'Tuesday' },
-    { label: 'Wednesday', value: 'Wednesday' },
-    { label: 'Thursday', value: 'Thursday' },
-    { label: 'Friday', value: 'Friday' },
-    { label: 'Saturday', value: 'Saturday' },
-    { label: 'Sunday', value: 'Sunday' },
-  ];
+  // dayOptions = [
+  //   { label: 'Monday', value: 'Monday' },
+  //   { label: 'Tuesday', value: 'Tuesday' },
+  //   { label: 'Wednesday', value: 'Wednesday' },
+  //   { label: 'Thursday', value: 'Thursday' },
+  //   { label: 'Friday', value: 'Friday' },
+  //   { label: 'Saturday', value: 'Saturday' },
+  //   { label: 'Sunday', value: 'Sunday' },
+  // ];
 
-  selectedStaff = signal<string[]>([]);
-  selectedDay = signal<string>('');
+  // selectedStaff = signal<string[]>([]);
+  // selectedDay = signal<string>('');
   classId = signal<string>('');
   selectedImage = signal<File | null>(null);
   currentClassImage = signal<string | null>(null);
@@ -76,11 +74,11 @@ export class UpdateClassPageviewComponent implements OnInit {
     this.classForm = this._formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      day: ['', Validators.required],
-      color: ['#ff4836'],
-      capacity: [0, Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
+      // day: ['', Validators.required],
+      // color: ['#ff4836'],
+      capacity: [1, Validators.required],
+      // startTime: ['', Validators.required],
+      // endTime: ['', Validators.required],
     });
 
     effect(
@@ -91,18 +89,18 @@ export class UpdateClassPageviewComponent implements OnInit {
           this.classForm.patchValue({
             name: gymClass.name,
             description: gymClass.description,
-            day: gymClass.day,
-            color: gymClass.color,
+            // day: gymClass.day,
+            // color: gymClass.color,
             capacity: gymClass.capacity,
-            startTime: gymClass.startTime,
-            endTime: gymClass.endTime,
+            // startTime: gymClass.startTime,
+            // endTime: gymClass.endTime,
           });
 
-          this.selectedStaff.set(
-            gymClass.instructors?.map((instructor) => instructor.id),
-          );
+          // this.selectedStaff.set(
+          //   gymClass.instructors?.map((instructor) => instructor.id),
+          // );
 
-          this.selectedDay.set(gymClass.day || '');
+          // this.selectedDay.set(gymClass.day || '');
 
           this.currentClassImage.set(gymClass.image || null);
         }
@@ -114,7 +112,7 @@ export class UpdateClassPageviewComponent implements OnInit {
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
     this.classId.set(id);
-    this._staffService.getAllStaffs();
+    // this._staffService.getAllStaffs();
 
     this._classesService.findOne(id, ['instructors']);
   }
@@ -128,19 +126,19 @@ export class UpdateClassPageviewComponent implements OnInit {
     }));
   };
 
-  selectStaffs(ids: any) {
-    this.selectedStaff.set(ids);
-  }
-  selectWeekDay(value: string) {
-    this.selectedDay.set(value);
-    this.classForm.patchValue({
-      day: value,
-    });
-  }
+  // selectStaffs(ids: any) {
+  //   this.selectedStaff.set(ids);
+  // }
+  // selectWeekDay(value: string) {
+  //   this.selectedDay.set(value);
+  //   this.classForm.patchValue({
+  //     day: value,
+  //   });
+  // }
 
-  addNewTrainer() {
-    this._router.navigate(['/admin/staffs/add']);
-  }
+  // addNewTrainer() {
+  //   this._router.navigate(['/admin/staffs/add']);
+  // }
 
   onImageSelected(file: File | null) {
     this.selectedImage.set(file);
@@ -163,7 +161,6 @@ export class UpdateClassPageviewComponent implements OnInit {
     }
 
     const data = {
-      staffIds: this.selectedStaff,
       ...this.classForm.value,
     };
 
@@ -171,12 +168,7 @@ export class UpdateClassPageviewComponent implements OnInit {
       .update(this.classId(), {
         name: data.name,
         description: data.description,
-        day: data.day,
-        color: data.color,
         capacity: data.capacity,
-        startTime: data.startTime,
-        endTime: data.endTime,
-        staffIds: data.staffIds(),
       })
       .subscribe({
         next: () => {

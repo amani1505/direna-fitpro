@@ -15,22 +15,105 @@
       </button>
     </div>
   </div>
+  <div>
+    <ul
+      class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      @for (class of classes(); track $index) {
+        <li class="scrollbar-item">
+          <div class="relative class-card">
+            <div class="absolute z-20 flex flex-col gap-1 right-2 top-2">
+              <button
+                class="flex items-center justify-center w-6 h-6 text-blue-400 bg-blue-200 rounded-full cursor-pointer dark:bg-blue-500 dark:text-white"
+                (click)="updateClass(class.id)"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/pencil.svg"
+                  [svgClass]="'w-4 h-4'"
+                  class="inline-block"
+                ></svg-icon>
+              </button>
+              <button
+                class="flex items-center justify-center w-6 h-6 text-red-400 bg-red-200 rounded-full cursor-pointer dark:bg-red-500 dark:text-white"
+                (click)="openDeleteModal(class.id)"
+              >
+                <svg-icon
+                  src="./assets/icons/heroicons/outline/trash.svg"
+                  [svgClass]="'w-4 h-4'"
+                  class="inline-block"
+                ></svg-icon>
+              </button>
+            </div>
+            <figure
+              class="card-banner img-holder w-"
+              style="--width: 416; --height: 240"
+            >
+              <img
+                src="{{ fileUrl + class.image }}"
+                width="416"
+                height="240"
+                loading="lazy"
+                alt="Weight Lifting"
+                class="img-cover"
+              />
+            </figure>
 
-  <div class="overflow-hidden bg-white rounded-lg shadow">
+            <div class="card-content">
+              <div class="flex items-center py-2 gap-x-2">
+                <div class="flex items-center justify-center pr-2 border-[var(--gainsboro)] border-r">
+                  <svg-icon
+                    src="./assets/icons/heroicons/outline/clock.svg"
+                    [svgClass]="'w-6 h-6'"
+                    class="text-primary-500"
+                    aria-hidden="true"
+                  ></svg-icon>
+                </div>
+                <div class="text-[1.125rem] font-[500] text-[var(--rich-black-fogra-29-1)] ">
+                  {{ class.name }}
+                </div>
+              </div>
+
+
+              <p class="text-[var(--sonic-silver)]">
+                {{ class.description }}
+              </p>
+
+              <!-- <div class="card-progress">
+              <div class="flex items-center justify-between font-catamaran text-[var(--rich-black-fogra-29-1)]">
+                <div class="text-xl font-[800] text-[var(--rich-black-fogra-29-1)] hero-title xl:text-[1.5rem] leading-[1.2]">Class Full</div>
+
+                <div class="text-xl font-[800] text-[var(--rich-black-fogra-29-1)] hero-title xl:text-[1.5rem] leading-[1.2]">{{ class.classFull }}%</div>
+              </div>
+
+              <div class="progress-bg">
+                <div
+                  class="progress-bar"
+                  [style.width.%]="class.classFull"
+                ></div>
+              </div>
+            </div> -->
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <!-- <div class="overflow-hidden bg-white rounded-lg shadow">
     <div class="grid grid-cols-1 text-sm md:grid-cols-7">
-      <!-- Days Header -->
+      <!-- Days Header --
       @for (day of days; track $index) {
         <div class="p-4 font-semibold text-white bg-gray-500 font-poppins">
           {{ day }}
         </div>
       }
 
-      <!-- Classes or No Classes for Each Day -->
+      <!-- Classes or No Classes for Each Day --
       @for (day of days; track $index) {
         <div class="p-4 border-b md:border-r">
-          <!-- Check if the day has classes -->
+          <!-- Check if the day has classes --
           @if (getClassesForDay(day).length === 0) {
-            <!-- No Classes Component -->
+            <!-- No Classes Component --
             <div
               class="flex items-center justify-center h-[10rem] text-sm text-gray-500 bg-gray-100 rounded-lg font-catamaran"
             >
@@ -103,7 +186,7 @@
         </div>
       }
     </div>
-  </div>
+  </div> -->
 </div>
 
 <Modal
