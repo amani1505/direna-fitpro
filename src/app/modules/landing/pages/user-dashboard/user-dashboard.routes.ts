@@ -11,6 +11,7 @@ export default [
     children: [
       {
         path: '',
+        data: { roles: ['User'] },
         loadComponent: () =>
           import(
             '@modules/landing/components//user-dashboard-pageview/personal-dashboard/personal-dashboard.component'
@@ -19,6 +20,7 @@ export default [
       {
         path: 'orders',
         providers: [OrderService],
+        data: { roles: ['User'] },
         loadComponent: () =>
           import(
             '@modules/landing/components//user-dashboard-pageview/my-orders/my-orders.component'
@@ -27,11 +29,13 @@ export default [
 
       {
         path: 'profile',
+        data: { roles: ['User'] },
         loadChildren: () => import('./profile/profile.routes'),
       },
       {
         path: 'wishlist',
         providers: [WishlistService, CartService],
+        data: { roles: ['User'] },
         loadComponent: () =>
           import(
             '@modules/landing/components//user-dashboard-pageview/my-wishlist/my-wishlist.component'

@@ -42,12 +42,17 @@ export class Menu {
           route: '/admin/packages',
         },
         {
-          icon: 'assets/icons/heroicons/solid/calender-days.svg',
+          icon: 'assets/icons/heroicons/outline/clock.svg',
           label: 'Classes',
           roles: ['Super Admin'],
           route: '/admin/classes',
         },
-
+        {
+          icon: 'assets/icons/heroicons/solid/calender-days.svg',
+          label: 'Timetable',
+          roles: ['Super Admin'],
+          route: '/admin/classes',
+        },
         {
           icon: 'assets/icons/heroicons/solid/swatch.svg',
           label: 'Equipments',

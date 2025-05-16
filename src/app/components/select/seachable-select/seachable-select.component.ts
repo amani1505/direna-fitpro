@@ -69,7 +69,7 @@ export class SeachableSelectComponent {
   }
 
   @Input({ required: true }) placeholder: string = 'Select an option';
-  @Input({ required: true }) buttonLabel!: string;
+  @Input() buttonLabel!: string;
   @Input() canAdd: boolean = false;
   @Output() selectionChange = new EventEmitter<string>();
   @Output() validationChange = new EventEmitter<boolean>();

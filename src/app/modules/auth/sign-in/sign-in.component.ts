@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '@service/auth.service';
 import { MenuService } from '@service/menu.service';
 import { ToastService } from '@service/toast.service';
@@ -22,6 +22,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     AngularSvgIconModule,
     NgIf,
     NgClass,
+    RouterModule
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',

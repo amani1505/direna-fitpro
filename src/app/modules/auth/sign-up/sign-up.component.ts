@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { MemberComponent } from './member/member.component';
+import { NormalUserComponent } from './normal-user/normal-user.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,47 +18,38 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    RouterLink,
+
     AngularSvgIconModule,
+    NgIf,
+    MemberComponent,
+    NormalUserComponent,
+    NgClass,
     NgIf,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
 })
-export class SignUpComponent implements OnInit {
-  form!: FormGroup;
-  submitted = false;
-  passwordTextType!: boolean;
+export class SignUpComponent {
+  activeTab: 'member' | 'user' = 'member';
 
-  constructor(
-    private readonly _formBuilder: FormBuilder,
-    private readonly _router: Router,
-  ) {}
+  tabs: Array<{
+    title: string;
+    icon: string;
+    value: 'member' | 'user';
+  }> = [
+    {
+      title: 'Member ',
+      icon: 'person',
+      value: 'member',
+    },
+    {
+      title: 'User',
+      icon: 'person',
+      value: 'user',
+    },
+  ];
 
-  ngOnInit(): void {
-    this.form = this._formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
-
-  get f() {
-    return this.form.controls;
-  }
-
-  togglePasswordTextType() {
-    this.passwordTextType = !this.passwordTextType;
-  }
-
-  onSubmit() {
-    this.submitted = true;
-    const { email, password } = this.form.value;
-
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
-    }
-
-    this._router.navigate(['/']);
+  setActiveTab(tab: 'member' | 'user'): void {
+    this.activeTab = tab;
   }
 }

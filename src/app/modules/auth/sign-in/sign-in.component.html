@@ -115,6 +115,15 @@
       </div>
     </div>
   </div>
+    <!-- Sign-up -->
+    <div class="flex gap-3 text-gray-400 dark:text-night-200 font-catamaran">
+      Not a Member or a User yet?
+      <a
+        routerLink="/auth/sign-up"
+        class="text-primary-500 hover:text-primary-400 hover:underline"
+        >Register here</a
+      >
+    </div>
 
   <!-- Submit Button -->
   <button
@@ -151,13 +160,5 @@
     {{ loading ? "Submitting..." : "Sign in" }}
   </button>
 
-  <!-- Sign-up -->
-  <!-- <div class="flex gap-3 text-gray-400 dark:text-night-200">
-    Not a Member yet?
-    <a
-      routerLink="/auth/sign-up"
-      class="text-primary-500 hover:text-primary-400"
-      >Sign up</a
-    >
-  </div> -->
+
 </form>

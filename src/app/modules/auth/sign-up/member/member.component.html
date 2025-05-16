@@ -1,0 +1,306 @@
+<form class="space-y-6" [formGroup]="authForm" (ngSubmit)="onSubmit()">
+  <div class="text-left space-y-9">
+    <div class="grid grid-cols-1 gap-2 md:grid-cols-3">
+      <div class="space-y-2">
+        <label for="first_name" class="text-sm font-medium text-gray-700"
+          >First Name <span class="text-[#e11d48]">*</span></label
+        >
+        <div class="relative">
+          <input
+            type="text"
+            id="first_name"
+            formControlName="first_name"
+            class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+            placeholder="John"
+          />
+        </div>
+
+        <div *ngIf="authForm.get('first_name')?.touched">
+          <div
+            *ngIf="authForm.get('first_name').hasError('required')"
+            class="is__invalid-error"
+          >
+            First Name is Required
+          </div>
+        </div>
+      </div>
+      <!-- Middle Name -->
+      <div class="space-y-2">
+        <label for="middle_name" class="text-sm font-medium text-gray-700"
+          >Middle Name</label
+        >
+        <div class="relative">
+          <input
+            type="text"
+            id="middle_name"
+            formControlName="middle_name"
+            class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+            placeholder="Doe"
+          />
+        </div>
+      </div>
+
+      <!-- Last name -->
+
+      <div class="space-y-2">
+        <label for="last_name" class="text-sm font-medium text-gray-700"
+          >Last Name <span class="text-[#e11d48]">*</span></label
+        >
+        <div class="relative">
+          <input
+            type="text"
+            id="last_name"
+            formControlName="last_name"
+            class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+            placeholder="Smith"
+          />
+        </div>
+
+        <div *ngIf="authForm.get('last_name')?.touched">
+          <div
+            *ngIf="authForm.get('last_name').hasError('required')"
+            class="is__invalid-error"
+          >
+            Last Name is Required
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label for="email" class="text-sm font-medium text-gray-700"
+          >Email <span class="text-[#e11d48]">*</span></label
+        >
+        <div class="relative">
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+            placeholder="your@email.com"
+          />
+        </div>
+
+        <div *ngIf="authForm.get('email')?.touched">
+          <div
+            *ngIf="authForm.get('email').hasError('required')"
+            class="is__invalid-error"
+          >
+            Email is Required
+          </div>
+          <div
+            *ngIf="authForm.get('email').hasError('email')"
+            class="is__invalid-error"
+          >
+            Email must be an email address valid
+          </div>
+        </div>
+      </div>
+      <!-- Phone Number -->
+      <div class="space-y-2">
+        <label for="phone" class="text-sm font-medium text-gray-700"
+          >Phone Number <span class="text-[#e11d48]">*</span></label
+        >
+        <div class="relative">
+          <input
+            type="tel"
+            id="phone"
+            prefix="+255 "
+            mask="(000) 000 000"
+            [showMaskTyped]="true"
+            [validation]="true"
+            formControlName="phone"
+            [ngClass]="{
+              'is__invalid-input': authForm.get('phone').hasError('required'),
+            }"
+            class="w-full py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#ff4836] focus:border-transparent"
+            placeholder="+1234567890"
+          />
+        </div>
+
+        <div *ngIf="authForm.get('phone')?.touched">
+          <div
+            *ngIf="authForm.get('phone').hasError('required')"
+            class="is__invalid-error"
+          >
+            Phone Number is Required
+          </div>
+        </div>
+      </div>
+
+      <!-- Gender -->
+
+      <div class="space-y-2">
+        <label class="block text-sm font-medium text-gray-700"
+          >Gender <span class="text-[#e11d48]">*</span></label
+        >
+        <div class="mt-2 space-x-4">
+          <label class="inline-flex items-center">
+            <input
+              type="radio"
+              formControlName="gender"
+              value="male"
+              class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+            />
+            <span class="ml-2">Male</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input
+              type="radio"
+              formControlName="gender"
+              value="female"
+              class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+            />
+            <span class="ml-2">Female</span>
+          </label>
+        </div>
+
+        <div *ngIf="authForm.get('gender')?.touched">
+          <div
+            *ngIf="authForm.get('gender').hasError('required')"
+            class="is__invalid-error"
+          >
+            Gender is Required
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+    <div class="space-b-2">
+      <label class="block mb-1 text-sm font-medium text-gray-700"
+        >Branch<span class="text-[#e11d48]">*</span></label
+      >
+      <SeachableSelect
+        [placeholder]="'Select Branch'"
+        [options]="transformToSelectOptions(branches())"
+        (selectionChange)="selectBranch($event)"
+        [canAdd]="false"
+      ></SeachableSelect>
+    </div>
+
+    <div class="space-y-2">
+      <label class="block mb-1 text-sm font-medium text-gray-700"
+        >Services<span class="text-[#e11d48]">*</span></label
+      >
+      <MultiSelect
+        [placeholder]="'Select the Services'"
+        [options]="transformToMultiSelectOptions(services())"
+        (selectionChange)="selectService($event)"
+        [canAdd]="false"
+      ></MultiSelect>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 gap-2 md:grid-cols-3">
+    <div class="space-b-2">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700">Age</label>
+        <input
+          type="number"
+          id="age"
+          class="block text-md peer input-field"
+          formControlName="age"
+        />
+      </div>
+    </div>
+    <div class="space-y-2">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Weight <span class="text-[#e11d48]">*</span></label
+        >
+        <input
+          type="text"
+          id="weight"
+          suffix=" kg"
+          mask="0000"
+          [validation]="false"
+          [ngClass]="{
+            'is__invalid-input': authForm.get('weight').hasError('required'),
+          }"
+          class="block text-md peer input-field"
+          placeholder="Enter the weight"
+          formControlName="weight"
+        />
+      </div>
+
+      <div
+        *ngIf="authForm.get('weight').hasError('required')"
+        class="is__invalid-error"
+      >
+        Weight field is Required
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <div class="relative">
+        <label class="block mb-1 text-sm font-medium text-gray-700"
+          >Height</label
+        >
+        <input
+          type="text"
+          id="height"
+          suffix=" cm"
+          class="block text-md peer input-field"
+          placeholder="Enter Height "
+          formControlName="height"
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <quill-editor
+      (onContentChanged)="onGoalChange($event)"
+      [styles]="{ height: '100px', width: '100%' }"
+      [ngClass]="{
+        'is__invalid-input': authForm
+          .get('goal')
+          .hasError('required'),
+      }"
+    ></quill-editor>
+  </div>
+  <!-- Sign-up -->
+  <div class="flex gap-3 text-gray-400 dark:text-night-200 font-catamaran">
+    Already a Member?
+    <a
+      routerLink="/auth"
+      class="text-primary-500 hover:text-primary-400 hover:underline"
+      >Sign In</a
+    >
+  </div>
+
+  <!-- Submit Button -->
+  <button
+    type="submit"
+    class="relative flex justify-center w-full px-4 py-2 mb-10 font-medium border border-transparent rounded-md group"
+    [disabled]="authForm.invalid || loading"
+    [ngClass]="{
+      ' hover:bg-primary-400  bg-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 text-white':
+        !authForm.invalid && !loading,
+      'bg-gray-300': authForm.invalid || loading,
+    }"
+  >
+    <svg
+      *ngIf="loading"
+      class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"
+      ></circle>
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+
+    {{ loading ? "Submitting..." : "Register" }}
+  </button>
+</form>
