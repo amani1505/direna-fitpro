@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RevealDirective } from '@directive/reveal.directive';
 
 interface BlogInterface {
   id: string;
@@ -10,7 +11,7 @@ interface BlogInterface {
 @Component({
   selector: 'blog',
   standalone: true,
-  imports: [],
+  imports: [RevealDirective],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.scss',
 })

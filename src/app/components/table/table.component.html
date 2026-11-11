@@ -1,36 +1,29 @@
-<div class="flex items-center justify-between px-2 mb-4">
-  <div class="inline-block text-gray-900 dark:text-night-50">
-    <h3 class="font-[600] text-[24px] tracking-wide font-catamaran uppercase">
+<div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+  <div class="min-w-0">
+    <h3 class="font-display text-2xl font-extrabold capitalize tracking-tight text-ink sm:text-3xl">
       {{ title }}
     </h3>
-
-    <div class="flex items-center gap-1 text-muted-foreground font-varela">
-      <span class="font-[400] capitalize">{{ totalTitle }} :</span>
-      <span class="text-foreground">{{ totalValue }}</span>
-    </div>
+    <p class="mt-1 flex items-center gap-2 text-sm text-muted">
+      <span class="capitalize">{{ totalTitle }}</span>
+      <span class="rounded-full bg-primary-500/10 px-2 py-0.5 font-display text-xs font-bold text-primary-600 dark:text-primary-400">{{ totalValue }}</span>
+    </p>
   </div>
 
-  <div class="inline-block space-x-4">
-    <button
-      (click)="add()"
-      class="flex-none rounded-md bg-gray-200 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-300 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 capitalize"
-    >
-      {{ buttonLabel }}
-    </button>
-  </div>
+  <button
+    type="button"
+    (click)="add()"
+    class="btn-pop shine w-full !px-5 !py-2.5 text-sm capitalize sm:w-auto"
+  >
+    <span aria-hidden="true" class="text-lg leading-none">+</span>
+    {{ buttonLabel }}
+  </button>
 </div>
 
-<div
-  class="flex flex-col min-w-full p-2 overflow-x-auto bg-white border rounded-xl border-muted/20"
->
+<div class="flex min-w-0 flex-col overflow-hidden rounded-2xl border border-line bg-surface animate-fade-in-up">
   <TableActions [actions]="actions"></TableActions>
-  <div
-    class="overflow-x-auto scrollbar-thumb-rounded scrollbar-track-rounded grow scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted"
-  >
-    <table
-      class="table w-full overflow-x-auto text-sm leading-5 text-left align-middle border-0 border-collapse table-auto sm:text-base text-muted-foreground"
-    >
-      <thead class="p-10 text-xs border bg-gray-50">
+  <div class="min-w-0 grow overflow-x-auto">
+    <table class="w-full min-w-max border-collapse text-left align-middle text-sm text-ink">
+      <thead class="bg-surface-2 text-xs text-muted">
         <tr
           app-table-header
           (onCheckAll)="toggleAll($event)"
@@ -48,21 +41,20 @@
             (onDelete)="deleteModal(row.id)"
             (onUpdate)="update(row.id)"
             (onView)="view(row.id)"
-            class="hover:bg-gray-50"
+            class="table-row-anim transition-colors duration-150 hover:bg-surface-2/60"
+            [style.animation-delay.ms]="$index * 30"
           ></tr>
-        } @empty {
-          <tr>
-            <td
-              class="py-4 text-sm text-center h-[10rem] bg-gray-50"
-              [attr.colspan]="colSpans"
-            >
-              No Data found
-            </td>
-          </tr>
         }
       </tbody>
     </table>
   </div>
+  @if (!data?.length) {
+    <div class="flex h-48 flex-col items-center justify-center gap-2 px-4 text-center text-muted">
+      <span class="grid h-12 w-12 animate-pop-in place-items-center rounded-full bg-surface-2 font-display text-xl text-subtle" aria-hidden="true">✺</span>
+      <p class="font-display font-bold text-ink">Nothing here yet</p>
+      <p class="text-sm">Use the button above to add the first one.</p>
+    </div>
+  }
   <TableFooter
     (pageChange)="onPageChange($event)"
     (itemsPerPageChange)="onItemsPerPageChange($event)"

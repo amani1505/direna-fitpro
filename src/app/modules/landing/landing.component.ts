@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { BreadCrumbsComponent } from '@components/bread-crumbs/bread-crumbs.component';
 import { ScrollService } from '@service/scroll.service';
@@ -11,7 +11,7 @@ import { ScrollService } from '@service/scroll.service';
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf, AngularSvgIconModule],
+  imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf, NgClass, AngularSvgIconModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })

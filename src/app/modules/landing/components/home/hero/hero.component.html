@@ -1,71 +1,211 @@
 <section
-  class="section hero bg-dark has-after max-h-1/2"
+  #heroEl
+  class="hero-x relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white"
   id="home"
-  aria-label="hero"
-  data-section
-  style="background-image: url(&quot;./assets/images/hero-bg.png&quot;)"
+  aria-label="Welcome"
 >
+  <!-- Backdrop: colour mesh, faint grid, film grain -->
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-mesh absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="hero-grain absolute inset-0"></div>
+  </div>
+
+  <!-- Oversized outlined brand word, drifting behind everything -->
+  <div
+    aria-hidden="true"
+    class="hero-bigword pointer-events-none absolute inset-x-0 bottom-[22%] -z-10 select-none lg:-bottom-[2%]"
+  >
+    <div class="hero-bigword-track">
+      <span>Direna FitPro ✺&nbsp;</span>
+      <span>Direna FitPro ✺&nbsp;</span>
+    </div>
+  </div>
+
   @if (hero) {
-    <div class="container">
-      <div class="flex flex-col items-center lg:items-start">
-        <p class="bg-gray-800 text-white p-[5px] hero-subtitle text-xl">
-          <strong
-            class="inline-block bg-[var(--coquelicot)] p-[6px] sm:py-2 sm:px-14 rounded-[var(--radius-5)] me-[10px] sm:me-[15px]"
-            >Top Equipment</strong
-          >Peak Service
-        </p>
-        <h1
-          class="text-3xl font-[700] text-white hero-title xl:text-[3.8rem] xl:font-[900] leading-[1.2]"
+    <div
+      class="mx-auto grid max-w-page items-center gap-14 px-4 pb-24 pt-28 sm:px-6 sm:pt-32 lg:grid-cols-[1.1fr_0.9fr] lg:gap-4 lg:pb-28 lg:pt-36"
+    >
+      <!-- Copy -->
+      <div class="relative z-10">
+        <p
+          class="inline-flex animate-rise items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] py-1.5 pl-2 pr-4 text-sm font-semibold backdrop-blur-md"
         >
-          {{ hero.title }}
+          <span class="relative grid h-6 w-6 place-items-center rounded-full bg-primary-500">
+            <span class="absolute inset-0 animate-ping rounded-full bg-primary-500/60"></span>
+            <svg-icon src="assets/images/logo-icon-white.svg" [svgClass]="'relative h-3.5 w-3.5'"></svg-icon>
+          </span>
+          Top equipment, peak service
+        </p>
+
+        <h1
+          class="hero-headline mt-6 font-display font-extrabold tracking-[-0.045em]"
+          [attr.aria-label]="hero.title"
+        >
+          @for (word of titleWords; track $index) {
+            <span class="hero-word" aria-hidden="true"
+              ><span class="hero-word-inner" [style.animation-delay.ms]="150 + $index * 90">{{
+                word
+              }}</span></span
+            >
+          }
         </h1>
-        <p class="xl:text-[1.5rem] tracking-wider leading-normal">
+
+        <p
+          class="mt-6 max-w-md animate-rise text-base leading-relaxed text-white/70 [animation-delay:700ms] sm:text-lg"
+        >
           {{ hero.subtitle }}
         </p>
-        <a class="btn btn-primary" routerLink="/auth">Join Us Now</a>
+
+        <div
+          class="mt-8 flex animate-rise flex-col gap-3 [animation-delay:800ms] xs:flex-row xs:items-center"
+        >
+          <a class="btn-pop shine on-dark group" routerLink="/auth">
+            Join us now
+            <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </a>
+          <a
+            routerLink="/"
+            fragment="class"
+            class="btn-ghost border-white/25 text-white hover:border-white hover:bg-white hover:text-ink"
+            >See classes</a
+          >
+        </div>
+
+        <!-- Bento shortcuts -->
+        <nav
+          aria-label="Explore"
+          class="mt-10 grid max-w-lg animate-rise grid-cols-3 gap-2 [animation-delay:900ms] sm:gap-3"
+        >
+          @for (tile of tiles; track tile.label) {
+            <a
+              [routerLink]="tile.route"
+              [fragment]="tile.fragment"
+              class="hero-tile group"
+            >
+              <span class="hero-tile-icon" [ngClass]="tile.tone">
+                <svg-icon [src]="tile.icon" [svgClass]="'h-5 w-5'"></svg-icon>
+              </span>
+              <span class="mt-3 block font-display text-sm font-bold leading-tight sm:text-base">{{ tile.label }}</span>
+              <span class="mt-0.5 hidden text-xs text-white/55 sm:block">{{ tile.hint }}</span>
+              <span
+                aria-hidden="true"
+                class="absolute right-3 top-3 text-white/40 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white"
+                >↗</span
+              >
+            </a>
+          }
+        </nav>
       </div>
 
-      <div class="hero-banner">
-        <img
-          src="{{ hero.image }}"
-          width="660"
-          height="753"
-          alt="hero banner"
-          class="w-full"
-        />
+      <!-- Visual -->
+      <div class="hero-visual relative mx-auto w-full max-w-[460px] lg:max-w-[520px]">
+        <!-- Arch -->
+        <div class="hero-depth-1 absolute inset-x-[6%] bottom-0 top-[14%]">
+          <div class="hero-arch h-full w-full animate-pop-in [animation-delay:250ms]"></div>
+        </div>
 
-        <img
-          src="./assets/images/hero-circle-one.png"
-          width="666"
-          height="666"
-          aria-hidden="true"
-          alt=""
-          class="circle circle-1"
-        />
-        <img
-          src="./assets/images/hero-circle-two.png"
-          width="666"
-          height="666"
-          aria-hidden="true"
-          alt=""
-          class="circle circle-2"
-        />
+        <!-- Athlete -->
+        <div class="hero-depth-2 relative z-10 animate-rise [animation-delay:350ms]">
+          <img
+            [src]="hero.image"
+            width="660"
+            height="753"
+            alt="Athlete training with a dumbbell"
+            class="hero-athlete mx-auto w-[92%]"
+            fetchpriority="high"
+          />
+        </div>
 
-        <img
-          src="./assets/images/heart-rate.svg"
-          width="255"
-          height="270"
-          alt="heart rate"
-          class="abs-img abs-img-1"
-        />
-        <img
-          src="./assets/images/calories.svg"
-          width="348"
-          height="224"
-          alt="calories"
-          class="abs-img abs-img-2"
-        />
+        <!-- Spinning join sticker -->
+        <a
+          routerLink="/auth"
+          class="hero-badge hero-depth-3 group absolute -left-2 top-[8%] z-20 animate-pop-in [animation-delay:900ms] sm:-left-6"
+          aria-label="Join the club"
+        >
+          <svg viewBox="0 0 120 120" class="hero-badge-text h-full w-full" aria-hidden="true">
+            <defs>
+              <path id="hero-badge-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
+            </defs>
+            <text>
+              <textPath href="#hero-badge-circle" startOffset="0">Join the club ✺ Join the club ✺ Join the club ✺</textPath>
+            </text>
+          </svg>
+          <span
+            class="absolute inset-[30%] grid place-items-center rounded-full bg-primary-500 text-2xl font-bold text-white transition-transform duration-500 ease-spring group-hover:rotate-45 group-hover:scale-110"
+            aria-hidden="true"
+            >↗</span
+          >
+        </a>
+
+        <!-- Heart-rate card -->
+        <div
+          class="hero-depth-3 absolute -right-1 top-[30%] z-20 animate-pop-in [animation-delay:1050ms] sm:-right-6"
+          aria-hidden="true"
+        >
+          <div class="hero-stat animate-float">
+            <div class="flex items-center gap-2.5">
+              <span class="hero-heart grid h-9 w-9 place-items-center rounded-xl bg-primary-500/20 text-primary-400">
+                <svg-icon src="assets/icons/heroicons/outline/heart.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+              </span>
+              <div>
+                <p class="text-[11px] text-white/60">Heart rate</p>
+                <p class="font-display text-lg font-extrabold leading-none">100 <span class="text-xs font-semibold text-white/60">bpm</span></p>
+              </div>
+            </div>
+            <svg viewBox="0 0 120 28" class="mt-2 h-7 w-full text-primary-400" fill="none">
+              <path
+                class="hero-ecg"
+                d="M0 16 H30 L36 6 L42 24 L48 2 L54 20 L58 16 H80 L84 10 L88 20 L92 16 H120"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Calories card -->
+        <div
+          class="hero-depth-2 absolute -left-1 bottom-[12%] z-20 animate-pop-in [animation-delay:1200ms] sm:-left-8"
+          aria-hidden="true"
+        >
+          <div class="hero-stat animate-float [animation-delay:-2.5s]">
+            <div class="flex items-end gap-1" style="height: 34px">
+              @for (bar of bars; track $index) {
+                <span
+                  class="hero-bar w-2 rounded-full"
+                  [ngClass]="$index === bars.length - 2 ? 'bg-primary-500' : 'bg-white/25'"
+                  [style.height.%]="bar"
+                  [style.animation-delay.ms]="1300 + $index * 70"
+                ></span>
+              }
+            </div>
+            <p class="mt-2 text-[11px] text-white/60">Calories burned</p>
+            <p class="font-display text-lg font-extrabold leading-none">540 <span class="text-xs font-semibold text-white/60">kcal</span></p>
+          </div>
+        </div>
       </div>
     </div>
   }
 </section>
+
+<!-- Class ticker -->
+<div
+  class="relative z-[2] -mt-6 -rotate-[1.5deg] scale-[1.02] border-y-2 border-ink bg-[rgb(var(--c-lilac-soft))] py-3 dark:border-lilac"
+  aria-label="Classes we run"
+>
+  <div class="marquee">
+    @for (copy of [0, 1]; track copy) {
+      <ul class="marquee-track items-center" [attr.aria-hidden]="copy === 1">
+        @for (word of tickerLoop; track $index) {
+          <li class="flex shrink-0 items-center gap-6 px-3 font-display text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
+            {{ word }}
+            <span class="text-primary-500" aria-hidden="true">✺</span>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

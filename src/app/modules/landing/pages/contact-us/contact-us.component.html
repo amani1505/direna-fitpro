@@ -1,70 +1,274 @@
+<!-- ============ Intro band ============ -->
 <section
-  class="min-h-[25vh]  flex flex-col justify-end items-center bg-dark has-bg-image pb-10 md:pb-0"
-  style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
+  class="relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white"
+  aria-labelledby="contact-title"
 >
-  <div class="text-white text-[2rem] md:text-[3rem] capitalize font-[500] mb-3">
-    contact Us
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-mesh absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="hero-grain absolute inset-0"></div>
   </div>
-  <p class="text-[14px] xl:text-[16px] lg:text-[12px] text-center">
-    Send us a message and we'll get back to you as soon as possible.
-  </p>
+  <div
+    aria-hidden="true"
+    class="hero-bigword pointer-events-none absolute inset-x-0 -bottom-[4%] -z-10 select-none"
+  >
+    <div class="hero-bigword-track">
+      <span>Say hello ✺&nbsp;</span>
+      <span>Say hello ✺&nbsp;</span>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-page px-4 pb-24 pt-32 sm:px-6 sm:pb-32 sm:pt-40">
+    <p
+      class="inline-flex animate-rise items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-sm font-semibold backdrop-blur-md"
+    >
+      <span class="text-primary-400" aria-hidden="true">✺</span> Contact us
+    </p>
+    <h1
+      id="contact-title"
+      class="mt-6 max-w-3xl animate-rise font-display text-[2.6rem] font-extrabold leading-[0.95] tracking-[-0.04em] [animation-delay:120ms] xs:text-5xl sm:text-6xl lg:text-7xl"
+    >
+      Let's talk
+    </h1>
+    <p
+      class="mt-5 max-w-lg animate-rise text-base leading-relaxed text-white/70 [animation-delay:240ms] sm:text-lg"
+    >
+      Send us a message and we'll get back to you as soon as possible.
+    </p>
+
+    <!-- Quick actions -->
+    <div class="mt-8 flex animate-rise flex-wrap gap-2.5 [animation-delay:360ms]">
+      @if (contact.phones[0]; as phone) {
+        <a [href]="phone.href" class="quick-chip group">
+          <svg-icon src="assets/icons/phone.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+          Call us
+        </a>
+      }
+      @if (contact.emails[0]; as mail) {
+        <a [href]="mail.href" class="quick-chip group">
+          <svg-icon src="assets/icons/envelope.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+          Email us
+        </a>
+      }
+      <a routerLink="/contact-us" fragment="find-us" class="quick-chip group">
+        <svg-icon src="assets/icons/map-pin.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+        Find us
+      </a>
+    </div>
+  </div>
 </section>
 
-<section class="mx-3 my-5 xl:my-24 mx- xl:mx-24">
-  <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-    <div class="p-2 rounded-lg shadow">
-      <Map [latitude]="-6.757139" [longitude]="39.126722" [zoom]="100"></Map>
-    </div>
-
-    <div class="p-10 rounded-lg bg-primary-50">
-      <form class="space-y-6">
-        <!-- Name Input -->
-        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div class="relative">
-            <input
-              type="text"
-              name="name"
-              aria-label="name"
-              placeholder="Fullname"
-              required
-              class="input-field"
-            />
+<!-- ============ Form + details ============ -->
+<section class="relative z-10 -mt-12 px-4 pb-20 sm:-mt-16 sm:px-6 sm:pb-28">
+  <div class="mx-auto grid max-w-page gap-5 lg:grid-cols-[1.15fr_0.85fr]">
+    <!-- Form card -->
+    <div
+      reveal
+      class="rounded-[2rem] border-2 border-ink bg-surface p-5 shadow-pop sm:p-8"
+    >
+      @if (!sent()) {
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="space-y-6">
+          <div>
+            <h2 class="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+              Send a message
+            </h2>
+            <p class="mt-1 text-sm text-muted">Fields marked * are required.</p>
           </div>
 
-          <!-- Email Input -->
-          <div class="relative">
-            <input
-              type="email"
-              name="email_address"
-              aria-label="email"
-              placeholder="Email Address"
-              required
-              class="input-field"
-            />
+          <!-- Topic -->
+          <fieldset>
+            <legend class="mb-2.5 text-sm font-semibold text-ink">What's it about?</legend>
+            <div class="flex flex-wrap gap-2">
+              @for (topic of topics; track topic) {
+                <button
+                  type="button"
+                  class="topic-chip"
+                  [ngClass]="{ 'is-active': form.controls.topic.value === topic }"
+                  [attr.aria-pressed]="form.controls.topic.value === topic"
+                  (click)="pickTopic(topic)"
+                >
+                  {{ topic }}
+                </button>
+              }
+            </div>
+          </fieldset>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="contact-name" class="mb-1.5 block text-sm font-semibold text-ink"
+                >Full name <span class="text-primary-500">*</span></label
+              >
+              <input
+                id="contact-name"
+                type="text"
+                formControlName="name"
+                autocomplete="name"
+                placeholder="Your name"
+                [class.is__invalid-input]="showError('name')"
+                [attr.aria-invalid]="showError('name')"
+                aria-describedby="contact-name-error"
+              />
+              @if (showError('name')) {
+                <p id="contact-name-error" class="is__invalid-error">Enter your name.</p>
+              }
+            </div>
+            <div>
+              <label for="contact-email" class="mb-1.5 block text-sm font-semibold text-ink"
+                >Email <span class="text-primary-500">*</span></label
+              >
+              <input
+                id="contact-email"
+                type="email"
+                formControlName="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                [class.is__invalid-input]="showError('email')"
+                [attr.aria-invalid]="showError('email')"
+                aria-describedby="contact-email-error"
+              />
+              @if (showError('email')) {
+                <p id="contact-email-error" class="is__invalid-error">Enter a valid email address.</p>
+              }
+            </div>
           </div>
-        </div>
 
-        <!-- Message Input -->
-        <div class="relative">
-          <textarea
-            id="message"
-            name="message"
-            rows="5"
-            placeholder="Write your message here..."
-            class="input-field"
-          ></textarea>
-        </div>
+          <div>
+            <div class="mb-1.5 flex items-end justify-between gap-2">
+              <label for="contact-message" class="block text-sm font-semibold text-ink"
+                >Message <span class="text-primary-500">*</span></label
+              >
+              <span
+                class="text-xs tabular-nums"
+                [ngClass]="form.controls.message.value.length > maxMessage ? 'text-rose-500' : 'text-subtle'"
+                aria-live="polite"
+                >{{ form.controls.message.value.length }}/{{ maxMessage }}</span
+              >
+            </div>
+            <textarea
+              id="contact-message"
+              rows="6"
+              formControlName="message"
+              placeholder="Tell us what you need help with"
+              class="resize-y"
+              [class.is__invalid-input]="showError('message')"
+              [attr.aria-invalid]="showError('message')"
+              aria-describedby="contact-message-error"
+            ></textarea>
+            @if (showError('message')) {
+              <p id="contact-message-error" class="is__invalid-error">
+                Write at least 10 characters, up to {{ maxMessage }}.
+              </p>
+            }
+          </div>
 
-        <!-- Submit Button -->
-        <div>
-          <button
-            type="submit"
-            class="w-full px-4 py-3 text-white rounded-md shadow-sm bg-primary-400 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-600 focus:ring-offset-2"
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-xs text-muted sm:max-w-[16rem]">
+              This opens your email app with the message ready to send.
+            </p>
+            <button type="submit" class="btn-pop shine w-full sm:w-auto">
+              Send message
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+      } @else {
+        <div class="flex min-h-[380px] flex-col items-center justify-center text-center" role="status">
+          <span
+            class="grid h-16 w-16 animate-pop-in place-items-center rounded-full bg-emerald-500/15 text-3xl text-emerald-500"
+            aria-hidden="true"
+            >✓</span
           >
-            Send Message
+          <h2 class="mt-5 font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+            Message ready to send
+          </h2>
+          <p class="mt-2 max-w-sm text-muted">
+            Your email app should have opened with your message. Press send there
+            and we'll get back to you as soon as possible.
+          </p>
+          <button type="button" (click)="reset()" class="btn-ghost mt-6 text-ink hover:bg-ink hover:text-bg">
+            Write another message
           </button>
         </div>
-      </form>
+      }
+    </div>
+
+    <!-- Details -->
+    <div class="grid content-start gap-4 sm:grid-cols-2 lg:grid-cols-1">
+      <article reveal [revealDelay]="100" class="info-card group">
+        <span class="info-icon bg-primary-500/10 text-primary-500">
+          <svg-icon src="assets/icons/phone.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+        </span>
+        <div class="min-w-0">
+          <h3 class="font-display text-lg font-bold text-ink">Call</h3>
+          @for (phone of contact.phones; track phone.href) {
+            <a [href]="phone.href" class="info-link">{{ phone.label }}</a>
+          }
+        </div>
+      </article>
+
+      <article reveal [revealDelay]="180" class="info-card group">
+        <span class="info-icon bg-secondary-500/10 text-secondary-600 dark:text-secondary-300">
+          <svg-icon src="assets/icons/envelope.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+        </span>
+        <div class="min-w-0">
+          <h3 class="font-display text-lg font-bold text-ink">Email</h3>
+          @for (mail of contact.emails; track mail.href) {
+            <a [href]="mail.href" class="info-link break-all">{{ mail.label }}</a>
+          }
+        </div>
+      </article>
+
+      <article reveal [revealDelay]="260" class="info-card group sm:col-span-2 lg:col-span-1">
+        <span class="info-icon bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+          <svg-icon src="assets/icons/heroicons/outline/clock.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+        </span>
+        <div class="min-w-0 grow">
+          <h3 class="font-display text-lg font-bold text-ink">Opening hours</h3>
+          <dl class="mt-1 space-y-1 text-sm">
+            @for (slot of contact.hours; track slot.days) {
+              <div class="flex flex-wrap justify-between gap-x-4">
+                <dt class="text-muted">{{ slot.days }}</dt>
+                <dd class="font-semibold text-ink">{{ slot.time }}</dd>
+              </div>
+            }
+          </dl>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Map ============ -->
+<section id="find-us" class="scroll-mt-24 px-4 pb-20 sm:px-6 sm:pb-28" aria-labelledby="find-title">
+  <div class="mx-auto max-w-page">
+    <div reveal class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="section-subtitle">Find us</p>
+        <h2
+          id="find-title"
+          class="mt-5 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-5xl"
+        >
+          Come say hi in person
+        </h2>
+      </div>
+      <p class="flex max-w-sm items-start gap-2 text-muted">
+        <svg-icon src="assets/icons/map-pin.svg" [svgClass]="'mt-0.5 h-5 w-5 shrink-0 text-primary-500'"></svg-icon>
+        {{ contact.address }}
+      </p>
+    </div>
+
+    <div
+      reveal="zoom"
+      class="relative overflow-hidden rounded-[2rem] border border-line bg-surface p-2 shadow-soft"
+    >
+      <div class="h-[320px] overflow-hidden rounded-[1.6rem] sm:h-[440px]">
+        <Map
+          [latitude]="contact.map.lat"
+          [longitude]="contact.map.lng"
+          [zoom]="contact.map.zoom"
+          [height]="'100%'"
+        ></Map>
+      </div>
     </div>
   </div>
 </section>

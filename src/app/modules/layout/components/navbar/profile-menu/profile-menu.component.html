@@ -1,8 +1,8 @@
-<div class="relative ml-3">
+<div class="relative">
   <!-- Profile Button -->
   <button
     (click)="toggleMenu()"
-    class="relative flex rounded-full bg-gray-800 text-sm"
+    class="relative flex rounded-full p-0.5 ring-2 ring-primary-500/60 transition hover:ring-primary-500 active:scale-95"
     type="button"
     aria-expanded="false"
     aria-haspopup="true"
@@ -11,7 +11,7 @@
     <img
       clickOutside
       (clickOutside)="isMenuOpen = false"
-      class="h-9 w-9 rounded-md"
+      class="h-9 w-9 rounded-full object-cover"
       src="https://avatars.githubusercontent.com/u/12519008?v=4"
       alt=""
     />
@@ -23,12 +23,12 @@
         ? 'pointer-events-auto scale-100 animate-fade-in-up opacity-100 duration-200 z-10'
         : 'pointer-events-none scale-95 opacity-0 duration-100 ease-in'
     "
-    class="absolute right-0 mt-2 w-60 origin-top-right transform rounded-md bg-white py-4 shadow-custom ring-1 ring-transparent ring-opacity-5 transition focus:outline-none dark:bg-night-600"
+    class="absolute right-0 mt-3 w-64 origin-top-right transform rounded-2xl border border-line bg-surface py-4 shadow-custom transition focus:outline-none"
   >
     <div class="flext-row flex items-center px-4 pb-4">
       <div class="w-10 shrink-0">
         <img
-          class="rounded-md"
+          class="rounded-full"
           src="https://avatars.githubusercontent.com/u/12519008?v=4"
           alt=""
         />
@@ -46,28 +46,28 @@
     </div>
 
     <div
-      class="border-b border-dashed border-gray-200 dark:border-night-500"
+      class="border-b border-dashed border-line"
     ></div>
 
     <ul class="my-2 mx-4">
       <li
-        class="block cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-primary-500 dark:text-night-200 dark:hover:bg-night-500 dark:hover:text-primary-500"
+        class="block cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold text-ink transition hover:translate-x-0.5 hover:bg-surface-2 hover:text-primary-500"
       >
         Your Profile
       </li>
       <li
-        class="block cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-primary-500 dark:text-night-200 dark:hover:bg-night-500 dark:hover:text-primary-500"
+        class="block cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold text-ink transition hover:translate-x-0.5 hover:bg-surface-2 hover:text-primary-500"
       >
         Language
       </li>
       <li
-        class="block cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-primary-500 dark:text-night-200 dark:hover:bg-night-500 dark:hover:text-primary-500"
+        class="block cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold text-ink transition hover:translate-x-0.5 hover:bg-surface-2 hover:text-primary-500"
       >
         Settings
       </li>
       <li
         routerLink="/auth"
-        class="block cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 hover:text-primary-500 dark:text-night-200 dark:hover:bg-night-500 dark:hover:text-primary-500"
+        class="block cursor-pointer rounded-xl px-3 py-2 text-sm font-semibold text-ink transition hover:translate-x-0.5 hover:bg-surface-2 hover:text-primary-500"
       >
         Sign out
       </li>

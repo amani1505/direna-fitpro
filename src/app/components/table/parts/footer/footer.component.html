@@ -1,11 +1,11 @@
 <div
-  class="flex flex-wrap items-center justify-between gap-2 px-5 py-3 text-xs text-muted-foreground"
+  class="flex flex-col-reverse items-center justify-between gap-3 px-4 py-3 text-xs text-muted sm:flex-row"
 >
   <!-- Show per page section -->
-  <div class="flex items-center order-2 gap-2 md:order-1">
+  <div class="flex items-center gap-2">
     Show
     <select
-      class="w-16 p-2"
+      class="!w-20 !rounded-lg !py-1.5 !pl-3 !pr-7 text-xs"
       [(ngModel)]="itemsPerPage"
       (change)="onItemsPerPageChange()"
     >
@@ -19,12 +19,13 @@
   </div>
 
   <!-- Pagination controls -->
-  <div class="flex items-center order-1 gap-4 md:order-2">
-    <span>{{ startItem }}-{{ endItem }} of {{ totalItems }}</span>
+  <div class="flex flex-wrap items-center justify-center gap-3">
+    <span class="font-semibold text-ink">{{ startItem }}–{{ endItem }} <span class="font-normal text-muted">of {{ totalItems }}</span></span>
     <div class="inline-flex items-center gap-1">
       <!-- Previous Button -->
       <button
-        class="inline-flex items-center justify-center flex-shrink-0 text-sm rounded-md h-7 w-7 disabled:opacity-50"
+        type="button"
+        class="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full text-ink transition hover:bg-surface-2 active:scale-90 disabled:pointer-events-none disabled:opacity-40"
         [disabled]="currentPage === 1"
         (click)="goToPreviousPage()"
       >
@@ -38,8 +39,10 @@
       <!-- Page Numbers -->
       <button
         *ngFor="let page of visiblePages"
-        class="inline-flex items-center justify-center flex-shrink-0 text-sm rounded-md h-7 w-7"
-        [class.bg-muted-foreground]="page === currentPage"
+        type="button"
+        class="grid h-8 min-w-8 flex-shrink-0 place-items-center rounded-full px-2 font-display text-sm font-bold transition duration-200 ease-spring active:scale-90"
+        [ngClass]="page === currentPage ? 'scale-105 bg-primary-500 text-white shadow-glow' : 'text-ink hover:bg-surface-2'"
+        [attr.aria-current]="page === currentPage ? 'page' : null"
         (click)="goToPage(+page)"
       >
         {{ page }}
@@ -47,7 +50,8 @@
 
       <!-- Next Button -->
       <button
-        class="inline-flex items-center justify-center flex-shrink-0 text-sm rounded-md h-7 w-7 disabled:opacity-50"
+        type="button"
+        class="grid h-8 w-8 flex-shrink-0 place-items-center rounded-full text-ink transition hover:bg-surface-2 active:scale-90 disabled:pointer-events-none disabled:opacity-40"
         [disabled]="currentPage === totalPages"
         (click)="goToNextPage()"
       >

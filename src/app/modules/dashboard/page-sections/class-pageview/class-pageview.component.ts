@@ -1,3 +1,4 @@
+import { SpotlightDirective } from '@directive/spotlight.directive';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from '@components/modal/modal.component';
@@ -9,7 +10,7 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'ClassPageview',
   standalone: true,
-  imports: [AngularSvgIconModule, ModalComponent],
+  imports: [SpotlightDirective, AngularSvgIconModule, ModalComponent],
   templateUrl: './class-pageview.component.html',
   styleUrl: './class-pageview.component.scss',
 })

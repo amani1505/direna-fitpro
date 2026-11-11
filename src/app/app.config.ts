@@ -1,5 +1,9 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withInMemoryScrolling,
+  withViewTransitions,
+} from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
@@ -19,7 +23,15 @@ import { authInitializerProvider } from '@service/auth.service';
 export const appConfig: ApplicationConfig = {
   providers: [
     authInitializerProvider,
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      // Animated route changes (see ::view-transition rules in styles.scss)
+      withViewTransitions({ skipInitialTransition: true }),
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled',
+      }),
+    ),
     provideClientHydration(),
     importProvidersFrom(AngularSvgIconModule.forRoot()),
     provideHttpClient(
@@ -51,7 +63,6 @@ export const appConfig: ApplicationConfig = {
         ],
       },
     }),
-    provideAnimationsAsync(),
     provideAnimationsAsync(),
   ],
 };

@@ -1,0 +1,106 @@
+/* Quick actions in the dark intro band */
+.quick-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  background: rgb(255 255 255 / 0.06);
+  font-family: var(--ff-catamaran);
+  font-weight: 700;
+  font-size: 0.9rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.quick-chip:hover,
+.quick-chip:focus-visible {
+  transform: translateY(-3px) rotate(-2deg);
+  background: #fff;
+  color: #ff4836;
+}
+
+/* Topic picker pills */
+.topic-chip {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+  color: rgb(var(--c-ink));
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.topic-chip:hover {
+  border-color: rgb(var(--c-ink));
+}
+
+.topic-chip:active {
+  transform: scale(0.94);
+}
+
+.topic-chip.is-active {
+  background: #ff4836;
+  border-color: #ff4836;
+  color: #fff;
+  transform: rotate(-2deg);
+}
+
+/* Contact detail cards */
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-3px);
+  border-color: rgb(255 72 54 / 0.4);
+}
+
+.info-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 1rem;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.info-card:hover .info-icon {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+.info-link {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
+  color: rgb(var(--c-muted));
+  transition:
+    color 0.2s ease,
+    transform 0.25s ease;
+}
+
+.info-link:hover,
+.info-link:focus-visible {
+  color: #ff4836;
+  transform: translateX(3px);
+}

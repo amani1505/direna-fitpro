@@ -1,76 +1,68 @@
-<section class="py-12">
-  <div class="container px-4 mx-auto">
-    <div class="flex flex-col items-center gap-5 md:flex-row">
-      <div class="mb-8 md:w-1/2 md:mb-0">
-        <div class="about-content">
-          <div class="flex items-center justify-center md:justify-start">
-            <p class="py-3 section-subtitle">About Us</p>
-          </div>
+<section class="overflow-hidden py-20 sm:py-28" aria-labelledby="story-title">
+  <div class="mx-auto grid max-w-page items-center gap-14 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16">
+    <!-- Collage -->
+    <div class="relative mx-auto w-full max-w-md lg:max-w-none" reveal="left">
+      <div class="story-arch absolute inset-x-[8%] bottom-0 top-[12%]" aria-hidden="true"></div>
+      <img
+        src="./assets/images/about-banner.png"
+        width="660"
+        height="648"
+        loading="lazy"
+        alt="Coach training at Direna FitPro"
+        class="relative z-10 mx-auto w-[92%] drop-shadow-[0_30px_40px_rgb(0_0_0/0.25)]"
+      />
 
-          <p class="leading-normal tracking-wider">
-            Direna FitPro is a division of Direna Solution Group, and we are
-            dedicated to providing top-quality sports equipment and gym
-            solutions. We take pride in offering comprehensive solutions to our
-            clients both locally and internationally. As suppliers and
-            distributors of state-of-the-art fitness and sports equipment, our
-            mission is to enhance and inspire health and wellness through the
-            best possible means.
-          </p>
-          <p class="mt-4 leading-normal tracking-wider">
-            With over 5 years of experience, we have established ourselves as
-            leaders in the supply of high-quality fitness and sports equipment,
-            ensuring that our services meet our clients' needs efficiently. We
-            are not just suppliers of gym equipment, but also offer complete
-            services including expert advice, installation, and maintenance of
-            our equipment.
-          </p>
-          <p class="mt-4 leading-normal tracking-wider">
-            At Direna FitPro, we value quality, trust, and close collaboration
-            with our clients. We strive to deliver modern, effective solutions
-            to the sports and fitness industry, ensuring our clients receive
-            premium services and equipment that meet international standards.
-          </p>
-        </div>
+      <!-- Experience sticker -->
+      <div
+        class="absolute -left-1 top-[10%] z-20 -rotate-6 rounded-3xl border-2 border-ink bg-surface px-5 py-4 shadow-pop transition-transform duration-500 ease-spring hover:rotate-0 hover:scale-105 sm:-left-4"
+      >
+        <p class="font-display text-5xl font-extrabold leading-none tracking-tight text-primary-500">5+</p>
+        <p class="mt-1 text-sm font-semibold leading-tight text-ink">years of<br />experience</p>
       </div>
-      <div class="w-[90%] md:w-1/2">
-        <div class="about-banner has-after">
-          <img
-            src="./assets/images/about-banner.png"
-            width="660"
-            height="648"
-            loading="lazy"
-            alt="about banner"
-            class="w-100"
-          />
 
-          <img
-            src="./assets/images/about-circle-one.png"
-            width="660"
-            height="534"
-            loading="lazy"
-            aria-hidden="true"
-            alt=""
-            class="circle circle-1"
-          />
-          <img
-            src="./assets/images/about-circle-two.png"
-            width="660"
-            height="534"
-            loading="lazy"
-            aria-hidden="true"
-            alt=""
-            class="circle circle-2"
-          />
+      <!-- Reach sticker -->
+      <div
+        class="absolute -right-1 bottom-[14%] z-20 rotate-3 rounded-full bg-[rgb(var(--c-lilac-soft))] px-4 py-2 font-display text-sm font-bold text-lilac shadow-soft sm:-right-4"
+      >
+        <span aria-hidden="true">✺</span> Local &amp; international
+      </div>
+    </div>
 
-          <img
-            src="./assets/images/fitness.png"
-            width="650"
-            height="154"
-            loading="lazy"
-            alt="fitness"
-            class="abs-img w-100"
-          />
-        </div>
+    <!-- Story -->
+    <div reveal="right" [revealDelay]="120">
+      <p class="section-subtitle">Our story</p>
+      <h2
+        id="story-title"
+        class="mt-5 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-5xl"
+      >
+        Top-quality equipment, complete gym solutions
+      </h2>
+
+      <p class="mt-6 text-lg leading-relaxed text-ink">
+        Direna FitPro is a division of Direna Solution Group, dedicated to
+        providing top-quality sports equipment and gym solutions to clients both
+        locally and internationally.
+      </p>
+      <p class="mt-4 leading-relaxed text-muted">
+        As suppliers and distributors of state-of-the-art fitness and sports
+        equipment, our mission is to enhance and inspire health and wellness
+        through the best possible means. With over 5 years of experience, we have
+        established ourselves as leaders in the supply of high-quality fitness and
+        sports equipment.
+      </p>
+      <p class="mt-4 leading-relaxed text-muted">
+        We value quality, trust and close collaboration with our clients, and
+        strive to deliver modern, effective solutions that meet international
+        standards.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 xs:flex-row">
+        <a routerLink="/equipments" class="btn-pop shine">Browse equipment</a>
+        <a
+          routerLink="/contact-us"
+          class="btn-ghost border-line text-ink hover:border-ink hover:bg-ink hover:text-bg"
+          >Talk to us</a
+        >
       </div>
     </div>
   </div>

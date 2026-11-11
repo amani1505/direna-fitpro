@@ -1,12 +1,12 @@
 <section class="section blog" id="blog" aria-label="blog">
   <div class="container">
-    <p class="py-3 section-subtitle">Our News</p>
+    <p class="section-subtitle" reveal="zoom">Our news</p>
 
-    <h2 class="text-2xl sm:text-3xl font-[700]  hero-title xl:text-[3rem] leading-[1.2] text-center  text-[var(--rich-black-fogra-29-1)]  mb-3  lg:mb-7 font-catamaran">Latest Blog Feed</h2>
+    <h2 reveal [revealDelay]="80" class="hero-title mb-6 text-center font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-[var(--rich-black-fogra-29-1)] sm:text-4xl lg:mb-10 xl:text-[3.25rem]">Latest from the blog</h2>
 
     <ul class="blog-list has-scrollbar">
       @for (blog of blogs; track $index) {
-        <li class="scrollbar-item">
+        <li class="scrollbar-item" reveal [revealDelay]="$index * 90">
           <div class="blog-card">
             <div
               class="card-banner img-holder"
@@ -17,25 +17,25 @@
                 width="440"
                 height="270"
                 loading="lazy"
-                alt="Going to the gym for the first time"
+                [alt]="blog.title"
                 class="img-cover"
               />
 
-              <time class="bg-[var(--coquelicot)] text-white absolute text-xl font-[500]  xl:text-[1.5rem] uppercase card-meta" datetime="2022-07-07">{{
+              <time class="card-meta">{{
                 blog.date
               }}</time>
             </div>
 
             <div class=" card-content">
               <h3 class="">
-                <a href="#" class="text-xl font-[500] text-[var(--rich-black-fogra-29-1)]  xl:text-[1.5rem] leading-[1.2]">{{ blog.title }}</a>
+                <a href="#" class="card-title font-display text-xl font-bold leading-tight tracking-tight text-[var(--rich-black-fogra-29-1)] xl:text-[1.5rem]">{{ blog.title }}</a>
               </h3>
 
-              <p class="text-[var(--sonic-silver)]">
+              <p class="my-3 text-[var(--sonic-silver)]">
                 {{ blog.description }}
               </p>
 
-              <a href="#" class="text-sm btn-link has-before">Read More</a>
+              <a href="#" class="btn-link has-before text-sm">Read more</a>
             </div>
           </div>
         </li>

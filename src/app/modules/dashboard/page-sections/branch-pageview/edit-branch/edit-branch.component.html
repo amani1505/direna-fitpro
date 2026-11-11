@@ -6,7 +6,7 @@
   <!-- Custom header -->
   <ng-container modalHeader>
     <h2
-      class="text-xl font-semibold text-gray-700 font-rubik dark:text-night-50 ms-2"
+      class="ms-2 font-display text-xl font-bold text-ink"
     >
       Edit Branch
     </h2>
@@ -17,9 +17,9 @@
     <form [formGroup]="editBranchForm">
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-2 text-sm font-medium text-gray-700"
+          <label class="mb-2 block text-sm font-semibold text-ink"
             >Branch Country
-            <span class="text-[#e11d48]">*</span>
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -43,9 +43,9 @@
       </div>
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-2 text-sm font-medium text-gray-700"
+          <label class="mb-2 block text-sm font-semibold text-ink"
             >Branch City
-            <span class="text-[#e11d48]">*</span>
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -70,9 +70,9 @@
 
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-2 text-sm font-medium text-gray-700"
+          <label class="mb-2 block text-sm font-semibold text-ink"
             >Branch district
-            <span class="text-[#e11d48]">*</span>
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -96,9 +96,9 @@
       </div>
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-2 text-sm font-medium text-gray-700"
+          <label class="mb-2 block text-sm font-semibold text-ink"
             >Branch Street
-            <span class="text-[#e11d48]">*</span>
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -122,9 +122,9 @@
       </div>
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-2 text-sm font-medium text-gray-700"
+          <label class="mb-2 block text-sm font-semibold text-ink"
             >Road
-            <span class="text-[#e11d48]">*</span>
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -148,9 +148,9 @@
       </div>
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="block mb-2 text-sm font-medium text-gray-700"
+          <label class="mb-2 block text-sm font-semibold text-ink"
             >Branch House No
-            <span class="text-[#e11d48]">*</span>
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -175,11 +175,11 @@
     </form>
   </ng-container>
   <ng-container modalFooter>
-    <div class="flex items-center justify-end gap-3 p-3">
+    <div class="form-actions">
       <button
         type="submit"
         (click)="cancel()"
-        class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+        class="form-cancel"
       >
         Cancel
       </button>
@@ -187,16 +187,16 @@
         type="submit"
         [disabled]="editBranchForm.invalid || loading()"
         (click)="submit()"
-        class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+        class="form-submit"
         [ngClass]="{
-          'bg-green-500 hover:bg-green-700':
+          'form-submit-ready':
             !editBranchForm.invalid && !loading(),
-          'bg-gray-300': editBranchForm.invalid || loading(),
+          'form-submit-disabled': editBranchForm.invalid || loading(),
         }"
       >
         <svg
           *ngIf="loading()"
-          class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+          class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
     this.menuService.toggleSidebar();
   }
 
-  toggleTheme() {
-    this.themeService.theme = !this.themeService.isDark ? 'dark' : 'light';
+  toggleTheme(event?: MouseEvent) {
+    this.themeService.toggle(event);
   }
 }

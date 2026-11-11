@@ -1,13 +1,13 @@
 <section class="section about" id="about" aria-label="about">
   @if (about) {
     <div class="container">
-      <div class="about-banner has-after">
+      <div class="about-banner has-after" reveal="left">
         <img
           src="{{ about.image }}"
           width="660"
           height="648"
           loading="lazy"
-          alt="about banner"
+          alt="Coach training a member"
           class="w-100"
         />
 
@@ -40,20 +40,20 @@
         />
       </div>
 
-      <div class="about-content">
-        <p class="py-3 section-subtitle">About Us</p>
+      <div class="about-content" reveal="right" [revealDelay]="120">
+        <p class="section-subtitle">About us</p>
 
         <h2
-          class="text-2xl font-[500] text-[var(--rich-black-fogra-29-1)] hero-title xl:text-[3rem] leading-[1.2]"
+          class="hero-title font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-[var(--rich-black-fogra-29-1)] sm:text-4xl xl:text-[3.25rem]"
         >
           {{ about.title }}
         </h2>
 
-        <p class="leading-normal tracking-wider">
+        <p class="mb-4 leading-relaxed">
           {{ about.description }}
         </p>
 
-        <p class="leading-normal tracking-wider">
+        <p class="leading-relaxed">
           {{ about.subDescription }}
         </p>
 
@@ -71,7 +71,7 @@
 
             <div class="">
               <h3
-                class="text-xl font-[600] text-[var(--rich-black-fogra-29-1)] hero-title leading-[1.2] coach-name font-catamaran"
+                class="coach-name font-display text-lg font-bold leading-tight text-[var(--rich-black-fogra-29-1)]"
               >
                 {{ about.ownerName }}
               </h3>
@@ -86,8 +86,8 @@
 
           <a
            [routerLink]="['/about']"
-            class="duration-100 ease-in-out delay-100 rounded-[var(--radius-8)] btn-primary py-[10px] px-3 text-center font-[500]"
-            >Explore More</a
+            class="btn-pop shine"
+            >Explore more</a
           >
         </div>
       </div>

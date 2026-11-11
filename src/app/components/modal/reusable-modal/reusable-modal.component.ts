@@ -12,15 +12,12 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   animations: [
     trigger('modalAnimation', [
       transition(':enter', [
-        style({ opacity: 0, transform: 'scale(0.8)' }),
-        animate('300ms ease-out', style({ opacity: 1, transform: 'scale(1)' })), // Animate to normal size
+        style({ opacity: 0, transform: 'translateY(16px) scale(0.92)' }),
+        animate('420ms cubic-bezier(0.34, 1.56, 0.64, 1)', style({ opacity: 1, transform: 'none' })), // Animate to normal size
       ]),
 
       transition(':leave', [
-        animate(
-          '300ms ease-in',
-          style({ opacity: 0, transform: 'scale(0.8)' }),
-        ),
+        animate('180ms ease-in', style({ opacity: 0, transform: 'translateY(8px) scale(0.96)' })),
       ]),
     ]),
   ],

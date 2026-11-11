@@ -52,17 +52,17 @@ export class IconButtonComponent {
 
     switch (this.color) {
       case 'primary':
-        return `${baseClass} ${this.variant !== 'basic' ? 'bg-primary-500 hover:bg-primary-600' : 'text-primary-500 hover:bg-primary-200'}`;
+        return `${baseClass} ${this.variant !== 'basic' ? 'bg-primary-500 hover:bg-primary-600' : 'text-primary-500 hover:bg-primary-500/15'}`;
       case 'secondary':
-        return `${baseClass} border-secondary-600 ${this.variant !== 'basic' ? 'bg-secondary-500 hover:bg-secondary-600' : 'text-secondary-500 hover:bg-secondary-200'}`;
+        return `${baseClass} border-secondary-600 ${this.variant !== 'basic' ? 'bg-secondary-500 hover:bg-secondary-600' : 'text-secondary-500 hover:bg-secondary-500/15'}`;
       case 'danger':
-        return `${baseClass} ${this.variant !== 'basic' ? 'bg-red-500 hover:bg-red-600' : 'text-red-500 hover:bg-red-200'}`;
+        return `${baseClass} ${this.variant !== 'basic' ? 'bg-red-500 hover:bg-red-600' : 'text-red-500 hover:bg-red-500/15'}`;
       case 'warning':
-        return `${baseClass} ${this.variant !== 'basic' ? 'bg-yellow-500 hover:bg-yellow-600' : 'text-yellow-500 hover:bg-yellow-200'}`;
+        return `${baseClass} ${this.variant !== 'basic' ? 'bg-yellow-500 hover:bg-yellow-600' : 'text-yellow-500 hover:bg-yellow-500/15'}`;
       case 'info':
-        return `${baseClass}  ${this.variant !== 'basic' ? 'bg-teal-500 hover:bg-teal-600' : 'text-teal-500 hover:bg-teal-200'}`;
+        return `${baseClass}  ${this.variant !== 'basic' ? 'bg-teal-500 hover:bg-teal-600' : 'text-teal-500 hover:bg-teal-500/15'}`;
       case 'normal':
-        return `${baseClass} text-gray-500  dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 ${this.variant !== 'basic' ? 'bg-gray-200 hover:bg-gray-300' : 'text-gray-500 hover:bg-gray-200'}`;
+        return `${baseClass} text-muted ${this.variant !== 'basic' ? 'bg-surface-2 hover:bg-line' : 'hover:bg-surface-2'}`;
       default:
         return `${baseClass} border-blue-500 ${this.variant !== 'basic' ? 'bg-blue-100 hover:bg-blue-200' : 'text-blue-500 hover:bg-blue-200'}`;
     }

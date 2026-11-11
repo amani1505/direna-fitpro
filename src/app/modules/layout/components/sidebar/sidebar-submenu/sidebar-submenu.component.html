@@ -6,11 +6,11 @@
   }"
 >
   <ul
-    class="flex flex-col border-l border-dashed border-gray-200 pl-2 text-night-200 dark:border-night-500"
+    class="ml-2 flex flex-col gap-0.5 border-l-2 border-dashed border-line pl-2"
   >
     <li *ngFor="let sub of submenu.children">
       <div
-        class="flex rounded text-gray-400 hover:bg-gray-100 dark:text-night-300 dark:hover:bg-night-600"
+        class="flex rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-ink"
         (click)="toggleMenu(sub)"
       >
         <!-- Condition -->
@@ -26,7 +26,7 @@
             [routerLink]="sub.route"
             routerLinkActive="text-primary-500"
             [routerLinkActiveOptions]="{ exact: true }"
-            class="inline-block w-full px-4 py-2 text-xs font-rubik font-[500] capitalize"
+            class="inline-block w-full px-4 py-2 text-[13px] font-medium capitalize transition-transform duration-200 hover:translate-x-0.5"
           >
             {{ sub.label }}
           </a>
@@ -35,7 +35,7 @@
         <!-- Child Menu -->
         <ng-template #childMenu let-sub="sub">
           <a
-            class="inline-block w-full cursor-pointer px-4 py-2 text-xs font-rubik font-[500] capitalize"
+            class="inline-block w-full cursor-pointer px-4 py-2 text-[13px] font-medium capitalize transition-transform duration-200 hover:translate-x-0.5"
           >
             {{ sub.label }}
           </a>

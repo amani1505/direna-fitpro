@@ -4,12 +4,27 @@
     <meta charset="utf-8" />
     <title>Direna Fitpro</title>
     <base href="/" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f6f4fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#110e17" media="(prefers-color-scheme: dark)" />
+    <script>
+      /* Apply the saved (or system) theme before first paint to avoid a flash. */
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t !== "dark" && t !== "light") {
+            t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
+          if (t === "dark") document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:ital,wght@0,300..900;1,400..700&family=PT+Serif:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -18,7 +33,7 @@
     />
     <link rel="stylesheet" href="assets/splash-screen/splash-screen.css" />
   </head>
-  <body class="mat-typography">
+  <body>
     <section class="splash-body">
       <div id="splash-screen">
         <!-- Background Elements -->

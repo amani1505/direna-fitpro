@@ -1,46 +1,51 @@
 <section>
-  <div class="flex items-center justify-between px-2 mb-4">
-    <div class="inline-block text-gray-900 dark:text-night-50">
-      <h3 class="font-[600] text-[24px] tracking-wide font-catamaran uppercase">
+  <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div class="min-w-0">
+      <h3 class="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
         Branches
       </h3>
-
-      <div class="flex items-center gap-1 text-muted-foreground font-varela">
-        <span class="font-[400] capitalize">All Branches :</span>
-        <span class="text-foreground">{{ totalItems() }}</span>
-      </div>
+    <p class="mt-1 flex items-center gap-2 text-sm text-muted">
+      <span>All branches</span>
+      <span class="rounded-full bg-primary-500/10 px-2 py-0.5 font-display text-xs font-bold text-primary-600 dark:text-primary-400">{{ totalItems() }}</span>
+    </p>
     </div>
 
-    <div class="inline-block space-x-4">
-      <button
-        (click)="add()"
-        class="flex-none rounded-md bg-gray-200 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-300 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 capitalize"
-      >
-        Add Branch
-      </button>
-    </div>
+    <button
+      type="button"
+      (click)="add()"
+      class="btn-pop shine w-full !px-5 !py-2.5 text-sm sm:w-auto"
+    >
+      <span aria-hidden="true" class="text-lg leading-none">+</span>
+      Add branch
+    </button>
   </div>
-
-  <div class="mb-3">
-    <label class="relative text-muted-foreground">
-      <div class="absolute left-2.5 top-0.5">
+  <div class="mb-5 w-full sm:w-80">
+    <label class="relative block text-subtle">
+      <span class="sr-only">Search</span>
+      <span class="pointer-events-none absolute left-3 top-1/2 z-20 -translate-y-1/2">
         <svg-icon
           src="./assets/icons/heroicons/outline/magnifying-glass.svg"
           [svgClass]="'h-4 w-4'"
-        >
-        </svg-icon>
-      </div>
+        ></svg-icon>
+      </span>
       <input
-        class="py-2 pl-8 pr-2"
+        class="!rounded-full !py-2.5 !pl-9 !pr-4 text-sm"
         [placeholder]="'Search...'"
-        type="text"
+        type="search"
         [value]="searchTerm()"
         (input)="onSearch($event)"
       />
     </label>
   </div>
 
-  <div class="grid grid-cols-1 gap-3 md:grid-cols-3 xl:grid-cols-4">
+  @if (branches().length === 0) {
+    <div class="flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line px-4 py-14 text-center text-muted">
+      <span class="grid h-12 w-12 animate-pop-in place-items-center rounded-full bg-surface-2 font-display text-xl text-subtle" aria-hidden="true">✺</span>
+      <p class="font-display font-bold text-ink">No branches yet</p>
+      <p class="text-sm">Use “Add branch” to create your first location.</p>
+    </div>
+  }
+  <div class="grid grid-cols-1 gap-4 xs:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
     @for (branch of branches(); track $index) {
       <BranchCard [branch]="branch"></BranchCard>
     }

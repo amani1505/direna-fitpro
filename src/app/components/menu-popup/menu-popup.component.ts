@@ -55,11 +55,11 @@ export class MenuPopupComponent {
       'flex items-center focus:outline-none focus:ring-2 focus:ring-primary-500';
     switch (this.config.triggerType) {
       case 'avatar':
-        return `${baseClass} rounded-full bg-gray-800 text-sm`;
+        return `${baseClass} rounded-full p-0.5 ring-2 ring-primary-500/60 transition hover:ring-primary-500 active:scale-95`;
       case 'icon':
-        return `${baseClass} lg:text-[var(--onyx)] lg:p-[5px] p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500`;
+        return `${baseClass} p-2 text-sm font-medium text-ink rounded-full transition hover:bg-surface-2 active:scale-90`;
       case 'button':
-        return `${baseClass} rounded-lg px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500`;
+        return `${baseClass} rounded-full px-4 py-2 text-sm font-semibold text-ink transition hover:bg-surface-2 active:scale-95`;
       default:
         return baseClass;
     }
@@ -72,11 +72,11 @@ export class MenuPopupComponent {
       center: 'left-1/2 -translate-x-1/2',
     }[this.config.position || 'right'];
 
-    return `absolute mt-2 ${this.config.width} origin-top-right transform rounded-md bg-white py-4 shadow ring-1 ring-transparent ring-opacity-5 transition focus:outline-none dark:bg-night-600 ${position}`;
+    return `absolute z-30 mt-2 ${this.config.width} max-w-[calc(100vw-2rem)] origin-top-right transform rounded-2xl border border-line bg-surface p-2 shadow-custom transition focus:outline-none ${position}`;
   }
 
   getAnimationClass(): string {
-    const baseShow = 'pointer-events-auto opacity-100 duration-200 z-10';
+    const baseShow = 'pointer-events-auto opacity-100 duration-200 z-30 animate-fade-in-up';
     const baseHide = 'pointer-events-none opacity-0 duration-100 ease-in';
 
     const animations = {
@@ -103,11 +103,11 @@ export class MenuPopupComponent {
       return 'hidden'; // This will hide the item completely using CSS
     }
 
-    return `flex items-center rounded-md px-3 py-2 text-sm
+    return `flex items-center rounded-xl px-3 py-2 text-sm font-medium transition
       ${
         item.disabled
-          ? 'cursor-not-allowed text-gray-400 dark:text-night-400'
-          : 'cursor-pointer text-gray-700 hover:bg-gray-100 hover:text-primary-500 dark:text-night-200 dark:hover:bg-night-500 dark:hover:text-primary-500'
+          ? 'cursor-not-allowed text-subtle'
+          : 'cursor-pointer text-ink hover:translate-x-0.5 hover:bg-surface-2 hover:text-primary-500'
       }`;
   }
 

@@ -1,30 +1,38 @@
 <div class="mx-auto">
-  <div class="flex items-center justify-between px-2 mb-4">
-    <div class="inline-block text-gray-900 dark:text-night-50">
-      <h3 class="font-[600] text-[24px] tracking-wide font-catamaran uppercase">
-        Gym Schedule
+  <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div class="min-w-0">
+      <h3 class="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+        Gym schedule
       </h3>
     </div>
 
-    <div class="inline-block space-x-4">
-      <button
-        (click)="addNew()"
-        class="flex-none rounded-md bg-gray-200 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-300 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 capitalize"
-      >
-        Add Class
-      </button>
+    <button
+      type="button"
+      (click)="addNew()"
+      class="btn-pop shine w-full !px-5 !py-2.5 text-sm sm:w-auto"
+    >
+      <span aria-hidden="true" class="text-lg leading-none">+</span>
+      Add class
+    </button>
+  </div>  @if (classes().length === 0) {
+    <div class="flex flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-line px-4 py-14 text-center text-muted">
+      <span class="grid h-12 w-12 animate-pop-in place-items-center rounded-full bg-surface-2 font-display text-xl text-subtle" aria-hidden="true">✺</span>
+      <p class="font-display font-bold text-ink">No classes scheduled</p>
+      <p class="text-sm">Use “Add class” to put the first class on the schedule.</p>
     </div>
-  </div>
+  }
   <div>
     <ul
-      class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      class="grid grid-cols-1 gap-4 xs:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4"
     >
       @for (class of classes(); track $index) {
-        <li class="scrollbar-item">
-          <div class="relative class-card">
-            <div class="absolute z-20 flex flex-col gap-1 right-2 top-2">
+        <li class="animate-pop-in" [style.animation-delay.ms]="$index * 60">
+          <div class="class-card relative" spotlight>
+            <div class="absolute right-3 top-3 z-20 flex gap-1.5">
               <button
-                class="flex items-center justify-center w-6 h-6 text-blue-400 bg-blue-200 rounded-full cursor-pointer dark:bg-blue-500 dark:text-white"
+                type="button"
+                aria-label="Edit class"
+                class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-blue-600 shadow-soft backdrop-blur transition duration-200 ease-spring hover:scale-110 hover:bg-blue-500 hover:text-white active:scale-90 dark:text-blue-400"
                 (click)="updateClass(class.id)"
               >
                 <svg-icon
@@ -34,7 +42,9 @@
                 ></svg-icon>
               </button>
               <button
-                class="flex items-center justify-center w-6 h-6 text-red-400 bg-red-200 rounded-full cursor-pointer dark:bg-red-500 dark:text-white"
+                type="button"
+                aria-label="Delete class"
+                class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-rose-600 shadow-soft backdrop-blur transition duration-200 ease-spring hover:scale-110 hover:bg-rose-500 hover:text-white active:scale-90 dark:text-rose-400"
                 (click)="openDeleteModal(class.id)"
               >
                 <svg-icon
@@ -45,7 +55,7 @@
               </button>
             </div>
             <figure
-              class="card-banner img-holder w-"
+              class="card-banner img-holder"
               style="--width: 416; --height: 240"
             >
               <img
@@ -53,14 +63,14 @@
                 width="416"
                 height="240"
                 loading="lazy"
-                alt="Weight Lifting"
+                [alt]="class.name"
                 class="img-cover"
               />
             </figure>
 
             <div class="card-content">
               <div class="flex items-center py-2 gap-x-2">
-                <div class="flex items-center justify-center pr-2 border-[var(--gainsboro)] border-r">
+                <div class="flex items-center justify-center border-r border-line pr-2">
                   <svg-icon
                     src="./assets/icons/heroicons/outline/clock.svg"
                     [svgClass]="'w-6 h-6'"
@@ -68,13 +78,13 @@
                     aria-hidden="true"
                   ></svg-icon>
                 </div>
-                <div class="text-[1.125rem] font-[500] text-[var(--rich-black-fogra-29-1)] ">
+                <div class="font-display text-lg font-bold text-ink">
                   {{ class.name }}
                 </div>
               </div>
 
 
-              <p class="text-[var(--sonic-silver)]">
+              <p class="line-clamp-3 text-sm text-muted">
                 {{ class.description }}
               </p>
 

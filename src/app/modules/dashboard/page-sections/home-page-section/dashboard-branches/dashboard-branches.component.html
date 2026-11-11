@@ -1,15 +1,15 @@
-<section class="p-5 mb-4 bg-white rounded-lg font-catamaran">
+<section class="animate-pop-in rounded-2xl border border-line bg-surface p-5 [animation-delay:120ms]">
   <div class="flex items-center justify-between mb-3">
-    <div class="text-md">Branches</div>
+    <h2 class="font-display text-lg font-bold text-ink">Branches</h2>
     <a
       [routerLink]="['/admin/branches']"
-      class="text-sm capitalize cursor-pointer hover:underline text-primary-500"
+      class="rounded-full px-3 py-1 text-sm font-semibold text-primary-500 transition hover:bg-primary-500 hover:text-white"
       >view all</a
     >
   </div>
   @for (branch of branches; track $index) {
     <div
-      class="mb-2 text-gray-700 bg-white rounded-lg shadow dark:text-night-50 dark:bg-night-700"
+      class="mb-2 rounded-xl border border-line bg-surface-2/50 text-ink transition duration-300 hover:translate-x-1 hover:border-primary-500/40"
     >
       <div
         class="flex items-center justify-between p-3 font-[500] capitalize text-md font-rubik"

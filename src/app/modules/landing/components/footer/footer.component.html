@@ -39,25 +39,20 @@
             />
           </div>
 
-          <ul class="col-span-10">
-            <li>
-              <p class="footer-brand-title">Monday - Friday</p>
-
-              <p class="font-raleway">7:00Am - 10:00Pm</p>
-            </li>
-
-            <li>
-              <p class="footer-brand-title">Saturday - Sunday</p>
-
-              <p class="font-raleway">7:00Am - 2:00Pm</p>
-            </li>
+          <ul class="col-span-10 space-y-1">
+            @for (slot of contact.hours; track slot.days) {
+              <li>
+                <p class="footer-brand-title">{{ slot.days }}</p>
+                <p class="text-white/70">{{ slot.time }}</p>
+              </li>
+            }
           </ul>
         </div>
       </div>
       <div class="w-full">
         <ul class="footer-list">
           <li>
-            <p class=" xl:text-[2.3rem] font-[500]   md:font-bold">Our Links</p>
+            <p class="mb-1 font-display text-xl font-extrabold text-white xl:text-2xl">Quick links</p>
           </li>
 
           <li>
@@ -74,7 +69,7 @@
           </li>
           <li>
             <a
-              [routerLink]="['blog']"
+              [routerLink]="['/blogs']"
               routerLinkActive="font-[500]"
               [routerLinkActiveOptions]="{ exact: true }"
               class="text-[14px] xl:text-[16px]"
@@ -104,7 +99,7 @@
       <div class="w-full">
         <ul class="footer-list">
           <li>
-            <p class="xl:text-[2.3rem] font-[500] md:font-bold">Contact Us</p>
+            <p class="mb-1 font-display text-xl font-extrabold text-white xl:text-2xl">Contact us</p>
           </li>
 
           <li class="footer-list-item">
@@ -116,7 +111,7 @@
             </div>
 
             <address class="address xl:text-[16px] text-[14px]">
-              1247/Plot No. 39, 15th Phase, Colony, Kukatpally, Hyderabad
+              {{ contact.address }}
             </address>
           </li>
 
@@ -129,11 +124,9 @@
             </div>
 
             <div>
-              <a href="tel:18001213637" class="xl:text-[16px] text-[14px]">1800-121-3637</a>
-
-              <a href="tel:+915552348765" class="xl:text-[16px] text-[14px]"
-                >+91 555 234-8765</a
-              >
+              @for (phone of contact.phones; track phone.href) {
+                <a [href]="phone.href" class="xl:text-[16px] text-[14px]">{{ phone.label }}</a>
+              }
             </div>
           </li>
 
@@ -146,13 +139,9 @@
             </div>
 
             <div>
-              <a href="mailto:info@fitlife.com" class="xl:text-[16px] text-[14px]"
-                >info&#64;fitlife.com</a
-              >
-
-              <a href="mailto:services@fitlife.com" class="xl:text-[16px] text-[14px]"
-                >services&#64;fitlife.com</a
-              >
+              @for (mail of contact.emails; track mail.href) {
+                <a [href]="mail.href" class="xl:text-[16px] text-[14px]">{{ mail.label }}</a>
+              }
             </div>
           </li>
         </ul>
@@ -190,7 +179,7 @@
     </div>
   </div>
 
-  <div class="text-white bg-black text-[14px] py-2">
+  <div class="bg-black py-3 text-[13px] text-white/70">
     <div class="container flex items-center justify-center">
       <p class="copyright">
         &copy; {{ currentYear }} Direna Fitpro. All Rights Reserved By

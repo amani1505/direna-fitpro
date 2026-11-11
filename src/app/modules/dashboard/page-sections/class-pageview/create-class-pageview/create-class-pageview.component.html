@@ -1,6 +1,6 @@
 <form [formGroup]="classForm">
   <h3
-    class="font-[600] text-[24px] tracking-wide font-catamaran capitalize text-gray-900 dark:text-night-50"
+    class="mb-5 font-display text-2xl font-extrabold capitalize tracking-tight text-ink sm:text-3xl"
   >
     Add new Class
   </h3>
@@ -14,9 +14,9 @@
   <div class="grid gap-3 md:grid-cols-2">
     <div class="form__group">
       <div class="relative">
-        <label for="name" class="block mb-1 text-sm font-medium text-gray-700"
+        <label for="name" class="mb-1.5 block text-sm font-semibold text-ink"
           >Class Name
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="text"
@@ -41,9 +41,9 @@
 
     <!-- <div class="form__group">
       <div class="relative">
-        <label for="day" class="block mb-1 text-sm font-medium text-gray-700"
+        <label for="day" class="mb-1.5 block text-sm font-semibold text-ink"
           >Week Day
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
 
         <NormalSelect
@@ -63,8 +63,8 @@
     </div> -->
 
     <!-- <div class="form__group">
-      <label class="block mb-1 text-sm font-medium text-gray-700"
-        >Trainers<span class="text-[#e11d48]">*</span></label
+      <label class="mb-1.5 block text-sm font-semibold text-ink"
+        >Trainers<span class="text-primary-500">*</span></label
       >
       <MultiSelect
         [placeholder]="'Select Trainers'"
@@ -80,8 +80,8 @@
       <div class="relative">
         <label
           for="capacity"
-          class="block mb-1 text-sm font-medium text-gray-700"
-          >Capacity <span class="text-[#e11d48]">*</span></label
+          class="mb-1.5 block text-sm font-semibold text-ink"
+          >Capacity <span class="text-primary-500">*</span></label
         >
         <input
           type="number"
@@ -107,8 +107,8 @@
       <div class="relative">
         <label
           for="start_time"
-          class="block mb-1 text-sm font-medium text-gray-700"
-          >Start Time <span class="text-[#e11d48]">*</span></label
+          class="mb-1.5 block text-sm font-semibold text-ink"
+          >Start Time <span class="text-primary-500">*</span></label
         >
         <input
           type="time"
@@ -135,8 +135,8 @@
       <div class="relative">
         <label
           for="end_time"
-          class="block mb-1 text-sm font-medium text-gray-700"
-          >End Time <span class="text-[#e11d48]">*</span></label
+          class="mb-1.5 block text-sm font-semibold text-ink"
+          >End Time <span class="text-primary-500">*</span></label
         >
         <input
           type="time"
@@ -157,14 +157,14 @@
       </div>
     </div> -->
 
-    <div class="col-span-2 form__group">
+    <div class="form__group md:col-span-2">
       <div class="relative">
         <label
           for="description"
-          class="block mb-2 text-sm font-medium text-gray-700"
+          class="mb-2 block text-sm font-semibold text-ink"
           >Description
 
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <textarea
           rows="3"
@@ -187,9 +187,9 @@
 
     <!-- <div class="form__group">
       <div class="relative">
-        <label for="color" class="block mb-1 text-sm font-medium text-gray-700"
+        <label for="color" class="mb-1.5 block text-sm font-semibold text-ink"
           >Choose a color:
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="color"
@@ -197,7 +197,7 @@
           [ngClass]="{
             'is__invalid-input': classForm.get('color').hasError('required'),
           }"
-          class="block w-10 h-10 p-0 border rounded cursor-pointer text-md peer input-field focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          class="block h-10 w-14 cursor-pointer rounded-xl border border-line bg-surface p-1"
           formControlName="color"
         />
       </div>
@@ -210,10 +210,10 @@
       </div>
     </div> -->
   </div>
-  <div class="flex items-center justify-end gap-3 p-3">
+  <div class="form-actions">
     <button
       (click)="cancel()"
-      class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+      class="form-cancel"
     >
       Cancel
     </button>
@@ -221,16 +221,16 @@
       type="submit"
       [disabled]="classForm.invalid || classLoading() || !selectedImage"
       (click)="submit()"
-      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      class="form-submit"
       [ngClass]="{
-        'bg-green-500 hover:bg-green-700':
+        'form-submit-ready':
           !classForm.invalid && !classLoading() && selectedImage,
-        'bg-gray-300': classForm.invalid || classLoading() || !selectedImage,
+        'form-submit-disabled': classForm.invalid || classLoading() || !selectedImage,
       }"
     >
       <svg
         *ngIf="classLoading()"
-        class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+        class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

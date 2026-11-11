@@ -1,62 +1,37 @@
-<!--
-	Mobile menu, show/hide based on mobile menu state.
-	Entering: "duration-200 ease-out"
-		From: "opacity-0 scale-95"
-		To: "opacity-100 scale-100"
-	Leaving: "duration-100 ease-in"
-		From: "opacity-100 scale-100"
-		To: "opacity-0 scale-95"
--->
+<!-- Backdrop -->
 <div
-  [ngClass]="
-    menuService.showMobileMenu
-      ? 'pointer-events-auto scale-100 animate-fade-in-up opacity-100 duration-200'
-      : 'pointer-events-none scale-95 opacity-0 duration-100 ease-out'
-  "
-  class="absolute inset-x-0 top-0 z-10 p-2 transition origin-top-right transform md:hidden"
+  class="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden"
+  [ngClass]="menuService.showMobileMenu ? 'opacity-100' : 'pointer-events-none opacity-0'"
+  (click)="toggleMobileMenu()"
+  aria-hidden="true"
+></div>
+
+<!-- Drawer -->
+<aside
+  class="fixed inset-y-0 left-0 z-50 flex w-[min(20rem,86vw)] flex-col border-r border-line bg-surface shadow-2xl transition-transform duration-500 ease-out-expo lg:hidden"
+  [ngClass]="menuService.showMobileMenu ? 'translate-x-0' : 'pointer-events-none -translate-x-full'"
+  [attr.aria-hidden]="!menuService.showMobileMenu"
+  aria-label="Menu"
 >
-  <div
-    class="bg-white divide-y-2 rounded-lg shadow-lg divide-gray-50 ring-1 ring-black ring-opacity-5 dark:bg-night-700"
-  >
-    <div class="pt-5 pb-6">
-      <div class="flex items-center justify-between px-5">
-        <div>
-          <!-- Logo -->
-          <div
-            class="flex items-center justify-start sm:order-2 md:mr-10 lg:hidden"
-          >
-            <a
-              class="flex items-center justify-center p-2 rounded bg-primary-100 focus:outline-none focus:ring-1"
-            >
-              <svg-icon
-                src="assets/images/logo.svg"
-                [svgClass]="'h-5 w-5'"
-              >
-              </svg-icon>
-              
-            </a>
-            <b class="pl-3 text-sm font-bold dark:text-night-50">
-              Direna FitPro
-            </b>
-          </div>
-        </div>
-        <div class="-mr-2">
-          <button
-            (click)="toggleMobileMenu()"
-            type="button"
-            class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 hover:bg-gray-100 hover:text-gray-500 dark:text-night-300 dark:hover:bg-night-600 dark:hover:text-night-200"
-          >
-            <span class="sr-only">Close menu</span>
-            <!-- Heroicon name: outline/x -->
-            <svg-icon src="assets/icons/heroicons/outline/x.svg"> </svg-icon>
-          </button>
-        </div>
-      </div>
-      <div
-        class="scrollbar-thumb-rounded scrollbar-track-rounded max-h-[500px] overflow-y-auto px-5 scrollbar-thin scrollbar-track-gray-50 scrollbar-thumb-gray-100 dark:scrollbar-thumb-night-500 dark:scrollbar-track-night-600"
-      >
-        <app-navbar-mobile-menu></app-navbar-mobile-menu>
-      </div>
+  <div class="flex h-16 items-center justify-between border-b border-line px-4">
+    <div class="flex items-center gap-2">
+      <span class="grid h-9 w-9 place-items-center rounded-xl border-2 border-ink bg-primary-500 shadow-pop-sm">
+        <svg-icon src="assets/images/logo-icon-white.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+      </span>
+      <b class="font-display text-base font-extrabold tracking-tight text-ink">
+        direna<span class="text-primary-500">fitpro</span>
+      </b>
     </div>
+    <button
+      (click)="toggleMobileMenu()"
+      type="button"
+      class="grid h-9 w-9 place-items-center rounded-full bg-surface-2 text-ink transition hover:rotate-90 hover:bg-primary-500 hover:text-white active:scale-90"
+      aria-label="Close menu"
+    >
+      <svg-icon src="assets/icons/heroicons/outline/x.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+    </button>
   </div>
-</div>
+  <div class="grow overflow-y-auto px-4 pb-6">
+    <app-navbar-mobile-menu></app-navbar-mobile-menu>
+  </div>
+</aside>

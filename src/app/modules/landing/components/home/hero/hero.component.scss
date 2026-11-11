@@ -1,0 +1,237 @@
+/* ---------- Headline: each word rises out of a mask ---------- */
+
+.hero-headline {
+  font-size: clamp(2.9rem, 9.5vw, 5.75rem);
+  line-height: 0.86;
+}
+
+.hero-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.04em;
+  margin-right: 0.2em;
+}
+
+.hero-word-inner {
+  display: inline-block;
+  animation: hero-word-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes hero-word-rise {
+  from {
+    transform: translateY(108%) rotate(7deg);
+  }
+}
+
+/* ---------- Bento shortcut tiles ---------- */
+
+.hero-tile {
+  position: relative;
+  display: block;
+  padding: 0.85rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.hero-tile:hover,
+.hero-tile:focus-visible {
+  transform: translateY(-4px);
+  background: rgb(255 255 255 / 0.1);
+  border-color: rgb(255 255 255 / 0.25);
+}
+
+.hero-tile-icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hero-tile:hover .hero-tile-icon {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+@media (min-width: 640px) {
+  .hero-tile {
+    padding: 1rem;
+  }
+}
+
+/* ---------- Visual ---------- */
+
+.hero-arch {
+  position: relative;
+  border-radius: 999px 999px 2.5rem 2.5rem;
+  background: linear-gradient(165deg, #ff8e80 0%, #ff4836 45%, #c22717 100%);
+  box-shadow:
+    inset 0 2px 0 rgb(255 255 255 / 0.35),
+    0 40px 80px -30px rgb(255 72 54 / 0.7);
+  overflow: hidden;
+}
+
+/* Concentric rings inside the arch */
+.hero-arch::before,
+.hero-arch::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  border: 1.5px solid rgb(255 255 255 / 0.22);
+}
+
+.hero-arch::before {
+  inset: 7%;
+}
+
+.hero-arch::after {
+  inset: 16%;
+  border-color: rgb(255 255 255 / 0.12);
+}
+
+.hero-athlete {
+  filter: drop-shadow(0 30px 40px rgb(0 0 0 / 0.45));
+}
+
+/* Parallax layers use the independent `translate` property so they don't
+   fight the entrance animations, which animate `transform`. */
+.hero-depth-1,
+.hero-depth-2,
+.hero-depth-3 {
+  transition: translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-depth-1 {
+  translate: calc(var(--px, 0) * 14px) calc(var(--py, 0) * 10px);
+}
+
+.hero-depth-2 {
+  translate: calc(var(--px, 0) * -22px) calc(var(--py, 0) * -14px);
+}
+
+.hero-depth-3 {
+  translate: calc(var(--px, 0) * 40px) calc(var(--py, 0) * 28px);
+}
+
+/* Spinning sticker */
+.hero-badge {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 999px;
+  background: rgb(24 19 34 / 0.85);
+  border: 1px solid rgb(255 255 255 / 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px -18px rgb(0 0 0 / 0.6);
+}
+
+.hero-badge-text {
+  animation: hero-spin 14s linear infinite;
+  font-family: var(--ff-catamaran);
+  font-weight: 700;
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  fill: #fff;
+}
+
+.hero-badge:hover .hero-badge-text {
+  animation-duration: 4s;
+}
+
+@keyframes hero-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 640px) {
+  .hero-badge {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+}
+
+/* Glass stat cards */
+.hero-stat {
+  width: 9.5rem;
+  padding: 0.75rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgb(255 255 255 / 0.16);
+  background: rgb(24 19 34 / 0.72);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: 0 24px 48px -20px rgb(0 0 0 / 0.6);
+}
+
+@media (min-width: 640px) {
+  .hero-stat {
+    width: 10.5rem;
+  }
+}
+
+.hero-heart {
+  animation: hero-beat 1.2s ease-in-out infinite;
+}
+
+@keyframes hero-beat {
+  0%,
+  40%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.18);
+  }
+  25% {
+    transform: scale(0.96);
+  }
+}
+
+.hero-ecg {
+  stroke-dasharray: 60 200;
+  animation: hero-ecg 2.2s linear infinite;
+}
+
+@keyframes hero-ecg {
+  from {
+    stroke-dashoffset: 260;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-bar {
+  transform-origin: bottom;
+  animation: hero-bar-grow 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes hero-bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-depth-1,
+  .hero-depth-2,
+  .hero-depth-3 {
+    translate: none;
+  }
+
+  .hero-bigword-track,
+  .hero-badge-text,
+  .hero-heart,
+  .hero-ecg {
+    animation: none;
+  }
+}

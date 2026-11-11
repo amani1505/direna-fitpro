@@ -22,7 +22,7 @@
         <img
           [src]="header.image"
           [alt]="header.title || ''"
-          class="object-cover rounded-md h-9 w-9"
+          class="h-9 w-9 rounded-full object-cover"
         />
       </ng-container>
 
@@ -52,7 +52,7 @@
 
     <!-- Default Header -->
     <ng-container *ngIf="!headerTemplate && header">
-      <div class="flex items-center px-4 pb-4">
+      <div class="flex items-center px-2 pb-3 pt-1">
         <div *ngIf="header.image" class="w-10 shrink-0">
           <img
             class="rounded-md"
@@ -61,12 +61,12 @@
           />
         </div>
         <div class="px-2 overflow-hidden">
-          <div class="text-sm font-semibold text-gray-700 dark:text-night-50">
+          <div class="text-sm font-semibold text-ink">
             {{ header.title }}
           </div>
           <p
             *ngIf="header.subtitle"
-            class="text-xs font-semibold text-gray-400 truncate text-ellipsis dark:text-night-300"
+            class="truncate text-xs text-muted"
           >
             {{ header.subtitle }}
           </p>
@@ -79,7 +79,7 @@
       <!-- Section Title -->
       <div
         *ngIf="section.title"
-        class="px-4 pt-2 pb-1 text-xs font-semibold text-gray-400 dark:text-night-300"
+        class="px-3 pb-1 pt-2 text-xs font-semibold text-subtle"
       >
         {{ section.title }}
       </div>
@@ -90,7 +90,7 @@
           <!-- Divider -->
           <li
             *ngIf="item.divider"
-            class="my-2 border-b border-gray-200 border-dashed dark:border-night-500"
+            class="my-2 border-b border-dashed border-line"
           ></li>
 
           <!-- Menu Item -->
@@ -104,7 +104,7 @@
             <svg-icon
               *ngIf="item.icon"
               [src]="item.icon"
-              [svgClass]="'h-6 w-6 text-gray-400 dark:text-night-400 mr-2'"
+              [svgClass]="'h-5 w-5 text-subtle mr-2'"
             ></svg-icon>
             <span class="flex-grow">{{ item.label }}</span>
             <span *ngIf="item.badge" [class]="getBadgeClass(item.badge.color)">
@@ -117,14 +117,14 @@
       <!-- Section Divider -->
       <div
         *ngIf="!last"
-        class="border-b border-gray-200 border-dashed dark:border-night-500"
+        class="border-b border-dashed border-line"
       ></div>
     </ng-container>
 
     <!-- Footer Template -->
     <ng-container *ngIf="footerTemplate">
       <div
-        class="pt-2 mt-2 border-t border-gray-200 border-dashed dark:border-night-500"
+        class="pt-2 mt-2 border-t border-dashed border-line"
       >
         <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
       </div>

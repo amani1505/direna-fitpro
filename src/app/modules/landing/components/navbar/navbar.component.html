@@ -1,273 +1,160 @@
-<nav
-  class="fixed flex content-center justify-between w-full px-4 py-3 transition duration-700 ease-in z-[999] md:px-12 text-[12px]"
-  [ngClass]="{
-    'bg-white text-primary-500 transition duration-700 ease-in py-0 shadow ':
-      isScrolled,
-  }"
->
-  <div class="flex items-center text-white h-1/2">
-    <div>
-      <svg-icon
-        src="assets/images/logo.svg"
-        [svgClass]="'h-8 w-8  block'"
-      ></svg-icon>
-    </div>
-    <div class="font-extrabold leading-7 uppercase text-[15px] font-varela">
+<header class="fixed inset-x-0 top-0 z-[999] px-3 pt-3 sm:px-5 sm:pt-4">
+  <nav
+    class="mx-auto flex max-w-page items-center justify-between gap-3 rounded-full py-2 pl-3 pr-2 transition-all duration-500 ease-out-expo sm:pl-5"
+    [ngClass]="
+      isScrolled
+        ? 'glass text-ink shadow-soft'
+        : 'border border-transparent text-white'
+    "
+    aria-label="Main"
+  >
+    <!-- Logo -->
+    <a [routerLink]="['/']" class="group flex items-center gap-2" aria-label="Direna FitPro home">
       <span
-        class=""
-        [ngClass]="{
-          'text-primary-500': isScrolled,
-          ' text-white': !isScrolled,
-        }"
-        >direna </span
-      ><span
-        class="py-2"
-        [ngClass]="{
-          'text-secondary-500': isScrolled,
-          ' text-primary-500': !isScrolled,
-        }"
+        class="grid h-9 w-9 place-items-center rounded-full bg-primary-500 transition-transform duration-500 ease-spring group-hover:rotate-[-20deg] group-hover:scale-110"
       >
-        FitPro</span
-      >
-    </div>
-  </div>
-  <ul
-    class="items-center hidden text-white text-[14px] font-montserrat md:flex"
-    [ngClass]="{
-      'text-black  transition duration-700 ease-in py-0': isScrolled,
-    }"
-  >
-    <li class="mx-3">
+        <svg-icon src="assets/images/logo-icon-white.svg" [svgClass]="'h-5 w-5 block'"></svg-icon>
+      </span>
+      <span class="font-display text-lg font-extrabold leading-none tracking-tight">
+        direna<span class="text-primary-500">fitpro</span>
+      </span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden items-center gap-1 text-[14px] font-semibold lg:flex">
+      @for (link of links; track link.label) {
+        <li>
+          @if (link.fragment) {
+            <a
+              [routerLink]="['/']"
+              [fragment]="link.fragment"
+              class="nav-pill"
+              [class.nav-pill-dark]="!isScrolled"
+              >{{ link.label }}</a
+            >
+          } @else {
+            <a
+              [routerLink]="[link.route]"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="{ exact: link.route === '/' }"
+              class="nav-pill"
+              [class.nav-pill-dark]="!isScrolled"
+              >{{ link.label }}</a
+            >
+          }
+        </li>
+      }
+    </ul>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-1.5 sm:gap-2">
+      <app-theme-toggle
+        [btnClass]="
+          isScrolled
+            ? 'bg-surface-2 text-ink hover:bg-primary-500 hover:text-white'
+            : 'bg-white/10 text-white hover:bg-white hover:text-primary-500'
+        "
+      ></app-theme-toggle>
+
       <a
-        class="cursor-pointer growing-underline hover:font-semibold"
-        [routerLink]="['/']"
-        routerLinkActive="font-semibold"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
+        routerLink="/auth"
+        class="btn-pop shine hidden !px-5 !py-2 text-sm sm:inline-flex"
+        [class.on-dark]="!isScrolled"
       >
-        Home
+        Join the club
       </a>
-    </li>
 
-    <li class="mx-3 cursor-pointer ">
-      <a
-        href="#class"
-        [class.active]="'font-semibold growing-underline'"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
-        >Classes</a
+      <button
+        type="button"
+        class="grid h-10 w-10 place-items-center rounded-full transition active:scale-90 lg:hidden"
+        [ngClass]="
+          isScrolled
+            ? 'bg-ink text-bg'
+            : 'bg-white text-primary-500'
+        "
+        (click)="openMobileNav()"
+        aria-label="Open menu"
+        [attr.aria-expanded]="showMenu"
+        aria-controls="mobile-nav"
       >
-    </li>
+        <svg-icon
+          src="./assets/icons/bars-3-center-left.svg"
+          [svgClass]="'h-5 w-5'"
+        ></svg-icon>
+      </button>
+    </div>
+  </nav>
+</header>
 
-    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
-      <a
-        [routerLink]="['/blogs']"
-        routerLinkActive=" font-semibold"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
-      >
-        Blogs</a
-      >
-    </li>
-
-    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
-      <a
-        [routerLink]="['/equipments']"
-        routerLinkActive="font-semibold"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
-      >
-        Equipments</a
-      >
-    </li>
-    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
-      <a
-        [routerLink]="['/about']"
-        routerLinkActive=" font-semibold"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
-        >About Us</a
-      >
-    </li>
-
-    <li class="mx-3 cursor-pointer growing-underline hover:font-semibold">
-      <a
-        [routerLink]="['/contact-us']"
-        routerLinkActive=" font-semibold"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [ngClass]="{
-          'text-black  transition duration-700 ease-in py-0': isScrolled,
-        }"
-        >Contact us</a
-      >
-    </li>
-  </ul>
-  <!-- <div class="hidden font-montserrat md:flex">
-    <button
-      class="px-4 py-2 font-semibold uppercase bg-white rounded-md text-[14px] text-primary-500"
-      [ngClass]="{
-        'bg-primary-500 text-white': isScrolled,
-        'bg-white text-primary-500': !isScrolled,
-      }"
-    >
-      Login
-    </button>
-  </div> -->
-
-  <!-- BUTTON FOR SMALL SCREEN -->
+<!-- Mobile navigation -->
+@if (isAnimating || showMenu) {
   <div
-    id="showMenu"
-    class="w-10 h-10 p-2 font-extrabold rotate-180 rounded-md shadow md:hidden"
-    (click)="openMobileNav()"
+    id="mobile-nav"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+    class="fixed inset-0 z-[1000] flex flex-col overflow-y-auto bg-primary-500 px-5 pb-8 pt-4 text-white"
     [ngClass]="{
-      'bg-primary-500 text-white': isScrolled,
-      'bg-white text-primary-500': !isScrolled,
+      'animate-slide-up': showMenu,
+      'animate-slide-down': !showMenu,
     }"
+    (animationend)="handleAnimationEnd($event)"
   >
-    <svg-icon
-      src="./assets/icons/bars-3-center-left.svg"
-      [svgClass]="'h-6 w-6 text-[14px] font-extrabold'"
-    ></svg-icon>
-  </div>
-</nav>
-
-<!-- MOBILE NAVIGATION BAR -->
-
-<div
-  *ngIf="isAnimating || showMenu"
-  class="fixed top-0 left-0 z-[9999999999999] w-full h-full px-4 py-6 text-white bg-primary-500"
-  [ngClass]="{
-    'animate-slide-up': showMenu,
-    'animate-slide-down': !showMenu,
-  }"
-  (animationend)="handleAnimationEnd()"
->
-  <div id="hideMenu" class="flex justify-end" (click)="closeMobileNav()">
-    <div class="w-10 h-10 p-2 bg-white rounded-md shadow text-primary-500">
-      <svg-icon
-        src="./assets/icons/x-mark.svg"
-        [svgClass]="'h-6 w-6 !text-3xl font-extrabold'"
-      ></svg-icon>
+    <!-- Decorative blobs -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="absolute -right-24 -top-24 h-72 w-72 animate-blob rounded-full bg-secondary-400/50 blur-3xl"></div>
+      <div class="absolute -bottom-24 -left-16 h-72 w-72 animate-blob rounded-full bg-yellow-300/40 blur-3xl [animation-delay:-6s]"></div>
     </div>
-  </div>
-  <ul class="font-montserrat flex flex-col mx-8 my-24 items-center text-[14px]">
-    <li id="hideMenu" class="my-6">
-      <a
-        (click)="navigate('/')"
-        [ngClass]="{
-          'font-semibold border-b-2 border-secondary': isActiveRoute('/'),
-        }"
-        >Home</a
-      >
-    </li>
-    <li class="my-6">
-      <a id="hideMenu" href="#class" (click)="closeMobileNav()"> Classes</a>
-    </li>
-    <li class="my-6">
-      <a
-        id="hideMenu"
-        (click)="navigate('blogs')"
-        [ngClass]="{
-          'font-semibold border-b-2 border-secondary': isActiveRoute('/blogs'),
-        }"
-      >
-        Blogs</a
-      >
-    </li>
-    <li class="my-6">
-      <a
-        id="hideMenu"
-        (click)="navigate('equipments')"
-        [ngClass]="{
-          'font-semibold border-b-2 border-secondary': isActiveRoute('/equipments'),
-        }"
-      >
-        Equipments</a
-      >
-    </li>
-    <li class="my-6">
-      <a
-        id="hideMenu"
-        (click)="navigate('about')"
-        [ngClass]="{
-          'font-semibold border-b-2 border-secondary': isActiveRoute('/about'),
-        }"
-        >About Us</a
-      >
-    </li>
 
-    <li class="my-6">
-      <a id="hideMenu" (click)="navigate('contact-us')">Contact us</a>
-    </li>
-  </ul>
+    <div class="relative flex items-center justify-between">
+      <span class="font-display text-lg font-extrabold">direna<span class="text-ink">fitpro</span></span>
+      <div class="flex items-center gap-2">
+        <app-theme-toggle [btnClass]="'bg-white/15 text-white hover:bg-white hover:text-primary-500'"></app-theme-toggle>
+        <button
+          type="button"
+          class="grid h-10 w-10 place-items-center rounded-full bg-white text-primary-500 transition hover:rotate-90 active:scale-90"
+          (click)="closeMobileNav()"
+          aria-label="Close menu"
+        >
+          <svg-icon src="./assets/icons/x-mark.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+        </button>
+      </div>
+    </div>
 
-  <div class="font-montserrat">
-    <button
-      class="py-5 font-semibold uppercase bg-white rounded-md text-[14px] text-primary-500 w-full"
-      [ngClass]="{
-        'bg-primary-500 text-white': isScrolled,
-        'bg-white text-primary-500': !isScrolled,
-      }"
-    >
-      Login
-    </button>
-  </div>
+    <ul class="relative my-auto flex flex-col gap-1 py-10">
+      @for (link of links; track link.label; let i = $index) {
+        <li class="animate-rise" [style.animation-delay.ms]="120 + i * 60">
+          <a
+            (click)="link.fragment ? goToFragment(link.fragment) : navigate(link.route)"
+            class="group flex cursor-pointer items-center justify-between border-b border-white/20 py-3 font-display text-4xl font-extrabold tracking-tight xs:text-5xl"
+            [class.text-ink]="!link.fragment && isActiveRoute(link.route)"
+          >
+            <span class="transition-transform duration-300 group-hover:translate-x-2">{{ link.label }}</span>
+            <span aria-hidden="true" class="text-2xl opacity-0 transition-all duration-300 group-hover:rotate-45 group-hover:opacity-100">✺</span>
+          </a>
+        </li>
+      }
+    </ul>
 
-  <div
-    class="fixed left-0 right-0 flex justify-center w-full gap-2 bottom-10 p-b-5"
-  >
-    <div>
+    <div class="relative animate-rise space-y-6 [animation-delay:500ms]">
       <a
-        href="#"
-        class="p-[5px] bg-white rounded-md flex text-secondary-500 transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
+        (click)="navigate('/auth')"
+        class="btn-pop w-full cursor-pointer !bg-white py-4 text-lg !text-primary-500"
       >
-        <svg-icon
-          [src]="'./assets/icons/ionicons/logo-facebook.svg'"
-          [svgStyle]="{ 'width.px': 20 }"
-        ></svg-icon>
+        Log in or join
       </a>
-    </div>
-    <div>
-      <a
-        href="#"
-        class="p-[5px] bg-white rounded-md flex text-secondary-500 transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
-      >
-        <svg-icon
-          [src]="'./assets/icons/ionicons/logo-twitter.svg'"
-          [svgStyle]="{ 'width.px': 20 }"
-        ></svg-icon>
-      </a>
-    </div>
-    <div>
-      <a
-        href="#"
-        class="p-[5px] bg-white rounded-md flex text-secondary-500 transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
-      >
-        <svg-icon
-          [src]="'assets/icons/logo-instagram.svg'"
-          [svgStyle]="{ 'width.px': 20 }"
-        ></svg-icon>
-      </a>
-    </div>
-    <div>
-      <a
-        href="#"
-        class="p-[5px] bg-white rounded-md flex text-secondary-500 transition-[ var(--transition-timing)] hover:bg-secondary hover:text-white"
-      >
-        <svg-icon
-          [src]="'assets/icons/logo-linkedin.svg'"
-          [svgStyle]="{ 'width.px': 20 }"
-        ></svg-icon>
-      </a>
+
+      <div class="flex justify-center gap-3">
+        @for (social of socials; track social.label) {
+          <a
+            href="#"
+            [attr.aria-label]="social.label"
+            class="grid h-11 w-11 place-items-center rounded-full bg-white/15 transition duration-300 ease-spring hover:-translate-y-1 hover:rotate-[-8deg] hover:bg-white hover:text-primary-500"
+          >
+            <svg-icon [src]="social.icon" [svgStyle]="{ 'width.px': 20 }"></svg-icon>
+          </a>
+        }
+      </div>
     </div>
   </div>
-</div>
+}

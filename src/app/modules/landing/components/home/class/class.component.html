@@ -1,70 +1,133 @@
 <section
-  class="section class bg-dark has-bg-image"
   id="class"
-  aria-label="class"
-  style="background-image: url(&quot;./assets/images/classes-bg.png&quot;)"
+  class="relative isolate scroll-mt-20 overflow-hidden bg-[rgb(var(--c-hero))] py-20 text-white sm:py-28"
+  aria-labelledby="classes-title"
 >
-  <div class="container">
-    <p class="py-3 section-subtitle">Our Classes</p>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="classes-mesh absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="hero-grain absolute inset-0"></div>
+  </div>
 
-    <h2 class="text-2xl sm:text-3xl font-[700]  hero-title xl:text-[3rem] leading-[1.2] text-center text-white mb-3  lg:mb-7 font-catamaran">Fitness Classes For Every Goal</h2>
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <!-- Header -->
+    <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+      <div reveal>
+        <p
+          class="inline-flex -rotate-2 items-center gap-2 rounded-full bg-[rgb(183_156_255/0.16)] px-4 py-1.5 font-display text-sm font-bold text-[#cbb8ff]"
+        >
+          <span aria-hidden="true">✺</span> Our classes
+        </p>
+        <h2
+          id="classes-title"
+          class="mt-5 max-w-2xl font-display text-[2.4rem] font-extrabold leading-[0.95] tracking-[-0.04em] sm:text-6xl"
+        >
+          Fitness classes for every goal
+        </h2>
+      </div>
 
-    <ul class="class-list has-scrollbar">
-      @for (class of classData; track $index) {
-        <li class="scrollbar-item">
-          <div class="class-card">
-            <figure
-              class="card-banner img-holder"
-              style="--width: 416; --height: 240"
-            >
-              <img
-                src="{{ class.image }}"
-                width="416"
-                height="240"
-                loading="lazy"
-                alt="Weight Lifting"
-                class="img-cover"
-              />
-            </figure>
+      <div reveal [revealDelay]="100" class="flex items-end justify-between gap-6 md:flex-col md:items-end">
+        <p class="max-w-xs text-white/65 md:text-right">
+          Strength, cardio, flexibility or recovery. Pick the class that fits
+          where you are right now.
+        </p>
+        <div class="flex shrink-0 gap-2 lg:hidden">
+          <button type="button" class="carousel-btn" aria-label="Previous class" (click)="scroll(-1)">←</button>
+          <button type="button" class="carousel-btn" aria-label="Next class" (click)="scroll(1)">→</button>
+        </div>
+      </div>
+    </div>
 
-            <div class="card-content">
-              <div class="title-wrapper">
-                <img
-                  src="{{ class.icon }}"
-                  width="40"
-                  height="40"
-                  aria-hidden="true"
-                  alt=""
-                  class="title-icon"
-                />
+    <!-- Cards: swipeable row on small screens, 4-up grid on large -->
+    <ul #track class="class-track mt-12" aria-label="Classes">
+      @for (class of classData; track class.id; let i = $index) {
+        <li class="class-slot" reveal [revealDelay]="i * 100">
+          <article spotlight class="class-tile group">
+            <img
+              [src]="class.image"
+              [alt]="class.title"
+              width="416"
+              height="520"
+              loading="lazy"
+              class="class-tile-img"
+            />
+            <div class="class-tile-shade" aria-hidden="true"></div>
 
-                <h3 class="">
-                  <a href="#" class="text-xl font-[500] text-[var(--rich-black-fogra-29-1)] hero-title xl:text-[1.5rem] leading-[1.2]">{{ class.title }}</a>
-                </h3>
-              </div>
+            <!-- Top row: icon + capacity ring -->
+            <div class="absolute inset-x-4 top-4 flex items-start justify-between">
+              <span
+                class="grid h-12 w-12 place-items-center rounded-2xl bg-white shadow-soft transition-transform duration-500 ease-spring group-hover:-rotate-12 group-hover:scale-110"
+              >
+                <img [src]="class.icon" alt="" aria-hidden="true" width="28" height="28" class="h-7 w-7" />
+              </span>
 
-              <p class="text-[var(--sonic-silver)]">
-                {{ class.description }}
-              </p>
-
-              <div class="card-progress">
-                <div class="flex items-center justify-between font-catamaran text-[var(--rich-black-fogra-29-1)]">
-                  <div class="text-xl font-[800] text-[var(--rich-black-fogra-29-1)] hero-title xl:text-[1.5rem] leading-[1.2]">Class Full</div>
-
-                  <div class="text-xl font-[800] text-[var(--rich-black-fogra-29-1)] hero-title xl:text-[1.5rem] leading-[1.2]">{{ class.classFull }}%</div>
-                </div>
-
-                <div class="progress-bg">
-                  <div
-                    class="progress-bar"
-                    [style.width.%]="class.classFull"
-                  ></div>
-                </div>
+              <div class="class-ring" [attr.aria-label]="class.classFull + '% full'" role="img">
+                <svg viewBox="0 0 44 44" class="h-14 w-14 -rotate-90">
+                  <circle cx="22" cy="22" r="18" fill="none" stroke="rgb(255 255 255 / 0.18)" stroke-width="4" />
+                  <circle
+                    class="class-ring-value"
+                    cx="22"
+                    cy="22"
+                    r="18"
+                    fill="none"
+                    stroke="#ff4836"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    [attr.stroke-dasharray]="ring"
+                    [style.--ring]="ring"
+                    [style.--offset]="ringOffset(class.classFull)"
+                    [style.animation-delay.ms]="300 + i * 120"
+                  />
+                </svg>
+                <span class="absolute inset-0 grid place-items-center font-display text-xs font-extrabold">
+                  {{ class.classFull }}%
+                </span>
               </div>
             </div>
-          </div>
+
+            <!-- Bottom content -->
+            <div class="relative">
+              @if (class.classFull >= 85) {
+                <span class="mb-3 inline-flex -rotate-2 rounded-full bg-primary-500 px-3 py-1 text-xs font-bold">
+                  Almost full
+                </span>
+              }
+              <h3 class="font-display text-2xl font-extrabold leading-tight tracking-tight sm:text-[1.65rem]">
+                {{ class.title }}
+              </h3>
+              <p class="class-tile-desc">{{ class.description }}</p>
+
+              <div class="mt-4 flex items-center justify-between gap-3 border-t border-white/15 pt-4">
+                <span class="text-sm text-white/70">{{ class.classFull }}% full</span>
+                <a
+                  routerLink="/auth"
+                  class="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-bold text-ink transition duration-300 ease-spring hover:scale-105 hover:bg-primary-500 hover:text-white"
+                  [attr.aria-label]="'Join to take ' + class.title"
+                >
+                  Join
+                  <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                </a>
+              </div>
+            </div>
+          </article>
         </li>
       }
     </ul>
+
+    <!-- Footer row -->
+    <div
+      reveal
+      class="mt-10 flex flex-col items-start gap-4 rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 backdrop-blur sm:flex-row sm:items-center sm:justify-between sm:p-6"
+    >
+      <p class="font-display text-lg font-bold sm:text-xl">
+        Not sure which class is right for you?
+      </p>
+      <div class="flex w-full flex-col gap-3 xs:w-auto xs:flex-row">
+        <a routerLink="/contact-us" class="btn-ghost border-white/30 text-white hover:border-white hover:bg-white hover:text-ink"
+          >Ask us</a
+        >
+        <a routerLink="/auth" class="btn-pop shine on-dark">Join the club</a>
+      </div>
+    </div>
   </div>
 </section>

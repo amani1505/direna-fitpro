@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Output, Input, ChangeDetectionStrategy } from '@angular/core';
-import { NgIf, NgFor } from '@angular/common';
+import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
   selector: 'Pagination',
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, NgClass],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

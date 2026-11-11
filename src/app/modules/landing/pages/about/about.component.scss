@@ -1,0 +1,46 @@
+/* Values: oversized words that fill with colour on hover */
+.value-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-block: 1.75rem;
+  cursor: default;
+}
+
+@media (min-width: 768px) {
+  .value-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+}
+
+.value-word {
+  font-size: clamp(2.75rem, 9vw, 6rem);
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(var(--c-ink) / 0.55);
+  background: linear-gradient(90deg, #ff4836, #ff8e80) no-repeat;
+  background-size: 0% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition:
+    background-size 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    -webkit-text-stroke-color 0.3s ease,
+    transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.value-row:hover .value-word {
+  background-size: 100% 100%;
+  -webkit-text-stroke-color: transparent;
+  transform: translateX(8px);
+}
+
+/* Touch screens have no hover: show the words filled */
+@media (hover: none) {
+  .value-word {
+    background-size: 100% 100%;
+    -webkit-text-stroke-color: transparent;
+  }
+}

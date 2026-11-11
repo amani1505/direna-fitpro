@@ -1,33 +1,35 @@
-<div class="flex flex-wrap items-center justify-end gap-2 px-5 py-3">
-  <ng-container *ngFor="let action of actions">
-    <!-- Search Input -->
-    <div *ngIf="action.type === 'search'" class="flex">
-      <label class="relative text-muted-foreground">
-        <div class="absolute left-2.5 top-2.5">
-          <svg-icon
-            src="./assets/icons/heroicons/outline/magnifying-glass.svg"
-            [svgClass]="'h-4 w-4'"
-          >
-          </svg-icon>
-        </div>
-        <input
-          class="py-2 pl-8 pr-2"
-          [placeholder]="action.placeholder || 'Search...'"
-          type="text"
-          [value]="action.value"
-          (input)="action.action($event)"
-        />
-      </label>
-    </div>
+@if (actions?.length) {
+  <div class="flex flex-col gap-2 border-b border-line p-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:px-4">
+    <ng-container *ngFor="let action of actions">
+      <!-- Search Input -->
+      <div *ngIf="action.type === 'search'" class="w-full sm:w-72">
+        <label class="relative block text-subtle">
+          <span class="sr-only">{{ action.placeholder || 'Search' }}</span>
+          <span class="pointer-events-none absolute left-3 top-1/2 z-20 -translate-y-1/2">
+            <svg-icon
+              src="./assets/icons/heroicons/outline/magnifying-glass.svg"
+              [svgClass]="'h-4 w-4'"
+            ></svg-icon>
+          </span>
+          <input
+            class="!rounded-full !py-2.5 !pl-9 !pr-4 text-sm"
+            [placeholder]="action.placeholder || 'Search...'"
+            type="search"
+            [value]="action.value"
+            (input)="action.action($event)"
+          />
+        </label>
+      </div>
 
-    <div *ngIf="action.type === 'select'" class="">
-      <NormalSelect
-        [width]="'w-64'"
-        [options]="action.options"
-        [placeholder]="action.placeholder"
-        (selectionChange)="action.action($event)"
-      >
-      </NormalSelect>
-    </div>
-  </ng-container>
-</div>
+      <div *ngIf="action.type === 'select'" class="w-full sm:w-64">
+        <NormalSelect
+          [width]="'w-full'"
+          [options]="action.options"
+          [placeholder]="action.placeholder"
+          (selectionChange)="action.action($event)"
+        >
+        </NormalSelect>
+      </div>
+    </ng-container>
+  </div>
+}

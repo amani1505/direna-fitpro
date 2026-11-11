@@ -1,25 +1,20 @@
-<div class="flex w-full h-screen overflow-hidden">
-  <!-- Sidebar -->
+<div class="flex h-[100dvh] w-full overflow-hidden bg-bg">
+  <!-- Sidebar (desktop) -->
   <app-sidebar></app-sidebar>
 
-  <div class="flex flex-col content-start bg-gray-100 grow dark:bg-night-800">
+  <div class="flex min-w-0 grow flex-col">
     <!-- Header -->
     <app-navbar></app-navbar>
-    <!-- main content -->
 
-    <section
-      class="scrollbar-thumb-rounded scrollbar-track-rounded grow overflow-auto scrollbar-thin scrollbar-thumb-white scrollbar-track-gray-100 dark:scrollbar-thumb-night-700 dark:scrollbar-track-night-800 px-[2rem] w-full"
-    >
-      <div class="my-2">
+    <!-- Main content -->
+    <main class="w-full grow overflow-y-auto overflow-x-hidden px-4 sm:px-6 lg:px-8">
+      <div class="vt-main mx-auto my-2 w-full max-w-[1600px] pb-8">
         <BreadCrumbs />
         <router-outlet></router-outlet>
       </div>
-    </section>
+    </main>
 
-    <!-- footer -->
+    <!-- Footer -->
     <app-footer></app-footer>
-
-    <!-- Bottom bar -->
-    <!-- <app-bottom-navbar></app-bottom-navbar> -->
   </div>
 </div>

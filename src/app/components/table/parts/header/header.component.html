@@ -3,8 +3,8 @@
   *ngFor="let column of columns"
   [class.w-[25px]]="column.type === 's/n'"
   [class.w-[50px]]="column.type === 'checkbox'"
-  [class.min-w-[300px]]="column.key === 'member'"
-  [class.min-w-[180px]]="!['checkbox', 'actions','s/n'].includes(column.type)"
+  [class.min-w-[240px]]="column.key === 'member'"
+  [class.min-w-[160px]]="!['checkbox', 'actions','s/n'].includes(column.type)"
   [class.w-[60px]]="column.type === 'actions'"
   [class.text-center]="column.align === 'center'"
 >

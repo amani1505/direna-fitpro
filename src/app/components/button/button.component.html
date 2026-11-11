@@ -1,7 +1,7 @@
 <button
-  [ngClass]="[colorClasses, sizeClasses, rounded ? 'rounded-full' : 'rounded']"
+  [ngClass]="[colorClasses, sizeClasses, rounded ? 'rounded-full' : 'rounded-xl']"
   matRipple
-  class="w-full transition delay-100 duration-300 ease-in-out font-rubik capitalize hover:text-white"
+  class="relative w-full select-none overflow-hidden font-display font-bold capitalize transition-[transform,background-color,color,box-shadow] duration-200 ease-out-expo active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50"
   (click)="click()"
 >
   <ng-content></ng-content>

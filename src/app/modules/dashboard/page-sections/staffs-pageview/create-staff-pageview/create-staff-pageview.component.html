@@ -1,15 +1,15 @@
 <form [formGroup]="staffForm">
   <h3
-    class="font-[600] text-[24px] tracking-wide font-catamaran capitalize text-gray-900 dark:text-night-50"
+    class="mb-5 font-display text-2xl font-extrabold capitalize tracking-tight text-ink sm:text-3xl"
   >
     Add new Staff
   </h3>
   <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
     <div class="form__group">
       <div class="relative">
-        <label class="block mb-1 text-sm font-medium text-gray-700"
+        <label class="mb-1.5 block text-sm font-semibold text-ink"
           >Fullname
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="text"
@@ -34,9 +34,9 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="block mb-1 text-sm font-medium text-gray-700"
+        <label class="mb-1.5 block text-sm font-semibold text-ink"
           >Email
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="email"
@@ -68,9 +68,9 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="block mb-1 text-sm font-medium text-gray-700"
+        <label class="mb-1.5 block text-sm font-semibold text-ink"
           >Phone Number
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="text"
@@ -102,8 +102,8 @@
     </div>
 
     <div class="form__group">
-      <label class="block text-sm font-medium text-gray-700"
-        >Gender <span class="text-[#e11d48]">*</span></label
+      <label class="block text-sm font-semibold text-ink"
+        >Gender <span class="text-primary-500">*</span></label
       >
       <div class="mt-2 space-x-4">
         <label class="inline-flex items-center">
@@ -111,7 +111,7 @@
             type="radio"
             formControlName="gender"
             value="male"
-            class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+            class="h-5 w-5 text-primary-500"
           />
           <span class="ml-2">Male</span>
         </label>
@@ -120,7 +120,7 @@
             type="radio"
             formControlName="gender"
             value="female"
-            class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+            class="h-5 w-5 text-primary-500"
           />
           <span class="ml-2">Female</span>
         </label>
@@ -136,9 +136,9 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="block mb-1 text-sm font-medium text-gray-700"
+        <label class="mb-1.5 block text-sm font-semibold text-ink"
           >Address
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="text"
@@ -163,9 +163,9 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="block mb-1 text-sm font-medium text-gray-700"
+        <label class="mb-1.5 block text-sm font-semibold text-ink"
           >City
-          <span class="text-[#e11d48]">*</span>
+          <span class="text-primary-500">*</span>
         </label>
         <input
           type="text"
@@ -189,8 +189,8 @@
     </div>
 
     <div class="form__group">
-      <label class="block mb-1 text-sm font-medium text-gray-700"
-        >Branch<span class="text-[#e11d48]">*</span></label
+      <label class="mb-1.5 block text-sm font-semibold text-ink"
+        >Branch<span class="text-primary-500">*</span></label
       >
       <SeachableSelect
         [placeholder]="'Select Branch'"
@@ -203,8 +203,8 @@
     </div>
 
     <div class="form__group">
-      <label class="block mb-1 text-sm font-medium text-gray-700"
-        >Role<span class="text-[#e11d48]">*</span></label
+      <label class="mb-1.5 block text-sm font-semibold text-ink"
+        >Role<span class="text-primary-500">*</span></label
       >
       <SeachableSelect
         [placeholder]="'Select Role of the staff'"
@@ -216,10 +216,10 @@
       ></SeachableSelect>
     </div>
   </div>
-  <div class="flex items-center justify-end gap-3 p-3">
+  <div class="form-actions">
     <button
       (click)="cancel()"
-      class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+      class="form-cancel"
     >
       Cancel
     </button>
@@ -227,16 +227,16 @@
       type="submit"
       [disabled]="staffForm.invalid || staffLoading() || !selectedBranch || !selectedRole"
       (click)="submit()"
-      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      class="form-submit"
       [ngClass]="{
-        'bg-green-500 hover:bg-green-700':
+        'form-submit-ready':
           !staffForm.invalid && !staffLoading(),
-        'bg-gray-300': staffForm.invalid || staffLoading() || !selectedBranch || !selectRole,
+        'form-submit-disabled': staffForm.invalid || staffLoading() || !selectedBranch || !selectRole,
       }"
     >
       <svg
         *ngIf="staffLoading()"
-        class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+        class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

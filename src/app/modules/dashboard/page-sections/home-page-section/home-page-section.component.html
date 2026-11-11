@@ -1,18 +1,18 @@
 <section class="py-3">
-  <div>
-    <h6 class="capitalize font-pt-serif">
-      {{ greeting
-      }}<span>{{
-        user?.profile?.first_name + " " + user?.profile?.last_name
+  <div class="mb-5 animate-rise">
+    <h1 class="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+      {{ greeting }}<span class="text-primary-500">{{
+        (user?.profile?.first_name ?? "") + " " + (user?.profile?.last_name ?? "")
       }}</span>
-    </h6>
+    </h1>
+    <p class="mt-1 text-sm text-muted">An overview of your branches, services, members and equipment.</p>
   </div>
-  <div class="grid grid-cols-12 gap-3">
-    <div class="col-span-8">
+  <div class="grid grid-cols-1 gap-4 xl:grid-cols-12">
+    <div class="min-w-0 space-y-4 xl:col-span-8">
       <header-cards [dashboardStats]="dashboardStatstics()"></header-cards>
       <dashboard-equipment [equipments]="equipments()"></dashboard-equipment>
     </div>
-    <div class="col-span-4">
+    <div class="grid min-w-0 grid-cols-1 content-start gap-4 md:grid-cols-2 xl:col-span-4 xl:grid-cols-1">
       <dashboard-branches [branches]="branches()"></dashboard-branches>
       <dashboard-services [services]="services()"></dashboard-services>
     </div>

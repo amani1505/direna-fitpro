@@ -1,22 +1,28 @@
+<!-- Scroll progress -->
+<div
+  aria-hidden="true"
+  class="fixed left-0 top-0 z-[1001] h-1 origin-left bg-gradient-to-r from-primary-500 via-primary-400 to-secondary-400 transition-transform duration-150"
+  [style.transform]="'scaleX(' + scrollProgress / 100 + ')'"
+  style="width: 100%"
+></div>
+
 <app-navbar [isScrolled]="isScrolled"></app-navbar>
 
-<!-- <section class="min-h-[25vh] bg-red-500 text-center flex items-center justify-center h-[100px]">
-  <BreadCrumbs></BreadCrumbs>
-</section> -->
-
-
-<section class="">
+<main>
   <router-outlet></router-outlet>
-</section>
+</main>
 
 <app-footer></app-footer>
+
 <button
-  *ngIf="isScrolled"
-  class="fixed bottom-0 right-0 flex items-center justify-center mb-5 mr-5 text-black border-2 border-black rounded-full shadow-lg z- bg-primary-500 w-10 h-10 animate-bounce z-[99999999]"
+  type="button"
+  aria-label="Back to top"
+  class="fixed bottom-5 right-5 z-[998] grid h-12 w-12 place-items-center rounded-full border-2 border-ink bg-primary-500 text-white shadow-pop transition-all duration-500 ease-spring hover:-translate-y-1 active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+  [ngClass]="isScrolled ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-20 opacity-0'"
   (click)="backToTheTop()"
 >
   <svg-icon
     src="./assets/icons/play.svg"
-    [svgClass]="'h-5 w-5 !text-3xl font-extrabold -rotate-90'"
+    [svgClass]="'h-5 w-5 -rotate-90'"
   ></svg-icon>
 </button>

@@ -1,14 +1,37 @@
-<nav class="flex justify-center">
-  <ul class="flex space-x-2">
+<nav class="flex justify-center" aria-label="Pagination">
+  <ul class="flex flex-wrap items-center justify-center gap-1.5">
     <li *ngIf="currentPage > 1">
-      <button (click)="selectPage(currentPage - 1)" class="px-3 py-1 border rounded"><<</button>
+      <button
+        type="button"
+        (click)="selectPage(currentPage - 1)"
+        class="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-ink transition hover:-translate-x-0.5 hover:border-primary-500 hover:text-primary-500 active:scale-90"
+        aria-label="Previous page"
+      >
+        ‹
+      </button>
     </li>
-    <li *ngFor="let page of pages" [class.font-bold]="page === currentPage">
-      <button *ngIf="page !== '...'" (click)="selectPage(page)" class="px-3 py-1 border rounded">{{ page }}</button>
-      <span *ngIf="page === '...'">...</span>
+    <li *ngFor="let page of pages">
+      <button
+        *ngIf="page !== '...'"
+        type="button"
+        (click)="selectPage(page)"
+        class="grid h-9 min-w-9 place-items-center rounded-full px-3 font-display text-sm font-bold transition duration-200 ease-spring active:scale-90"
+        [ngClass]="page === currentPage ? 'scale-105 bg-primary-500 text-white shadow-glow' : 'border border-line bg-surface text-ink hover:border-primary-500 hover:text-primary-500'"
+        [attr.aria-current]="page === currentPage ? 'page' : null"
+      >
+        {{ page }}
+      </button>
+      <span *ngIf="page === '...'" class="px-1 text-subtle">…</span>
     </li>
     <li *ngIf="currentPage < totalPages">
-      <button (click)="selectPage(currentPage + 1)" class="px-3 py-1 border rounded">>></button>
+      <button
+        type="button"
+        (click)="selectPage(currentPage + 1)"
+        class="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-ink transition hover:translate-x-0.5 hover:border-primary-500 hover:text-primary-500 active:scale-90"
+        aria-label="Next page"
+      >
+        ›
+      </button>
     </li>
   </ul>
 </nav>

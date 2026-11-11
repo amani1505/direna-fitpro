@@ -1,1 +1,66 @@
-#map { width: 100%; }
+:host {
+  display: block;
+  height: 100%;
+}
+
+.map-root {
+  position: relative;
+  z-index: 0;
+}
+
+/* Leaflet injects these outside Angular's view encapsulation. */
+:host ::ng-deep .map-pin {
+  position: relative;
+}
+
+:host ::ng-deep .map-pin-dot {
+  position: absolute;
+  inset: 6px;
+  border-radius: 999px;
+  background: #ff4836;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgb(255 72 54 / 0.6);
+}
+
+:host ::ng-deep .map-pin-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgb(255 72 54 / 0.45);
+  animation: map-pulse 1.8s ease-out infinite;
+}
+
+@keyframes map-pulse {
+  from {
+    transform: scale(0.6);
+    opacity: 1;
+  }
+  to {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* Dark mode: invert the light OSM tiles into a dark map */
+:host-context(.dark) ::ng-deep .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9) contrast(0.9) saturate(0.6);
+}
+
+:host-context(.dark) ::ng-deep .leaflet-container {
+  background: rgb(var(--c-surface));
+}
+
+:host ::ng-deep .leaflet-control-zoom a {
+  border-radius: 10px !important;
+}
+
+:host-context(.dark) ::ng-deep .leaflet-control-attribution,
+:host-context(.dark) ::ng-deep .leaflet-control-zoom a {
+  background: rgb(var(--c-surface) / 0.85) !important;
+  color: rgb(var(--c-muted)) !important;
+  border-color: rgb(var(--c-line)) !important;
+}
+
+:host-context(.dark) ::ng-deep .leaflet-control-attribution a {
+  color: rgb(var(--c-ink)) !important;
+}

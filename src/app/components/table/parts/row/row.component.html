@@ -1,7 +1,7 @@
 @for (column of columns; track column.key) {
   @switch (column.type) {
     @case ("s/n") {
-      <td class="">{{ index }}</td>
+      <td class="font-display font-bold text-subtle">{{ index }}</td>
     }
     @case ("checkbox") {
       <td>
@@ -19,16 +19,16 @@
         @if (column.key === "files[0].file_path") {
           @if (data.files && data.files.length > 0) {
             <img
-              class="object-cover w-10 h-10 rounded-full"
+              class="h-10 w-10 rounded-xl object-cover ring-2 ring-line"
               [src]="fileUrl + data.files[0].file_path"
               alt=""
             />
           } @else {
-            <span>No Image</span>
+            <span class="text-xs text-subtle">No image</span>
           }
         } @else {
           <img
-            class="object-cover w-10 h-10 rounded-full"
+            class="h-10 w-10 rounded-xl object-cover ring-2 ring-line"
             [src]="fileUrl + data[column.key]"
             alt=""
           />
@@ -63,7 +63,7 @@
               }"
             ></div>
           </div>
-          <span class="ml-2 text-xs">
+          <span class="ml-2 text-xs font-semibold">
             {{ data[column.key] === true ? "Active" : "Inactive" }}
           </span>
         </div>
@@ -71,13 +71,13 @@
     }
 
     @case ("date") {
-      <td>{{ (data[column.key] | date: "fullDate") || "-" }}</td>
+      <td class="whitespace-nowrap">{{ (data[column.key] | date: "mediumDate") || "-" }}</td>
     }
     @case ("badge") {
       <td>
         @for (item of data[column.key]; track $index) {
           <span
-            class="rounded-[30px] bg-primary-500/10 px-2 py-0.5 text-xs font-medium text-primary-800 m-[1px]"
+            class="m-[1px] inline-block rounded-full bg-primary-500/10 px-2.5 py-0.5 text-xs font-semibold text-primary-700 dark:text-primary-300"
           >
             {{ item }}
           </span>
@@ -90,18 +90,21 @@
         <div class="flex items-center justify-end gap-x-2">
           @for (type of column.actionType; track $index) {
             <button
-              class="flex items-center justify-center rounded-md h-7 w-7"
+              type="button"
+              class="grid h-8 w-8 place-items-center rounded-lg transition duration-200 ease-spring hover:-translate-y-0.5 hover:scale-110 active:scale-90"
+              [attr.aria-label]="type"
+              [attr.title]="type | titlecase"
               [ngClass]="{
-                'bg-green-200 text-green-400 dark:bg-green-500 dark:text-green-300':
+                'bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500 hover:text-white dark:text-emerald-400':
                   type === 'view',
-                'bg-blue-200 text-blue-400 dark:bg-blue-500 dark:text-blue-300':
+                'bg-blue-500/10 text-blue-600 hover:bg-blue-500 hover:text-white dark:text-blue-400':
                   type === 'update',
-                'bg-red-200 text-red-400 dark:bg-red-500 dark:text-red-300':
+                'bg-rose-500/10 text-rose-600 hover:bg-rose-500 hover:text-white dark:text-rose-400':
                   type === 'delete',
               }"
               (click)="handleAction(type)"
             >
-              <svg-icon [src]="getIconForAction(type)" [svgClass]="'h-5 w-5'">
+              <svg-icon [src]="getIconForAction(type)" [svgClass]="'h-4 w-4'">
               </svg-icon>
             </button>
           }

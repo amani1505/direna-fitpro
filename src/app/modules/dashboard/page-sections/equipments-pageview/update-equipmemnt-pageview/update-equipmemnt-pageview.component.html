@@ -1,19 +1,19 @@
 <form class="py-2 md:px-4" [formGroup]="equipmentForm">
   <h3
-    class="font-[600] text-[24px] tracking-wide font-catamaran capitalize text-gray-900 dark:text-night-50"
+    class="mb-5 font-display text-2xl font-extrabold capitalize tracking-tight text-ink sm:text-3xl"
   >
     Update Equipment
   </h3>
   <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
     <!-- Equipment Image Section -->
-    <div class="relative bg-white shadow dark:bg-night-600 rounded-xl">
+    <div class="form-card relative">
       <div>
         <div
-          class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
+          class="form-card-title"
         >
           Equipment Image
         </div>
-        <div class="p-5">
+        <div class="p-4 sm:p-5">
           <div class="flex flex-wrap gap-2">
             <!-- Loop through image uploaders -->
             @for (item of imageUploaders; track $index) {
@@ -46,7 +46,7 @@
                   <button
                     type="button"
                     (click)="removeImageUploader($index)"
-                    class="absolute flex items-center justify-center w-6 h-6 text-white bg-red-500 rounded-full -top-2 -right-2 hover:bg-red-600"
+                    class="absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-rose-500 text-white shadow-soft transition hover:scale-110 hover:bg-rose-600"
                     title="Remove image"
                   >
                     <svg-icon
@@ -63,11 +63,11 @@
               <button
                 type="button"
                 (click)="addImageUploader()"
-                class="flex items-center justify-center w-[130px] h-[130px] border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 dark:border-night-400 dark:hover:border-night-300"
+                class="flex h-[130px] w-[130px] items-center justify-center rounded-2xl border-2 border-dashed border-line text-subtle transition hover:border-primary-500 hover:bg-primary-500/5 hover:text-primary-500"
               >
                 <svg-icon
                   src="./assets/icons/heroicons/outline/plus.svg"
-                  [svgClass]="'w-6 h-6 text-gray-500 dark:text-night-200'"
+                  [svgClass]="'w-6 h-6 text-current'"
                 ></svg-icon>
               </button>
             }
@@ -76,7 +76,7 @@
           <!-- Image Upload Instructions -->
           <div class="mt-8">
             <div
-              class="flex items-center gap-2 mt-2 text-wrap dark:text-night-50"
+              class="mt-2 flex items-center gap-2 text-wrap text-ink"
             >
               <div>
                 <svg-icon
@@ -85,7 +85,7 @@
                 >
                 </svg-icon>
               </div>
-              <div class="flex-1 font-rubik text-[12px]">
+              <div class="flex-1 text-xs text-muted">
                 You need at least 4 images (maximum 10). Pay attention to the
                 quality of the pictures you add (important)
               </div>
@@ -96,21 +96,21 @@
     </div>
 
     <!-- Equipment Details Section -->
-    <div class="col-span-2">
-      <div class="bg-white shadow rounded-xl dark:bg-night-600">
+    <div class="xl:col-span-2">
+      <div class="form-card">
         <div
-          class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
+          class="form-card-title"
         >
           Equipment Details
         </div>
-        <div class="p-5">
-          <div class="grid grid-cols-1 gap-2 xl:grid-cols-3">
+        <div class="p-4 sm:p-5">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <!-- Equipment Name -->
             <div class="form__group">
               <div class="relative">
-                <label class="block mb-1 text-sm font-medium text-gray-700"
+                <label class="mb-1.5 block text-sm font-semibold text-ink"
                   >Equipment Name
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -135,9 +135,9 @@
             <!-- Model Number -->
             <div class="form__group">
               <div class="relative">
-                <label class="block mb-1 text-sm font-medium text-gray-700"
+                <label class="mb-1.5 block text-sm font-semibold text-ink"
                   >Model Number
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -162,9 +162,9 @@
             <!-- Serial Number -->
             <div class="form__group">
               <div class="relative">
-                <label class="block mb-1 text-sm font-medium text-gray-700"
+                <label class="mb-1.5 block text-sm font-semibold text-ink"
                   >Serial Number
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="text"
@@ -188,8 +188,8 @@
 
             <!-- Equipment Categories -->
             <div class="form__group">
-              <label class="block mb-1 text-sm font-medium text-gray-700"
-                >Equipment Categories<span class="text-[#e11d48]"
+              <label class="mb-1.5 block text-sm font-semibold text-ink"
+                >Equipment Categories<span class="text-primary-500"
                   >*</span
                 ></label
               >
@@ -208,9 +208,9 @@
               <div class="relative">
                 <label
                   for="purchase_date"
-                  class="block mb-1 text-sm font-medium text-gray-700"
+                  class="mb-1.5 block text-sm font-semibold text-ink"
                   >Purchase Date
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="date"
@@ -237,9 +237,9 @@
               <div class="relative">
                 <label
                   for="quantity"
-                  class="block mb-1 text-sm font-medium text-gray-700"
+                  class="mb-1.5 block text-sm font-semibold text-ink"
                   >Quantity
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -267,9 +267,9 @@
               <div class="relative">
                 <label
                   for="price"
-                  class="block mb-1 text-sm font-medium text-gray-700"
+                  class="mb-1.5 block text-sm font-semibold text-ink"
                   >Price
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="number"
@@ -293,11 +293,11 @@
             </div>
 
             <!-- Short Description -->
-            <div class="col-span-2 form__group">
+            <div class="form__group sm:col-span-2">
               <div class="relative">
-                <label class="block mb-1 text-sm font-medium text-gray-700"
+                <label class="mb-1.5 block text-sm font-semibold text-ink"
                   >Short Description
-                  <span class="text-[#e11d48]">*</span>
+                  <span class="text-primary-500">*</span>
                 </label>
 
                 <textarea
@@ -324,9 +324,9 @@
           <!-- Description & Product Feature -->
           <div class="mt-2 form__group">
             <div class="relative">
-              <label class="block mb-2 text-sm font-medium text-gray-700"
+              <label class="mb-2 block text-sm font-semibold text-ink"
                 >Description & Product Feature
-                <span class="text-[#e11d48]">*</span>
+                <span class="text-primary-500">*</span>
               </label>
               <div>
                 <quill-editor
@@ -350,7 +350,7 @@
 
           <!-- Publish Status -->
           <div class="form__group">
-            <label class="block mt-2 text-sm font-medium text-gray-700"
+            <label class="mt-2 block text-sm font-semibold text-ink"
               >Publish</label
             >
             <div class="mt-2 space-x-4">
@@ -359,7 +359,7 @@
                   type="radio"
                   formControlName="isPublished"
                   [value]="true"
-                  class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+                  class="h-5 w-5 text-primary-500"
                 />
                 <span class="ml-2">Published</span>
               </label>
@@ -368,7 +368,7 @@
                   type="radio"
                   formControlName="isPublished"
                   [value]="false"
-                  class="w-5 h-5 border-gray-300 form-radio text-primary-600 focus:ring-primary-500"
+                  class="h-5 w-5 text-primary-500"
                 />
                 <span class="ml-2">Unpublished</span>
               </label>
@@ -379,19 +379,19 @@
     </div>
 
     <!-- Equipment Status Section -->
-    <div class="mt-4 bg-white shadow rounded-xl dark:bg-night-600">
+    <div class="form-card mt-4">
       <div
-        class="font-rubik text-gray-900 dark:text-night-50 font-[400] p-2 text-xm capitalize leading-relaxed border-b border-gray-300 dark:border-night-50"
+        class="form-card-title"
       >
         Status
       </div>
-      <div class="p-5">
+      <div class="p-4 sm:p-5">
         <div class="mt-2">
           <div class="form__group">
             <label
               for="equipment_status"
-              class="block mb-1 text-sm font-medium text-gray-700"
-              >Equipment Status<span class="text-[#e11d48]">*</span></label
+              class="mb-1.5 block text-sm font-semibold text-ink"
+              >Equipment Status<span class="text-primary-500">*</span></label
             >
 
             <NormalSelect
@@ -406,8 +406,8 @@
           <div class="form__group">
             <label
               for="used_For"
-              class="block mb-1 text-sm font-medium text-gray-700"
-              >Uses of The Equipment<span class="text-[#e11d48]">*</span></label
+              class="mb-1.5 block text-sm font-semibold text-ink"
+              >Uses of The Equipment<span class="text-primary-500">*</span></label
             >
 
             <NormalSelect
@@ -423,10 +423,10 @@
   </div>
 
   <!-- Form Actions -->
-  <div class="flex items-center justify-end gap-3 p-3">
+  <div class="form-actions">
     <button
       (click)="cancel()"
-      class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
+      class="form-cancel"
     >
       Cancel
     </button>
@@ -440,15 +440,15 @@
         !selectedUsedFor()
       "
       (click)="submit()"
-      class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
+      class="form-submit"
       [ngClass]="{
-        'bg-green-500 hover:bg-green-700':
+        'form-submit-ready':
           !equipmentForm.invalid &&
           !createLoading() &&
           selectedCategories().length > 0 &&
           selectedStatus() &&
           selectedUsedFor(),
-        'bg-gray-300':
+        'form-submit-disabled':
           equipmentForm.invalid ||
           createLoading() ||
           selectedCategories().length === 0 ||
@@ -458,7 +458,7 @@
     >
       @if (createLoading()) {
         <svg
-          class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+          class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"

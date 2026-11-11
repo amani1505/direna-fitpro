@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { RevealDirective } from '@directive/reveal.directive';
 
 interface AboutInterface {
   id: string;
@@ -15,7 +16,7 @@ interface AboutInterface {
 @Component({
   selector: 'about',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, RevealDirective],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })

@@ -1,52 +1,33 @@
-<div class="relative bg-white dark:bg-night-700">
-  <div class="px-5 mx-auto">
-    <div class="flex items-center justify-between py-3.5 md:justify-start">
-      <!-- Mobile Navigation Menu Button-->
-      <div class="sm:order-1 md:hidden">
-        <button
-          (click)="toggleMobileMenu()"
-          type="button"
-          class="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 hover:bg-gray-100 hover:text-gray-500 dark:bg-night-700 dark:text-night-200 dark:hover:text-night-400"
-          aria-expanded="false"
-        >
-          <span class="sr-only">Open menu</span>
-          <!-- Heroicon name: outline/menu -->
-          <svg-icon
-            src="assets/icons/heroicons/outline/menu.svg"
-            [svgClass]="'h-6 w-6'"
-          >
-          </svg-icon>
-        </button>
-      </div>
-
-      <!-- Logo -->
-      <div
-        class="flex items-center justify-start sm:order-2 md:mr-10 lg:hidden"
+<header class="relative z-20 border-b border-line bg-surface/80 backdrop-blur-xl">
+  <div class="flex h-16 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center gap-3">
+      <!-- Menu button (below lg, where the sidebar is hidden) -->
+      <button
+        (click)="toggleMobileMenu()"
+        type="button"
+        class="grid h-10 w-10 place-items-center rounded-xl border border-line bg-surface text-ink transition hover:border-primary-500 hover:text-primary-500 active:scale-90 lg:hidden"
+        aria-label="Open menu"
       >
-        <a
-          class="flex items-center justify-center p-2 rounded bg-primary-100 focus:outline-none focus:ring-1"
-        >
-          <svg-icon src="assets/images/logo.svg" [svgClass]="'h-5 w-5'">
-          </svg-icon>
-        </a>
-        <b
-          class="hidden pl-3 text-sm font-rubik font-[500] dark:text-night-50 sm:block"
-        >
-          Direna FitPro
-        </b>
-      </div>
+        <svg-icon src="assets/icons/heroicons/outline/menu.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+      </button>
 
-      <!-- Desktop Menu -->
-      <!-- <div class="hidden space-x-10 sm:order-3 md:flex">
-        <app-navbar-menu></app-navbar-menu>
-      </div> -->
+      <!-- Logo (below lg) -->
+      <a routerLink="/admin" class="group flex items-center gap-2 lg:hidden">
+        <span class="grid h-9 w-9 place-items-center rounded-xl border-2 border-ink bg-primary-500 shadow-pop-sm transition-transform duration-500 ease-spring group-hover:-rotate-12">
+          <svg-icon src="assets/images/logo-icon-white.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+        </span>
+        <span class="hidden font-display text-base font-extrabold tracking-tight text-ink xs:block">
+          direna<span class="text-primary-500">fitpro</span>
+        </span>
+      </a>
+    </div>
 
-      <!-- Profile menu -->
-      <div class="items-center justify-end sm:order-4 md:flex md:flex-1 lg:w-0">
-        <app-profile-menu></app-profile-menu>
-      </div>
+    <div class="flex items-center gap-2">
+      <app-theme-toggle></app-theme-toggle>
+      <app-profile-menu></app-profile-menu>
     </div>
   </div>
+
   <!-- Mobile menu -->
   <app-navbar-mobile></app-navbar-mobile>
-</div>
+</header>

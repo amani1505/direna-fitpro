@@ -4,50 +4,53 @@
     (click)="toggleDropdown()"
     clickOutside
     (clickOutside)="closeDropdown()"
-    class="inline-flex justify-between w-full gap-1 px-4 py-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer focus:outline-none focus:ring-1 focus:ring-offset-1 focus:ring-primary-500"
+    type="button"
+    class="field"
   >
     <span class="capitalize truncate"
 
     [ngClass]="{
-      'text-neutral-700': selectedOptionDetail(),
-      'text-gray-400': !selectedOptionDetail()
+      'text-ink': selectedOptionDetail(),
+      'text-subtle': !selectedOptionDetail()
     }"
 
     >
       {{ selectedOptionDetail()?.label || placeholder }}
     </span>
     <svg-icon
-      src="assets/icons/heroicons/solid/chevron-right.svg"
-      [svgClass]="'h-4 w-4'"
+      src="assets/icons/heroicons/solid/chevron-down.svg"
+      [svgClass]="'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'"
+      [class.rotate-180]="dropdownOpenSignal()"
     ></svg-icon>
   </button>
 
   <!-- Dropdown Menu -->
   <div
     *ngIf="dropdownOpenSignal()"
-    class="absolute z-10 w-full p-2 mt-1 bg-white border border-gray-200 rounded-md shadow"
+    class="dropdown-panel"
   >
     <!-- Search Input -->
     <input
       type="text"
       placeholder="Search..."
-      class="w-full px-4 py-2 mb-2 text-sm border border-gray-200 rounded focus:outline-none"
+      class="mb-1.5 !rounded-lg !py-2 text-sm"
       (input)="onSearchChange($event)"
       (click)="$event.stopPropagation()"
     />
 
     <!-- Options -->
-    <div *ngIf="filteredOptions().length > 0; else noOptions">
+    <div *ngIf="filteredOptions().length > 0; else noOptions" class="max-h-56 overflow-y-auto">
       <div
         *ngFor="let option of filteredOptions()"
         (click)="selectOption(option)"
-        class="px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 text-neutral-700"
+        class="dropdown-option"
+        [class.dropdown-option-active]="selectedOptionDetail()?.value === option.value"
       >
         {{ option.label }}
       </div>
     </div>
     <ng-template #noOptions>
-      <div class="px-4 py-2 text-sm text-center text-gray-500">
+      <div class="px-3 py-4 text-center text-sm text-muted">
         No options available
       </div>
     </ng-template>
@@ -56,7 +59,8 @@
       <div>
         <button
           (click)="add()"
-          class="w-full flex rounded-md bg-gray-200 px-4 py-2.5 text-xs font-semibold text-gray-500 hover:bg-gray-300 dark:bg-night-600 dark:text-night-200 dark:hover:bg-night-500 capitalize justify-center items-center gap-2"
+          type="button"
+            class="dropdown-add"
         >
           <div>
             <svg-icon
@@ -74,7 +78,7 @@
 
   <!-- Validation Error -->
   <div
-    class="mt-1 text-sm text-red-600"
+    class="is__invalid-error"
     *ngIf="isTouchedSignal() && !isValid()"
   >
     Please select an option.

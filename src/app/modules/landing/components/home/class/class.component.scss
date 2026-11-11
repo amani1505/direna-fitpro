@@ -1,0 +1,183 @@
+/* Section backdrop: violet top-right, coral bottom-left (mirrors the hero) */
+.classes-mesh {
+  background:
+    radial-gradient(50% 50% at 90% 10%, rgb(122 86 245 / 0.35), transparent 70%),
+    radial-gradient(55% 55% at 5% 95%, rgb(255 72 54 / 0.3), transparent 70%);
+}
+
+/* ---------- Track: swipe row below lg, 4-up grid from lg ---------- */
+
+.class-track {
+  display: flex;
+  gap: 1rem;
+  margin-inline: -1rem;
+  padding: 0.5rem 1rem 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1rem;
+  scrollbar-width: none;
+}
+
+.class-track::-webkit-scrollbar {
+  display: none;
+}
+
+.class-slot {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 420px) {
+  .class-slot {
+    flex-basis: 64%;
+  }
+}
+
+@media (min-width: 768px) {
+  .class-slot {
+    flex-basis: 44%;
+  }
+}
+
+@media (min-width: 640px) {
+  .class-track {
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+    scroll-padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .class-track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+}
+
+/* ---------- Tile ---------- */
+
+.class-tile {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 30rem;
+  padding: 1.25rem;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: rgb(255 255 255 / 0.04);
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease;
+}
+
+.class-tile:hover,
+.class-tile:focus-within {
+  transform: translateY(-8px) rotate(-0.6deg);
+  border-color: rgb(255 72 54 / 0.6);
+  box-shadow: 0 30px 60px -25px rgb(255 72 54 / 0.55);
+}
+
+@media (min-width: 1280px) {
+  .class-tile {
+    height: 34rem;
+    padding: 1.5rem;
+  }
+}
+
+.class-tile-img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.class-tile:hover .class-tile-img {
+  transform: scale(1.1);
+}
+
+.class-tile-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to top,
+    rgb(24 19 34 / 0.96) 0%,
+    rgb(24 19 34 / 0.6) 40%,
+    rgb(24 19 34 / 0.05) 70%
+  );
+  transition: opacity 0.4s ease;
+}
+
+/* Description: two lines, opens up on hover (always open on touch) */
+.class-tile-desc {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgb(255 255 255 / 0.72);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .class-tile:hover .class-tile-desc {
+    -webkit-line-clamp: 4;
+  }
+}
+
+/* ---------- Capacity ring ---------- */
+
+.class-ring {
+  position: relative;
+  border-radius: 999px;
+  background: rgb(24 19 34 / 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.class-ring-value {
+  stroke-dashoffset: var(--offset);
+  transition: stroke-dashoffset 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Empty until the card scrolls into view, then it fills */
+:host ::ng-deep .reveal:not(.is-visible) .class-ring-value {
+  stroke-dashoffset: var(--ring);
+}
+
+/* ---------- Carousel buttons ---------- */
+
+.carousel-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / 0.2);
+  font-size: 1.1rem;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.carousel-btn:hover {
+  background: #fff;
+  color: #ff4836;
+}
+
+.carousel-btn:active {
+  transform: scale(0.9);
+}

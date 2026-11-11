@@ -1,16 +1,16 @@
-<div class="my-3 font-catamaran">
+<div class="animate-pop-in [animation-delay:160ms]">
   <div class="w-auto">
     <main class="">
-      <div class="mb-8 overflow-hidden bg-white shadow rounded-xl">
+      <div class="overflow-hidden rounded-2xl border border-line bg-surface">
         <div class="flex items-center justify-between p-2 m-3">
-          <div class="text-md">Equipments</div>
+          <h2 class="font-display text-lg font-bold text-ink">Equipment</h2>
           <a
             [routerLink]="['/admin/equipments']"
-            class="text-sm capitalize cursor-pointer hover:underline text-primary-500"
+            class="rounded-full px-3 py-1 text-sm font-semibold text-primary-500 transition hover:bg-primary-500 hover:text-white"
             >view all</a
           >
         </div>
-        <div class="">
+        <div class="overflow-x-auto">
           <table class="hidden min-w-full divide-y divide-gray-200 sm:table">
             <thead class="bg-gray-50">
               <tr>

@@ -1,9 +1,9 @@
 <div
-  class="relative flex items-center justify-center border border-dashed rounded-md cursor-pointer bg-gray-50 hover:bg-gray-100 dark:bg-night-300"
-  [ngClass]="{ 'border-none': currentImage }"
+  class="group relative flex max-w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-line bg-surface-2/60 transition-all duration-300 hover:border-primary-500 hover:bg-primary-500/5"
+  [ngClass]="{ '!border-solid !border-transparent': currentImage }"
   [style.width]="width"
   [style.height]="height"
-  [class.border-blue-500]="isDragOver"
+  [class.uploader-drag]="isDragOver"
   (drop)="onDrop($event)"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
@@ -13,27 +13,27 @@
     [src]="currentImage"
     [style.width]="width"
     [style.height]="height"
-    alt="Selected Image"
-    class="rounded-md"
+    alt="Selected image"
+    class="max-w-full animate-pop-in rounded-2xl object-cover"
   />
 
   <div
-    class="absolute inset-0 flex flex-col items-center justify-center px-2 text-neutral-600 font-raleway"
+    class="absolute inset-0 flex flex-col items-center justify-center gap-1 px-2 text-muted"
     *ngIf="!currentImage"
   >
     <svg-icon
       src="./assets/icons/heroicons/outline/photo.svg"
-      [svgClass]="'w-6 h-6'"
-      class="inline-block dark:text-night-50"
+      [svgClass]="'w-7 h-7'"
+      class="inline-block text-subtle transition-transform duration-500 ease-spring group-hover:-translate-y-1 group-hover:rotate-[-8deg] group-hover:text-primary-500"
     >
     </svg-icon>
-    <span class="text-[9px] dark:text-night-50 text-center"
-      >Drag your image here or
+    <span class="text-center text-[11px] leading-snug"
+      >Drag an image here or
       <span
-        class="text-center text-blue-700 underline cursor-pointer"
+        class="cursor-pointer font-semibold text-primary-500 underline underline-offset-2"
         (click)="fileInput.click()"
       >
-        click to browser
+        browse
       </span></span
     >
   </div>
@@ -45,7 +45,9 @@
     <button
       *ngIf="editMode"
       (click)="fileInput.click()"
-      class="flex items-center p-1 text-white bg-blue-600 rounded-full hover:bg-blue-700"
+      type="button"
+      aria-label="Replace image"
+      class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-ink shadow-soft backdrop-blur transition hover:scale-110 hover:bg-primary-500 hover:text-white"
     >
       <svg-icon
         src="./assets/icons/heroicons/outline/pencil.svg"
@@ -57,7 +59,9 @@
     @if (canDelete && !isFromApi) {
       <button
         (click)="deleteImage()"
-        class="flex items-center p-1 text-white bg-red-600 rounded-full hover:bg-red-700"
+        type="button"
+        aria-label="Remove image"
+        class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-rose-500 shadow-soft backdrop-blur transition hover:scale-110 hover:bg-rose-500 hover:text-white"
       >
         <svg-icon
           src="./assets/icons/heroicons/outline/trash.svg"

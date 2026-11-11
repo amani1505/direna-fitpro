@@ -1,0 +1,24 @@
+/* Coral arch with concentric rings, matching the home hero */
+.story-arch {
+  border-radius: 999px 999px 2.5rem 2.5rem;
+  background: linear-gradient(165deg, #ff8e80 0%, #ff4836 45%, #c22717 100%);
+  box-shadow: 0 40px 80px -30px rgb(255 72 54 / 0.6);
+  overflow: hidden;
+}
+
+.story-arch::before,
+.story-arch::after {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  border: 1.5px solid rgb(255 255 255 / 0.22);
+}
+
+.story-arch::before {
+  inset: 7%;
+}
+
+.story-arch::after {
+  inset: 16%;
+  border-color: rgb(255 255 255 / 0.12);
+}

@@ -1,4 +1,5 @@
 import { DatePipe, NgIf } from '@angular/common';
+import { SpotlightDirective } from '@directive/spotlight.directive';
 import { Component, inject, Input, signal } from '@angular/core';
 import { ModalComponent } from '@components/modal/modal.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -10,6 +11,7 @@ import { ServicesService } from '@service/modules/services.service';
   selector: 'ServiceCard',
   standalone: true,
   imports: [
+    SpotlightDirective,
     AngularSvgIconModule,
     DatePipe,
     ModalComponent,

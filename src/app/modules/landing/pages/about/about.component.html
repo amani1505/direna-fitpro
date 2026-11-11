@@ -1,35 +1,195 @@
+<!-- ============ Intro band ============ -->
 <section
-class="min-h-[25vh]  flex flex-col justify-end items-center bg-dark has-bg-image pb-10 md:pb-0"
-  style="background-image: url(&quot;./assets/images/footer-bg.png&quot;)"
+  class="relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white"
+  aria-labelledby="about-title"
 >
-<div class="text-white text-[2rem] md:text-[3rem]  capitalize font-[500] mb-3">About US</div>
-  <p class="text-[14px] xl:text-[16px] lg:text-[12px] text-center">
-    Get to know more about Direna FitPro and our mission
-  </p>
-</section>
-
-<section>
-  <div class="md:px-[5rem] md:py-[5rem]">
-    <about-section></about-section>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-mesh absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="hero-grain absolute inset-0"></div>
+  </div>
+  <div
+    aria-hidden="true"
+    class="hero-bigword pointer-events-none absolute inset-x-0 -bottom-[4%] -z-10 select-none"
+  >
+    <div class="hero-bigword-track">
+      <span>About us ✺&nbsp;</span>
+      <span>About us ✺&nbsp;</span>
+    </div>
   </div>
 
-  <section class="py-12 bg-primary-50">
-    <div class="container px-4 mx-auto">
-      <div class="flex items-center justify-center my-7">
-        <p class="py-3 section-subtitle">Our Team</p>
-      </div>
+  <div class="mx-auto max-w-page px-4 pb-20 pt-32 sm:px-6 sm:pb-28 sm:pt-40">
+    <p
+      class="inline-flex animate-rise items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-sm font-semibold backdrop-blur-md"
+    >
+      <span class="text-primary-400" aria-hidden="true">✺</span> About Direna FitPro
+    </p>
+    <h1
+      id="about-title"
+      class="mt-6 max-w-4xl animate-rise font-display text-[2.6rem] font-extrabold leading-[0.95] tracking-[-0.04em] [animation-delay:120ms] xs:text-5xl sm:text-6xl lg:text-7xl"
+    >
+      Here to enhance and inspire health and wellness
+    </h1>
+    <p
+      class="mt-6 max-w-xl animate-rise text-base leading-relaxed text-white/70 [animation-delay:240ms] sm:text-lg"
+    >
+      A division of Direna Solution Group, supplying top-quality sports equipment
+      and complete gym solutions, locally and internationally.
+    </p>
+  </div>
+</section>
 
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
-        <team-member
-          *ngFor="let member of teamMembers"
-          [name]="member.name"
-          [role]="member.role"
-          [imageUrl]="member.imageUrl"
+<!-- ============ Story ============ -->
+<about-section></about-section>
+
+<!-- ============ What we do ============ -->
+<section class="bg-sunken py-20 sm:py-28" aria-labelledby="services-title">
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <div class="max-w-2xl" reveal>
+      <p class="section-subtitle">What we do</p>
+      <h2
+        id="services-title"
+        class="mt-5 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-5xl"
+      >
+        More than a supplier, from advice to installation to maintenance
+      </h2>
+    </div>
+
+    <div class="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <!-- Large tile -->
+      <article
+        reveal
+        spotlight
+        class="group relative isolate flex min-h-[320px] flex-col justify-end overflow-hidden rounded-3xl bg-[rgb(var(--c-hero))] p-6 text-white sm:p-8 md:col-span-2 lg:row-span-2"
+      >
+        <img
+          src="./assets/images/class-1.jpg"
+          alt=""
+          aria-hidden="true"
+          class="absolute inset-0 -z-10 h-full w-full object-cover opacity-50 transition-transform duration-[1.2s] ease-out-expo group-hover:scale-105"
+          loading="lazy"
+        />
+        <div aria-hidden="true" class="absolute inset-0 -z-10 bg-gradient-to-t from-[rgb(var(--c-hero))] via-[rgb(var(--c-hero)/0.6)] to-transparent"></div>
+        <span class="grid h-12 w-12 place-items-center rounded-2xl bg-primary-500 transition-transform duration-500 ease-spring group-hover:-rotate-12">
+          <svg-icon src="assets/icons/heroicons/outline/cube.svg" [svgClass]="'h-6 w-6'"></svg-icon>
+        </span>
+        <h3 class="mt-5 font-display text-2xl font-extrabold tracking-tight sm:text-3xl">
+          Equipment supply &amp; distribution
+        </h3>
+        <p class="mt-2 max-w-md text-white/75">
+          State-of-the-art fitness and sports equipment, sourced and delivered for
+          gyms, clubs and homes.
+        </p>
+      </article>
+
+      @for (item of services; track item.title; let i = $index) {
+        <article
+          reveal
+          [revealDelay]="(i + 1) * 90"
+          spotlight
+          class="group flex flex-col rounded-3xl border border-line bg-surface p-6 transition-[transform,border-color] duration-300 ease-out-expo hover:-translate-y-1 hover:border-primary-500/40"
+          [ngClass]="item.span"
         >
-        </team-member>
+          <span
+            class="grid h-11 w-11 place-items-center rounded-2xl transition-transform duration-500 ease-spring group-hover:-rotate-12 group-hover:scale-110"
+            [ngClass]="item.tone"
+          >
+            <svg-icon [src]="item.icon" [svgClass]="'h-5 w-5'"></svg-icon>
+          </span>
+          <h3 class="mt-4 font-display text-xl font-bold tracking-tight text-ink">{{ item.title }}</h3>
+          <p class="mt-1.5 text-sm leading-relaxed text-muted">{{ item.text }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ============ Values ============ -->
+<section class="py-20 sm:py-28" aria-labelledby="values-title">
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between" reveal>
+      <div>
+        <p class="section-subtitle">What we value</p>
+        <h2
+          id="values-title"
+          class="mt-5 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-5xl"
+        >
+          How we work with you
+        </h2>
+      </div>
+      <p class="max-w-sm text-muted">
+        Modern, effective solutions for the sports and fitness industry, built to
+        international standards.
+      </p>
+    </div>
+
+    <ul class="mt-12 divide-y divide-line border-y border-line">
+      @for (value of values; track value.title; let i = $index) {
+        <li reveal [revealDelay]="i * 90" class="value-row group">
+          <span class="value-word font-display font-extrabold tracking-[-0.04em]">{{ value.title }}</span>
+          <p class="max-w-md text-muted transition-colors duration-300 group-hover:text-ink md:text-right">
+            {{ value.text }}
+          </p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<!-- ============ Team ============ -->
+<section class="bg-sunken py-20 sm:py-28" aria-labelledby="team-title">
+  <div class="mx-auto max-w-page px-4 sm:px-6">
+    <div class="text-center" reveal>
+      <p class="section-subtitle">Our team</p>
+      <h2
+        id="team-title"
+        class="mt-5 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-5xl"
+      >
+        The people behind the reps
+      </h2>
+    </div>
+
+    <div class="mt-12 grid grid-cols-1 gap-5 xs:grid-cols-2 md:grid-cols-3">
+      <team-member
+        *ngFor="let member of teamMembers; let i = index"
+        reveal
+        [revealDelay]="i * 110"
+        [name]="member.name"
+        [role]="member.role"
+        [imageUrl]="member.imageUrl"
+      >
+      </team-member>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="px-4 py-20 sm:px-6 sm:py-24">
+  <div
+    reveal="zoom"
+    class="relative isolate mx-auto max-w-page overflow-hidden rounded-[2rem] border-2 border-ink bg-primary-500 px-6 py-14 text-white shadow-pop sm:px-12 sm:py-16"
+  >
+    <div aria-hidden="true" class="absolute -right-16 -top-16 -z-10 h-64 w-64 animate-blob rounded-full bg-secondary-400/50 blur-3xl"></div>
+    <div aria-hidden="true" class="absolute -bottom-24 left-1/3 -z-10 h-64 w-64 animate-blob rounded-full bg-yellow-300/40 blur-3xl [animation-delay:-6s]"></div>
+
+    <div class="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <div class="max-w-xl">
+        <h2 class="font-display text-3xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl">
+          Ready to train with us?
+        </h2>
+        <p class="mt-3 text-white/85">
+          Join as a member, or talk to us about equipment and gym solutions for
+          your space.
+        </p>
+      </div>
+      <div class="flex flex-col gap-3 xs:flex-row">
+        <a routerLink="/auth" class="btn-pop shine !bg-white !text-primary-500">Join the club</a>
+        <a
+          routerLink="/contact-us"
+          class="btn-ghost border-white/50 text-white hover:border-white hover:bg-white hover:text-primary-500"
+          >Contact us</a
+        >
       </div>
     </div>
-  </section>
-
-
+  </div>
 </section>

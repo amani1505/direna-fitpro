@@ -1,4 +1,5 @@
 import { DatePipe, NgIf } from '@angular/common';
+import { SpotlightDirective } from '@directive/spotlight.directive';
 import { Component, inject, Input, signal } from '@angular/core';
 import { ModalComponent } from '@components/modal/modal.component';
 import { Branch } from '@model/branch.interface';
@@ -10,6 +11,7 @@ import { EditBranchComponent } from '../edit-branch/edit-branch.component';
   selector: 'BranchCard',
   standalone: true,
   imports: [
+    SpotlightDirective,
     AngularSvgIconModule,
     DatePipe,
     ModalComponent,
