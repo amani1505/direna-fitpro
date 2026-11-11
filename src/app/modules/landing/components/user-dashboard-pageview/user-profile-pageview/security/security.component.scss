@@ -1,3 +1,22 @@
-// .input-field {
-//   @apply w-full px-4 py-2 dark:text-white dark:bg-gray-700 border border-primary-300 rounded-lg focus:outline-none focus:border-blue-500;
-// }
+.pw-toggle {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  z-index: 11;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  color: rgb(var(--c-muted));
+  transform: translateY(-50%);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.pw-toggle:hover,
+.pw-toggle:focus-visible {
+  background: rgb(var(--c-surface-2));
+  color: rgb(var(--c-ink));
+}

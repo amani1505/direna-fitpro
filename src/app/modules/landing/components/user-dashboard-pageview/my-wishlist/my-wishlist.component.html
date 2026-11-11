@@ -1,38 +1,42 @@
-<div class="">
+<div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
   <div>
-    <h2 class="mb-1 text-2xl font-[500] font-catamaran text-neutral-700">
-      Personal Wishlist
-    </h2>
-    <p class="font-catamaran">Manage your personal wishlist</p>
+    <h2 class="dash-title">Wishlist</h2>
+    <p class="dash-desc">Equipment you've saved for later.</p>
   </div>
+  @if (wishlists().length > 0) {
+    <p class="text-sm font-semibold text-muted">
+      {{ wishlists().length }} {{ wishlists().length === 1 ? "item" : "items" }}
+    </p>
+  }
+</div>
 
+<div class="mt-6">
   @if (loading()) {
-    <div class="loader-container">
-      <div class="loader"></div>
-    </div>
-  } @else if (!loading() && (!wishlists || wishlists().length === 0)) {
-    <div class="flex bg-gray-100 items-center justify-center w-full h-[300px]">
-      <p class="no-data-text">Your Wishlist is Empty</p>
+    <ul class="grid gap-4 xs:grid-cols-2 xl:grid-cols-3" aria-label="Loading wishlist">
+      @for (row of [1, 2, 3]; track row) {
+        <li class="skeleton h-[300px] rounded-3xl"></li>
+      }
+    </ul>
+  } @else if (wishlists().length === 0) {
+    <div class="dash-empty">
+      <span class="dash-empty-icon">
+        <svg-icon src="./assets/icons/heroicons/outline/heart.svg" [svgClass]="'h-7 w-7'"></svg-icon>
+      </span>
+      <p class="font-display text-xl font-bold text-ink">Your wishlist is empty</p>
+      <p class="max-w-sm text-sm text-muted">Tap the heart on any equipment to save it here.</p>
+      <a routerLink="/equipments" class="btn-pop shine mt-2 px-5 py-2.5 text-sm">Browse equipment</a>
     </div>
   } @else {
-    @for (wishlist of wishlists(); track $index) {
-      <div class="mb-3">
-        <wishlist-card
-          [wishlist]="wishlist"
-          (removeFromWishlist)="removeFromWishlist($event)"
-          (addToCart)="addToCart($event)"
-        ></wishlist-card>
-      </div>
-    }
+    <ul class="grid gap-4 xs:grid-cols-2 xl:grid-cols-3">
+      @for (wishlist of wishlists(); track wishlist.id; let i = $index) {
+        <li class="animate-rise" [style.animation-delay.ms]="i * 70">
+          <wishlist-card
+            [wishlist]="wishlist"
+            (removeFromWishlist)="removeFromWishlist($event)"
+            (addToCart)="addToCart($event)"
+          ></wishlist-card>
+        </li>
+      }
+    </ul>
   }
-
-  <!-- @for (wishlist of wishlists(); track $index) {
-    <div class="mb-3">
-      <wishlist-card
-        [wishlist]="wishlist"
-        (removeFromWishlist)="removeFromWishlist($event)"
-        (addToCart)="addToCart($event)"
-      ></wishlist-card>
-    </div>
-  } -->
 </div>

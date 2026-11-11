@@ -1,183 +1,102 @@
-<ReusableModal
-  [isOpen]="isModalOpen()"
-  [config]="modalConfig"
-  (closeModalEvent)="onCancel()"
->
-  <!-- Custom header -->
+<ReusableModal [isOpen]="isModalOpen()" [config]="modalConfig" (closeModalEvent)="onCancel()">
   <ng-container modalHeader>
-    <h2
-      class="text-xl font-semibold text-gray-700 font-catamaran dark:text-night-50 ms-2"
-    >
-      Add New Branch
-    </h2>
+    <span class="grid h-9 w-9 place-items-center rounded-xl bg-primary-500/10 text-primary-500" aria-hidden="true">
+      <svg-icon src="./assets/icons/map-pin.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+    </span>
+    <h2 class="font-display text-xl font-bold text-ink">Add address</h2>
   </ng-container>
 
-  <!-- Modal content -->
-  <ng-container modalContent>
-    <form
-      [formGroup]="addressForm"
-      class="grid grid-cols-1 gap-6 md:grid-cols-2"
-    >
-      <div class="">
-        <label for="type" class="block mb-2"
-          >Address Type <span class="text-[#e11d48]">*</span></label
-        >
-        <input
-          type="text"
-          id="type"
-          formControlName="type"
-          class="input-field"
-        />
-
-        @if (addressForm.get("type")?.touched) {
-          @if (addressForm.get("type").hasError("required")) {
-            <div class="is__invalid-error">Address Type is Required</div>
-          }
-        }
-      </div>
-
-      <div class="">
-        <label for="type" class="block mb-2"
-          >Address Street <span class="text-[#e11d48]">*</span></label
-        >
-        <input
-          type="text"
-          id="street"
-          formControlName="street"
-          class="input-field"
-        />
-
-        @if (addressForm.get("street")?.touched) {
-          @if (addressForm.get("street").hasError("required")) {
-            <div class="is__invalid-error">Address Street is Required</div>
-          }
-        }
-      </div>
-
-      <div class="">
-        <label for="district" class="block mb-2"
-          >Address District<span class="text-[#e11d48]">*</span></label
-        >
-        <input
-          type="text"
-          id="district"
-          formControlName="district"
-          class="input-field"
-        />
-
-        @if (addressForm.get("district")?.touched) {
-          @if (addressForm.get("district").hasError("required")) {
-            <div class="is__invalid-error">District is Required</div>
-          }
-        }
-      </div>
-
-      <div class="">
-        <label for="city" class="block mb-2"
-          >Address City <span class="text-[#e11d48]">*</span></label
-        >
-        <input
-          type="text"
-          id="city"
-          formControlName="city"
-          class="input-field"
-        />
-
-        @if (addressForm.get("city")?.touched) {
-          @if (addressForm.get("city").hasError("required")) {
-            <div class="is__invalid-error">Address City is Required</div>
-          }
-        }
-      </div>
-
-      <div class="">
-        <label for="state" class="block mb-2">Address State</label>
-        <input
-          type="text"
-          id="state"
-          formControlName="state"
-          class="input-field"
-        />
-      </div>
-
-      <div class="">
-        <label for="country" class="block mb-2"
-          >Address Country <span class="text-[#e11d48]">*</span></label
-        >
-        <input
-          type="text"
-          id="country"
-          formControlName="country"
-          class="input-field"
-        />
-
-        @if (addressForm.get("country")?.touched) {
-          @if (addressForm.get("country").hasError("required")) {
-            <div class="is__invalid-error">Address Country is Required</div>
-          }
-        }
-      </div>
-
-      <div class="">
-        <label for="zip_code" class="block mb-2">Zip Code</label>
-        <input
-          type="text"
-          id="zip_code"
-          formControlName="zip_code"
-          class="input-field"
-        />
-      </div>
-
-      <div class="">
-        <label for="is_default" class="block mb-2">Default </label>
-        <input type="checkbox" id="is_default" formControlName="is_default" />
-      </div>
-    </form>
-  </ng-container>
-  <ng-container modalFooter>
-    <div class="flex items-center justify-end gap-3 p-3">
-      <button
-        type="submit"
-        (click)="onCancel()"
-        class="px-5 py-2 text-white bg-red-500 rounded-lg font-[500] hover:bg-red-700"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        [disabled]="addressForm.invalid || loading()"
-        (click)="submit()"
-        class="px-5 py-2 text-white rounded-lg font-[500] flex items-center justify-center min-w-[100px]"
-        [ngClass]="{
-          'bg-green-500 hover:bg-green-700': !addressForm.invalid && !loading(),
-          'bg-gray-300': addressForm.invalid || loading(),
-        }"
-      >
-        @if (loading()) {
-          <svg
-            class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+  <form [formGroup]="addressForm" (ngSubmit)="submit()" novalidate class="space-y-5" id="create-address-form">
+    <div>
+      <label for="new_type" class="profile-label">Label <span class="text-primary-500">*</span></label>
+      <div class="mb-2.5 flex flex-wrap gap-2">
+        @for (preset of presets; track preset) {
+          <button
+            type="button"
+            class="rounded-full border-[1.5px] px-3.5 py-1.5 text-sm font-semibold transition duration-200 active:scale-95"
+            [ngClass]="addressForm.get('type')?.value === preset ? 'border-primary-500 bg-primary-500 text-white' : 'border-line text-ink hover:border-ink'"
+            [attr.aria-pressed]="addressForm.get('type')?.value === preset"
+            (click)="pickType(preset)"
           >
-            <circle
-              class="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              stroke-width="4"
-            ></circle>
-            <path
-              class="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
+            {{ preset }}
+          </button>
         }
-
-        {{ loading() ? "Submitting..." : "Submit" }}
-      </button>
+      </div>
+      <input
+        type="text"
+        id="new_type"
+        formControlName="type"
+        placeholder="Or type your own, e.g. Mum's house"
+        [class.is__invalid-input]="invalid('type')"
+      />
+      @if (invalid("type")) {
+        <p class="is__invalid-error">Give this address a label.</p>
+      }
     </div>
+
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="sm:col-span-2">
+        <label for="new_street" class="profile-label">Street <span class="text-primary-500">*</span></label>
+        <input type="text" id="new_street" formControlName="street" autocomplete="address-line1" [class.is__invalid-input]="invalid('street')" />
+        @if (invalid("street")) {
+          <p class="is__invalid-error">Enter the street.</p>
+        }
+      </div>
+
+      <div>
+        <label for="new_district" class="profile-label">District <span class="text-primary-500">*</span></label>
+        <input type="text" id="new_district" formControlName="district" autocomplete="address-level3" [class.is__invalid-input]="invalid('district')" />
+        @if (invalid("district")) {
+          <p class="is__invalid-error">Enter the district.</p>
+        }
+      </div>
+
+      <div>
+        <label for="new_city" class="profile-label">City <span class="text-primary-500">*</span></label>
+        <input type="text" id="new_city" formControlName="city" autocomplete="address-level2" [class.is__invalid-input]="invalid('city')" />
+        @if (invalid("city")) {
+          <p class="is__invalid-error">Enter the city.</p>
+        }
+      </div>
+
+      <div>
+        <label for="new_state" class="profile-label">Region / state</label>
+        <input type="text" id="new_state" formControlName="state" autocomplete="address-level1" />
+      </div>
+
+      <div>
+        <label for="new_zip_code" class="profile-label">Postal code</label>
+        <input type="text" id="new_zip_code" formControlName="zip_code" autocomplete="postal-code" />
+      </div>
+
+      <div class="sm:col-span-2">
+        <label for="new_country" class="profile-label">Country <span class="text-primary-500">*</span></label>
+        <input type="text" id="new_country" formControlName="country" autocomplete="country-name" [class.is__invalid-input]="invalid('country')" />
+        @if (invalid("country")) {
+          <p class="is__invalid-error">Enter the country.</p>
+        }
+      </div>
+    </div>
+
+    <label class="flex cursor-pointer items-center gap-3 rounded-2xl bg-surface-2 px-4 py-3">
+      <input type="checkbox" formControlName="is_default" class="h-5 w-5 rounded-md" />
+      <span class="text-sm font-semibold text-ink">Use as my default delivery address</span>
+    </label>
+  </form>
+
+  <ng-container modalFooter>
+    <button type="button" (click)="onCancel()" class="form-cancel">Cancel</button>
+    <button
+      type="submit"
+      form="create-address-form"
+      [disabled]="addressForm.invalid || loading()"
+      class="form-submit"
+      [ngClass]="addressForm.invalid || loading() ? 'form-submit-disabled' : 'form-submit-ready'"
+    >
+      @if (loading()) {
+        <span class="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" aria-hidden="true"></span>
+      }
+      {{ loading() ? "Saving…" : "Save address" }}
+    </button>
   </ng-container>
 </ReusableModal>

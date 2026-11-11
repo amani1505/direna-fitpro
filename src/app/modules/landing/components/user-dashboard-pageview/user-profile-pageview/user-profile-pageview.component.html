@@ -1,68 +1,40 @@
-<!-- profile.component.html -->
-<div class="">
-  <!-- Tabs -->
-  <!-- <div
-    class="flex flex-wrap p-1 mb-6 overflow-hidden text-black rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200"
-  > -->
+<div
+  class="profile-tabs"
+  role="tablist"
+  aria-label="Profile sections"
+>
+  @for (tab of tabs; track tab.value) {
+    <button
+      type="button"
+      role="tab"
+      class="profile-tab"
+      [id]="'tab-' + tab.value"
+      [class.is-active]="activeTab === tab.value"
+      [attr.aria-selected]="activeTab === tab.value"
+      [attr.aria-controls]="'panel-' + tab.value"
+      (click)="setActiveTab(tab.value)"
+    >
+      <svg-icon [src]="tab.icon" [svgClass]="'h-4 w-4'"></svg-icon>
+      {{ tab.title }}
+    </button>
+  }
+</div>
 
-  <div
-    class="flex p-1 mb-6 overflow-auto text-black rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200 has-scrollbar"
-  >
-    @for (tab of tabs; track $index) {
-      <button
-        [ngClass]="{
-          'bg-gray-200 hover:bg-gray-300 dark:bg-night-600':
-            activeTab === tab.value,
-        }"
-        (click)="setActiveTab(tab.value)"
-        class="px-4 py-2 text-sm transition-colors duration-200 rounded-lg focus:outline-none font-catamaran"
-      >
-        {{ tab.title }}
-      </button>
+<div
+  class="mt-6"
+  role="tabpanel"
+  [id]="'panel-' + activeTab"
+  [attr.aria-labelledby]="'tab-' + activeTab"
+>
+  @switch (activeTab) {
+    @case ("personal") {
+      <div class="animate-fade-in-up"><personal-information [user]="user?.profile"></personal-information></div>
     }
-  </div>
-
-  <!-- Personal Information Tab -->
-  <div
-    *ngIf="activeTab === 'personal'"
-    class="p-6 text-black rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200 font-catamaran"
-  >
-    <personal-information [user]="user?.profile"></personal-information>
-  </div>
-
-  <!-- Addresses Tab -->
-  <div
-    *ngIf="activeTab === 'addresses'"
-    class="p-6 text-black rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200 font-catamaran"
-  >
-    <personal-address></personal-address>
-  </div>
-
-  <!-- Placeholder for other tabs -->
-  <!-- <div
-    *ngIf="activeTab === 'payment'"
-    class="p-6 rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200"
-  >
-    <h2 class="mb-4 text-xl font-bold">Payment Methods</h2>
-    <p class="text-gray-400">
-      This tab is not implemented in the current example.
-    </p>
-  </div>
-
-  <div
-    *ngIf="activeTab === 'notifications'"
-    class="p-6 rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200"
-  >
-    <h2 class="mb-4 text-xl font-bold">Notification Preferences</h2>
-    <p class="text-gray-400">
-      This tab is not implemented in the current example.
-    </p>
-  </div> -->
-
-  <div
-    *ngIf="activeTab === 'security'"
-    class="p-6 text-black rounded-lg bg-gray-50 dark:bg-night-500 dark:text-night-200 font-catamaran"
-  >
-    <personal-security></personal-security>
-  </div>
+    @case ("addresses") {
+      <div class="animate-fade-in-up"><personal-address></personal-address></div>
+    }
+    @case ("security") {
+      <div class="animate-fade-in-up"><personal-security></personal-security></div>
+    }
+  }
 </div>

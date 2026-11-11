@@ -58,7 +58,7 @@
     const container = document.querySelector(".splash-bg-elements");
     if (!container) return;
 
-    const colors = ["#ff4836", "#2d6f17", "#ff7d66", "#45a825"];
+    const colors = ["#ff4836", "#7a56f5", "#ff7d66", "#a68cff"];
     for (let i = 0; i < 40; i++) {
       const dot = document.createElement("div");
       dot.classList.add("splash-bg-element");

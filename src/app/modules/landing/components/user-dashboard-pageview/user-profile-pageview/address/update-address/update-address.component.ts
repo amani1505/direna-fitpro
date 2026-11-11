@@ -20,11 +20,12 @@ import { Address } from '@model/address.interface';
 import { ModalConfig } from '@model/modal-config.interface';
 import { AddressService } from '@service/modules/address.service';
 import { ToastService } from '@service/toast.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'update-address',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass],
+  imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
   templateUrl: './update-address.component.html',
   styleUrl: './update-address.component.scss',
 })
@@ -42,8 +43,8 @@ export class UpdateAddressComponent implements OnInit {
   addressForm: FormGroup;
 
   modalConfig: ModalConfig = {
-    title: 'Confirm Action',
-    size: 'xl',
+    title: 'Edit address',
+    size: 'lg',
     submitLabel: 'Submit',
     cancelLabel: 'Cancel',
     closeOnOverlayClick: true,
@@ -63,8 +64,21 @@ export class UpdateAddressComponent implements OnInit {
     });
   }
 
+  readonly presets = ['Home', 'Work', 'Gym'];
+
+  pickType(type: string): void {
+    this.addressForm.get('type')?.setValue(type);
+    this.addressForm.get('type')?.markAsTouched();
+  }
+
+  invalid(control: string): boolean {
+    const c = this.addressForm.get(control);
+    return !!c && c.invalid && c.touched;
+  }
+
   submit() {
     if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
       return;
     }
 
@@ -76,7 +90,7 @@ export class UpdateAddressComponent implements OnInit {
           this.cancel.emit(); // Only close on success
         },
         error: (error) => {
-          this._toastService.error(error.error.message);
+          this._toastService.error(error?.error?.message || "Couldn't save the address. Try again.");
         },
       });
   }

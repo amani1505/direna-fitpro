@@ -10,11 +10,12 @@ import { ReusableModalComponent } from '@components/modal/reusable-modal/reusabl
 import { ModalConfig } from '@model/modal-config.interface';
 import { AddressService } from '@service/modules/address.service';
 import { ToastService } from '@service/toast.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'create-address',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass],
+  imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
   templateUrl: './create-address.component.html',
   styleUrl: './create-address.component.scss',
 })
@@ -29,8 +30,8 @@ export class CreateAddressComponent {
   loading = this._addressService.loading;
 
   modalConfig: ModalConfig = {
-    title: 'Confirm Action',
-    size: 'xl',
+    title: 'Add address',
+    size: 'lg',
     submitLabel: 'Submit',
     cancelLabel: 'Cancel',
     closeOnOverlayClick: true,
@@ -48,18 +49,31 @@ export class CreateAddressComponent {
     is_default: [false],
   });
 
+  readonly presets = ['Home', 'Work', 'Gym'];
+
+  pickType(type: string): void {
+    this.addressForm.get('type')?.setValue(type);
+    this.addressForm.get('type')?.markAsTouched();
+  }
+
+  invalid(control: string): boolean {
+    const c = this.addressForm.get(control);
+    return !!c && c.invalid && c.touched;
+  }
+
   submit() {
     if (this.addressForm.invalid) {
+      this.addressForm.markAllAsTouched();
       return;
     }
 
     this._addressService.create(this.addressForm.value).subscribe({
       next: () => {
-        this.addressForm.reset();
+        this.addressForm.reset({ is_default: false });
         this.cancel.emit(); // Only close on success
       },
       error: (error) => {
-        this._toastService.error(error.error.message);
+        this._toastService.error(error?.error?.message || "Couldn't save the address. Try again.");
       },
     });
   }

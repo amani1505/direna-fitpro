@@ -1,14 +1,14 @@
-import { NgIf } from '@angular/common';
 import { Component, inject, Input, signal } from '@angular/core';
 import { Address } from '@model/address.interface';
 import { AddressService } from '@service/modules/address.service';
 import { UpdateAddressComponent } from "../update-address/update-address.component";
 import { ModalComponent } from '@components/modal/modal.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'address-card',
   standalone: true,
-  imports: [NgIf, UpdateAddressComponent,ModalComponent],
+  imports: [UpdateAddressComponent, ModalComponent, AngularSvgIconModule],
   templateUrl: './address-card.component.html',
   styleUrl: './address-card.component.scss',
 })
@@ -17,9 +17,8 @@ export class AddressCardComponent {
 
   private _addressService = inject(AddressService);
 
-    deleteContent: string = 'Are you sure you want to delete this Address?';
-    deleteSubContent: string =
-      'Deleting this Address  will permanently remove this address from your addresses list';
+    deleteContent = 'This address will be removed from your account.';
+    deleteSubContent = "This can't be undone. Orders already placed aren't affected.";
 
     isDeleteModalOpen = signal<boolean>(false);
     isModalOpen = signal<boolean>(false);

@@ -1,0 +1,90 @@
+/* Stat tiles in the dark greeting band */
+.stat-tile {
+  display: block;
+  height: 100%;
+  min-width: 0;
+  padding: 0.9rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: rgb(255 255 255 / 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+
+  @media (min-width: 640px) {
+    padding: 1.1rem 1.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    width: 9.5rem;
+  }
+}
+
+.stat-tile:hover,
+.stat-tile:focus-visible {
+  transform: translateY(-4px) rotate(-1.5deg);
+  background: rgb(255 255 255 / 0.12);
+  border-color: rgb(255 255 255 / 0.3);
+}
+
+.stat-icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.85rem;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stat-tile:hover .stat-icon {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+/* Dashboard navigation */
+.dash-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  white-space: nowrap;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  font-family: var(--ff-catamaran);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(var(--c-muted));
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @media (min-width: 1024px) {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+  }
+}
+
+.dash-link:hover {
+  background: rgb(var(--c-surface-2));
+  color: rgb(var(--c-ink));
+}
+
+.dash-link:active {
+  transform: scale(0.96);
+}
+
+.dash-link.is-active {
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-bg));
+}
+
+.dash-nav-list {
+  scrollbar-width: none;
+}
+
+.dash-nav-list::-webkit-scrollbar {
+  display: none;
+}

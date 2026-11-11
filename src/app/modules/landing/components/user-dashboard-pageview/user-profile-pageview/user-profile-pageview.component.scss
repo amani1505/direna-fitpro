@@ -1,0 +1,48 @@
+.profile-tabs {
+  display: inline-flex;
+  max-width: 100%;
+  gap: 0.25rem;
+  padding: 0.3rem;
+  overflow-x: auto;
+  border-radius: 999px;
+  background: rgb(var(--c-surface-2));
+  scrollbar-width: none;
+}
+
+.profile-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.profile-tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  font-family: var(--ff-catamaran);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgb(var(--c-muted));
+  transition:
+    background-color 0.25s ease,
+    color 0.2s ease,
+    box-shadow 0.25s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.profile-tab:hover {
+  color: rgb(var(--c-ink));
+}
+
+.profile-tab:active {
+  transform: scale(0.95);
+}
+
+.profile-tab.is-active {
+  background: rgb(var(--c-surface));
+  color: rgb(var(--c-ink));
+  box-shadow:
+    0 1px 2px rgb(var(--c-ink) / 0.08),
+    0 6px 16px -8px rgb(var(--c-ink) / 0.3);
+}

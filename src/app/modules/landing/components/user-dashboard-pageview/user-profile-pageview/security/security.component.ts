@@ -46,11 +46,16 @@ export class SecurityComponent {
   isConfirmPasswordVisible = signal<boolean>(false);
   isCurrentPasswordVisible = signal<boolean>(false);
 
-  strengthColors = {
-    weak: 'bg-red-500 w-1/4',
-    moderate: 'bg-yellow-500 w-2/4',
-    strong: 'bg-green-500 w-full',
-  };
+  readonly rules: Array<{ key: 'length' | 'uppercase' | 'lowercase' | 'number' | 'specialChar'; label: string }> = [
+    { key: 'length', label: 'At least 8 characters' },
+    { key: 'uppercase', label: 'An uppercase letter' },
+    { key: 'lowercase', label: 'A lowercase letter' },
+    { key: 'number', label: 'A number' },
+    { key: 'specialChar', label: 'A symbol: @ $ ! % * ? &' },
+  ];
+
+  /** How many of the rules the new password meets. */
+  metCount = computed(() => Object.values(this.criteriaFulfilled()).filter(Boolean).length);
 
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group(
@@ -171,18 +176,36 @@ export class SecurityComponent {
     }
   }
 
-  // Compute progress bar class
-  passwordStrengthClass() {
+  strengthBarClass(): string {
     switch (this.passwordStrengthText()) {
-      case 'Weak':
-        return this.strengthColors.weak;
-      case 'Moderate':
-        return this.strengthColors.moderate;
       case 'Strong':
-        return this.strengthColors.strong;
+        return 'bg-emerald-500';
+      case 'Moderate':
+        return 'bg-amber-500';
       default:
-        return 'bg-gray-200 w-0';
+        return 'bg-rose-500';
     }
+  }
+
+  strengthTextClass(): string {
+    switch (this.passwordStrengthText()) {
+      case 'Strong':
+        return 'text-emerald-600 dark:text-emerald-400';
+      case 'Moderate':
+        return 'text-amber-600 dark:text-amber-400';
+      default:
+        return 'text-rose-600 dark:text-rose-400';
+    }
+  }
+
+  invalid(control: string): boolean {
+    const c = this.passwordForm.get(control);
+    return !!c && c.invalid && c.touched;
+  }
+
+  mismatch(): boolean {
+    const confirm = this.passwordForm.get('confirmPassword');
+    return !!confirm?.value && !!confirm?.touched && this.passwordForm.hasError('passwordMismatch');
   }
 
   onSubmit() {
@@ -200,9 +223,10 @@ export class SecurityComponent {
       .subscribe({
         next: () => {
           this.passwordForm.reset();
+          this.updatePasswordStrength();
         },
         error: (error) => {
-          this._toastService.error(error.error.message);
+          this._toastService.error(error?.error?.message || "Couldn't update the password. Try again.");
         },
       });
   }

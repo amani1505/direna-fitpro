@@ -1,29 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { PersonalInformationComponent } from './personal-information/personal-information.component';
-import { AddressComponent } from './address/address.component';
-import { SecurityComponent } from './security/security.component';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { User } from '@model/user';
 import { AuthService } from '@service/auth.service';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 import { Subject, takeUntil } from 'rxjs';
+import { AddressComponent } from './address/address.component';
+import { PersonalInformationComponent } from './personal-information/personal-information.component';
+import { SecurityComponent } from './security/security.component';
+
+type ProfileTab = 'personal' | 'addresses' | 'security';
 
 @Component({
   selector: 'user-profile-pageview',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    PersonalInformationComponent,
-    AddressComponent,
-    SecurityComponent,
-  ],
+  imports: [AngularSvgIconModule, PersonalInformationComponent, AddressComponent, SecurityComponent],
   templateUrl: './user-profile-pageview.component.html',
   styleUrl: './user-profile-pageview.component.scss',
 })
@@ -32,48 +21,15 @@ export class UserProfilePageviewComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   user: User | null = null;
 
-  activeTab:
-    | 'personal'
-    | 'addresses'
-    | 'payment'
-    | 'notifications'
-    | 'security' = 'personal';
+  activeTab: ProfileTab = 'personal';
 
-  tabs: Array<{
-    title: string;
-    icon: string;
-    value: 'personal' | 'addresses' | 'payment' | 'notifications' | 'security';
-  }> = [
-    {
-      title: 'Personal',
-      icon: 'person',
-      value: 'personal',
-    },
-    {
-      title: 'Addresses',
-      icon: 'home',
-      value: 'addresses',
-    },
-    // {
-    //   title: 'Payment',
-    //   icon: 'payment',
-    //   value: 'payment',
-    // },
-    // {
-    //   title: 'Notifications',
-    //   icon: 'notifications',
-    //   value: 'notifications',
-    // },
-    {
-      title: 'Security',
-      icon: 'security',
-      value: 'security',
-    },
+  tabs: Array<{ title: string; icon: string; value: ProfileTab }> = [
+    { title: 'Personal', icon: './assets/icons/heroicons/outline/person.svg', value: 'personal' },
+    { title: 'Addresses', icon: './assets/icons/heroicons/outline/building-office-2.svg', value: 'addresses' },
+    { title: 'Password', icon: './assets/icons/heroicons/outline/lock-closed.svg', value: 'security' },
   ];
 
-  setActiveTab(
-    tab: 'personal' | 'addresses' | 'payment' | 'notifications' | 'security',
-  ): void {
+  setActiveTab(tab: ProfileTab): void {
     this.activeTab = tab;
   }
 

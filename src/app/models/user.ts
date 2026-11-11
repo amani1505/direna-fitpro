@@ -16,7 +16,7 @@ export interface Profile {
   middle_name: string;
   last_name: string;
   avatar?: string;
-  username: string;u
+  username: string;
   phone_number: string;
   gender: string;
   email: string;

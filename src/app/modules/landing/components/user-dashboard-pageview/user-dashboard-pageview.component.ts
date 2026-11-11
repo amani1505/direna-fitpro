@@ -1,6 +1,6 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { User } from '@model/user';
 import { AuthService } from '@service/auth.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -9,7 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'user-dashboard-pageview',
   standalone: true,
-  imports: [NgIf, NgClass, RouterModule, AngularSvgIconModule, RouterOutlet],
+  imports: [NgClass, RouterLink, RouterLinkActive, AngularSvgIconModule, RouterOutlet],
   templateUrl: './user-dashboard-pageview.component.html',
   styleUrl: './user-dashboard-pageview.component.scss',
 })
@@ -21,70 +21,80 @@ export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
   orderCount = signal<number>(0);
   wishlistCount = signal<number>(0);
   cartItemsCount = signal<number>(0);
+  firstName = signal<string>('');
+  initials = signal<string>('');
 
   dashboardStats = computed(() => [
     {
       icon: './assets/icons/heroicons/outline/cube.svg',
       label: 'Orders',
       count: this.orderCount(),
-      link: 'View order history',
+      link: 'view order history',
       navigationLink: '/dashboard/orders',
+      tone: 'bg-[#fff] text-[#17131f]',
     },
     {
       icon: './assets/icons/heroicons/outline/heart.svg',
       label: 'Wishlist',
       count: this.wishlistCount(),
-      link: 'View wishlist',
+      link: 'view wishlist',
       navigationLink: '/dashboard/wishlist',
+      tone: 'bg-primary-500 text-white',
     },
     {
-      icon: './assets/icons/heroicons/outline/clock.svg',
-      label: 'Cart',
+      icon: './assets/icons/heroicons/outline/shopping-cart.svg',
+      label: 'In cart',
       count: this.cartItemsCount(),
-      link: 'View Cart',
+      link: 'view cart',
       navigationLink: '/equipments/cart',
+      tone: 'bg-secondary-400 text-white',
     },
   ]);
+
   dashboardLinks = [
     {
       icon: './assets/icons/heroicons/outline/chart-pie.svg',
-      label: 'Dashboard',
+      label: 'Overview',
       link: '/dashboard',
+      exact: true,
     },
     {
       icon: './assets/icons/heroicons/outline/cube.svg',
-      label: 'My Orders',
+      label: 'My orders',
       link: '/dashboard/orders',
-    },
-    {
-      icon: './assets/icons/heroicons/outline/person.svg',
-      label: 'Profile',
-      link: '/dashboard/profile',
+      exact: false,
     },
     {
       icon: './assets/icons/heroicons/outline/heart.svg',
       label: 'Wishlist',
       link: '/dashboard/wishlist',
+      exact: false,
     },
-    // {
-    //   icon: './assets/icons/heroicons/outline/cog-8-tooth.svg',
-    //   label: 'Account Settings',
-    //   link: '/orders',
-    // },
+    {
+      icon: './assets/icons/heroicons/outline/person.svg',
+      label: 'Profile',
+      link: '/dashboard/profile',
+      exact: false,
+    },
   ];
 
   ngOnInit() {
-    // Subscribe to user loaded status
     this._authService.userLoaded$
       .pipe(takeUntil(this.destroy$))
       .subscribe((loaded) => {
-        if (loaded) {
-          this.user = this._authService.user();
+        if (!loaded) return;
+        const user: User | null = this._authService.user();
+        this.user = user;
+        this.orderCount.set(user?.ordersCount ?? 0);
+        this.wishlistCount.set(user?.wishlistCount ?? 0);
+        this.cartItemsCount.set(user?.cartItemsCount ?? 0);
 
-          this.orderCount.set(this._authService.user().ordersCount);
-          this.wishlistCount.set(this._authService.user().wishlistCount);
-          this.cartItemsCount.set(this._authService.user().cartItemsCount);
-        }
+        const profile = user?.profile;
+        const first = profile?.first_name || profile?.username || '';
+        this.firstName.set(first);
+        this.initials.set(
+          ((profile?.first_name?.[0] ?? first[0] ?? '') + (profile?.last_name?.[0] ?? '')).toUpperCase() || '✺',
+        );
       });
   }
 

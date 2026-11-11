@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.wish-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.6rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+
+.wish-card:hover {
+  transform: translateY(-4px);
+  border-color: rgb(var(--c-ink) / 0.3);
+}

@@ -1,198 +1,149 @@
-<div class="flex items-center gap-1">
-  <div class="p-1 rounded-md text-primary-500 bg-primary-100">
-    <svg-icon
-      [src]="'/assets/icons/heroicons/outline/shield-check.svg'"
-      [svgStyle]="{ 'width.px': 24 }"
-    ></svg-icon>
+<form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" novalidate class="space-y-6">
+  <div>
+    <h3 class="font-display text-xl font-bold text-ink">Change password</h3>
+    <p class="mt-1 text-sm text-muted">Use a password you don't use anywhere else.</p>
   </div>
-  <div class="text-xl font-bold">Security Settings</div>
-</div>
 
-<p class="mt-4 mb-6 text-gray-400">Manage your account security</p>
-
-<div class="mb-6 text-xl font-bold">Change Password</div>
-<div class="">
-  <form [formGroup]="passwordForm" (ngSubmit)="onSubmit()" class="space-y-4">
-    <!-- Current Password -->
-    <div>
-      <label for="currentPassword" class="block mb-2">Current Password <span class="text-[#e11d48]">*</span></label>
-      <div class="relative">
-        <input
-          [type]="isCurrentPasswordVisible() ? 'text' : 'password'"
-          id="currentPassword"
-          formControlName="currentPassword"
-          class="input-field"
-        />
-        <button
-          type="button"
-          (click)="toggleCurrentPasswordVisibility()"
-          class="absolute inset-y-0 right-0 flex items-center px-3"
-        >
-          <svg-icon
-            [src]="
-              !isCurrentPasswordVisible()
-                ? 'assets/icons/heroicons/outline/eye-off.svg'
-                : 'assets/icons/heroicons/outline/eye.svg'
-            "
-            [svgClass]="'h-4  w-4'"
+  <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+    <div class="space-y-5">
+      <!-- Current password -->
+      <div>
+        <label for="currentPassword" class="profile-label">Current password <span class="text-primary-500">*</span></label>
+        <div class="relative">
+          <input
+            [type]="isCurrentPasswordVisible() ? 'text' : 'password'"
+            id="currentPassword"
+            formControlName="currentPassword"
+            autocomplete="current-password"
+            class="pr-12"
+            [class.is__invalid-input]="invalid('currentPassword')"
+          />
+          <button
+            type="button"
+            class="pw-toggle"
+            [attr.aria-label]="isCurrentPasswordVisible() ? 'Hide password' : 'Show password'"
+            [attr.aria-pressed]="isCurrentPasswordVisible()"
+            (click)="toggleCurrentPasswordVisibility()"
           >
-          </svg-icon>
-        </button>
-      </div>
-      @if (passwordForm.get("currentPassword")?.touched) {
-        @if (passwordForm.get("currentPassword").hasError("required")) {
-          <div class="is__invalid-error">Current Password is Required</div>
+            <svg-icon
+              [src]="isCurrentPasswordVisible() ? 'assets/icons/heroicons/outline/eye.svg' : 'assets/icons/heroicons/outline/eye-off.svg'"
+              [svgClass]="'h-4 w-4'"
+            ></svg-icon>
+          </button>
+        </div>
+        @if (invalid("currentPassword")) {
+          <p class="is__invalid-error">Enter your current password.</p>
         }
-      }
-    </div>
-    <!-- New Password Input -->
-    <div>
-      <label for="new_password" class="block mb-2">New Password <span class="text-[#e11d48]">*</span></label>
-      <div class="relative">
-        <input
-          [type]="isNewPasswordVisible() ? 'text' : 'password'"
-          id="new_password"
-          formControlName="newPassword"
-          (input)="updatePasswordStrength()"
-          class="input-field"
-        />
-        <button
-          type="button"
-          (click)="toggleNewPasswordVisibility()"
-          class="absolute inset-y-0 right-0 flex items-center px-3"
-        >
-          <svg-icon
-            [src]="
-              !isNewPasswordVisible()
-                ? 'assets/icons/heroicons/outline/eye-off.svg'
-                : 'assets/icons/heroicons/outline/eye.svg'
-            "
-            [svgClass]="'h-4  w-4'"
-          >
-          </svg-icon>
-        </button>
       </div>
 
-      <div class="mt-4 space-y-2">
-        <div class="flex items-center">
-          @if (criteriaFulfilled().length) {
-            <span class="mr-2 text-green-500">✓</span>
-          } @else {
-            <span class="mr-2 text-red-500">✗</span>
-          }
-          <span>At least 8 characters long</span>
+      <!-- New password -->
+      <div>
+        <label for="new_password" class="profile-label">New password <span class="text-primary-500">*</span></label>
+        <div class="relative">
+          <input
+            [type]="isNewPasswordVisible() ? 'text' : 'password'"
+            id="new_password"
+            formControlName="newPassword"
+            autocomplete="new-password"
+            aria-describedby="password-rules"
+            class="pr-12"
+            (input)="updatePasswordStrength()"
+            [class.is__invalid-input]="invalid('newPassword')"
+          />
+          <button
+            type="button"
+            class="pw-toggle"
+            [attr.aria-label]="isNewPasswordVisible() ? 'Hide password' : 'Show password'"
+            [attr.aria-pressed]="isNewPasswordVisible()"
+            (click)="toggleNewPasswordVisibility()"
+          >
+            <svg-icon
+              [src]="isNewPasswordVisible() ? 'assets/icons/heroicons/outline/eye.svg' : 'assets/icons/heroicons/outline/eye-off.svg'"
+              [svgClass]="'h-4 w-4'"
+            ></svg-icon>
+          </button>
         </div>
+        @if (invalid("newPassword") && passwordForm.get("newPassword")?.hasError("required")) {
+          <p class="is__invalid-error">Enter a new password.</p>
+        }
+      </div>
 
-        <div class="flex items-center">
-          @if (criteriaFulfilled().uppercase) {
-            <span class="mr-2 text-green-500">✓</span>
-          } @else {
-            <span class="mr-2 text-red-500">✗</span>
-          }
-          <span>Contains at least one uppercase letter</span>
+      <!-- Confirm password -->
+      <div>
+        <label for="confirm_password" class="profile-label">Confirm new password <span class="text-primary-500">*</span></label>
+        <div class="relative">
+          <input
+            [type]="isConfirmPasswordVisible() ? 'text' : 'password'"
+            id="confirm_password"
+            formControlName="confirmPassword"
+            autocomplete="new-password"
+            class="pr-12"
+            [class.is__invalid-input]="invalid('confirmPassword') || mismatch()"
+          />
+          <button
+            type="button"
+            class="pw-toggle"
+            [attr.aria-label]="isConfirmPasswordVisible() ? 'Hide password' : 'Show password'"
+            [attr.aria-pressed]="isConfirmPasswordVisible()"
+            (click)="toggleConfirmPasswordVisibility()"
+          >
+            <svg-icon
+              [src]="isConfirmPasswordVisible() ? 'assets/icons/heroicons/outline/eye.svg' : 'assets/icons/heroicons/outline/eye-off.svg'"
+              [svgClass]="'h-4 w-4'"
+            ></svg-icon>
+          </button>
         </div>
+        @if (invalid("confirmPassword") && passwordForm.get("confirmPassword")?.hasError("required")) {
+          <p class="is__invalid-error">Type the new password again.</p>
+        } @else if (mismatch()) {
+          <p class="is__invalid-error">The passwords don't match.</p>
+        }
+      </div>
+    </div>
 
-        <div class="flex items-center">
-          @if (criteriaFulfilled().lowercase) {
-            <span class="mr-2 text-green-500">✓</span>
-          } @else {
-            <span class="mr-2 text-red-500">✗</span>
-          }
-          <span>Contains at least one lowercase letter</span>
-        </div>
-
-        <div class="flex items-center">
-          @if (criteriaFulfilled().number) {
-            <span class="mr-2 text-green-500">✓</span>
-          } @else {
-            <span class="mr-2 text-red-500">✗</span>
-          }
-          <span>Contains at least one number</span>
-        </div>
-
-        <div class="flex items-center">
-          @if (criteriaFulfilled().specialChar) {
-            <span class="mr-2 text-green-500">✓</span>
-          } @else {
-            <span class="mr-2 text-red-500">✗</span>
-          }
+    <!-- Strength + rules -->
+    <div id="password-rules" class="self-start rounded-3xl bg-surface-2 p-5" aria-live="polite">
+      <div class="flex items-center justify-between gap-3">
+        <p class="text-sm font-semibold text-ink">Password strength</p>
+        <p class="text-sm font-bold" [ngClass]="strengthTextClass()">{{ passwordStrengthText() }}</p>
+      </div>
+      <div class="mt-2.5 grid grid-cols-5 gap-1.5" aria-hidden="true">
+        @for (step of [1, 2, 3, 4, 5]; track step) {
           <span
-            >Contains at least one special character (&#64;, $, !, %, *, ?,
-            &)</span
-          >
-        </div>
-      </div>
-
-      <!-- Password Strength Meter -->
-      <div class="mt-4">
-        <div class="w-full h-2 bg-gray-200 rounded">
-          <div [ngClass]="passwordStrengthClass()" class="h-2 rounded"></div>
-        </div>
-        <p class="mt-1 text-sm">{{ passwordStrengthText() }}</p>
-      </div>
-      @if (passwordForm.get("newPassword")?.touched) {
-        @if (passwordForm.get("newPassword").hasError("required")) {
-          <div class="is__invalid-error">Current Password is Required</div>
+            class="h-1.5 rounded-full transition-colors duration-300"
+            [ngClass]="step <= metCount() ? strengthBarClass() : 'bg-line'"
+          ></span>
         }
-      }
-    </div>
-
-    <!-- Confirm Password -->
-    <div>
-      <label for="confirm_password" class="block mb-2">Confirm Password <span class="text-[#e11d48]">*</span></label>
-      <div class="relative">
-        <input
-          [type]="isConfirmPasswordVisible() ? 'text' : 'password'"
-          id="confirm_password"
-          formControlName="confirmPassword"
-          class="input-field"
-        />
-        <button
-          type="button"
-          (click)="toggleConfirmPasswordVisibility()"
-          class="absolute inset-y-0 right-0 flex items-center px-3"
-        >
-          <svg-icon
-            [src]="
-              !isConfirmPasswordVisible()
-                ? 'assets/icons/heroicons/outline/eye-off.svg'
-                : 'assets/icons/heroicons/outline/eye.svg'
-            "
-            [svgClass]="'h-4  w-4'"
-          >
-          </svg-icon>
-        </button>
       </div>
 
-      @if (passwordForm.get("confirmPassword")?.touched) {
-        @if (passwordForm.get("confirmPassword").hasError("required")) {
-          <div class="is__invalid-error">Confirm Password is Required</div>
+      <ul class="mt-5 space-y-2.5 text-sm">
+        @for (rule of rules; track rule.key) {
+          <li class="flex items-center gap-2.5" [class.text-ink]="criteriaFulfilled()[rule.key]" [class.text-muted]="!criteriaFulfilled()[rule.key]">
+            <span
+              class="grid h-5 w-5 shrink-0 place-items-center rounded-full text-[11px] font-bold transition duration-300 ease-spring"
+              [ngClass]="criteriaFulfilled()[rule.key] ? 'scale-100 bg-emerald-500 text-white' : 'scale-90 bg-line text-muted'"
+              aria-hidden="true"
+              >{{ criteriaFulfilled()[rule.key] ? "✓" : "" }}</span
+            >
+            {{ rule.label }}
+            <span class="sr-only">{{ criteriaFulfilled()[rule.key] ? "(met)" : "(not met yet)" }}</span>
+          </li>
         }
-      }
-
-      @if (
-        passwordForm.get("confirmPassword")?.touched &&
-        passwordForm.hasError("passwordMismatch")
-      ) {
-        <div class="is__invalid-error">
-          <div>
-            Make sure the
-            <span class="font-bold text-blue-400">Confirm Password </span> and
-            <span class="font-bold text-blue-400">New Password </span> matches
-          </div>
-        </div>
-      }
+      </ul>
     </div>
+  </div>
 
-    <!-- Submit Button -->
-    <div class="flex items-center justify-end">
-      <button
-        [disabled]="!passwordForm.valid || loading()"
-        type="submit"
-        class="px-6 py-2 text-white transition-colors duration-200 rounded-lg bg-primary-400 hover:bg-primary-600 disabled:opacity-50"
-      >
-        {{ loading() ? "Updating..." : "   Update Password" }}
-      </button>
-    </div>
-  </form>
-</div>
+  <div class="flex justify-end border-t border-line pt-5">
+    <button
+      type="submit"
+      [disabled]="!passwordForm.valid || loading()"
+      class="form-submit w-full sm:w-auto"
+      [ngClass]="!passwordForm.valid || loading() ? 'form-submit-disabled' : 'form-submit-ready'"
+    >
+      @if (loading()) {
+        <span class="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" aria-hidden="true"></span>
+      }
+      {{ loading() ? "Updating…" : "Update password" }}
+    </button>
+  </div>
+</form>
