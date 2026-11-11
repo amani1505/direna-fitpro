@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 import { HeaderColumn } from '@model/TableColumn.interface';
 
 @Component({
-  selector: '[app-table-header]',
-  standalone: true,
-  imports: [CommonModule, AngularSvgIconModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+    selector: '[app-table-header]',
+    imports: [CommonModule, AngularSvgIconModule],
+    templateUrl: './header.component.html',
+    styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   @Input() columns: HeaderColumn[] = [];

@@ -6,11 +6,10 @@ import { BLOG_POSTS } from '../../../../../constant/blog-posts';
 import { BlogCardComponent } from './blog-card/blog-card.component';
 
 @Component({
-  selector: 'all-blogs-pageview',
-  standalone: true,
-  imports: [BlogCardComponent, RouterLink, DatePipe, RevealDirective],
-  templateUrl: './all-blogs-pageview.component.html',
-  styleUrl: './all-blogs-pageview.component.scss',
+    selector: 'all-blogs-pageview',
+    imports: [BlogCardComponent, RouterLink, DatePipe, RevealDirective],
+    templateUrl: './all-blogs-pageview.component.html',
+    styleUrl: './all-blogs-pageview.component.scss'
 })
 export class AllBlogsPageviewComponent {
   /** Newest post is featured; the rest go in the grid. */

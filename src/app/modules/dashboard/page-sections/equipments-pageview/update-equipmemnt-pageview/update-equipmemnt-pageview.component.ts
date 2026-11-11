@@ -30,20 +30,19 @@ import Quill from 'quill';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'update-equipmemnt-pageview',
-  standalone: true,
-  imports: [
-    AngularSvgIconModule,
-    NormalSelectComponent,
-    ImageUploaderComponent,
-    ReactiveFormsModule,
-    FormsModule,
-    NgClass,
-    MultiSelectComponent,
-    QuillModule,
-  ],
-  templateUrl: './update-equipmemnt-pageview.component.html',
-  styleUrl: './update-equipmemnt-pageview.component.scss',
+    selector: 'update-equipmemnt-pageview',
+    imports: [
+        AngularSvgIconModule,
+        NormalSelectComponent,
+        ImageUploaderComponent,
+        ReactiveFormsModule,
+        FormsModule,
+        NgClass,
+        MultiSelectComponent,
+        QuillModule,
+    ],
+    templateUrl: './update-equipmemnt-pageview.component.html',
+    styleUrl: './update-equipmemnt-pageview.component.scss'
 })
 export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
   private readonly _formBuilder = inject(FormBuilder);

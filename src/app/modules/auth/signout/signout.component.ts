@@ -4,11 +4,10 @@ import { AuthService } from '@service/auth.service';
 import { ToastService } from '@service/toast.service';
 
 @Component({
-  selector: 'app-signout',
-  standalone: true,
-  imports: [RouterModule],
-  templateUrl: './signout.component.html',
-  styleUrl: './signout.component.scss',
+    selector: 'app-signout',
+    imports: [RouterModule],
+    templateUrl: './signout.component.html',
+    styleUrl: './signout.component.scss'
 })
 export class SignoutComponent {
   private readonly _router = inject(Router);

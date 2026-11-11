@@ -9,16 +9,15 @@ import { DashboardEquipmentComponent } from './dashboard-equipment/dashboard-equ
 import { DashboardService } from '@service/modules/dashboard.service';
 
 @Component({
-  selector: 'home-page-section',
-  standalone: true,
-  imports: [
-    HeaderCardsComponent,
-    DashboardBranchesComponent,
-    DashboardServicesComponent,
-    DashboardEquipmentComponent,
-  ],
-  templateUrl: './home-page-section.component.html',
-  styleUrl: './home-page-section.component.scss',
+    selector: 'home-page-section',
+    imports: [
+        HeaderCardsComponent,
+        DashboardBranchesComponent,
+        DashboardServicesComponent,
+        DashboardEquipmentComponent,
+    ],
+    templateUrl: './home-page-section.component.html',
+    styleUrl: './home-page-section.component.scss'
 })
 export class HomePageSectionComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

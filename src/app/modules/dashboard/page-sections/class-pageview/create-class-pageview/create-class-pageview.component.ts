@@ -16,19 +16,18 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'create-class-pageview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgClass,
-    NgIf,
-    AngularSvgIconModule,
-    ImageUploaderComponent,
-  ],
-  templateUrl: './create-class-pageview.component.html',
-  styleUrl: './create-class-pageview.component.scss',
+    selector: 'create-class-pageview',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgClass,
+        NgIf,
+        AngularSvgIconModule,
+        ImageUploaderComponent,
+    ],
+    templateUrl: './create-class-pageview.component.html',
+    styleUrl: './create-class-pageview.component.scss'
 })
 export class CreateClassPageviewComponent {
   private readonly _formBuilder = inject(FormBuilder);

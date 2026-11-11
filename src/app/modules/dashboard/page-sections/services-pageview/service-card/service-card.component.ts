@@ -8,18 +8,17 @@ import { Services } from '@model/services.interface';
 import { ServicesService } from '@service/modules/services.service';
 
 @Component({
-  selector: 'ServiceCard',
-  standalone: true,
-  imports: [
-    SpotlightDirective,
-    AngularSvgIconModule,
-    DatePipe,
-    ModalComponent,
-    NgIf,
-    EditServiceComponent,
-  ],
-  templateUrl: './service-card.component.html',
-  styleUrl: './service-card.component.scss',
+    selector: 'ServiceCard',
+    imports: [
+        SpotlightDirective,
+        AngularSvgIconModule,
+        DatePipe,
+        ModalComponent,
+        NgIf,
+        EditServiceComponent,
+    ],
+    templateUrl: './service-card.component.html',
+    styleUrl: './service-card.component.scss'
 })
 export class ServiceCardComponent {
  @Input({ required: true }) service: Services;

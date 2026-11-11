@@ -8,19 +8,18 @@ import { TeamMemberComponent } from '@modules/landing/components/team-member/tea
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'app-about',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    AngularSvgIconModule,
-    AboutSectionComponent,
-    TeamMemberComponent,
-    RevealDirective,
-    SpotlightDirective,
-  ],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.scss',
+    selector: 'app-about',
+    imports: [
+        CommonModule,
+        RouterLink,
+        AngularSvgIconModule,
+        AboutSectionComponent,
+        TeamMemberComponent,
+        RevealDirective,
+        SpotlightDirective,
+    ],
+    templateUrl: './about.component.html',
+    styleUrl: './about.component.scss'
 })
 export class AboutComponent {
   /** Services named in the company description. */

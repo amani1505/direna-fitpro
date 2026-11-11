@@ -11,11 +11,10 @@ import { CartItemComponent } from './cart-item/cart-item.component';
 import { CartLoaderComponent } from './cart-loader/cart-loader.component';
 
 @Component({
-  selector: 'cart-pageview',
-  standalone: true,
-  imports: [RouterLink, DecimalPipe, AngularSvgIconModule, CartLoaderComponent, CartItemComponent],
-  templateUrl: './cart-pageview.component.html',
-  styleUrl: './cart-pageview.component.scss',
+    selector: 'cart-pageview',
+    imports: [RouterLink, DecimalPipe, AngularSvgIconModule, CartLoaderComponent, CartItemComponent],
+    templateUrl: './cart-pageview.component.html',
+    styleUrl: './cart-pageview.component.scss'
 })
 export class CartPageviewComponent implements OnInit {
   cart = signal<Cart | null>(null);

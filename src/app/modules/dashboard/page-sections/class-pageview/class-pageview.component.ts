@@ -8,11 +8,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'ClassPageview',
-  standalone: true,
-  imports: [SpotlightDirective, AngularSvgIconModule, ModalComponent],
-  templateUrl: './class-pageview.component.html',
-  styleUrl: './class-pageview.component.scss',
+    selector: 'ClassPageview',
+    imports: [SpotlightDirective, AngularSvgIconModule, ModalComponent],
+    templateUrl: './class-pageview.component.html',
+    styleUrl: './class-pageview.component.scss'
 })
 export class ClassPageviewComponent implements OnInit {
   private _classesService = inject(ClassesService);

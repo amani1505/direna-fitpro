@@ -16,11 +16,10 @@ interface ClassInterface {
 const RING = 2 * Math.PI * 18;
 
 @Component({
-  selector: 'class',
-  standalone: true,
-  imports: [RevealDirective, SpotlightDirective, RouterLink],
-  templateUrl: './class.component.html',
-  styleUrl: './class.component.scss',
+    selector: 'class',
+    imports: [RevealDirective, SpotlightDirective, RouterLink],
+    templateUrl: './class.component.html',
+    styleUrl: './class.component.scss'
 })
 export class ClassComponent {
   @ViewChild('track') track?: ElementRef<HTMLUListElement>;

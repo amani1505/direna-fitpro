@@ -8,11 +8,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CONTACT_INFO } from '../../../../constant/contact';
 
 @Component({
-  selector: 'app-contact-us',
-  standalone: true,
-  imports: [MapComponent, ReactiveFormsModule, NgClass, RouterLink, AngularSvgIconModule, RevealDirective],
-  templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.scss',
+    selector: 'app-contact-us',
+    imports: [MapComponent, ReactiveFormsModule, NgClass, RouterLink, AngularSvgIconModule, RevealDirective],
+    templateUrl: './contact-us.component.html',
+    styleUrl: './contact-us.component.scss'
 })
 export class ContactUsComponent {
   private readonly fb = inject(FormBuilder);

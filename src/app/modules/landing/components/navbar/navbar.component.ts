@@ -11,11 +11,10 @@ interface NavLink {
 }
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, AngularSvgIconModule, ThemeToggleComponent],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+    selector: 'app-navbar',
+    imports: [CommonModule, RouterModule, AngularSvgIconModule, ThemeToggleComponent],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
   @Input() isScrolled: boolean = false;

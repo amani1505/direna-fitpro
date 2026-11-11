@@ -16,20 +16,19 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { QuillModule } from 'ngx-quill';
 
 @Component({
-  selector: 'create-equipmemnt-pageview',
-  standalone: true,
-  imports: [
-    AngularSvgIconModule,
-    NormalSelectComponent,
-    ImageUploaderComponent,
-    ReactiveFormsModule,
-    FormsModule,
-    NgClass,
-    MultiSelectComponent,
-    QuillModule,
-  ],
-  templateUrl: './create-equipmemnt-pageview.component.html',
-  styleUrl: './create-equipmemnt-pageview.component.scss',
+    selector: 'create-equipmemnt-pageview',
+    imports: [
+        AngularSvgIconModule,
+        NormalSelectComponent,
+        ImageUploaderComponent,
+        ReactiveFormsModule,
+        FormsModule,
+        NgClass,
+        MultiSelectComponent,
+        QuillModule,
+    ],
+    templateUrl: './create-equipmemnt-pageview.component.html',
+    styleUrl: './create-equipmemnt-pageview.component.scss'
 })
 export class CreateEquipmemntPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

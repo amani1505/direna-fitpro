@@ -14,11 +14,10 @@ import { environment } from 'environments/environment';
 import { QuillModule } from 'ngx-quill';
 
 @Component({
-  selector: 'view-single-pageview',
-  standalone: true,
-  imports: [NgClass, DecimalPipe, AngularSvgIconModule, QuillModule, RouterLink, RevealDirective],
-  templateUrl: './view-single-pageview.component.html',
-  styleUrl: './view-single-pageview.component.scss',
+    selector: 'view-single-pageview',
+    imports: [NgClass, DecimalPipe, AngularSvgIconModule, QuillModule, RouterLink, RevealDirective],
+    templateUrl: './view-single-pageview.component.html',
+    styleUrl: './view-single-pageview.component.scss'
 })
 export class ViewSinglePageviewComponent implements OnInit {
   private _equipmentsService = inject(EquipmentService);

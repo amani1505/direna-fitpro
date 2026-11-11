@@ -9,16 +9,15 @@ import { updateRouteAndFetch } from '@utils/update-route-fetch';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'BranchPageview',
-  standalone: true,
-  imports: [
-    BranchCardComponent,
-    AddBranchModalComponent,
-    PaginationComponent,
-    AngularSvgIconModule,
-  ],
-  templateUrl: './branch-pageview.component.html',
-  styleUrl: './branch-pageview.component.scss',
+    selector: 'BranchPageview',
+    imports: [
+        BranchCardComponent,
+        AddBranchModalComponent,
+        PaginationComponent,
+        AngularSvgIconModule,
+    ],
+    templateUrl: './branch-pageview.component.html',
+    styleUrl: './branch-pageview.component.scss'
 })
 export class BranchPageviewComponent implements OnInit {
   private _branchService = inject(BranchesService);

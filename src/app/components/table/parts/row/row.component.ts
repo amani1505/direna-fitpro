@@ -6,11 +6,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: '[table-row]',
-  standalone: true,
-  imports: [FormsModule, AngularSvgIconModule, CommonModule],
-  templateUrl: './row.component.html',
-  styleUrl: './row.component.scss',
+    selector: '[table-row]',
+    imports: [FormsModule, AngularSvgIconModule, CommonModule],
+    templateUrl: './row.component.html',
+    styleUrl: './row.component.scss'
 })
 export class RowComponent {
   fileUrl = environment.staicUrl;

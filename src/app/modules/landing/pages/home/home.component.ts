@@ -5,10 +5,9 @@ import { BlogComponent } from '@modules/landing/components/home/blog/blog.compon
 import { ClassComponent } from '@modules/landing/components/home/class/class.component';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [HeroComponent, AboutComponent, BlogComponent,ClassComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+    selector: 'app-home',
+    imports: [HeroComponent, AboutComponent, BlogComponent, ClassComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent {}

@@ -3,11 +3,10 @@ import { HomePageSectionComponent } from '@modules/dashboard/page-sections/home-
 
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [ HomePageSectionComponent],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+    selector: 'app-home',
+    imports: [HomePageSectionComponent],
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss'
 })
 export class HomeComponent  {
 

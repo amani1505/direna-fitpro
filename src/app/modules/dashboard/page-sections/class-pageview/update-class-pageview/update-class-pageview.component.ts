@@ -24,17 +24,16 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 @Component({
-  selector: 'update-class-pageview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AngularSvgIconModule,
-    ImageUploaderComponent,
-  ],
-  templateUrl: './update-class-pageview.component.html',
-  styleUrl: './update-class-pageview.component.scss',
+    selector: 'update-class-pageview',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AngularSvgIconModule,
+        ImageUploaderComponent,
+    ],
+    templateUrl: './update-class-pageview.component.html',
+    styleUrl: './update-class-pageview.component.scss'
 })
 export class UpdateClassPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

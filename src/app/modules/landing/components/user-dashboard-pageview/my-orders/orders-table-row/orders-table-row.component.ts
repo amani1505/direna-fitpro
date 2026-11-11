@@ -6,11 +6,10 @@ import { environment } from 'environments/environment';
 import { canCancel, itemCount, orderThumbs, statusTone } from '../../order-view';
 
 @Component({
-  selector: '[orders-table-row]',
-  standalone: true,
-  imports: [AngularSvgIconModule, DatePipe, DecimalPipe, NgClass],
-  templateUrl: './orders-table-row.component.html',
-  styleUrl: './orders-table-row.component.scss',
+    selector: '[orders-table-row]',
+    imports: [AngularSvgIconModule, DatePipe, DecimalPipe, NgClass],
+    templateUrl: './orders-table-row.component.html',
+    styleUrl: './orders-table-row.component.scss'
 })
 export class OrdersTableRowComponent implements OnChanges {
   @Input() order: Order;

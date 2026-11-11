@@ -10,11 +10,10 @@ import { SecurityComponent } from './security/security.component';
 type ProfileTab = 'personal' | 'addresses' | 'security';
 
 @Component({
-  selector: 'user-profile-pageview',
-  standalone: true,
-  imports: [AngularSvgIconModule, PersonalInformationComponent, AddressComponent, SecurityComponent],
-  templateUrl: './user-profile-pageview.component.html',
-  styleUrl: './user-profile-pageview.component.scss',
+    selector: 'user-profile-pageview',
+    imports: [AngularSvgIconModule, PersonalInformationComponent, AddressComponent, SecurityComponent],
+    templateUrl: './user-profile-pageview.component.html',
+    styleUrl: './user-profile-pageview.component.scss'
 })
 export class UserProfilePageviewComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

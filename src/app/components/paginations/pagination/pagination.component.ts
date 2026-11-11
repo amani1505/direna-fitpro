@@ -2,12 +2,11 @@ import { Component, EventEmitter, Output, Input, ChangeDetectionStrategy } from 
 import { NgClass, NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'Pagination',
-  standalone: true,
-  imports: [NgIf, NgFor, NgClass],
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'Pagination',
+    imports: [NgIf, NgFor, NgClass],
+    templateUrl: './pagination.component.html',
+    styleUrls: ['./pagination.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent {
   @Input({ required: true }) totalPages: number = 1;

@@ -6,11 +6,10 @@ import { ModalComponent } from '@components/modal/modal.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'address-card',
-  standalone: true,
-  imports: [UpdateAddressComponent, ModalComponent, AngularSvgIconModule],
-  templateUrl: './address-card.component.html',
-  styleUrl: './address-card.component.scss',
+    selector: 'address-card',
+    imports: [UpdateAddressComponent, ModalComponent, AngularSvgIconModule],
+    templateUrl: './address-card.component.html',
+    styleUrl: './address-card.component.scss'
 })
 export class AddressCardComponent {
   @Input({ required: true }) address: Address;

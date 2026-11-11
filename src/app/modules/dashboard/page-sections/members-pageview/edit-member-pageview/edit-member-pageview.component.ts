@@ -27,21 +27,20 @@ import { ToastService } from '@service/toast.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'edit-member-pageview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    MultiSelectComponent,
-    AngularSvgIconModule,
-    SeachableSelectComponent,
-    AddServiceModalComponent,
-    AddBranchModalComponent,
-  ],
-  templateUrl: './edit-member-pageview.component.html',
-  styleUrl: './edit-member-pageview.component.scss',
+    selector: 'edit-member-pageview',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        MultiSelectComponent,
+        AngularSvgIconModule,
+        SeachableSelectComponent,
+        AddServiceModalComponent,
+        AddBranchModalComponent,
+    ],
+    templateUrl: './edit-member-pageview.component.html',
+    styleUrl: './edit-member-pageview.component.scss'
 })
 export class EditMemberPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

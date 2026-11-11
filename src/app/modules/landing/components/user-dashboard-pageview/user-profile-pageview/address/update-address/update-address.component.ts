@@ -23,11 +23,10 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'update-address',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
-  templateUrl: './update-address.component.html',
-  styleUrl: './update-address.component.scss',
+    selector: 'update-address',
+    imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
+    templateUrl: './update-address.component.html',
+    styleUrl: './update-address.component.scss'
 })
 export class UpdateAddressComponent implements OnInit {
   isModalOpen = input.required<boolean>();

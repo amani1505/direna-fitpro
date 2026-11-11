@@ -7,17 +7,16 @@ import { MenuService } from '@service/menu.service';
 import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [
-    NgClass,
-    NgIf,
-    AngularSvgIconModule,
-    RouterLink,
-    SidebarMenuComponent,
-  ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss',
+    selector: 'app-sidebar',
+    imports: [
+        NgClass,
+        NgIf,
+        AngularSvgIconModule,
+        RouterLink,
+        SidebarMenuComponent,
+    ],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
   constructor(

@@ -8,11 +8,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { itemCount, statusTone } from '../order-view';
 
 @Component({
-  selector: 'personal-dashboard',
-  standalone: true,
-  imports: [NgClass, DatePipe, DecimalPipe, RouterLink, AngularSvgIconModule],
-  templateUrl: './personal-dashboard.component.html',
-  styleUrl: './personal-dashboard.component.scss',
+    selector: 'personal-dashboard',
+    imports: [NgClass, DatePipe, DecimalPipe, RouterLink, AngularSvgIconModule],
+    templateUrl: './personal-dashboard.component.html',
+    styleUrl: './personal-dashboard.component.scss'
 })
 export class PersonalDashboardComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

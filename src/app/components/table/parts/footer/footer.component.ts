@@ -12,11 +12,10 @@ export interface PaginationConfig {
 }
 
 @Component({
-  selector: 'TableFooter',
-  standalone: true,
-  imports: [AngularSvgIconModule, CommonModule, FormsModule],
-  templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss',
+    selector: 'TableFooter',
+    imports: [AngularSvgIconModule, CommonModule, FormsModule],
+    templateUrl: './footer.component.html',
+    styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
   @Input() itemsPerPage: number = 10;

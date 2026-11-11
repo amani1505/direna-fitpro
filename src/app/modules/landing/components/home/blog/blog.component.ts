@@ -5,11 +5,10 @@ import { RevealDirective } from '@directive/reveal.directive';
 import { BLOG_POSTS } from '../../../../../constant/blog-posts';
 
 @Component({
-  selector: 'blog',
-  standalone: true,
-  imports: [RevealDirective, RouterLink, DatePipe],
-  templateUrl: './blog.component.html',
-  styleUrl: './blog.component.scss',
+    selector: 'blog',
+    imports: [RevealDirective, RouterLink, DatePipe],
+    templateUrl: './blog.component.html',
+    styleUrl: './blog.component.scss'
 })
 export class BlogComponent {
   /** The three newest posts. */

@@ -11,11 +11,10 @@ import { Router } from '@angular/router';
 import { EquipmentsCardComponent } from '../equipments-card/equipments-card.component';
 
 @Component({
-  selector: 'equipments',
-  standalone: true,
-  imports: [EquipmentsCardComponent, PaginationComponent, AngularSvgIconModule],
-  templateUrl: './equipments.component.html',
-  styleUrl: './equipments.component.scss',
+    selector: 'equipments',
+    imports: [EquipmentsCardComponent, PaginationComponent, AngularSvgIconModule],
+    templateUrl: './equipments.component.html',
+    styleUrl: './equipments.component.scss'
 })
 export class EquipmentsComponent {
   @Input({ required: true }) data: Equipment[] = [];

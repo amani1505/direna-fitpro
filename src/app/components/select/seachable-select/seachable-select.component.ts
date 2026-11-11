@@ -19,17 +19,16 @@ export interface SearchableSelectOption {
 }
 
 @Component({
-  selector: 'SeachableSelect',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ClickOutsideDirective,
-    FormsModule,
-    AngularSvgIconModule,
-  ],
-  templateUrl: './seachable-select.component.html',
-  styleUrl: './seachable-select.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'SeachableSelect',
+    imports: [
+        CommonModule,
+        ClickOutsideDirective,
+        FormsModule,
+        AngularSvgIconModule,
+    ],
+    templateUrl: './seachable-select.component.html',
+    styleUrl: './seachable-select.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SeachableSelectComponent {
   private optionsSignal = signal<SearchableSelectOption[]>([]);

@@ -6,11 +6,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { SpotlightDirective } from '@directive/spotlight.directive';
 
 @Component({
-  selector: 'header-cards',
-  standalone: true,
-  imports: [AngularSvgIconModule, NgClass, RouterModule, SpotlightDirective],
-  templateUrl: './header-cards.component.html',
-  styleUrl: './header-cards.component.scss',
+    selector: 'header-cards',
+    imports: [AngularSvgIconModule, NgClass, RouterModule, SpotlightDirective],
+    templateUrl: './header-cards.component.html',
+    styleUrl: './header-cards.component.scss'
 })
 export class HeaderCardsComponent {
   @Input() dashboardStats: CountData[] = [];

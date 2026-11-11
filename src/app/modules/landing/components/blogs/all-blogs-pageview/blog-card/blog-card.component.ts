@@ -4,11 +4,10 @@ import { RouterLink } from '@angular/router';
 import { BlogPost } from '../../../../../../constant/blog-posts';
 
 @Component({
-  selector: 'BlogCard',
-  standalone: true,
-  imports: [RouterLink, DatePipe],
-  templateUrl: './blog-card.component.html',
-  styleUrl: './blog-card.component.scss',
+    selector: 'BlogCard',
+    imports: [RouterLink, DatePipe],
+    templateUrl: './blog-card.component.html',
+    styleUrl: './blog-card.component.scss'
 })
 export class BlogCardComponent {
   @Input({ required: true }) blog!: BlogPost;

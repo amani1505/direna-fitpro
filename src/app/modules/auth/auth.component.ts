@@ -4,10 +4,9 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ThemeToggleComponent } from '@components/theme-toggle/theme-toggle.component';
 
 @Component({
-  selector: 'app-auth',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, AngularSvgIconModule, ThemeToggleComponent],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss',
+    selector: 'app-auth',
+    imports: [RouterOutlet, RouterLink, AngularSvgIconModule, ThemeToggleComponent],
+    templateUrl: './auth.component.html',
+    styleUrl: './auth.component.scss'
 })
 export class AuthComponent {}

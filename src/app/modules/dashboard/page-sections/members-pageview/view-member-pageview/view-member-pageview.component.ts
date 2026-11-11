@@ -5,11 +5,10 @@ import { MemberService } from '@service/modules/member.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'view-member-pageview',
-  standalone: true,
-  imports: [CommonModule, AngularSvgIconModule, DatePipe],
-  templateUrl: './view-member-pageview.component.html',
-  styleUrl: './view-member-pageview.component.scss',
+    selector: 'view-member-pageview',
+    imports: [CommonModule, AngularSvgIconModule, DatePipe],
+    templateUrl: './view-member-pageview.component.html',
+    styleUrl: './view-member-pageview.component.scss'
 })
 export class ViewMemberPageviewComponent implements OnInit {
   private _route = inject(ActivatedRoute);

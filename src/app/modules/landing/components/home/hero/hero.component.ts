@@ -29,11 +29,10 @@ interface HeroTile {
 }
 
 @Component({
-  selector: 'hero',
-  standalone: true,
-  imports: [RouterModule, NgClass, AngularSvgIconModule],
-  templateUrl: './hero.component.html',
-  styleUrl: './hero.component.scss',
+    selector: 'hero',
+    imports: [RouterModule, NgClass, AngularSvgIconModule],
+    templateUrl: './hero.component.html',
+    styleUrl: './hero.component.scss'
 })
 export class HeroComponent implements AfterViewInit, OnDestroy {
   @ViewChild('heroEl') heroEl?: ElementRef<HTMLElement>;

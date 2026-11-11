@@ -14,11 +14,10 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'personal-security',
-  standalone: true,
-  imports: [AngularSvgIconModule, FormsModule, ReactiveFormsModule, NgClass],
-  templateUrl: './security.component.html',
-  styleUrl: './security.component.scss',
+    selector: 'personal-security',
+    imports: [AngularSvgIconModule, FormsModule, ReactiveFormsModule, NgClass],
+    templateUrl: './security.component.html',
+    styleUrl: './security.component.scss'
 })
 export class SecurityComponent {
   private _authService = inject(AuthService);

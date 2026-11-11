@@ -7,11 +7,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'user-dashboard-pageview',
-  standalone: true,
-  imports: [NgClass, RouterLink, RouterLinkActive, AngularSvgIconModule, RouterOutlet],
-  templateUrl: './user-dashboard-pageview.component.html',
-  styleUrl: './user-dashboard-pageview.component.scss',
+    selector: 'user-dashboard-pageview',
+    imports: [NgClass, RouterLink, RouterLinkActive, AngularSvgIconModule, RouterOutlet],
+    templateUrl: './user-dashboard-pageview.component.html',
+    styleUrl: './user-dashboard-pageview.component.scss'
 })
 export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

@@ -12,11 +12,10 @@ import { EquipmentsComponent } from '../components/equipments/equipments.compone
 const DEFAULT_LIMIT = 12;
 
 @Component({
-  selector: 'equipment-layout',
-  standalone: true,
-  imports: [EquipmentsComponent, AngularSvgIconModule],
-  templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss',
+    selector: 'equipment-layout',
+    imports: [EquipmentsComponent, AngularSvgIconModule],
+    templateUrl: './layout.component.html',
+    styleUrl: './layout.component.scss'
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
   private _equipmentsService = inject(EquipmentService);

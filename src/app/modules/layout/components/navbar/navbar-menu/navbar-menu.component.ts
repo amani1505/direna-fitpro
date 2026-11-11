@@ -5,11 +5,10 @@ import { MenuService } from '@service/menu.service';
 import { NavbarSubmenuComponent } from '../navbar-submenu/navbar-submenu.component';
 
 @Component({
-  selector: 'app-navbar-menu',
-  standalone: true,
-  imports: [NgFor, NgClass, NavbarSubmenuComponent],
-  templateUrl: './navbar-menu.component.html',
-  styleUrl: './navbar-menu.component.scss',
+    selector: 'app-navbar-menu',
+    imports: [NgFor, NgClass, NavbarSubmenuComponent],
+    templateUrl: './navbar-menu.component.html',
+    styleUrl: './navbar-menu.component.scss'
 })
 export class NavbarMenuComponent implements OnInit {
   private _showMenuClass = [

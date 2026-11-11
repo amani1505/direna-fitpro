@@ -8,18 +8,17 @@ import { NavbarMobileComponent } from './navbar-mobile/navbar-mobile.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [
-    AngularSvgIconModule,
-    NavbarMenuComponent,
-    ProfileMenuComponent,
-    NavbarMobileComponent,
-    ThemeToggleComponent,
-    RouterLink,
-  ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss',
+    selector: 'app-navbar',
+    imports: [
+        AngularSvgIconModule,
+        NavbarMenuComponent,
+        ProfileMenuComponent,
+        NavbarMobileComponent,
+        ThemeToggleComponent,
+        RouterLink,
+    ],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
   constructor(private _menuService: MenuService) {}

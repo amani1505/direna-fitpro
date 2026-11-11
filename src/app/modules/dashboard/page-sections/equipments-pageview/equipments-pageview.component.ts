@@ -10,11 +10,10 @@ import {
 import { EquipmentService } from '@service/modules/equipment.service';
 
 @Component({
-  selector: 'equipments-pageview',
-  standalone: true,
-  imports: [TableComponent],
-  templateUrl: './equipments-pageview.component.html',
-  styleUrl: './equipments-pageview.component.scss',
+    selector: 'equipments-pageview',
+    imports: [TableComponent],
+    templateUrl: './equipments-pageview.component.html',
+    styleUrl: './equipments-pageview.component.scss'
 })
 export class EquipmentsPageviewComponent implements OnInit {
   private _equipmentsService = inject(EquipmentService);

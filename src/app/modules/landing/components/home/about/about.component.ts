@@ -14,11 +14,10 @@ interface AboutInterface {
 }
 
 @Component({
-  selector: 'about',
-  standalone: true,
-  imports: [RouterLink, RevealDirective],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.scss',
+    selector: 'about',
+    imports: [RouterLink, RevealDirective],
+    templateUrl: './about.component.html',
+    styleUrl: './about.component.scss'
 })
 export class AboutComponent {
   about: AboutInterface = {

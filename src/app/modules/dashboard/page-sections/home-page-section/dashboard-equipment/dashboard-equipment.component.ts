@@ -5,11 +5,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'dashboard-equipment',
-  standalone: true,
-  imports: [AngularSvgIconModule, RouterModule],
-  templateUrl: './dashboard-equipment.component.html',
-  styleUrl: './dashboard-equipment.component.scss',
+    selector: 'dashboard-equipment',
+    imports: [AngularSvgIconModule, RouterModule],
+    templateUrl: './dashboard-equipment.component.html',
+    styleUrl: './dashboard-equipment.component.scss'
 })
 export class DashboardEquipmentComponent {
   private _route = inject(ActivatedRoute);

@@ -18,17 +18,16 @@ import { ModalConfig } from '@model/modal-config.interface';
 import { ServicesService } from '@service/modules/services.service';
 
 @Component({
-  selector: 'add-service-modal',
-  standalone: true,
-  imports: [
-    ReusableModalComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    NgIf,
-    NgClass,
-  ],
-  templateUrl: './add-service-modal.component.html',
-  styleUrl: './add-service-modal.component.scss',
+    selector: 'add-service-modal',
+    imports: [
+        ReusableModalComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        NgIf,
+        NgClass,
+    ],
+    templateUrl: './add-service-modal.component.html',
+    styleUrl: './add-service-modal.component.scss'
 })
 export class AddServiceModalComponent {
   isModalOpen = input.required<boolean>();

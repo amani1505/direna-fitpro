@@ -11,11 +11,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { filter, interval, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'BreadCrumbs',
-  standalone: true,
-  imports: [CommonModule, RouterModule, AngularSvgIconModule],
-  templateUrl: './bread-crumbs.component.html',
-  styleUrl: './bread-crumbs.component.scss',
+    selector: 'BreadCrumbs',
+    imports: [CommonModule, RouterModule, AngularSvgIconModule],
+    templateUrl: './bread-crumbs.component.html',
+    styleUrl: './bread-crumbs.component.scss'
 })
 export class BreadCrumbsComponent implements OnInit, OnDestroy {
   @Input() isEquipment: boolean = false;

@@ -13,11 +13,10 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'create-address',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
-  templateUrl: './create-address.component.html',
-  styleUrl: './create-address.component.scss',
+    selector: 'create-address',
+    imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
+    templateUrl: './create-address.component.html',
+    styleUrl: './create-address.component.scss'
 })
 export class CreateAddressComponent {
   isModalOpen = input.required<boolean>();

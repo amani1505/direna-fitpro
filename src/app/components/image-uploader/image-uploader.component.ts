@@ -14,11 +14,10 @@ import {
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'image-uploader',
-  standalone: true,
-  imports: [CommonModule, AngularSvgIconModule],
-  templateUrl: './image-uploader.component.html',
-  styleUrl: './image-uploader.component.scss',
+    selector: 'image-uploader',
+    imports: [CommonModule, AngularSvgIconModule],
+    templateUrl: './image-uploader.component.html',
+    styleUrl: './image-uploader.component.scss'
 })
 export class ImageUploaderComponent implements OnInit, OnChanges {
   @Input() width: string = '200px';

@@ -9,16 +9,15 @@ import { QueryParams } from '@model/QueryParams.interface';
 import { updateRouteAndFetch } from '@utils/update-route-fetch';
 
 @Component({
-  selector: 'ServicesPageview',
-  standalone: true,
-  imports: [
-    ServiceCardComponent,
-    AddServiceModalComponent,
-    PaginationComponent,
-    AngularSvgIconModule,
-  ],
-  templateUrl: './services-pageview.component.html',
-  styleUrl: './services-pageview.component.scss',
+    selector: 'ServicesPageview',
+    imports: [
+        ServiceCardComponent,
+        AddServiceModalComponent,
+        PaginationComponent,
+        AngularSvgIconModule,
+    ],
+    templateUrl: './services-pageview.component.html',
+    styleUrl: './services-pageview.component.scss'
 })
 export class ServicesPageviewComponent implements OnInit {
   private _serviceService = inject(ServicesService);

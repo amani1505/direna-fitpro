@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'team-member',
-  standalone: true,
-  imports: [],
-  templateUrl: './team-member.component.html',
-  styleUrl: './team-member.component.scss',
+    selector: 'team-member',
+    imports: [],
+    templateUrl: './team-member.component.html',
+    styleUrl: './team-member.component.scss'
 })
 export class TeamMemberComponent {
   @Input() name: string = '';

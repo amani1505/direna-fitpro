@@ -22,19 +22,18 @@ import {
 import { ModalComponent } from '@components/modal/modal.component';
 
 @Component({
-  selector: 'ListTable',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ActionsComponent,
-    FooterComponent,
-    HeaderComponent,
-    RowComponent,
-    ModalComponent,
-  ],
-  templateUrl: './table.component.html',
-  styleUrl: './table.component.scss',
+    selector: 'ListTable',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ActionsComponent,
+        FooterComponent,
+        HeaderComponent,
+        RowComponent,
+        ModalComponent,
+    ],
+    templateUrl: './table.component.html',
+    styleUrl: './table.component.scss'
 })
 export class TableComponent {
   @Input({ required: true }) title!: string;

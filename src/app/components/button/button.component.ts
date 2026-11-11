@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatRippleModule } from '@angular/material/core';
 
 @Component({
-  selector: 'Button',
-  standalone: true,
-  imports: [CommonModule, MatRippleModule],
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.scss',
+    selector: 'Button',
+    imports: [CommonModule, MatRippleModule],
+    templateUrl: './button.component.html',
+    styleUrl: './button.component.scss'
 })
 export class ButtonComponent {
   @Input() size: 'medium' | 'small' | 'large' = 'medium';

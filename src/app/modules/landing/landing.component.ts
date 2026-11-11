@@ -9,11 +9,10 @@ import { BreadCrumbsComponent } from '@components/bread-crumbs/bread-crumbs.comp
 import { ScrollService } from '@service/scroll.service';
 
 @Component({
-  selector: 'app-landing',
-  standalone: true,
-  imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf, NgClass, AngularSvgIconModule],
-  templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss',
+    selector: 'app-landing',
+    imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf, NgClass, AngularSvgIconModule],
+    templateUrl: './landing.component.html',
+    styleUrl: './landing.component.scss'
 })
 export class LandingComponent implements OnInit {
   isScrolled: boolean = false;

@@ -8,11 +8,10 @@ import { OrdersCardComponent } from './orders-card/orders-card.component';
 import { OrdersTableRowComponent } from './orders-table-row/orders-table-row.component';
 
 @Component({
-  selector: 'app-my-orders',
-  standalone: true,
-  imports: [OrdersTableRowComponent, OrdersCardComponent, ModalComponent, RouterLink, AngularSvgIconModule],
-  templateUrl: './my-orders.component.html',
-  styleUrl: './my-orders.component.scss',
+    selector: 'app-my-orders',
+    imports: [OrdersTableRowComponent, OrdersCardComponent, ModalComponent, RouterLink, AngularSvgIconModule],
+    templateUrl: './my-orders.component.html',
+    styleUrl: './my-orders.component.scss'
 })
 export class MyOrdersComponent implements OnInit {
   private _ordersService = inject(OrderService);

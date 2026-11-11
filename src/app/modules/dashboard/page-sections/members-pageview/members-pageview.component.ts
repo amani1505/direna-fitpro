@@ -11,11 +11,10 @@ import { MemberService } from '@service/modules/member.service';
 import { ToastService } from '@service/toast.service';
 
 @Component({
-  selector: 'members-pageview',
-  standalone: true,
-  imports: [TableComponent],
-  templateUrl: './members-pageview.component.html',
-  styleUrl: './members-pageview.component.scss',
+    selector: 'members-pageview',
+    imports: [TableComponent],
+    templateUrl: './members-pageview.component.html',
+    styleUrl: './members-pageview.component.scss'
 })
 export class MembersPageviewComponent implements OnInit {
   private _memberService = inject(MemberService);

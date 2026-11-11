@@ -5,11 +5,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'wishlist-card',
-  standalone: true,
-  imports: [AngularSvgIconModule, DecimalPipe],
-  templateUrl: './wishlist-card.component.html',
-  styleUrl: './wishlist-card.component.scss',
+    selector: 'wishlist-card',
+    imports: [AngularSvgIconModule, DecimalPipe],
+    templateUrl: './wishlist-card.component.html',
+    styleUrl: './wishlist-card.component.scss'
 })
 export class WishlistCardComponent {
   @Input() wishlist: Wishlist;

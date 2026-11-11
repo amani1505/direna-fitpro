@@ -10,10 +10,9 @@ let nextId = 0;
  * circular reveal that starts at the button (see ThemeService.toggle).
  */
 @Component({
-  selector: 'app-theme-toggle',
-  standalone: true,
-  imports: [NgClass],
-  template: `
+    selector: 'app-theme-toggle',
+    imports: [NgClass],
+    template: `
     <button
       type="button"
       class="theme-toggle"
@@ -50,8 +49,8 @@ let nextId = 0;
       </svg>
     </button>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: inline-flex;
       }
@@ -113,7 +112,7 @@ let nextId = 0;
         opacity: 0;
       }
     `,
-  ],
+    ]
 })
 export class ThemeToggleComponent {
   readonly theme = inject(ThemeService);

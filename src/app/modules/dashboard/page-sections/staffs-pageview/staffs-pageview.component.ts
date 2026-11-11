@@ -10,11 +10,10 @@ import {
 import { StaffService } from '@service/modules/staff.service';
 
 @Component({
-  selector: 'staffs-pageview',
-  standalone: true,
-  imports: [TableComponent],
-  templateUrl: './staffs-pageview.component.html',
-  styleUrl: './staffs-pageview.component.scss',
+    selector: 'staffs-pageview',
+    imports: [TableComponent],
+    templateUrl: './staffs-pageview.component.html',
+    styleUrl: './staffs-pageview.component.scss'
 })
 export class StaffsPageviewComponent {
   private _staffService = inject(StaffService);

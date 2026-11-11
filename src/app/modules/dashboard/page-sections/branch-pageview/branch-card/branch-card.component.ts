@@ -8,18 +8,17 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { EditBranchComponent } from '../edit-branch/edit-branch.component';
 
 @Component({
-  selector: 'BranchCard',
-  standalone: true,
-  imports: [
-    SpotlightDirective,
-    AngularSvgIconModule,
-    DatePipe,
-    ModalComponent,
-    EditBranchComponent,
-    NgIf,
-  ],
-  templateUrl: './branch-card.component.html',
-  styleUrl: './branch-card.component.scss',
+    selector: 'BranchCard',
+    imports: [
+        SpotlightDirective,
+        AngularSvgIconModule,
+        DatePipe,
+        ModalComponent,
+        EditBranchComponent,
+        NgIf,
+    ],
+    templateUrl: './branch-card.component.html',
+    styleUrl: './branch-card.component.scss'
 })
 export class BranchCardComponent {
   @Input({ required: true }) branch: Branch;

@@ -5,11 +5,10 @@ import { AddressCardComponent } from './address-card/address-card.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 
 @Component({
-  selector: 'personal-address',
-  standalone: true,
-  imports: [AngularSvgIconModule, CreateAddressComponent, AddressCardComponent],
-  templateUrl: './address.component.html',
-  styleUrl: './address.component.scss',
+    selector: 'personal-address',
+    imports: [AngularSvgIconModule, CreateAddressComponent, AddressCardComponent],
+    templateUrl: './address.component.html',
+    styleUrl: './address.component.scss'
 })
 export class AddressComponent implements OnInit {
   private _addressService = inject(AddressService);

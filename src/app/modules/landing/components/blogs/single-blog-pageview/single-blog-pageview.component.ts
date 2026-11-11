@@ -9,11 +9,10 @@ import { BLOG_POSTS, findBlogPost } from '../../../../../constant/blog-posts';
 import { BlogCardComponent } from '../all-blogs-pageview/blog-card/blog-card.component';
 
 @Component({
-  selector: 'single-blog-pageview',
-  standalone: true,
-  imports: [RouterLink, DatePipe, RevealDirective, AngularSvgIconModule, BlogCardComponent],
-  templateUrl: './single-blog-pageview.component.html',
-  styleUrl: './single-blog-pageview.component.scss',
+    selector: 'single-blog-pageview',
+    imports: [RouterLink, DatePipe, RevealDirective, AngularSvgIconModule, BlogCardComponent],
+    templateUrl: './single-blog-pageview.component.html',
+    styleUrl: './single-blog-pageview.component.scss'
 })
 export class SingleBlogPageviewComponent {
   private readonly route = inject(ActivatedRoute);

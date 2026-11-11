@@ -6,11 +6,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'equipment-card',
-  standalone: true,
-  imports: [AngularSvgIconModule, DecimalPipe, RouterLink],
-  templateUrl: './equipments-card.component.html',
-  styleUrl: './equipments-card.component.scss',
+    selector: 'equipment-card',
+    imports: [AngularSvgIconModule, DecimalPipe, RouterLink],
+    templateUrl: './equipments-card.component.html',
+    styleUrl: './equipments-card.component.scss'
 })
 export class EquipmentsCardComponent implements OnChanges {
   @Input({ required: true }) equipment!: Equipment;

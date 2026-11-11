@@ -5,11 +5,10 @@ import { environment } from 'environments/environment';
 import { canCancel, itemCount, orderThumbs, statusTone } from '../../order-view';
 
 @Component({
-  selector: 'orders-card',
-  standalone: true,
-  imports: [NgClass, DatePipe, DecimalPipe],
-  templateUrl: './orders-card.component.html',
-  styleUrl: './orders-card.component.scss',
+    selector: 'orders-card',
+    imports: [NgClass, DatePipe, DecimalPipe],
+    templateUrl: './orders-card.component.html',
+    styleUrl: './orders-card.component.scss'
 })
 export class OrdersCardComponent implements OnChanges {
   @Input() order: Order;

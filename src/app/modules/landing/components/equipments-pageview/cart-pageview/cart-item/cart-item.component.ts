@@ -6,11 +6,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-  selector: '[cart-item]',
-  standalone: true,
-  imports: [AngularSvgIconModule, RouterLink, DecimalPipe],
-  templateUrl: './cart-item.component.html',
-  styleUrl: './cart-item.component.scss',
+    selector: '[cart-item]',
+    imports: [AngularSvgIconModule, RouterLink, DecimalPipe],
+    templateUrl: './cart-item.component.html',
+    styleUrl: './cart-item.component.scss'
 })
 export class CartItemComponent {
   @Input({ required: true }) product!: CartItem;

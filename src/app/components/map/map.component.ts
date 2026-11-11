@@ -10,11 +10,10 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'Map',
-  standalone: true,
-  imports: [],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.scss',
+    selector: 'Map',
+    imports: [],
+    templateUrl: './map.component.html',
+    styleUrl: './map.component.scss'
 })
 export class MapComponent implements AfterViewInit, OnDestroy {
   @Input() latitude: number = 40.712776;

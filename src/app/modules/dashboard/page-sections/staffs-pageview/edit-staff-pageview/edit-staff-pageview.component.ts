@@ -26,20 +26,19 @@ import { ToastService } from '@service/toast.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'edit-staff-pageview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxMaskDirective,
-    AngularSvgIconModule,
-    SeachableSelectComponent,
-    AddBranchModalComponent,
-    AddRoleComponent,
-  ],
-  templateUrl: './edit-staff-pageview.component.html',
-  styleUrl: './edit-staff-pageview.component.scss',
+    selector: 'edit-staff-pageview',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxMaskDirective,
+        AngularSvgIconModule,
+        SeachableSelectComponent,
+        AddBranchModalComponent,
+        AddRoleComponent,
+    ],
+    templateUrl: './edit-staff-pageview.component.html',
+    styleUrl: './edit-staff-pageview.component.scss'
 })
 export class EditStaffPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

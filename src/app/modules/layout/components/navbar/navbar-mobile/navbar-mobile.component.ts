@@ -5,11 +5,10 @@ import { MenuService } from '@service/menu.service';
 import { NavbarMobileMenuComponent } from './navbar-mobile-menu/navbar-mobile-menu.component';
 
 @Component({
-  selector: 'app-navbar-mobile',
-  standalone: true,
-  imports: [NgClass, AngularSvgIconModule, NavbarMobileMenuComponent],
-  templateUrl: './navbar-mobile.component.html',
-  styleUrl: './navbar-mobile.component.scss',
+    selector: 'app-navbar-mobile',
+    imports: [NgClass, AngularSvgIconModule, NavbarMobileMenuComponent],
+    templateUrl: './navbar-mobile.component.html',
+    styleUrl: './navbar-mobile.component.scss'
 })
 export class NavbarMobileComponent implements OnInit {
   constructor(public menuService: MenuService) {}

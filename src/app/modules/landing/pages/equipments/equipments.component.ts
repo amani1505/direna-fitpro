@@ -25,11 +25,10 @@ const HEADINGS: Record<ShopView, { title: string; text: string }> = {
 };
 
 @Component({
-  selector: 'app-equipments',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, AngularSvgIconModule],
-  templateUrl: './equipments.component.html',
-  styleUrl: './equipments.component.scss',
+    selector: 'app-equipments',
+    imports: [RouterOutlet, RouterLink, AngularSvgIconModule],
+    templateUrl: './equipments.component.html',
+    styleUrl: './equipments.component.scss'
 })
 export class EquipmentsComponent {
   private readonly router = inject(Router);

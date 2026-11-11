@@ -22,17 +22,16 @@ import { ModalConfig } from '@model/modal-config.interface';
 import { BranchesService } from '@service/modules/branches.service';
 
 @Component({
-  selector: 'edit-branch',
-  standalone: true,
-  imports: [
-    ReusableModalComponent,
-    NgClass,
-    NgIf,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './edit-branch.component.html',
-  styleUrl: './edit-branch.component.scss',
+    selector: 'edit-branch',
+    imports: [
+        ReusableModalComponent,
+        NgClass,
+        NgIf,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
+    templateUrl: './edit-branch.component.html',
+    styleUrl: './edit-branch.component.scss'
 })
 export class EditBranchComponent implements OnInit {
   isModalOpen = input.required<boolean>();

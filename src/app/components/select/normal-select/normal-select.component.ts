@@ -11,12 +11,11 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-  selector: 'NormalSelect',
-  standalone: true,
-  imports: [CommonModule, ClickOutsideDirective, AngularSvgIconModule],
-  templateUrl: './normal-select.component.html',
-  styleUrl: './normal-select.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'NormalSelect',
+    imports: [CommonModule, ClickOutsideDirective, AngularSvgIconModule],
+    templateUrl: './normal-select.component.html',
+    styleUrl: './normal-select.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NormalSelectComponent {
   @Input({ required: true }) options: Array<{ label: string; value: string }> =
