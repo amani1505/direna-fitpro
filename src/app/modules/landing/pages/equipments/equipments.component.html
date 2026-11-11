@@ -1,17 +1,70 @@
-<section
-  class="min-h-[25vh] xl:min-h-[25vh] flex flex-col justify-end items-center bg-dark has-bg-image pb-3"
-  style="background-image: url('./assets/images/footer-bg.png'); background-size: cover; background-position: center;"
->
-  <!-- Title -->
-  <div class="mb-2 text-3xl font-medium text-center text-white capitalize md:text-5xl lg:text-6xl">
-    Equipments
+<!-- ============ Shop band ============ -->
+<section class="relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white" aria-labelledby="shop-title">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-mesh absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="hero-grain absolute inset-0"></div>
   </div>
 
-  <!-- Description -->
-  <p class="hidden px-4 text-sm text-center text-gray-300 text-[14px] xl:text-[16px] lg:text-[12px] sm:block">
-    Here are Equipments that are available in our GYM Store
-  </p>
-  <BreadCrumbs [isEquipment]="true"></BreadCrumbs>
+  <div
+    class="mx-auto flex max-w-page flex-col gap-8 px-4 pb-24 pt-32 sm:px-6 sm:pb-28 sm:pt-36 lg:flex-row lg:items-end lg:justify-between"
+  >
+    <div class="min-w-0">
+      @if (view() === "list") {
+        <p
+          class="inline-flex animate-rise items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-sm font-semibold backdrop-blur-md"
+        >
+          <span class="text-primary-400" aria-hidden="true">✺</span> Equipment shop
+        </p>
+      } @else {
+        <a
+          routerLink="/equipments"
+          class="group inline-flex animate-rise items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
+        >
+          <span aria-hidden="true" class="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+          {{ view() === "cart" ? "Continue shopping" : "All equipment" }}
+        </a>
+      }
+      <h1
+        id="shop-title"
+        class="mt-5 animate-rise font-display text-[2.5rem] font-extrabold leading-[0.95] tracking-[-0.04em] [animation-delay:100ms] xs:text-5xl sm:text-6xl"
+      >
+        {{ heading().title }}
+      </h1>
+      <p class="mt-4 max-w-lg animate-rise text-white/70 [animation-delay:200ms] sm:text-lg">
+        {{ heading().text }}
+      </p>
+    </div>
+
+    <!-- Shop shortcuts -->
+    <nav class="flex animate-rise flex-wrap gap-2 [animation-delay:280ms]" aria-label="Your shop">
+      <a routerLink="/dashboard/wishlist" class="shop-chip">
+        <svg-icon src="./assets/icons/heroicons/outline/heart.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+        Wishlist
+        <span class="shop-count">{{ wishlistCount() }}</span>
+      </a>
+      <a routerLink="/equipments/cart" class="shop-chip" [class.is-current]="view() === 'cart'">
+        <svg-icon src="./assets/icons/heroicons/outline/shopping-cart.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+        Cart
+        <span class="shop-count">{{ cartCount() }}</span>
+      </a>
+      @if (isAuthenticated()) {
+        <a routerLink="/dashboard" class="shop-chip">
+          <svg-icon src="./assets/icons/heroicons/outline/person.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+          My account
+        </a>
+      } @else {
+        <a routerLink="/auth" [queryParams]="{ redirectURL: currentUrl() }" class="shop-chip">
+          <svg-icon src="./assets/icons/heroicons/outline/lock-closed.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+          Sign in
+        </a>
+      }
+    </nav>
+  </div>
 </section>
 
-<router-outlet></router-outlet>
+<div class="relative px-4 pb-20 sm:px-6 sm:pb-28">
+  <div class="mx-auto -mt-12 max-w-page sm:-mt-14">
+    <router-outlet></router-outlet>
+  </div>
+</div>

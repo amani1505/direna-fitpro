@@ -1,100 +1,128 @@
-.showcase:hover {
-  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.1);
-}
-.group:hover .default {
-  opacity: 0;
-  transform: scale(1.05);
+:host {
+  display: block;
+  height: 100%;
 }
 
-.group:hover .hover {
-  opacity: 1 !important;
-  transform: scale(1.1);
-}
-.product-image {
+.gear-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
 }
 
-.showcase-badge {
-  font-size: var(--fs-8);
-  font-weight: var(--fw-500);
+.gear-card:hover,
+.gear-card:focus-within {
+  transform: translateY(-5px);
+  border-color: rgb(var(--c-ink) / 0.35);
 }
 
-.icon-container {
-  transform: translateX(100%);
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+/* Product photos sit on a light "studio" tile in both themes */
+.gear-photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: #f3f1f7;
 }
 
-.group:hover .icon-container {
-  transform: translateX(0) !important;
-  opacity: 1 !important;
-}
-.btn-action {
-  background: var(--white);
-  color: var(--sonic-silver);
-  margin-bottom: 5px;
-  border: 1px solid var(--cultured);
-  padding: 5px;
-  border-radius: var(--border-radius-sm);
-  transition: var(--transition-timing);
-}
-.btn-action:hover {
-  background: var(--eerie-black);
-  color: var(--white);
-  border-color: var(--eerie-black);
-}
-.showcase-content {
-  // width: calc(100% - 85px);
-
+.gear-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8%;
+  mix-blend-mode: multiply;
+  transition:
+    opacity 0.45s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.showcase-category {
+
+.gear-img-alt {
+  opacity: 0;
+}
+
+.gear-card:hover .gear-img {
+  transform: scale(1.06);
+}
+
+.gear-card:hover .gear-img-alt {
+  opacity: 1;
+}
+
+.gear-card:hover .gear-img:not(.gear-img-alt):has(+ .gear-img-alt) {
+  opacity: 0;
+}
+
+.gear-heart {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: #fff;
+  color: #17131f;
+  box-shadow: 0 4px 14px -6px rgb(23 19 31 / 0.35);
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.gear-heart:hover {
+  transform: scale(1.12);
   color: #ff4836;
-  font-size: var(--fs-9);
-  font-weight: var(--fw-500);
-  text-transform: uppercase;
-  margin-bottom: 10px;
 }
 
-.showcase-category:hover {
-  // color: var(--salmon-p;
-  @apply text-primary-600;
-}
-.showcase-title {
-  color: var(--eerie-black);
-  font-size: var(--fs-8);
-  font-weight: var(--fw-300);
-  text-transform: capitalize;
-  letter-spacing: 1px;
-  line-height: 30px;
-  margin-bottom: 10px;
-  transition: var(--transition-timing);
+.gear-heart:active {
+  transform: scale(0.88);
 }
 
-.showcase-title:hover {
-  color: var(--eerie-black);
-}
-.showcase-rating {
-  display: flex;
-  color: var(--sandy-brown);
-  margin-bottom: 10px;
+.gear-heart.is-on {
+  background: #ff4836;
+  color: #fff;
 }
 
-.price-box {
-  display: flex;
-  gap: 10px;
-  font-size: var(--fs-7);
-  color: var(--eerie-black);
-  margin-bottom: 10px;
+.gear-heart.is-on ::ng-deep svg {
+  fill: currentColor;
 }
 
-.price {
-  font-weight: var(--fw-700);
+.gear-cart {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-bg));
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease;
 }
 
-del {
-  color: var(--sonic-silver);
+.gear-cart:hover:not(:disabled) {
+  transform: rotate(-10deg) scale(1.1);
+  background: #ff4836;
+  color: #fff;
+}
+
+.gear-cart:active:not(:disabled) {
+  transform: scale(0.9);
+}
+
+.gear-cart:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
 }

@@ -1,63 +1,58 @@
-<div class="w-auto overflow-hidden bg-white border rounded-lg showcase group">
-  <div class="relative w-full h-48">
-    <!-- Default Image -->
-    <img
-      [src]="fileUrl + equipment?.files[0].file_path"
-      alt="Product Image 1"
-      class="absolute top-0 left-0 object-contain w-full h-full product-image default"
-    />
-    <!-- Hover Image -->
-    <img
-      [src]="fileUrl + equipment?.files[1].file_path"
-      alt="Product Image 2"
-      class="absolute top-0 left-0 object-contain w-full h-full opacity-0 product-image hover"
-    />
-    <!-- Badge -->
-    <div
-      *ngIf="badgeText"
-      class="absolute top-[15px] left-[15px] text-white px-[8px] rounded-[var(--border-radius-sm)] z-[3] showcase-badge"
-      [ngStyle]="{ 'background-color': badgeColor }"
-    >
-      {{ badgeText }}
-    </div>
-    <!-- Buttons -->
-    <div class="absolute opacity-0 top-2 right-2 icon-container">
-      <button class="block btn-action" (click)="onAddToWishlist(equipment.id)">
-        <svg-icon
-          src="./assets/icons/heroicons/outline/heart.svg"
-          [svgStyle]="{ 'width.px': 15 }"
-        ></svg-icon>
-      </button>
-      <button class="block btn-action" (click)="viewSingle(equipment.id)">
-        <svg-icon
-          src="./assets/icons/heroicons/outline/eye.svg"
-          [svgStyle]="{ 'width.px': 15 }"
-        ></svg-icon>
-      </button>
-      <button class="block btn-action" (click)="onAddToCart(equipment.id)">
-        <svg-icon
-          src="./assets/icons/heroicons/outline/shopping-cart.svg"
-          [svgStyle]="{ 'width.px': 15 }"
-        ></svg-icon>
-      </button>
-    </div>
-  </div>
-  <!-- Description Section -->
-  <div class="p-4 showcase-content">
-    <button class="showcase-category" (click)="viewSingle(equipment.id)">
-      {{ equipment.title }}
-    </button>
-    <h3>
-      <a href="#" class="showcase-title">{{
-        equipment?.short_description || "-"
-      }}</a>
+<article class="gear-card group">
+  <a [routerLink]="['/equipments', equipment.id]" class="gear-photo" [attr.aria-label]="equipment.title">
+    @if (images[0]) {
+      <img [src]="fileUrl + images[0]" [alt]="equipment.title" loading="lazy" class="gear-img" />
+      @if (images[1]) {
+        <img [src]="fileUrl + images[1]" alt="" loading="lazy" class="gear-img gear-img-alt" />
+      }
+    } @else {
+      <span class="grid h-full w-full place-items-center text-[#9a93a8]">
+        <svg-icon src="./assets/icons/heroicons/outline/photo.svg" [svgClass]="'h-10 w-10'"></svg-icon>
+      </span>
+    }
+    @if (soldOut) {
+      <span class="absolute left-2.5 top-2.5 -rotate-3 rounded-full bg-[#17131f] px-2.5 py-1 text-[11px] font-bold text-white">
+        Sold out
+      </span>
+    }
+  </a>
+
+  <button
+    type="button"
+    class="gear-heart"
+    [class.is-on]="inWishlist"
+    [attr.aria-label]="(inWishlist ? 'In your wishlist: ' : 'Save to wishlist: ') + equipment.title"
+    [attr.aria-pressed]="inWishlist"
+    (click)="onAddToWishlist(equipment.id)"
+  >
+    <svg-icon src="./assets/icons/heroicons/outline/heart.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+  </button>
+
+  <div class="flex grow flex-col px-1.5 pb-1.5 pt-3 sm:px-2.5">
+    @if (category) {
+      <p class="truncate text-xs font-semibold text-primary-500">{{ category }}</p>
+    }
+    <h3 class="mt-1 line-clamp-2 font-display text-base font-bold leading-snug text-ink sm:text-lg">
+      <a [routerLink]="['/equipments', equipment.id]" class="hover:text-primary-500">{{ equipment.title }}</a>
     </h3>
-    <!-- <div *ngIf="showRating" class="showcase-rating">
-      <svg-icon *ngFor="let star of getRatingArray()" src="./assets/icons/heroicons/star.svg" class="remove-icon" [svgStyle]="{ 'width.px': 15 }"></svg-icon>
-    </div> -->
-    <div class="price-box">
-      <p class="price">{{ equipment.price }}</p>
-      <del>{{ oldPrice }}</del>
+    @if (equipment.short_description) {
+      <p class="mt-1 hidden line-clamp-2 text-sm text-muted sm:block">{{ equipment.short_description }}</p>
+    }
+
+    <div class="mt-auto flex items-center justify-between gap-2 pt-3">
+      <p class="min-w-0 font-display text-base font-extrabold tabular-nums text-ink sm:text-lg">
+        {{ equipment.price | number: "1.0-2" }} <span class="text-xs font-semibold text-muted">TZS</span>
+      </p>
+      <button
+        type="button"
+        class="gear-cart"
+        [disabled]="soldOut"
+        [attr.aria-label]="'Add ' + equipment.title + ' to cart'"
+        title="Add to cart"
+        (click)="onAddToCart(equipment.id)"
+      >
+        <svg-icon src="./assets/icons/heroicons/outline/shopping-cart.svg" [svgClass]="'h-[18px] w-[18px]'"></svg-icon>
+      </button>
     </div>
   </div>
-</div>
+</article>

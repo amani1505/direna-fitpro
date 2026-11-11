@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  border: 1.5px solid rgb(var(--c-line));
+}
+
+.stepper-btn {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: rgb(var(--c-surface-2));
+  color: rgb(var(--c-ink));
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.stepper-btn:hover:not(:disabled) {
+  background: rgb(var(--c-ink));
+  color: rgb(var(--c-bg));
+}
+
+.stepper-btn:active:not(:disabled) {
+  transform: scale(0.88);
+}
+
+.stepper-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

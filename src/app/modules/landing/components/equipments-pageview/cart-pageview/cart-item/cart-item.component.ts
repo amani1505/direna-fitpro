@@ -1,53 +1,37 @@
-import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  Output,
-  signal,
-  WritableSignal,
-} from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CartItem } from '@model/cart.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
   selector: '[cart-item]',
   standalone: true,
-  imports: [AngularSvgIconModule, RouterModule, CommonModule],
+  imports: [AngularSvgIconModule, RouterLink, DecimalPipe],
   templateUrl: './cart-item.component.html',
   styleUrl: './cart-item.component.scss',
 })
 export class CartItemComponent {
-  @Input() set product(value: any) {
-    this._product.set(value); // ✅ Convert the input into a signal
-  }
-  private _product: WritableSignal<any> = signal<any>({});
+  @Input({ required: true }) product!: CartItem;
+  /** Disables the controls while a cart update is in flight. */
+  @Input() busy = false;
 
-  @Output() decrementQuantity: EventEmitter<any> = new EventEmitter();
-  @Output() incrementQuantity: EventEmitter<any> = new EventEmitter();
-  @Output() removeItem: EventEmitter<any> = new EventEmitter();
+  @Output() decrementQuantity = new EventEmitter<CartItem>();
+  @Output() incrementQuantity = new EventEmitter<CartItem>();
+  @Output() removeItem = new EventEmitter<CartItem>();
 
-  quatity = 0;
-  available = 12;
   fileUrl = environment.staicUrl;
 
-  get product() {
-    return this._product(); // ✅ Read signal value
-  }
-
-  onIncrement(item: any) {
+  onIncrement(item: CartItem) {
     this.incrementQuantity.emit(item);
   }
 
-  onDecrement(item: any) {
+  onDecrement(item: CartItem) {
     this.decrementQuantity.emit(item);
   }
 
-  onRemove(item: any) {
+  onRemove(item: CartItem) {
     this.removeItem.emit(item);
   }
 }

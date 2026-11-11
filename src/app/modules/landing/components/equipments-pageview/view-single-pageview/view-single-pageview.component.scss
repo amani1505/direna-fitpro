@@ -1,158 +1,132 @@
-/* Shimmer Effect */
-.shimmer {
-  position: relative;
+.thumbs {
+  scrollbar-width: none;
+}
+
+.thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  flex-shrink: 0;
+  width: 4.5rem;
+  height: 4.5rem;
   overflow: hidden;
-  background: #f6f7f8;
+  border-radius: 1rem;
+  border: 2px solid transparent;
+  background: #f3f1f7;
+  opacity: 0.6;
+  transition:
+    opacity 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.shimmer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
-  animation: shimmer 1.5s infinite;
+.thumb:hover {
+  opacity: 1;
+  transform: translateY(-2px);
 }
 
-@keyframes shimmer {
-  100% {
-    left: 100%;
-  }
+.thumb.is-active {
+  opacity: 1;
+  border-color: #ff4836;
 }
 
-/* Custom styles for quill-view-html */
-::ng-deep quill-view-html {
-  font-family: 'Varela', sans-serif; /* Use your desired font */
-  font-size: 16px; /* Default font size */
-  line-height: 2.5; /* Adjust line height for better readability */
+.round-btn {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 999px;
+  border: 2px solid rgb(var(--c-ink));
+  color: rgb(var(--c-ink));
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
 
-  /* Customize unordered lists (bullet points) */
-  ul {
-    list-style-type: disc; /* Default bullet points */
+.round-btn:hover {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.round-btn:active {
+  transform: scale(0.92);
+}
+
+.round-btn.is-on {
+  background: #ff4836;
+  border-color: #ff4836;
+  color: #fff;
+}
+
+.round-btn.is-on ::ng-deep svg {
+  fill: currentColor;
+}
+
+/* Rich text from the equipment editor */
+.gear-description ::ng-deep .ql-editor {
+  padding: 0;
+  color: rgb(var(--c-muted));
+  font-size: 1.025rem;
+  line-height: 1.8;
+
+  p {
     margin: 0.75rem 0;
-    padding-left: 1.5rem;
-
-    li {
-      margin: 0.5rem 0;
-      position: relative;
-
-      &::before {
-        content: '*'; /* Custom bullet point */
-        color: #ff4836; /* Blue color for bullet points */
-        font-size: 1.2em;
-        position: absolute;
-        left: -1rem;
-      }
-    }
   }
 
-  /* Customize ordered lists (numbered lists) */
-  ol {
-    list-style-type: decimal; /* Default numbers */
-    margin: 0.75rem 0;
-    padding-left: 1.5rem;
-
-    li {
-      margin: 0.5rem 0;
-      position: relative;
-
-      &::before {
-        content: counter(list-item) '.'; /* Custom number format */
-        color: #ff4836; /* Blue color for numbers */
-        font-weight: bold;
-        position: absolute;
-        left: -1.5rem;
-      }
-    }
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 1.75rem 0 0.5rem;
+    font-family: var(--ff-catamaran);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    color: rgb(var(--c-ink));
   }
 
-  /* Nested lists */
-  ul ul,
-  ol ol {
-    margin: 0.5rem 0;
-    padding-left: 1.5rem;
-
-    li::before {
-      color: #666; /* Lighter color for nested list items */
-    }
-  }
-
-  /* Customize headings, paragraphs, links, etc. */
   h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin: 1.5rem 0;
+    font-size: 1.75rem;
   }
 
   h2 {
-    font-size: 1.75rem;
-    font-weight: bold;
-    margin: 1.25rem 0;
+    font-size: 1.5rem;
   }
 
   h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 1rem 0;
-  }
-
-  h4 {
     font-size: 1.25rem;
-    font-weight: bold;
-    margin: 0.875rem 0;
-    color: #333; /* Dark gray color for h4 */
   }
 
-  h5 {
-    font-size: 1.125rem;
-    font-weight: bold;
+  ul,
+  ol {
     margin: 0.75rem 0;
-    color: #555; /* Medium gray color for h5 */
+    padding-left: 1.5rem;
   }
 
-  h6 {
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0.625rem 0;
-    color: #777; /* Light gray color for h6 */
+  li {
+    margin: 0.35rem 0;
   }
 
-  p {
-    font-size: 1rem;
-    margin: 0.75rem 0;
-    line-height: 2;
+  li::marker {
+    color: #ff4836;
   }
 
   a {
-    color: #3b82f6; /* Blue color for links */
+    color: #ff4836;
     text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  strong {
+    color: rgb(var(--c-ink));
   }
 
   blockquote {
-    border-left: 4px solid #ccc;
-    padding-left: 1rem;
     margin: 1rem 0;
+    padding-left: 1rem;
+    border-left: 4px solid #ff4836;
     font-style: italic;
-    color: #666;
-  }
-
-  pre {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-radius: 4px;
-    overflow-x: auto;
-  }
-
-  code {
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: #d63384; /* Pink color for code */
   }
 }

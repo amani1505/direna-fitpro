@@ -1,5 +1,108 @@
-<section class="grid grid-cols-1 gap-6 p-8 md:grid-cols-2 lg:grid-cols-3">
-  @for (news of fitnessBlogPosts; track $index) {
-    <BlogCard [blog]="news" [large]="isPrime($index)"> </BlogCard>
-  }
+<!-- ============ Intro band ============ -->
+<section class="relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white" aria-labelledby="blog-title">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+    <div class="hero-mesh absolute inset-0"></div>
+    <div class="hero-grid absolute inset-0"></div>
+    <div class="hero-grain absolute inset-0"></div>
+  </div>
+  <div aria-hidden="true" class="hero-bigword pointer-events-none absolute inset-x-0 -bottom-[4%] -z-10 select-none">
+    <div class="hero-bigword-track">
+      <span>Read up ✺&nbsp;</span>
+      <span>Read up ✺&nbsp;</span>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-page px-4 pb-28 pt-32 sm:px-6 sm:pb-36 sm:pt-40">
+    <p
+      class="inline-flex animate-rise items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-1.5 text-sm font-semibold backdrop-blur-md"
+    >
+      <span class="text-primary-400" aria-hidden="true">✺</span> Blog
+    </p>
+    <h1
+      id="blog-title"
+      class="mt-6 max-w-3xl animate-rise font-display text-[2.6rem] font-extrabold leading-[0.95] tracking-[-0.04em] [animation-delay:120ms] xs:text-5xl sm:text-6xl lg:text-7xl"
+    >
+      Training notes
+    </h1>
+    <p class="mt-5 max-w-lg animate-rise text-base leading-relaxed text-white/70 [animation-delay:240ms] sm:text-lg">
+      Tips on strength, nutrition, motivation and recovery from the Direna FitPro team.
+    </p>
+  </div>
 </section>
+
+<div class="relative px-4 pb-20 sm:px-6 sm:pb-28">
+  <div class="mx-auto max-w-page">
+    <!-- Featured post -->
+    @if (featured; as post) {
+      <a
+        [routerLink]="['/blogs', post.id]"
+        reveal
+        class="featured group -mt-16 grid overflow-hidden rounded-[2rem] border-2 border-ink bg-surface shadow-pop sm:-mt-20 lg:grid-cols-[1.15fr_1fr]"
+      >
+        <div class="relative aspect-[16/10] overflow-hidden lg:aspect-auto lg:min-h-[420px]">
+          <img
+            [src]="post.image"
+            [alt]="post.title"
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
+          />
+          <span
+            class="absolute left-4 top-4 -rotate-3 rounded-full bg-primary-500 px-3 py-1 font-display text-xs font-bold text-white"
+            >Latest</span
+          >
+        </div>
+        <div class="flex flex-col justify-center p-6 sm:p-10">
+          <p class="text-sm font-semibold text-primary-500">{{ post.category }}</p>
+          <h2 class="mt-3 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-4xl xl:text-5xl">
+            {{ post.title }}
+          </h2>
+          <p class="mt-4 text-muted sm:text-lg">{{ post.excerpt }}</p>
+          <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+            <p class="text-sm text-muted">
+              <time [attr.datetime]="post.date">{{ post.date | date: "mediumDate" }}</time> ·
+              {{ post.readMinutes }} min read
+            </p>
+            <span class="inline-flex items-center gap-2 font-display font-bold text-ink">
+              Read article
+              <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    }
+
+    <!-- Filter + grid -->
+    <div class="mt-14 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+      <h2 class="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">More to read</h2>
+      <div class="flex flex-wrap gap-2" role="group" aria-label="Filter by topic">
+        @for (topic of topics; track topic) {
+          <button
+            type="button"
+            class="topic-pill"
+            [class.is-active]="activeTopic() === topic"
+            [attr.aria-pressed]="activeTopic() === topic"
+            (click)="activeTopic.set(topic)"
+          >
+            {{ topic }}
+          </button>
+        }
+      </div>
+    </div>
+
+    @if (visible().length) {
+      <ul class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        @for (post of visible(); track post.id; let i = $index) {
+          <li reveal [revealDelay]="(i % 3) * 90">
+            <BlogCard [blog]="post"></BlogCard>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="dash-empty mt-8">
+        <p class="font-display text-xl font-bold text-ink">No posts on this topic yet</p>
+        <button type="button" class="btn-ghost mt-1 px-5 py-2 text-sm text-ink hover:bg-ink hover:text-bg" (click)="activeTopic.set('All')">
+          Show all posts
+        </button>
+      </div>
+    }
+  </div>
+</div>

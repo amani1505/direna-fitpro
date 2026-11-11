@@ -1,190 +1,150 @@
-<section class="mx-3 my-5 xl:my-5 xl:mx-5">
-  <div class="flex items-center justify-center gap-1 mb-2 lg:justify-end">
-    <button
-      class="relative lg:text-[var(--onyx)] lg:p-[5px] p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
-      routerLink="/dashboard/wishlist"
-    >
-      <svg-icon
-        src="./assets/icons/heroicons/outline/heart.svg"
-        [svgStyle]="{ 'width.px': 24 }"
-      ></svg-icon>
-
-      <span
-        class="absolute -top-[2px] lg:-right-[3px] bg-primary-500 text-white lg:py-[2px] lg:px-[4px] rounded-full w-4 h-4 flex items-center justify-center text-sm"
-        >{{ wishlist().length || 0 }}</span
-      >
-    </button>
-
-    <button
-      class="relative lg:text-[var(--onyx)] lg:p-[5px] p-2 text-sm font-medium text-gray-700 rounded-full hover:bg-gray-100 dark:text-night-200 dark:hover:bg-night-500"
-      routerLink="/equipments/cart"
-    >
-      <svg-icon
-        src="./assets/icons/heroicons/outline/shopping-cart.svg"
-        [svgStyle]="{ 'width.px': 24 }"
-      ></svg-icon>
-
-      <span
-        class="count absolute -top-[2px] lg:-right-[3px] bg-primary-500 text-white lg:py-[2px] lg:px-[4px] rounded-full w-4 h-4 flex items-center justify-center text-sm"
-      >
-        {{ cart()?.items?.length || 0 }}</span
-      >
-    </button>
-
-    <Menu
-      [triggerIcon]="'./assets/icons/heroicons/outline/person.svg'"
-      [config]="profileConfig"
-      [sections]="profileSections"
-      [containerClass]="'rounded-full'"
-    >
-    </Menu>
+@if (notFound()) {
+  <div class="dash-empty bg-surface py-20">
+    <span class="dash-empty-icon">
+      <svg-icon src="./assets/icons/heroicons/outline/magnifying-glass.svg" [svgClass]="'h-7 w-7'"></svg-icon>
+    </span>
+    <p class="font-display text-xl font-bold text-ink">We couldn't load this equipment</p>
+    <p class="max-w-sm text-sm text-muted">It may have been removed, or the connection dropped. Try again or browse everything else.</p>
+    <a routerLink="/equipments" class="btn-pop shine mt-2 px-5 py-2.5 text-sm">Browse equipment</a>
   </div>
-
-  <div class="p-5 mt-10 dark:bg-night-900">
-    <div class="grid grid-cols-1 bg-white custom-container lg:grid-cols-2">
-      <!-- Image Gallery -->
-      <div class="flex flex-col p-4 sm:flex-row sm:col-span-1">
-        <!-- Thumbnails -->
-        <div
-          class="flex overflow-x-auto sm:overflow-visible sm:flex-col lg:mr-4"
-        >
-          @for (image of equipment().files; track image.file_path) {
-            <div class="flex-shrink-0 w-16 mb-2 sm:w-20">
-              @if (image.file_path) {
-                <img
-                  [src]="fileUrl + image.file_path"
-                  class="w-full transition-opacity duration-300 ease-in-out cursor-pointer"
-                  [ngClass]="{
-                    'opacity-50':
-                      selectedImage()?.file_path !== image.file_path,
-                    'opacity-100 border-b-4 border-primary-400':
-                      selectedImage()?.file_path === image.file_path,
-                  }"
-                  (click)="selectImage(image)"
-                />
-              } @else {
-                <!-- Shimmer Skeleton for Thumbnails -->
-                <div class="w-full h-20 bg-gray-200 shimmer"></div>
-              }
-            </div>
-          }
-        </div>
-
-        <!-- Main Image -->
-        <div class="relative flex-1 overflow-hidden w-full h-[400px]">
-          @if (selectedImage()) {
+} @else if (!ready()) {
+  <div class="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]" aria-label="Loading equipment">
+    <div class="rounded-[2rem] border border-line bg-surface p-3">
+      <div class="skeleton aspect-square rounded-[1.5rem]"></div>
+    </div>
+    <div class="space-y-4 rounded-[2rem] border border-line bg-surface p-8">
+      <div class="skeleton h-5 w-24 rounded-full"></div>
+      <div class="skeleton h-10 w-3/4"></div>
+      <div class="skeleton h-4 w-full"></div>
+      <div class="skeleton h-4 w-2/3"></div>
+      <div class="skeleton mt-8 h-12 w-full rounded-full"></div>
+    </div>
+  </div>
+} @else {
+  @if (equipment(); as eq) {
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start">
+      <!-- Gallery -->
+      <section class="rounded-[2rem] border border-line bg-surface p-2.5 shadow-soft sm:p-3" aria-label="Photos">
+        <div class="relative aspect-square overflow-hidden rounded-[1.5rem] bg-[#f3f1f7]">
+          @if (selectedImage(); as image) {
             <img
-              [src]="fileUrl + selectedImage()?.file_path"
+              [src]="fileUrl + image.file_path"
+              [alt]="eq.title"
               [ngClass]="animationClass"
-              class="object-contain w-full h-full transition-transform duration-700 ease-in-out"
+              class="h-full w-full object-contain p-[7%] mix-blend-multiply"
             />
           } @else {
-            <!-- Shimmer Skeleton for Main Image -->
-            <div class="w-full h-full bg-gray-200 shimmer"></div>
+            <div class="grid h-full w-full place-items-center text-[#9a93a8]">
+              <svg-icon src="./assets/icons/heroicons/outline/photo.svg" [svgClass]="'h-14 w-14'"></svg-icon>
+            </div>
           }
         </div>
-      </div>
 
-      <div class="p-4 lg:col-span-1 lg:ml-4">
-        <div>
-          <div
-            class="bg-primary-300 w-28 rounded-full text-center text-sm capitalize text-white font-[500] mb-3 px2-"
-          >
-            {{ equipment().status }}
-          </div>
-          <h2 class="mb-2 font-semibold tracking-wide capitalize text-xxl">
-            {{ equipment().title }}
-          </h2>
-          <div class="my-3 text-neutral-500">
-            {{ equipment()?.short_description || "-" }}
-          </div>
-
-          <div
-            class="flex flex-col gap-2 my-3 md:flex-row md:items-center md:gap-8"
-          >
-            <div class="uppercase font-[500]">Model :</div>
-            <div class="text-neutral-500">
-              {{ equipment()?.model }}
-            </div>
-          </div>
-
-          <p class="text-2xl font-bold text-secondary-600 font-raleway">
-            {{ equipment().price | currency }}
-          </p>
-
-          @if (cart()?.items?.length > 0 || cart()) {
-            <div class="mt-5">
+        @if (eq.files.length > 1) {
+          <div class="thumbs mt-3 flex gap-2 overflow-x-auto pb-1">
+            @for (image of eq.files; track image.file_path; let i = $index) {
               <button
-                class="flex items-center justify-center w-full gap-1 py-2 text-white transition duration-500 ease-in-out rounded-md bg-primary-400 hover:bg-primary-500"
-                (click)="goToYouCart()"
+                type="button"
+                class="thumb"
+                [class.is-active]="selectedImage()?.file_path === image.file_path"
+                [attr.aria-label]="'Show photo ' + (i + 1)"
+                [attr.aria-pressed]="selectedImage()?.file_path === image.file_path"
+                (click)="selectImage(image)"
               >
-                <div class="font-bold">
-                  <svg-icon
-                    src="assets/icons/heroicons/outline/shopping-cart.svg"
-                    [svgStyle]="{ 'width.px': 20 }"
-                  ></svg-icon>
-                </div>
-                <div>Go to your shopping cart</div>
-              </button>
-            </div>
-          }
-
-          <!-- Buttons -->
-          <div class="flex items-center justify-center gap-4 mt-5">
-            @if (cart()?.items?.length === 0 || !cart()) {
-              <button
-                class="text-white p-2 rounded-md text-sm font-[500] bg-primary-500 hover:bg-primary-700"
-                (click)="addToCart()"
-              >
-                Add to cart
+                <img [src]="fileUrl + image.file_path" alt="" class="h-full w-full object-contain p-1.5 mix-blend-multiply" />
               </button>
             }
-
-            <!-- <button
-              class="bg-secondary-500 text-white py-1 px-2 rounded-md text-sm font-[500] capitalize"
-            >
-              Buy now
-            </button> -->
           </div>
+        }
+      </section>
 
-          <!-- Social Icons -->
-          <div class="mt-5">
-            <ul class="flex items-center gap-[5px]">
-              @for (item of icons; track $index) {
-                <li>
-                  <a
-                    href="#"
-                    class="p-[5px] bg-[#f2f2f2] rounded-[var(--border-radius-sm)] flex text-[var(--sonic-silver)] transition-[ var(--transition-timing)] hover:bg-primary-500 hover:text-white"
-                  >
-                    <svg-icon
-                      [src]="item"
-                      [svgStyle]="{ 'width.px': 20 }"
-                    ></svg-icon>
-                  </a>
-                </li>
-              }
-            </ul>
-          </div>
+      <!-- Details -->
+      <section class="rounded-[2rem] border-2 border-ink bg-surface p-5 shadow-pop sm:p-8 lg:sticky lg:top-28">
+        <div class="flex flex-wrap gap-2">
+          @for (cat of eq.categories; track cat.id) {
+            <span class="rounded-full bg-primary-500/10 px-3 py-1 text-xs font-bold text-primary-600 dark:text-primary-300">
+              {{ cat.category_name }}
+            </span>
+          }
+          @if (eq.status) {
+            <span class="rounded-full bg-surface-2 px-3 py-1 text-xs font-bold capitalize text-ink">{{ eq.status }}</span>
+          }
         </div>
-      </div>
+
+        <h2 class="mt-4 font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-4xl xl:text-5xl">
+          {{ eq.title }}
+        </h2>
+        @if (eq.short_description) {
+          <p class="mt-3 text-muted sm:text-lg">{{ eq.short_description }}</p>
+        }
+
+        <p class="mt-6 font-display text-4xl font-extrabold tabular-nums tracking-tight text-ink">
+          {{ eq.price | number: "1.0-2" }} <span class="text-base font-bold text-muted">TZS</span>
+        </p>
+
+        <dl class="mt-6 grid grid-cols-2 gap-3">
+          @if (eq.model) {
+            <div class="rounded-2xl bg-surface-2 px-4 py-3">
+              <dt class="text-xs font-semibold text-muted">Model</dt>
+              <dd class="mt-0.5 truncate font-semibold text-ink">{{ eq.model }}</dd>
+            </div>
+          }
+          <div class="rounded-2xl bg-surface-2 px-4 py-3">
+            <dt class="text-xs font-semibold text-muted">Availability</dt>
+            <dd class="mt-0.5 font-semibold" [ngClass]="eq.quantity > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'">
+              {{ eq.quantity > 0 ? eq.quantity + " in stock" : "Sold out" }}
+            </dd>
+          </div>
+        </dl>
+
+        <!-- Actions -->
+        <div class="mt-8 flex gap-3">
+          @if (inCart()) {
+            <a routerLink="/equipments/cart" class="btn-pop shine grow">
+              <svg-icon src="assets/icons/heroicons/outline/shopping-cart.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+              In your cart · View cart
+            </a>
+          } @else {
+            <button type="button" class="btn-pop shine grow disabled:pointer-events-none disabled:opacity-50" [disabled]="eq.quantity === 0 || adding()" (click)="addToCart()">
+              <svg-icon src="assets/icons/heroicons/outline/shopping-cart.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+              {{ adding() ? "Adding…" : "Add to cart" }}
+            </button>
+          }
+          <button
+            type="button"
+            class="round-btn"
+            [class.is-on]="inWishlist()"
+            [attr.aria-label]="inWishlist() ? 'In your wishlist' : 'Save to wishlist'"
+            [attr.aria-pressed]="inWishlist()"
+            [title]="inWishlist() ? 'In your wishlist' : 'Save to wishlist'"
+            (click)="addToWishlist()"
+          >
+            <svg-icon src="./assets/icons/heroicons/outline/heart.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+          </button>
+          <button type="button" class="round-btn" [attr.aria-label]="copied() ? 'Link copied' : 'Share'" [title]="copied() ? 'Link copied' : 'Share'" (click)="share(eq.title)">
+            @if (copied()) {
+              <span class="text-lg font-bold" aria-hidden="true">✓</span>
+            } @else {
+              <svg-icon src="./assets/icons/heroicons/outline/arrow-sm-up.svg" [svgClass]="'h-5 w-5'"></svg-icon>
+            }
+          </button>
+        </div>
+        @if (copied()) {
+          <p class="mt-2 text-sm font-semibold text-emerald-600 dark:text-emerald-400" role="status">Link copied</p>
+        }
+      </section>
     </div>
 
-    <!-- Description Section -->
-    <div class="mt-5">
-      <div class="bg-white custom-container">
-        <div class="p-5">
-          <div class="py-1 border-b-2 border-primary-400">
-            <p class="font-poppins font-[500] text-lg capitalize">
-              Description
-            </p>
-          </div>
-          <div class="py-3 font-varela">
-            <quill-view-html
-              [content]="equipment().description"
-            ></quill-view-html>
-          </div>
+    <!-- Description -->
+    @if (eq.description) {
+      <section reveal class="mt-5 rounded-[2rem] border border-line bg-surface p-5 sm:p-8 lg:p-10" aria-labelledby="about-gear">
+        <h3 id="about-gear" class="font-display text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+          About this equipment
+        </h3>
+        <div class="gear-description mt-5 max-w-3xl">
+          <quill-view-html [content]="eq.description"></quill-view-html>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
+    }
+  }
+}

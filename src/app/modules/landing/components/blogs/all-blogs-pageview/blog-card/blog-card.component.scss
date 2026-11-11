@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.post-card {
+  height: 100%;
+  padding: 0.6rem;
+  border-radius: 1.6rem;
+  border: 1px solid rgb(var(--c-line));
+  background: rgb(var(--c-surface));
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+}
+
+.post-card:hover,
+.post-card:focus-within {
+  transform: translateY(-5px) rotate(-0.4deg);
+  border-color: rgb(var(--c-ink) / 0.35);
+}

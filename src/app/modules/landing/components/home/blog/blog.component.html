@@ -1,11 +1,11 @@
 <section class="section blog" id="blog" aria-label="blog">
   <div class="container">
-    <p class="section-subtitle" reveal="zoom">Our news</p>
+    <p class="section-subtitle mx-auto flex w-fit" reveal="zoom">Our news</p>
 
     <h2 reveal [revealDelay]="80" class="hero-title mb-6 text-center font-display text-3xl font-extrabold leading-[1.05] tracking-tight text-[var(--rich-black-fogra-29-1)] sm:text-4xl lg:mb-10 xl:text-[3.25rem]">Latest from the blog</h2>
 
     <ul class="blog-list has-scrollbar">
-      @for (blog of blogs; track $index) {
+      @for (blog of blogs; track blog.id) {
         <li class="scrollbar-item" reveal [revealDelay]="$index * 90">
           <div class="blog-card">
             <div
@@ -21,25 +21,29 @@
                 class="img-cover"
               />
 
-              <time class="card-meta">{{
-                blog.date
+              <time class="card-meta" [attr.datetime]="blog.date">{{
+                blog.date | date: "mediumDate"
               }}</time>
             </div>
 
             <div class=" card-content">
               <h3 class="">
-                <a href="#" class="card-title font-display text-xl font-bold leading-tight tracking-tight text-[var(--rich-black-fogra-29-1)] xl:text-[1.5rem]">{{ blog.title }}</a>
+                <a [routerLink]="['/blogs', blog.id]" class="card-title font-display text-xl font-bold leading-tight tracking-tight text-[var(--rich-black-fogra-29-1)] xl:text-[1.5rem]">{{ blog.title }}</a>
               </h3>
 
               <p class="my-3 text-[var(--sonic-silver)]">
-                {{ blog.description }}
+                {{ blog.excerpt }}
               </p>
 
-              <a href="#" class="btn-link has-before text-sm">Read more</a>
+              <a [routerLink]="['/blogs', blog.id]" class="btn-link has-before text-sm" [attr.aria-label]="'Read ' + blog.title">Read more</a>
             </div>
           </div>
         </li>
       }
       </ul>
+
+    <div class="mt-4 flex justify-center" reveal>
+      <a routerLink="/blogs" class="btn-ghost text-[var(--rich-black-fogra-29-1)] hover:bg-ink hover:text-bg">All posts</a>
+    </div>
   </div>
 </section>

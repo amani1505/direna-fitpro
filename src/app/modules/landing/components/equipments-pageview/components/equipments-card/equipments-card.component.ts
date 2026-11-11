@@ -1,5 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Equipment } from '@model/equipment';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
@@ -7,30 +8,26 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'equipment-card',
   standalone: true,
-  imports: [AngularSvgIconModule, CommonModule],
+  imports: [AngularSvgIconModule, DecimalPipe, RouterLink],
   templateUrl: './equipments-card.component.html',
   styleUrl: './equipments-card.component.scss',
 })
-export class EquipmentsCardComponent {
+export class EquipmentsCardComponent implements OnChanges {
   @Input({ required: true }) equipment!: Equipment;
-  fileUrl = environment.staicUrl;
-
-  @Input() image!: string;
-  @Input() showHeart: boolean = false;
-  @Input() showEye: boolean = false;
-  @Input() showBag: boolean = false;
-  @Input() badgeText!: string;
-  @Input() badgeColor: string = 'var(--ocean-green)';
-  @Input() oldPrice!: string;
-  @Input() showRating: boolean = false;
-  @Input() rating: number = 0;
+  @Input() inWishlist = false;
 
   @Output() addToWishlist = new EventEmitter<string>();
-  @Output() singleView = new EventEmitter<string>();
   @Output() addToCart = new EventEmitter<string>();
 
-  viewSingle(id: string) {
-    this.singleView.emit(id);
+  fileUrl = environment.staicUrl;
+  images: string[] = [];
+  category = '';
+  soldOut = false;
+
+  ngOnChanges(): void {
+    this.images = (this.equipment?.files ?? []).map((f) => f.file_path).filter(Boolean).slice(0, 2);
+    this.category = this.equipment?.categories?.[0]?.category_name ?? '';
+    this.soldOut = this.equipment?.quantity === 0;
   }
 
   onAddToCart(id: string) {

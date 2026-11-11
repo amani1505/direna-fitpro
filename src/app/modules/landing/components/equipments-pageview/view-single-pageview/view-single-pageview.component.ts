@@ -1,23 +1,9 @@
-import { CommonModule } from '@angular/common';
-import {
-  Component,
-  computed,
-  effect,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterModule,
-} from '@angular/router';
-import { MenuPopupComponent } from '@components/menu-popup/menu-popup.component';
-import { Cart } from '@model/cart.interface';
-import { DropdownConfig, DropdownSection } from '@model/dropdown';
+import { DecimalPipe, isPlatformBrowser, NgClass } from '@angular/common';
+import { Component, computed, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { RevealDirective } from '@directive/reveal.directive';
 import { Files } from '@model/files';
-import { Wishlist } from '@model/wishlist.interface';
 import { AuthService } from '@service/auth.service';
 import { CartService } from '@service/modules/cart.service';
 import { EquipmentService } from '@service/modules/equipment.service';
@@ -26,63 +12,52 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 import { QuillModule } from 'ngx-quill';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'view-single-pageview',
   standalone: true,
-  imports: [
-    CommonModule,
-    AngularSvgIconModule,
-    QuillModule,
-    RouterModule,
-    MenuPopupComponent,
-  ],
+  imports: [NgClass, DecimalPipe, AngularSvgIconModule, QuillModule, RouterLink, RevealDirective],
   templateUrl: './view-single-pageview.component.html',
   styleUrl: './view-single-pageview.component.scss',
 })
 export class ViewSinglePageviewComponent implements OnInit {
-  cart = signal<Cart | null>(null);
-    wishlist = signal<Wishlist[] | []>([]);
   private _equipmentsService = inject(EquipmentService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
   private _cartService = inject(CartService);
-    private _wishlistService = inject(WishlistService);
+  private _wishlistService = inject(WishlistService);
   private _toastService = inject(ToastService);
   private _authService = inject(AuthService);
+  private _isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  equipment = computed(() => this._equipmentsService.equipment());
   fileUrl = environment.staicUrl;
+  equipment = computed(() => this._equipmentsService.equipment());
+  private loading = this._equipmentsService.loading;
+  private requestedId = signal<string | null>(null);
 
-  currentIndex: number = 0;
-  quantity: number = 0;
-  available: number = 12;
-  animationClass: string = '';
-  colors: string[] = ['#FF5722', '#F44336', '#4CAF50', '#2196F3']; // Define colors here
-  selectedColor: string = this.colors[0];
-  icons: string[] = [
-    './assets/icons/ionicons/logo-facebook.svg',
-    './assets/icons/ionicons/logo-twitter.svg',
-    '/assets/icons/ionicons/logo-instagram.svg',
-    './assets/icons/ionicons/logo-linkedin.svg',
-  ];
+  /** The service keeps the last viewed item, so wait until it matches this page. */
+  ready = computed(() => !this.loading() && String(this.equipment()?.id) === this.requestedId());
+  /** The request finished but did not return this item. */
+  notFound = computed(() => this.requestedId() !== null && !this.loading() && !this.ready());
+
+  private cart = toSignal(this._cartService.cart$, { initialValue: null });
+  private wishlist = toSignal(this._wishlistService.wishlist$, { initialValue: null });
+
+  inCart = computed(() => (this.cart()?.items ?? []).some((item) => item.equipment?.id === this.equipment()?.id));
+  inWishlist = computed(() => (this.wishlist() ?? []).some((item) => item.equipment?.id === this.equipment()?.id));
 
   selectedImage = signal<Files | null>(null);
-
-  currentRoute: string = '';
-
-  isAuthenticated = this._authService.authenticated;
+  adding = signal(false);
+  copied = signal(false);
+  animationClass = '';
+  private currentIndex = 0;
 
   constructor() {
     effect(
       () => {
-        const eq = this.equipment();
-        if (eq.files && eq.files.length > 0) {
-          this.selectedImage.set(eq.files[0]); // Set the first image as selected
-        } else {
-          this.selectedImage.set(null); // Reset if no files are available
-        }
+        const files = this.equipment()?.files ?? [];
+        this.currentIndex = 0;
+        this.selectedImage.set(files.length > 0 ? files[0] : null);
       },
       { allowSignalWrites: true },
     );
@@ -90,117 +65,68 @@ export class ViewSinglePageviewComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this._route.snapshot.paramMap.get('id');
+    this.requestedId.set(id);
     this._equipmentsService.findOne(id, ['files']);
-
-    this._cartService.cart$.subscribe((cart) => {
-      this.cart.set(cart);
-    });
-
-    this._wishlistService.wishlist$.subscribe((wishlist) => {
-      this.wishlist.set(wishlist);
-    });
-    // Get the initial route
-    this.currentRoute = this._router.url;
-
-    // Subscribe to route changes
-    // this._router.events
-    //   .pipe(filter((event) => event instanceof NavigationEnd))
-    //   .subscribe((event: NavigationEnd) => {
-    //     this.currentRoute = event.url; // Update the current route
-    //     console.log('Current Route:', this.currentRoute);
-    //   });
   }
-
-  profileConfig: DropdownConfig = {
-    triggerType: 'icon',
-    width: 'w-56',
-    position: 'right',
-    animation: 'fade',
-  };
-
-  profileSections: DropdownSection[] = [
-    {
-      items: [
-        {
-          label: 'Dashboard',
-          hide: !this.isAuthenticated(),
-          icon: './assets/icons/heroicons/solid/chart-pie.svg',
-          action: () => this._router.navigateByUrl(`/dashboard`),
-        },
-        {
-          label: 'Profile',
-          hide: !this.isAuthenticated(),
-          icon: './assets/icons/heroicons/outline/user-circle.svg',
-          action: () => this._router.navigateByUrl(`/dashboard/profile`),
-        },
-
-        {
-          label: 'Sign in',
-          hide: this.isAuthenticated(),
-          icon: './assets/icons/heroicons/outline/lock-closed.svg',
-          action: () =>
-            this._router.navigateByUrl(`auth?redirectURL=${this.currentRoute}`),
-        },
-        {
-          label: 'Sign out',
-          icon: './assets/icons/heroicons/outline/logout.svg',
-          hide: !this.isAuthenticated(),
-          action: () =>
-            this._router.navigateByUrl(`signout?redirectURL=${this.currentRoute}`),
-        },
-      ],
-    },
-  ];
 
   selectImage(image: Files): void {
     const newIndex = this.equipment().files.indexOf(image);
+    if (newIndex === this.currentIndex) return;
 
-    if (newIndex === this.currentIndex) {
-      return;
-    }
-
-    if (newIndex > this.currentIndex) {
-      this.animationClass = 'animate-slide-left';
-    } else {
-      this.animationClass = 'animate-slide-right';
-    }
-
+    this.animationClass = newIndex > this.currentIndex ? 'animate-slide-left' : 'animate-slide-right';
     this.currentIndex = newIndex;
     this.selectedImage.set(image);
-
-    setTimeout(() => {
-      this.animationClass = '';
-    }, 500);
+    setTimeout(() => (this.animationClass = ''), 500);
   }
 
-  selectColor(color: string): void {
-    this.selectedColor = color;
-  }
-
-  add() {
-    if (this.equipment().quantity > this.quantity) {
-      ++this.quantity;
-    }
-  }
-
-  decrease() {
-    if (this.quantity > 0) {
-      --this.quantity;
-    }
+  /** Cart and wishlist need an account; send guests to sign in first. */
+  private requireSignIn(): boolean {
+    if (this._authService.authenticated()) return false;
+    this._toastService.error('Sign in to save items and add them to your cart.');
+    this._router.navigate(['/auth'], { queryParams: { redirectURL: this._router.url } });
+    return true;
   }
 
   addToCart() {
+    if (this.requireSignIn() || this.adding()) return;
+    this.adding.set(true);
     this._cartService.addToCart(this.equipment().id, 1).subscribe({
       next: () => {
-        this._toastService.success('Item added successfully.');
+        this.adding.set(false);
+        this._toastService.success('Added to your cart.');
       },
       error: (error) => {
-        this._toastService.error(error.message);
+        this.adding.set(false);
+        this._toastService.error(error?.error?.message || error.message);
       },
     });
   }
 
-  goToYouCart(){
-    this._router.navigateByUrl('/equipments/cart');
+  addToWishlist() {
+    if (this.requireSignIn()) return;
+    if (this.inWishlist()) {
+      this._toastService.success('Already in your wishlist.');
+      return;
+    }
+    this._wishlistService.addToWishlist(this.equipment().id).subscribe({
+      next: () => this._toastService.success('Saved to your wishlist.'),
+      error: (error) => this._toastService.error(error?.error?.message || error.message),
+    });
+  }
+
+  async share(title: string): Promise<void> {
+    if (!this._isBrowser) return;
+    const url = window.location.href;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      this.copied.set(true);
+      setTimeout(() => this.copied.set(false), 2000);
+    } catch {
+      // The person closed the share sheet; nothing to do.
+    }
   }
 }

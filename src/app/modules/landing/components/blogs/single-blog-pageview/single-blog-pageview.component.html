@@ -1,96 +1,108 @@
-<!-- Blog Post -->
-<section class="px-4 py-4 mx-auto md:max-w-7xl md:py-0">
-  <div>
-    <h2 class="mb-4 text-xl font-semibold md:text-4xl font-poppins">
-      The Future of Web Development
-    </h2>
-    <p class="mb-3 text-sm text-gray-500">
-      By <span class="font-medium">Jane Doe</span> | April 25, 2025 · 5 min read
-    </p>
-    <div class="rounded-lg h-96">
-      <img
-        src="https://images.unsplash.com/photo-1470167290877-7d5d3446de4c?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        alt="Blog Cover"
-        class="object-cover w-full h-full rounded-lg"
-      />
+@if (post(); as post) {
+  <!-- ============ Title band ============ -->
+  <section class="relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white" aria-labelledby="post-title">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div class="hero-mesh absolute inset-0"></div>
+      <div class="hero-grid absolute inset-0"></div>
+      <div class="hero-grain absolute inset-0"></div>
     </div>
 
-    <div class="mt-4 prose max-w-none">
-      <p>
-        Web development is rapidly evolving with the rise of new technologies
-        like AI, WebAssembly, and frameworks such as Next.js and Svelte.
-        Developers are now more empowered than ever to build responsive,
-        performant, and engaging web applications with minimal overhead.
-      </p>
-
-      <h3>What to Expect in 2025</h3>
-      <ul>
-        <li>Increased use of AI for UI generation</li>
-        <li>Real-time collaboration features in standard apps</li>
-        <li>Universal adoption of dark mode</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- Tags -->
-  <div class="mt-8 space-x-2">
-    <span
-      class="inline-block px-3 py-1 text-sm text-indigo-600 bg-indigo-100 rounded-full"
-      >#WebDev</span
-    >
-    <span
-      class="inline-block px-3 py-1 text-sm text-indigo-600 bg-indigo-100 rounded-full"
-      >#Tech</span
-    >
-    <span
-      class="inline-block px-3 py-1 text-sm text-indigo-600 bg-indigo-100 rounded-full"
-      >#2025</span
-    >
-  </div>
-
-  <!-- Author Box -->
-  <div
-    class="flex items-center p-6 mt-12 space-x-4 bg-white shadow-md rounded-xl"
-  >
-    <img
-      src="https://i.pravatar.cc/100?img=3"
-      alt="Author"
-      class="w-16 h-16 rounded-full"
-    />
-    <div>
-      <h4 class="text-lg font-bold">Jane Doe</h4>
-      <p class="text-sm text-gray-500">Full Stack Developer & Tech Blogger</p>
-    </div>
-  </div>
-
-  <!-- Comments -->
-  <!-- <section class="mt-12">
-    <h3 class="mb-4 text-2xl font-bold">Comments</h3>
-    <form class="mb-6 space-y-4">
-      <textarea
-        rows="4"
-        class="w-full p-3 border rounded-lg"
-        placeholder="Write a comment..."
-      ></textarea>
-      <button
-        type="submit"
-        class="px-6 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700"
+    <div class="mx-auto max-w-4xl px-4 pb-36 pt-32 sm:px-6 sm:pb-48 sm:pt-40">
+      <a
+        routerLink="/blogs"
+        class="group inline-flex animate-rise items-center gap-2 text-sm font-semibold text-white/70 transition hover:text-white"
       >
-        Post Comment
-      </button>
-    </form>
+        <span aria-hidden="true" class="transition-transform duration-300 group-hover:-translate-x-1">←</span>
+        All posts
+      </a>
+      <p class="mt-6 animate-rise [animation-delay:80ms]">
+        <span class="inline-flex -rotate-2 rounded-full bg-primary-500 px-3 py-1 font-display text-sm font-bold">{{
+          post.category
+        }}</span>
+      </p>
+      <h1
+        id="post-title"
+        class="mt-5 animate-rise font-display text-[2.4rem] font-extrabold leading-[0.98] tracking-[-0.04em] [animation-delay:160ms] xs:text-5xl sm:text-6xl"
+      >
+        {{ post.title }}
+      </h1>
+      <p class="mt-5 animate-rise text-white/70 [animation-delay:240ms]">
+        <time [attr.datetime]="post.date">{{ post.date | date: "longDate" }}</time> · {{ post.readMinutes }} min read
+      </p>
+    </div>
+  </section>
 
-    <div class="space-y-4">
-      <div class="p-4 bg-white rounded-lg shadow">
-        <p class="text-sm text-gray-600">
-          <strong>John:</strong> Great insights, thanks for sharing!
-        </p>
-      </div>
-      <div class="p-4 bg-white rounded-lg shadow">
-        <p class="text-sm text-gray-600">
-          <strong>Alice:</strong> Looking forward to more articles like this.
-        </p>
+  <!-- ============ Article ============ -->
+  <article class="relative px-4 pb-16 sm:px-6">
+    <div class="mx-auto -mt-24 max-w-5xl sm:-mt-36">
+      <div reveal="zoom" class="overflow-hidden rounded-[2rem] border-2 border-ink bg-surface-2 shadow-pop">
+        <img [src]="post.image" [alt]="post.title" class="aspect-[16/9] w-full object-cover" />
       </div>
     </div>
-  </section> -->
-</section>
+
+    <div class="article mx-auto mt-12 max-w-2xl sm:mt-16">
+      <p class="article-lead">{{ post.excerpt }}</p>
+      @for (block of post.body; track $index) {
+        @switch (block.type) {
+          @case ("h") {
+            <h2>{{ $any(block).text }}</h2>
+          }
+          @case ("list") {
+            <ul>
+              @for (item of $any(block).items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          }
+          @default {
+            <p>{{ $any(block).text }}</p>
+          }
+        }
+      }
+
+      <div class="mt-12 flex flex-wrap items-center gap-3 border-t border-line pt-8">
+        <span class="text-sm font-semibold text-ink">Share</span>
+        <button type="button" class="share-btn" (click)="share(post.title)">
+          <svg-icon src="./assets/icons/heroicons/outline/arrow-sm-up.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+          {{ copied() ? "Link copied" : "Share this post" }}
+        </button>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============ More posts ============ -->
+  @if (more().length) {
+    <section class="px-4 pb-20 sm:px-6 sm:pb-28" aria-labelledby="more-title">
+      <div class="mx-auto max-w-page">
+        <div class="flex items-end justify-between gap-4">
+          <h2 id="more-title" class="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+            Keep reading
+          </h2>
+          <a routerLink="/blogs" class="hidden font-display font-bold text-ink hover:text-primary-500 sm:inline-flex">
+            All posts →
+          </a>
+        </div>
+        <ul class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          @for (item of more(); track item.id; let i = $index) {
+            <li reveal [revealDelay]="i * 90">
+              <BlogCard [blog]="item"></BlogCard>
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+  }
+} @else {
+  <section class="relative isolate overflow-hidden bg-[rgb(var(--c-hero))] text-white">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+      <div class="hero-mesh absolute inset-0"></div>
+      <div class="hero-grain absolute inset-0"></div>
+    </div>
+    <div class="mx-auto flex min-h-[70vh] max-w-xl flex-col items-center justify-center px-4 pb-20 pt-32 text-center">
+      <p class="font-display text-7xl font-extrabold text-primary-500">404</p>
+      <h1 class="mt-4 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">We couldn't find that post</h1>
+      <p class="mt-3 text-white/70">It may have been moved or removed.</p>
+      <a routerLink="/blogs" class="btn-pop shine on-dark mt-8">Browse all posts</a>
+    </div>
+  </section>
+}

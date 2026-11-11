@@ -1,23 +1,15 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { BlogPost } from '../../../../../../constant/blog-posts';
 
 @Component({
   selector: 'BlogCard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RouterLink, DatePipe],
   templateUrl: './blog-card.component.html',
   styleUrl: './blog-card.component.scss',
 })
 export class BlogCardComponent {
-  @Input() blog: any;
-  @Input() large: boolean = false;
-  private _route = inject(ActivatedRoute);
-  private _router = inject(Router);
-
-  view(id: string) {
-    this._router.navigate([id], {
-      relativeTo: this._route,
-    });
-  }
+  @Input({ required: true }) blog!: BlogPost;
 }

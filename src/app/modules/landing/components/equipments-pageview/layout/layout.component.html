@@ -1,59 +1,88 @@
-<div class="grid grid-cols-1 gap-4 my-4 md:grid-cols-5">
-  <div class="p-4 rounded-lg shadow">
-    <div class="flex items-center gap-3 mb-3">
-      <div>
-        <input
-          type="radio"
-          name="category"
-          [checked]="!isFiltered()"
-          (change)="clearFilters()"
-        />
-      </div>
-      <div>All Equipments</div>
+<!-- Toolbar -->
+<div class="relative rounded-[1.75rem] border border-line bg-surface p-3 shadow-soft sm:p-4">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center">
+    <label class="relative min-w-0 grow">
+      <span class="sr-only">Search equipment</span>
+      <svg-icon
+        src="./assets/icons/heroicons/outline/magnifying-glass.svg"
+        class="pointer-events-none absolute left-4 top-1/2 z-20 -translate-y-1/2 text-subtle"
+        [svgClass]="'h-5 w-5'"
+      ></svg-icon>
+      <input
+        type="search"
+        class="!rounded-full !py-3 !pl-12"
+        placeholder="Search equipment by name"
+        autocomplete="off"
+        #searchBox
+        (input)="onSearchInput(searchBox.value)"
+      />
+    </label>
+
+    <div class="grid grid-cols-2 gap-3 md:flex md:shrink-0">
+      <label class="toolbar-select">
+        <span class="sr-only">Sort</span>
+        <select (change)="onSortChange($any($event.target).value)" class="!rounded-full">
+          <option value="DESC" [selected]="sortOrder() === 'DESC'">Newest first</option>
+          <option value="ASC" [selected]="sortOrder() === 'ASC'">Oldest first</option>
+        </select>
+      </label>
+      <label class="toolbar-select">
+        <span class="sr-only">Items per page</span>
+        <select (change)="onItemCountChange(+$any($event.target).value)" class="!rounded-full">
+          @for (n of pageSizes; track n) {
+            <option [value]="n" [selected]="limit() === n">Show {{ n }}</option>
+          }
+        </select>
+      </label>
     </div>
-    @for (category of categories(); track $index) {
-      <div class="flex items-center justify-between mb-3">
-        <div class="flex items-center gap-3">
-          <div class="rounded-lg w-14 h-14">
-            <img
-              [src]="fileUrl + category?.image"
-              [alt]="category.category_name"
-              class="object-cover rounded-lg w-14 h-14"
-            />
-          </div>
-          <div
-            class="text-sm cursor-pointer hover:underline hover:text-primary-500"
-            [class.text-primary-500]="
-              selectedCategory() === category.category_name
-            "
-            [class.underline]="selectedCategory() === category.category_name"
+  </div>
+</div>
+
+<div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start">
+  <!-- Categories -->
+  <nav class="min-w-0 lg:sticky lg:top-28" aria-label="Categories">
+    <p class="mb-3 hidden px-1 font-display text-lg font-bold text-ink lg:block">Categories</p>
+    <ul class="cat-list flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0">
+      <li class="shrink-0">
+        <button type="button" class="cat-item" [class.is-active]="!selectedCategory()" (click)="clearFilters()">
+          <span class="cat-thumb grid place-items-center bg-ink text-bg">
+            <svg-icon src="./assets/icons/heroicons/outline/squares.svg" [svgClass]="'h-4 w-4'"></svg-icon>
+          </span>
+          All equipment
+        </button>
+      </li>
+      @for (category of categories(); track category.id) {
+        <li class="shrink-0">
+          <button
+            type="button"
+            class="cat-item"
+            [class.is-active]="selectedCategory() === category.category_name"
+            [attr.aria-pressed]="selectedCategory() === category.category_name"
             (click)="onCategoryChange(category.category_name)"
           >
+            <span class="cat-thumb">
+              @if (category.image) {
+                <img [src]="fileUrl + category.image" alt="" class="h-full w-full object-cover" loading="lazy" />
+              }
+            </span>
             {{ category.category_name }}
-          </div>
-        </div>
-        <div
-          class="flex items-center justify-center w-5 h-5 rounded-full cursor-pointer hover:bg-primary-50"
-          (click)="onCategoryChange(category.category_name)"
-        >
-          <svg-icon
-            [src]="'assets/icons/chevron.svg'"
-            [svgClass]="'h-4  w-4 text-primary-500'"
-          >
-          </svg-icon>
-        </div>
-      </div>
-    }
-  </div>
-  <div class="md:col-span-4">
+          </button>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Results -->
+  <div class="min-w-0">
     <equipments
       [data]="equipemnts()"
       [isLoading]="loading()"
       [currentPage]="currentPage()"
       [totalPages]="totalPages()"
+      [totalItems]="totalItems()"
+      [filtered]="isFiltered()"
       (pageChange)="onPageChange($event)"
-      (itemsCountChange)="onItemCountChange($event)"
-      (sortChange)="onSortChange($event)"
+      (clearFilters)="clearFilters()"
     ></equipments>
   </div>
 </div>

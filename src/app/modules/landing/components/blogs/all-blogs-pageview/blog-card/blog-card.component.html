@@ -1,41 +1,28 @@
-<li class="">
-  <div class="blog-card shadow-orange-300 hover:shaow-lg">
-    <div class="card-banner img-holder" style="--width: 440; --height: 270">
+<article class="post-card group">
+  <a [routerLink]="['/blogs', blog.id]" class="flex h-full flex-col">
+    <div class="relative aspect-[16/10] overflow-hidden rounded-[1.25rem] bg-surface-2">
       <img
         [src]="blog.image"
-        width="440"
-        height="270"
+        [alt]="blog.title"
         loading="lazy"
-        alt="Going to the gym for the first time"
-        class="img-cover"
+        class="h-full w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-105"
       />
-
-      <time
-        class="bg-[var(--coquelicot)] text-white absolute text-xl font-[500] xl:text-[1.5rem] uppercase card-meta"
-        datetime="2022-07-07"
-        >{{ blog.date }}</time
-      >
+      <span class="absolute left-3 top-3 rounded-full bg-surface/90 px-3 py-1 text-xs font-bold text-ink backdrop-blur">
+        {{ blog.category }}
+      </span>
     </div>
-
-    <div class="card-content">
-      <h3 class="">
-        <a
-          href="#"
-          class="text-xl font-[500] text-[var(--rich-black-fogra-29-1)] xl:text-[1.5rem] leading-[1.2]"
-          >{{ blog.title }}</a
-        >
-      </h3>
-
-      <p class="text-[var(--sonic-silver)] truncate-2-lines">
-        {{ blog.description }}
+    <div class="flex grow flex-col px-2 pb-2 pt-4">
+      <p class="text-sm text-muted">
+        <time [attr.datetime]="blog.date">{{ blog.date | date: "mediumDate" }}</time> · {{ blog.readMinutes }} min read
       </p>
-
-      <button
-        (click)="view(blog.id)"
-        class="text-sm btn-link has-before"
-      >
-        Read More
-      </button>
+      <h3 class="mt-2 font-display text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
+        {{ blog.title }}
+      </h3>
+      <p class="mt-2 line-clamp-2 text-muted">{{ blog.excerpt }}</p>
+      <span class="mt-auto inline-flex items-center gap-2 pt-5 font-display text-sm font-bold text-ink">
+        Read article
+        <span aria-hidden="true" class="transition-transform duration-300 group-hover:translate-x-1">→</span>
+      </span>
     </div>
-  </div>
-</li>
+  </a>
+</article>

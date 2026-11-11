@@ -1,45 +1,17 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { RevealDirective } from '@directive/reveal.directive';
+import { BLOG_POSTS } from '../../../../../constant/blog-posts';
 
-interface BlogInterface {
-  id: string;
-  title: string;
-  date: string;
-  description: string;
-  image:string;
-}
 @Component({
   selector: 'blog',
   standalone: true,
-  imports: [RevealDirective],
+  imports: [RevealDirective, RouterLink, DatePipe],
   templateUrl: './blog.component.html',
   styleUrl: './blog.component.scss',
 })
 export class BlogComponent {
-  blogs: Array<BlogInterface> = [
-    {
-      id: '1',
-      title: 'Going to the gym for the first time',
-      date: 'June 15, 2022',
-      image:'./assets/images/blog-1.jpg',
-      description:
-        ' Praesent id ipsum pellentesque lectus dapibus condimentum curabitur eget risus quam. In hac  habitasse platea dictumst.',
-    },
-    {
-      id: '2',
-      title: 'The benefits of regular exercise',
-      date: 'July 12, 2022',
-      image:'./assets/images/blog-2.jpg',
-      description:
-        ' Curabitur vel dui vel neque efficitur consectetur. Donec eget dolor lacinia, dictum ipsum eu, commodo ligula.',
-    },
-    {
-      id: '3',
-      title: 'Mindfulness and stress management',
-      date: 'August 8, 2022',
-      image:'./assets/images/blog-3.jpg',
-      description:
-        ' Nullam vel eros vel neque bibendum faucibus. Sed id neque vel lectus consequat consectetur.',
-    },
-  ];
+  /** The three newest posts. */
+  readonly blogs = [...BLOG_POSTS].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
 }
