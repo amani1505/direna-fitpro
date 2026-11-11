@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HotToastService } from '@ngneat/hot-toast';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +17,9 @@ export class ToastService {
         padding: '10px',
         color: '#e11d48',
         backgroundColor: '#ffe4e6',
-        fontWeight: 400,
+        fontWeight: '400',
         fontSize: '12px',
-        zIndex: 2147483647,
+        zIndex: '2147483647',
       },
     });
   }
@@ -33,9 +33,9 @@ export class ToastService {
         padding: '10px',
         color: '#16a34a',
         backgroundColor: '#dcfce7',
-        fontWeight: 400,
+        fontWeight: '400',
         fontSize: '12px',
-        zIndex: 2147483647,
+        zIndex: '2147483647',
       },
     });
   }
@@ -50,9 +50,9 @@ export class ToastService {
         padding: '10px',
         color: '#ca8a04',
         backgroundColor: '#fef9c3',
-        fontWeight: 400,
+        fontWeight: '400',
         fontSize: '12px',
-        zIndex: 2147483647,
+        zIndex: '2147483647',
       },
     });
   }
@@ -66,9 +66,9 @@ export class ToastService {
         padding: '10px',
         color: '#1e40af', // Dark blue text
         backgroundColor: '#dbeafe', // Light blue background
-        fontWeight: 400,
+        fontWeight: '400',
         fontSize: '12px',
-        zIndex: 2147483647,
+        zIndex: '2147483647',
       },
     });
   }
