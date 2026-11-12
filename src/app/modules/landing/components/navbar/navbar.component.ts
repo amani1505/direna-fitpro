@@ -1,5 +1,5 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { Component, Input, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, inject, DOCUMENT } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ThemeToggleComponent } from '@components/theme-toggle/theme-toggle.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';

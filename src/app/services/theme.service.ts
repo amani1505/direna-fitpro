@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import {
   ApplicationRef,
   Injectable,
@@ -6,6 +6,7 @@ import {
   computed,
   inject,
   signal,
+  DOCUMENT
 } from '@angular/core';
 
 export type ThemeMode = 'light' | 'dark';
