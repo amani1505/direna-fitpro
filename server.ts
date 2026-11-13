@@ -12,7 +12,13 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  // Angular only renders requests for known hostnames (protects against
+  // host-header attacks). In production set NG_ALLOWED_HOSTS to your domain(s),
+  // comma separated, e.g. NG_ALLOWED_HOSTS=direnafitpro.com,www.direnafitpro.com.
+  // The environment variable takes precedence over this local default.
+  const commonEngine = new CommonEngine({
+    allowedHosts: ['localhost', '127.0.0.1'],
+  });
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
