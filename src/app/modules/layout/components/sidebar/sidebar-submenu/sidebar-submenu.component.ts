@@ -27,11 +27,11 @@ export class SidebarSubmenuComponent {
 
   constructor(public menuService: MenuService) {}
 
-  public toggleMenu(menu: any) {
+  public toggleMenu(menu: SubMenuItem) {
     this.menuService.toggleSubMenu(menu);
   }
 
-  private collapse(items: any[]) {
+  private collapse(items: SubMenuItem[]) {
     items.forEach((item) => {
       item.expanded = false;
       if (item.children) this.collapse(item.children);

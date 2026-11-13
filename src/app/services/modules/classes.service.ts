@@ -126,10 +126,10 @@ export class ClassesService {
     });
   }
 
-  create(data: FormData): Observable<any> {
+  create(data: FormData): Observable<unknown> {
     this._loading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}classes`, data).pipe(
+    return this._http.post<unknown>(`${environment.apiUrl}classes`, data).pipe(
       map((response) => {
         this._toast.success('gym class created successfully.');
         this._loading.set(false);
@@ -151,11 +151,11 @@ export class ClassesService {
 
       capacity: number;
     },
-  ): Observable<any> {
+  ): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}classes/${id}`, data)
+      .patch<unknown>(`${environment.apiUrl}classes/${id}`, data)
       .pipe(
         map((response) => {
           this._toast.success('Class  updated successfully.');
@@ -171,11 +171,11 @@ export class ClassesService {
       );
   }
 
-  uploadImage(id: string, image: FormData): Observable<any> {
+  uploadImage(id: string, image: FormData): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}classes/file/${id}`, image)
+      .patch<unknown>(`${environment.apiUrl}classes/file/${id}`, image)
       .pipe(
         map((response) => {
           this._toast.success('Class image uploaded Successfully.');

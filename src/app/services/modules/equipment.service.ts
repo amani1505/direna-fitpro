@@ -140,10 +140,10 @@ export class EquipmentService {
       });
   }
 
-  create(data: any): Observable<any> {
+  create(data: FormData): Observable<unknown> {
     this._loading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}equipment`, data).pipe(
+    return this._http.post<unknown>(`${environment.apiUrl}equipment`, data).pipe(
       map((response) => {
         this._toast.success('Equipment created successfully.');
         this._loading.set(false);
@@ -157,11 +157,11 @@ export class EquipmentService {
     );
   }
 
-  update(id: string, data: any): Observable<any> {
+  update(id: string, data: Record<string, unknown>): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}equipment/${id}`, data)
+      .patch<unknown>(`${environment.apiUrl}equipment/${id}`, data)
       .pipe(
         map((response) => {
           this._toast.success('Equipment  updated successfully.');
@@ -177,11 +177,11 @@ export class EquipmentService {
       );
   }
 
-  updateImage(id: string, image: FormData): Observable<any> {
+  updateImage(id: string, image: FormData): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}equipment/file/${id}`, image)
+      .patch<unknown>(`${environment.apiUrl}equipment/file/${id}`, image)
       .pipe(
         map((response) => {
           this._toast.success('Equipment image uploaded Successfully.');
@@ -196,11 +196,11 @@ export class EquipmentService {
       );
   }
 
-  uploadImage(id: string, image: FormData): Observable<any> {
+  uploadImage(id: string, image: FormData): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .post<any>(`${environment.apiUrl}equipment/file/${id}`, image)
+      .post<unknown>(`${environment.apiUrl}equipment/file/${id}`, image)
       .pipe(
         map((response) => {
           this._toast.success('Equipment image uploaded Successfully.');

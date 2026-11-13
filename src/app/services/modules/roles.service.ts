@@ -124,7 +124,7 @@ export class RolesService {
   ) {
     this._loading.set(true);
 
-    this._http.patch<any>(`${environment.apiUrl}roles/${id}`, data).subscribe({
+    this._http.patch<unknown>(`${environment.apiUrl}roles/${id}`, data).subscribe({
       next: () => {
         this._toast.success('Role updated successfully.');
         if (type === 'findAll') {

@@ -22,7 +22,7 @@ export class OrderService {
     this._loading.set(true);
 
     return this._http
-      .post<any>(`${this._apiUrl}/cart/${cartId}`, orderData)
+      .post<Order>(`${this._apiUrl}/cart/${cartId}`, orderData)
       .pipe(
         tap(() => {
           this._loading.set(false);

@@ -56,10 +56,10 @@ export class StaffService {
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
-  create(data: any): Observable<any> {
+  create(data: Record<string, unknown>): Observable<unknown> {
     this._loading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}staffs`, data).pipe(
+    return this._http.post<unknown>(`${environment.apiUrl}staffs`, data).pipe(
       map((response) => {
         this._toast.success('Staff created successfully.');
         this.findAll();
@@ -140,11 +140,11 @@ export class StaffService {
       });
   }
 
-  update(id: string, data: any): Observable<any> {
+  update(id: string, data: Record<string, unknown>): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}staffs/${id}`, data)
+      .patch<unknown>(`${environment.apiUrl}staffs/${id}`, data)
       .pipe(
         map((response) => {
           this._toast.success('Staff updated successfully.');

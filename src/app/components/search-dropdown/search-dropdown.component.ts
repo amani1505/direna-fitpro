@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
+import { Equipment } from '@model/equipment';
 
 @Component({
   selector: 'SearchDropdown',
@@ -13,7 +14,7 @@ import { environment } from 'environments/environment';
   styleUrl: './search-dropdown.component.scss',
 })
 export class SearchDropdownComponent {
-  @Input() data: any[] = [];
+  @Input() data: Equipment[] = [];
   // @Input() hasError = signal<boolean>(false);
   @Input() isLoading = false;
   searchQuery = '';

@@ -18,21 +18,16 @@
                   [width]="'130px'"
                   [height]="'130px'"
                   [initialImage]="
-                    selectedImages()[$index]
-                      ? fileUrl +
-                        $safeNavigationMigration(
-                          selectedImages()[$index]?.file_path
-                        )
-                      : null
+                    apiImage($index) ? fileUrl + apiImage($index)?.file_path : null
                   "
                   [editMode]="true"
                   [canDelete]="canRemoveUploader($index)"
-                  [isFromApi]="!!selectedImages()[$index]?.file_path"
+                  [isFromApi]="!!apiImage($index)?.file_path"
                   (imageSelected)="
                     onImageSelected(
                       $event,
                       $index,
-                      selectedImages()[$index]?.id || null
+                      apiImage($index)?.id || null
                     )
                   "
                 ></image-uploader>
@@ -40,7 +35,7 @@
                 <!-- Delete Button (Conditional) -->
                 @if (
                   canRemoveUploader($index) &&
-                  !selectedImages()[$index]?.file_path
+                  !apiImage($index)?.file_path
                 ) {
                   <button
                     type="button"

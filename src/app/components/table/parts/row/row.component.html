@@ -17,10 +17,10 @@
       <td>
         <!-- Handle files array -->
         @if (column.key === "files[0].file_path") {
-          @if (data.files && data.files.length > 0) {
+          @if (firstFile) {
             <img
               class="h-10 w-10 rounded-xl object-cover ring-2 ring-line"
-              [src]="fileUrl + data.files[0].file_path"
+              [src]="fileUrl + firstFile"
               alt=""
             />
           } @else {
@@ -29,53 +29,53 @@
         } @else {
           <img
             class="h-10 w-10 rounded-xl object-cover ring-2 ring-line"
-            [src]="fileUrl + data[column.key]"
+            [src]="fileUrl + cellText(column.key)"
             alt=""
           />
         }
       </td>
     }
     @case ("text") {
-      <td>{{ data[column.key] || "-" }}</td>
+      <td>{{ cellText(column.key) || "-" }}</td>
     }
     @case ("status") {
       <td class="">
-        <div role="switch" tabindex="0" [attr.aria-checked]="data[column.key] === true" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
+        <div role="switch" tabindex="0" [attr.aria-checked]="cell(column.key) === true" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
           class="relative inline-flex items-center cursor-pointer"
           (click)="column.action(data)"
           [ngClass]="{
-            'opacity-50': data[column.key] !== true,
-            'opacity-100': data[column.key] === true,
+            'opacity-50': cell(column.key) !== true,
+            'opacity-100': cell(column.key) === true,
           }"
         >
           <div
             class="w-10 h-5 transition-colors duration-300 rounded-full"
             [ngClass]="{
-              'bg-green-500': data[column.key] === true,
-              'bg-red-500': data[column.key] !== true,
+              'bg-green-500': cell(column.key) === true,
+              'bg-red-500': cell(column.key) !== true,
             }"
           >
             <div
               class="absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full shadow-md transition-transform duration-300"
               [ngClass]="{
-                'translate-x-5': data[column.key] === true,
-                'translate-x-0': data[column.key] !== true,
+                'translate-x-5': cell(column.key) === true,
+                'translate-x-0': cell(column.key) !== true,
               }"
             ></div>
           </div>
           <span class="ml-2 text-xs font-semibold">
-            {{ data[column.key] === true ? "Active" : "Inactive" }}
+            {{ cell(column.key) === true ? "Active" : "Inactive" }}
           </span>
         </div>
       </td>
     }
 
     @case ("date") {
-      <td class="whitespace-nowrap">{{ (data[column.key] | date: "mediumDate") || "-" }}</td>
+      <td class="whitespace-nowrap">{{ (cellDate(column.key) | date: "mediumDate") || "-" }}</td>
     }
     @case ("badge") {
       <td>
-        @for (item of data[column.key]; track $index) {
+        @for (item of cellList(column.key); track $index) {
           <span
             class="m-[1px] inline-block rounded-full bg-primary-500/10 px-2.5 py-0.5 text-xs font-semibold text-primary-700 dark:text-primary-300"
           >

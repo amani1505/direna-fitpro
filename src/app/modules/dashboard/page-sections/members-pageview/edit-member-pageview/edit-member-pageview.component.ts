@@ -117,7 +117,7 @@ export class EditMemberPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: any[],
+    apiData: { id: string; name: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
@@ -126,7 +126,7 @@ export class EditMemberPageviewComponent implements OnInit {
   };
 
   transformToSelectOptions = (
-    apiData: any[],
+    apiData: { id: string; road: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
@@ -134,10 +134,10 @@ export class EditMemberPageviewComponent implements OnInit {
     }));
   };
 
-  selectService(ids: any) {
+  selectService(ids: string[]) {
     this.selectedServices.set(ids);
   }
-  selectBranch(id: any) {
+  selectBranch(id: string) {
     this.selectedBranch.set(id);
     this.memberForm.patchValue({
       branchId: id,

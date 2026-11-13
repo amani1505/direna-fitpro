@@ -31,7 +31,7 @@ export class BreadCrumbsComponent implements OnInit, OnDestroy {
   currentUrl = '';
   currentDateTime = '';
 
-  private timeUpdateTimer: any;
+  private timeUpdateTimer: ReturnType<typeof setInterval> | null = null;
   private routerSubscription: Subscription | null = null;
 
   constructor(

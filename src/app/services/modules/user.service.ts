@@ -12,7 +12,7 @@ export class UserService {
 
   loading: Signal<boolean> = this._loading.asReadonly();
 
-  update(id: string, data: any) {
+  update(id: string, data: Partial<Profile>) {
     this._loading.set(true);
 
     this._http

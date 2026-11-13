@@ -16,7 +16,7 @@ export class AddressService {
   addresses: Signal<Address[]> = this._addresses.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
 
-  create(data: any): Observable<Address> {
+  create(data: Partial<Address>): Observable<Address> {
     this._loading.set(true);
 
     return this._http.post<Address>(`${environment.apiUrl}address`, data).pipe(
@@ -47,7 +47,7 @@ export class AddressService {
     );
   }
 
-  setDefault(id: string, data: any) {
+  setDefault(id: string, data: Pick<Address, 'is_default'>) {
     this._loading.set(true);
     this._http
       .patch<Address>(`${environment.apiUrl}address/${id}`, data)
@@ -64,7 +64,7 @@ export class AddressService {
       });
   }
 
-  update(id: string, data: any): Observable<Address> {
+  update(id: string, data: Partial<Address>): Observable<Address> {
     this._loading.set(true);
 
     return this._http.patch<Address>(`${environment.apiUrl}address/${id}`, data).pipe(

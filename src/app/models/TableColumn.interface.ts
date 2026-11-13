@@ -1,3 +1,9 @@
+/** A table row: any record with an id. Other fields are read by column key. */
+export interface TableRow {
+  id: string;
+  selected?: boolean;
+}
+
 export interface BaseTableColumn {
   key: string;
   type:
@@ -21,7 +27,7 @@ export interface RowColumn extends BaseTableColumn {
   alt?: string;
   actionType?: ('delete' | 'update' | 'view')[];
   icon?: string;
-  action?: (row: any) => void;
+  action?: (row: TableRow) => void;
 }
 
 export interface TableActions {

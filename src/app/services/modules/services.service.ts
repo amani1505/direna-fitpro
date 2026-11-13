@@ -111,7 +111,7 @@ export class ServicesService {
     this._loading.set(true);
 
     this._http
-      .patch<any>(`${environment.apiUrl}service/${id}`, data)
+      .patch<unknown>(`${environment.apiUrl}service/${id}`, data)
       .subscribe({
         next: () => {
           this._toast.success('Service updated successfully.');

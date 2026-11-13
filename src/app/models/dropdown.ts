@@ -1,3 +1,5 @@
+import { Type } from '@angular/core';
+
 export interface DropdownConfig {
   triggerType: 'button' | 'icon' | 'avatar' | 'custom';
   width?: string;
@@ -9,7 +11,7 @@ export interface DropdownHeader {
   image?: string;
   title?: string;
   subtitle?: string;
-  component?: any; // For custom header component
+  component?: Type<unknown>; // For custom header component
 }
 
 export interface DropdownItem {

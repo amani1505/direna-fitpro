@@ -16,6 +16,7 @@ import {
   HeaderColumn,
   RowColumn,
   TableActions,
+  TableRow,
 } from '@model/TableColumn.interface';
 import { ModalComponent } from '@components/modal/modal.component';
 
@@ -41,7 +42,7 @@ export class TableComponent {
   @Input({ required: true }) deleteContent!: string;
   @Input({ required: true }) deleteSubContent!: string;
   @Input({ required: true }) actions: TableActions[] = [];
-  @Input({ required: true }) data: any[] = [];
+  @Input({ required: true }) data: TableRow[] = [];
   @Input({ required: true }) headerColumns: HeaderColumn[] = [];
   @Input({ required: true }) rowColumns: RowColumn[] = [];
   @Input({ required: true }) itemsPerPage = 10;
@@ -54,10 +55,10 @@ export class TableComponent {
   @Output() onCheckAll = new EventEmitter<boolean>();
   @Output() onCheck = new EventEmitter<boolean>();
   @Output() onDelete = new EventEmitter<void>();
-  @Output() openDeleteModal = new EventEmitter<void>();
+  @Output() openDeleteModal = new EventEmitter<string>();
   @Output() closeModalEvent = new EventEmitter<void>();
-  @Output() onView = new EventEmitter<void>();
-  @Output() onUpdate = new EventEmitter<void>();
+  @Output() onView = new EventEmitter<string>();
+  @Output() onUpdate = new EventEmitter<string>();
   @Output() pageChange = new EventEmitter<number>();
   @Output() itemsPerPageChange = new EventEmitter<number>();
 
@@ -72,24 +73,24 @@ export class TableComponent {
     this.data.forEach((row) => (row.selected = checked));
     this.onCheckAll.emit(checked);
   }
-  toggle(checked: boolean, row: any) {
+  toggle(checked: boolean, row: TableRow) {
     row.selected = checked;
     this.selectedAll = this.data.every((r) => r.selected);
     this.onCheck.emit(checked);
   }
 
-  deleteModal(row: any) {
-    this.openDeleteModal.emit(row);
+  deleteModal(id: string) {
+    this.openDeleteModal.emit(id);
   }
   delete() {
     this.onDelete.emit();
   }
 
-  update(row: any) {
-    this.onUpdate.emit(row);
+  update(id: string) {
+    this.onUpdate.emit(id);
   }
-  view(row: any) {
-    this.onView.emit(row);
+  view(id: string) {
+    this.onView.emit(id);
   }
 
   add() {

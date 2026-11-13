@@ -10,6 +10,6 @@ import { environment } from 'environments/environment';
 })
 export class ResponsiveHelperComponent {
 
-  public env: any = environment;
+  public env = environment;
 
 }

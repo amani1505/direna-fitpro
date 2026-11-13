@@ -28,7 +28,7 @@ import { ServicesService } from '@service/modules/services.service';
 export class AddServiceModalComponent {
   isModalOpen = input.required<boolean>();
   @Input({ required: true }) refetchString: 'getAll' | 'findAll' = 'getAll';
-  @Output() onCancel = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<void>();
 
   private _servicesService = inject(ServicesService);
   private _formBuilder = inject(FormBuilder);

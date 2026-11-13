@@ -29,7 +29,7 @@ export class AddBranchModalComponent {
   isModalOpen = input.required<boolean>();
   @Input({ required: true }) refetchString: 'getAll' | 'findAll' = 'getAll';
 
-  @Output() onCancel = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<void>();
 
   private _branchesService = inject(BranchesService);
   private _formBuilder = inject(FormBuilder);

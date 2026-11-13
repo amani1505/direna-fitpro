@@ -24,7 +24,7 @@ export class NormalSelectComponent {
   /** id of the visible heading that names this field (sets aria-labelledby). */
   @Input() labelledBy?: string;
   @Input() width = 'w-full';
-  @Output() selectionChange = new EventEmitter<any>();
+  @Output() selectionChange = new EventEmitter<string>();
 
   @Input() selectedOption = signal<string>('');
   dropdownOpen = false;

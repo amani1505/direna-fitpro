@@ -42,9 +42,9 @@ export class MenuPopupComponent {
   @Input() triggerText = '';
   @Input() containerClass = '';
 
-  @ContentChild('triggerTemplate') triggerTemplate?: TemplateRef<any>;
-  @ContentChild('headerTemplate') headerTemplate?: TemplateRef<any>;
-  @ContentChild('footerTemplate') footerTemplate?: TemplateRef<any>;
+  @ContentChild('triggerTemplate') triggerTemplate?: TemplateRef<unknown>;
+  @ContentChild('headerTemplate') headerTemplate?: TemplateRef<unknown>;
+  @ContentChild('footerTemplate') footerTemplate?: TemplateRef<unknown>;
 
   @Output() itemClick = new EventEmitter<DropdownItem>();
 

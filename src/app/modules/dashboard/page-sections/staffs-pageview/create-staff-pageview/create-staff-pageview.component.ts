@@ -75,7 +75,7 @@ export class CreateStaffPageviewComponent implements OnInit {
   }
 
   transformBranchToSelectOptions = (
-    apiData: any[],
+    apiData: { id: string; road: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
@@ -84,7 +84,7 @@ export class CreateStaffPageviewComponent implements OnInit {
   };
 
   transformRoleToSelectOptions = (
-    apiData: any[],
+    apiData: { id: string; name: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
@@ -92,14 +92,14 @@ export class CreateStaffPageviewComponent implements OnInit {
     }));
   };
 
-  selectBranch(id: any) {
+  selectBranch(id: string) {
     this.selectedBranch = id;
     this.staffForm.patchValue({
       branchId: id,
     });
   }
 
-  selectRole(id: any) {
+  selectRole(id: string) {
     this.selectedRole = id;
     this.staffForm.patchValue({
       role: id,

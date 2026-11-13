@@ -19,7 +19,7 @@ import { BranchesService } from '@service/modules/branches.service';
 import { ServicesService } from '@service/modules/services.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { NgxMaskDirective } from 'ngx-mask';
-import { QuillModule } from 'ngx-quill';
+import { ContentChange, QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'member-registration',
@@ -77,7 +77,7 @@ export class MemberComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: any[],
+    apiData: { id: string; name: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
@@ -86,21 +86,21 @@ export class MemberComponent implements OnInit {
   };
 
   transformToSelectOptions = (
-    apiData: any[],
+    apiData: { id: string; road: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
       value: item.id,
     }));
   };
-  onGoalChange(event: any) {
+  onGoalChange(event: ContentChange) {
     this.authForm.get('goal').setValue(event.html);
   }
 
-  selectService(ids: any) {
+  selectService(ids: string[]) {
     this.selectedServices = ids;
   }
-  selectBranch(id: any) {
+  selectBranch(id: string) {
     this.selectedBranch = id;
     this.authForm.patchValue({
       branchId: id,

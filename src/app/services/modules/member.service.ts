@@ -146,10 +146,10 @@ export class MemberService {
       });
   }
 
-  create(data: any): Observable<any> {
+  create(data: Record<string, unknown>): Observable<unknown> {
     this._loading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}member`, data).pipe(
+    return this._http.post<unknown>(`${environment.apiUrl}member`, data).pipe(
       map((response) => {
         this._toast.success('Member created successfully.');
         this.findAll();
@@ -164,11 +164,11 @@ export class MemberService {
     );
   }
 
-  update(id: string, data: any): Observable<any> {
+  update(id: string, data: Record<string, unknown>): Observable<unknown> {
     this._loading.set(true);
 
     return this._http
-      .patch<any>(`${environment.apiUrl}member/${id}`, data)
+      .patch<unknown>(`${environment.apiUrl}member/${id}`, data)
       .pipe(
         map((response) => {
           this._loading.set(false);

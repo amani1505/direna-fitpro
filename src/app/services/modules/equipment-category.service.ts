@@ -174,7 +174,7 @@ export class EquipmemntCategoryService {
     this._loading.set(true);
 
     this._http
-      .patch<any>(`${environment.apiUrl}equipment-category/${id}`, data)
+      .patch<unknown>(`${environment.apiUrl}equipment-category/${id}`, data)
       .subscribe({
         next: () => {
           this._toast.success('Equipment Category updated successfully.');

@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RowColumn } from '@model/TableColumn.interface';
+import { RowColumn, TableRow } from '@model/TableColumn.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
@@ -20,15 +20,46 @@ import { environment } from 'environments/environment';
 })
 export class RowComponent {
   fileUrl = environment.staicUrl;
-  @Input() data: any;
+  @Input({ required: true }) data!: TableRow;
   @Input() hasImage = false;
   @Input({ required: true }) index = 0;
   @Input() columns: RowColumn[] = [];
 
-  @Output() onDelete = new EventEmitter<any>();
-  @Output() onView = new EventEmitter<any>();
-  @Output() onUpdate = new EventEmitter<any>();
-  @Output() onCheck = new EventEmitter<{ checked: boolean; row: any }>();
+  @Output() onDelete = new EventEmitter<void>();
+  @Output() onView = new EventEmitter<void>();
+  @Output() onUpdate = new EventEmitter<void>();
+  @Output() onCheck = new EventEmitter<{ checked: boolean; row: TableRow }>();
+
+  /** The row's fields, looked up by column key. */
+  private get record(): Record<string, unknown> {
+    return this.data as unknown as Record<string, unknown>;
+  }
+
+  cell(key: string): unknown {
+    return this.record[key];
+  }
+
+  cellText(key: string): string {
+    const value = this.cell(key);
+    return value === null || value === undefined ? '' : String(value);
+  }
+
+  cellDate(key: string): string | number | Date | null {
+    const value = this.cell(key);
+    return typeof value === 'string' || typeof value === 'number' || value instanceof Date ? value : null;
+  }
+
+  cellList(key: string): unknown[] {
+    const value = this.cell(key);
+    return Array.isArray(value) ? value : [];
+  }
+
+  /** Path of the first uploaded file, for image columns. */
+  get firstFile(): string | null {
+    const files = this.record['files'];
+    const first = Array.isArray(files) ? files[0] : null;
+    return first && typeof first.file_path === 'string' ? first.file_path : null;
+  }
 
   getIconForAction(action: string): string {
     switch (action) {

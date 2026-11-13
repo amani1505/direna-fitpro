@@ -249,6 +249,17 @@ import { AuthUtils } from '@utils/auth.util';
 import { User } from '@model/user';
 import { ToastService } from './toast.service';
 
+export interface LoginCredentials {
+  username: string;
+  password: string;
+}
+
+/** Fields of the login response that the app reads. */
+export interface LoginResponse {
+  accessToken: string;
+  user: { role: { name: string } };
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   _authenticated = signal<boolean>(false);
@@ -315,14 +326,14 @@ export class AuthService {
     return this.getLocalStorageItem('role') ?? '';
   }
 
-  signIn(credentials: any): Observable<any> {
+  signIn(credentials: LoginCredentials): Observable<LoginResponse> {
     // if (this._authenticated) {
     //   this._toast.info('User is already logged in.');
     //   return throwError(() => new Error('User is already logged in.'));
     // }
 
-    return this._http.post(`${environment.apiUrl}auth/login`, credentials).pipe(
-      switchMap((response: any) => {
+    return this._http.post<LoginResponse>(`${environment.apiUrl}auth/login`, credentials).pipe(
+      switchMap((response) => {
         this.accessToken = response.accessToken;
         // this.role = JSON.stringify(  response.role)
 
@@ -357,10 +368,10 @@ export class AuthService {
   updatePassword(data: {
     password: string;
     newPassword: string;
-  }): Observable<any> {
+  }): Observable<unknown> {
     this._updatePasswordLoading.set(true);
 
-    return this._http.post<any>(`${environment.apiUrl}auth/change-password`, data).pipe(
+    return this._http.post<unknown>(`${environment.apiUrl}auth/change-password`, data).pipe(
       tap(() => {
         this._toastService.success('Password successfuly updated.');
         this._updatePasswordLoading.set(false);
@@ -373,7 +384,7 @@ export class AuthService {
     );
   }
 
-  signOut(): Observable<any> {
+  signOut(): Observable<boolean> {
     return this._http.post(`${environment.apiUrl}auth/logout`, null).pipe(
       switchMap(() => {
         this.removeLocalStorageItem('accessToken');
@@ -430,25 +441,30 @@ export class AuthService {
     return this.signInUsingToken();
   }
 
-  signInUsingToken(): Observable<any> {
-    return this._http.get(`${environment.apiUrl}auth/signInWithToken`).pipe(
-      catchError(() => {
-        this.removeLocalStorageItem('accessToken');
-        this.removeLocalStorageItem('role');
-        this._authenticated.set(false);
-        this._userLoadedSubject.next(false);
-        return of(false);
-      }),
-      switchMap((response: any) => {
-        if (response.accessToken) {
-          this.accessToken = response.accessToken;
-        }
+  signInUsingToken(): Observable<boolean> {
+    return this._http
+      .get<{ accessToken?: string }>(`${environment.apiUrl}auth/signInWithToken`)
+      .pipe(
+        switchMap((response) => {
+          if (response?.accessToken) {
+            this.accessToken = response.accessToken;
+          }
 
-        this._authenticated.set(true);
-        this.loadUserProfile();
-        return of(true);
-      }),
-    );
+          this._authenticated.set(true);
+          this.loadUserProfile();
+          return of(true);
+        }),
+        // An invalid or expired token must not count as signed in. (This
+        // handler used to run before switchMap, which then set the user as
+        // authenticated anyway.)
+        catchError(() => {
+          this.removeLocalStorageItem('accessToken');
+          this.removeLocalStorageItem('role');
+          this._authenticated.set(false);
+          this._userLoadedSubject.next(false);
+          return of(false);
+        }),
+      );
   }
 }
 

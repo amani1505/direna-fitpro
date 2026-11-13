@@ -33,7 +33,7 @@ export class EditBranchComponent implements OnInit {
   @Input({ required: true }) refetchString: 'getAll' | 'findAll' = 'getAll';
   @Input({ required: true }) branch: Branch = undefined;
 
-  @Output() onCancel = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<void>();
 
   private _branchesService = inject(BranchesService);
   private _formBuilder = inject(FormBuilder);

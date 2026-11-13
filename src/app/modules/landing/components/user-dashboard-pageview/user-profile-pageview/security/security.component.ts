@@ -13,6 +13,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -110,7 +111,7 @@ export class SecurityComponent {
 
   // Custom validator for password complexity
   passwordComplexityValidator(): ValidatorFn {
-    return (control: AbstractControl): Record<string, any> | null => {
+    return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
 
       const lengthValid = value && value.length >= 8;

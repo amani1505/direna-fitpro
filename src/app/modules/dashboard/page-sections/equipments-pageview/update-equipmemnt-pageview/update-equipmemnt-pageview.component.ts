@@ -86,7 +86,14 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
   selectedCategories = signal<string[]>([]);
   selectedStatus = signal<string>('');
   selectedUsedFor = signal<string>('');
-  selectedImages = signal<Files[]>(new Array(this.MIN_IMAGES).fill(null));
+  /** One slot per uploader: an image from the API, a newly picked file, or empty. */
+  selectedImages = signal<(Files | File | null)[]>(new Array(this.MIN_IMAGES).fill(null));
+
+  /** The slot's image if it came from the API (has a stored file path). */
+  apiImage(index: number): Files | null {
+    const image = this.selectedImages()[index];
+    return image && !(image instanceof File) ? image : null;
+  }
   imageUploaders: number[] = [0, 1, 2, 3];
   equipmentId = signal<string>('');
 
@@ -175,7 +182,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
     // 2. The image at the current index is a newly uploaded image (not from the API).
     return (
       this.imageUploaders.length > this.MIN_IMAGES ||
-      !this.selectedImages()[index]?.file_path // Check if the image is not from the API
+      !this.apiImage(index)?.file_path // Check if the image is not from the API
     );
   }
 
@@ -194,7 +201,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
       // Only remove the image if it's not from the API or if there are more than the minimum required images.
       if (
         this.imageUploaders.length > this.MIN_IMAGES ||
-        !this.selectedImages()[index]?.file_path
+        !this.apiImage(index)?.file_path
       ) {
         this.imageUploaders.splice(index, 1);
         this.selectedImages().splice(index, 1);
@@ -210,7 +217,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
   }
 
   transformToMultiSelectOptions = (
-    apiData: any[],
+    apiData: { category_name: string; id: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.category_name,
@@ -218,7 +225,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
     }));
   };
 
-  selectCategory(ids: any) {
+  selectCategory(ids: string[]) {
     this.selectedCategories.set(ids);
   }
 
@@ -236,7 +243,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  onImageSelected(event: any, index: number, id: string) {
+  onImageSelected(event: File | null, index: number, id: string | null) {
     if (event) {
       this.selectedImages()[index] = event;
       const formData = new FormData();
@@ -263,7 +270,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
       // Only allow deletion if the image is not from the API or if there are more than the minimum required images.
       if (
         this.imageUploaders.length > this.MIN_IMAGES ||
-        !this.selectedImages()[index]?.file_path
+        !this.apiImage(index)?.file_path
       ) {
         this.selectedImages().splice(index, 1);
       } else {
@@ -287,7 +294,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
       this.quillChangeHandler = null;
     }
 
-    const textChangeHandler = (delta: any, oldDelta: any, source: string) => {
+    const textChangeHandler = (_delta: unknown, _oldDelta: unknown, source: string) => {
       // Only handle user-initiated changes
       if (source === 'user' && !this.isUpdatingContent) {
         this.updateDescriptionFromQuill(quill);

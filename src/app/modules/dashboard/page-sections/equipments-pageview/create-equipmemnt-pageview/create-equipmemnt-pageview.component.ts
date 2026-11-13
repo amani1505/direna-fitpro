@@ -19,7 +19,7 @@ import { EquipmemntCategoryService } from '@service/modules/equipment-category.s
 import { EquipmentService } from '@service/modules/equipment.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { QuillModule } from 'ngx-quill';
+import { ContentChange, QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'create-equipmemnt-pageview',
@@ -142,7 +142,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: any[],
+    apiData: { category_name: string; id: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.category_name,
@@ -150,7 +150,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
     }));
   };
 
-  selectCategory(ids: any) {
+  selectCategory(ids: string[]) {
     this.selectedCategories = ids;
   }
 
@@ -178,7 +178,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
   getValidImageCount(): number {
     return this.selectedImages.filter((img) => img !== null).length;
   }
-  onDescriptionChange(event: any) {
+  onDescriptionChange(event: ContentChange) {
     this.equipmentForm.get('description').setValue(event.html);
   }
 

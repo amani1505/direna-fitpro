@@ -9,6 +9,7 @@ import {
   PLATFORM_ID,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import type { Map as LeafletMap } from 'leaflet';
 
 @Component({
   selector: 'Map',
@@ -24,7 +25,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   /** CSS height of the map, e.g. '400px' or '100%'. */
   @Input() height = '400px';
 
-  private map: any;
+  private map?: LeafletMap;
 
   constructor(
     private el: ElementRef,

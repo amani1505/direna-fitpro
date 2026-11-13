@@ -1,18 +1,16 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { QueryParams } from '@model/QueryParams.interface';
 
 export function updateRouteAndFetch(
   params: Partial<QueryParams>,
-  route: any,
-  router: any,
+  route: ActivatedRoute,
+  router: Router,
 ) {
-  const queryParams = { ...params };
-
-  Object.keys(queryParams).forEach((key) => {
-    const value = queryParams[key as keyof QueryParams];
-    if (value === '') {
-      (queryParams[key as keyof QueryParams] as any) = null;
-    }
-  });
+  // Send empty strings as null so they are removed from the URL.
+  const queryParams: Record<string, unknown> = { ...params };
+  for (const [key, value] of Object.entries(queryParams)) {
+    if (value === '') queryParams[key] = null;
+  }
 
   router.navigate([], {
     relativeTo: route,

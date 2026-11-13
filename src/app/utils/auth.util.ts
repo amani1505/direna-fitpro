@@ -1,3 +1,10 @@
+/** Claims read from the JWT; `exp` is the expiry time in seconds. */
+interface JwtPayload
+{
+    exp?: number;
+    [claim: string]: unknown;
+}
+
 export class AuthUtils
 {
     /**
@@ -93,11 +100,11 @@ export class AuthUtils
      * @param str
      * @private
      */
-    private static _b64DecodeUnicode(str: any): string
+    private static _b64DecodeUnicode(str: string): string
     {
         return decodeURIComponent(
             Array.prototype.map
-                .call(this._b64decode(str), (c: any) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .call(this._b64decode(str), (c: string) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
                 .join(''),
         );
     }
@@ -141,7 +148,7 @@ export class AuthUtils
      * @param token
      * @private
      */
-    private static _decodeToken(token: string): any
+    private static _decodeToken(token: string): JwtPayload | null
     {
         // Return if there is no token
         if ( !token )
@@ -179,8 +186,8 @@ export class AuthUtils
         // Get the decoded token
         const decodedToken = this._decodeToken(token);
 
-        // Return if the decodedToken doesn't have an 'exp' field
-        if ( !Object.hasOwn(decodedToken, 'exp') )
+        // Return if there is no token or it doesn't have a numeric 'exp' field
+        if ( !decodedToken || typeof decodedToken.exp !== 'number' )
         {
             return null;
         }

@@ -13,7 +13,9 @@ import {
   HeaderColumn,
   RowColumn,
   TableActions,
+  TableRow,
 } from '@model/TableColumn.interface';
+import { Member } from '@model/member.interface';
 import { MemberService } from '@service/modules/member.service';
 import { ToastService } from '@service/toast.service';
 
@@ -69,9 +71,10 @@ export class MembersPageviewComponent implements OnInit {
     {
       key: 'isActive',
       type: 'status',
-      action: (data: any) => {
+      action: (row: TableRow) => {
+        const member = row as unknown as Member;
         this._memberService
-          .update(data.id, { isActive: !data.isActive })
+          .update(member.id, { isActive: !member.isActive })
           .subscribe({
             next: () => {
               this._toast.success('Member Status updated successfully.');
@@ -163,14 +166,11 @@ export class MembersPageviewComponent implements OnInit {
   }
 
   private updateRouteAndFetch(params: Partial<QueryParams>) {
-    const queryParams = { ...params };
-
-    Object.keys(queryParams).forEach((key) => {
-      const value = queryParams[key as keyof QueryParams];
-      if (value === '') {
-        (queryParams[key as keyof QueryParams] as any) = null;
-      }
-    });
+    // Send empty strings as null so they are removed from the URL.
+    const queryParams: Record<string, unknown> = { ...params };
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value === '') queryParams[key] = null;
+    }
 
     this._router.navigate([], {
       relativeTo: this._route,
@@ -183,7 +183,7 @@ export class MembersPageviewComponent implements OnInit {
     this._router.navigate(['add'], { relativeTo: this._route });
   }
 
-  deleteModal(id: any) {
+  deleteModal(id: string) {
     this.memberId = id;
     this.isModalOpen.set(true);
   }
@@ -192,10 +192,10 @@ export class MembersPageviewComponent implements OnInit {
     this.isModalOpen.set(false);
   }
 
-  update(id: any) {
+  update(id: string) {
     this._router.navigate(['edit', id], { relativeTo: this._route });
   }
-  view(id: any) {
+  view(id: string) {
     this._router.navigate([id], { relativeTo: this._route });
   }
 

@@ -32,7 +32,7 @@ export class EditServiceComponent implements OnInit {
   isModalOpen = input.required<boolean>();
   @Input({ required: true }) refetchString: 'getAll' | 'findAll' = 'getAll';
   @Input({ required: true }) service: Services = undefined;
-  @Output() onCancel = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<void>();
 
   private _servicesService = inject(ServicesService);
   private _formBuilder = inject(FormBuilder);

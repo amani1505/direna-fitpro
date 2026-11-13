@@ -116,7 +116,7 @@ export class UpdateClassPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: any[],
+    apiData: { fullname: string; id: string }[],
   ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.fullname,

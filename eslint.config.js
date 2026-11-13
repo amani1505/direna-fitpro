@@ -29,8 +29,9 @@ module.exports = defineConfig([
       // Project conventions: `onX` output names and constructor injection.
       "@angular-eslint/no-output-on-prefix": "off",
       "@angular-eslint/prefer-inject": "off",
-      // Tighten gradually: report `any` without failing the lint run.
-      "@typescript-eslint/no-explicit-any": "warn",
+      // The codebase is free of `any`; keep it that way. Use `unknown` or a
+      // real type instead.
+      "@typescript-eslint/no-explicit-any": "error",
       // Unused imports are removed by `--fix`; other unused variables are
       // reported. Prefix intentionally unused ones with `_`.
       "@typescript-eslint/no-unused-vars": "off",

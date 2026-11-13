@@ -146,14 +146,11 @@ export class EquipmentsPageviewComponent implements OnInit {
   }
 
   private updateRouteAndFetch(params: Partial<QueryParams>) {
-    const queryParams = { ...params };
-
-    Object.keys(queryParams).forEach((key) => {
-      const value = queryParams[key as keyof QueryParams];
-      if (value === '') {
-        (queryParams[key as keyof QueryParams] as any) = null;
-      }
-    });
+    // Send empty strings as null so they are removed from the URL.
+    const queryParams: Record<string, unknown> = { ...params };
+    for (const [key, value] of Object.entries(queryParams)) {
+      if (value === '') queryParams[key] = null;
+    }
 
     this._router.navigate([], {
       relativeTo: this._route,
@@ -166,7 +163,7 @@ export class EquipmentsPageviewComponent implements OnInit {
     this._router.navigate(['add'], { relativeTo: this._route });
   }
 
-  deleteModal(id: any) {
+  deleteModal(id: string) {
     this.equipmentId = id;
     this.isModalOpen.set(true);
   }
@@ -176,10 +173,10 @@ export class EquipmentsPageviewComponent implements OnInit {
     this.isModalOpen.set(false);
   }
 
-  update(id: any) {
+  update(id: string) {
     this._router.navigate(['edit', id], { relativeTo: this._route });
   }
-  view(id: any) {
+  view(id: string) {
     this._router.navigate([id], { relativeTo: this._route });
   }
 

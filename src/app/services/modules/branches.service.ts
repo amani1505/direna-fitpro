@@ -158,7 +158,7 @@ export class BranchesService {
   ) {
     this._loading.set(true);
 
-    this._http.patch<any>(`${environment.apiUrl}branch/${id}`, data).subscribe({
+    this._http.patch<unknown>(`${environment.apiUrl}branch/${id}`, data).subscribe({
       next: () => {
         this._toast.success('Branch updated successfully.');
         if (type === 'findAll') {

@@ -31,16 +31,16 @@ export class NavbarMenuComponent {
     menu.selected = !menu.selected;
   }
 
-  public mouseEnter(event: any): void {
-    const element = event.target.querySelector('app-navbar-submenu').children[0];
+  public mouseEnter(event: MouseEvent): void {
+    const element = (event.target as HTMLElement).querySelector('app-navbar-submenu')?.children[0];
     if (element) {
       this._hideMenuClass.forEach((c) => element.classList.remove(c));
       this._showMenuClass.forEach((c) => element.classList.add(c));
     }
   }
 
-  public mouseLeave(event: any): void {
-    const element = event.target.querySelector('app-navbar-submenu').children[0];
+  public mouseLeave(event: MouseEvent): void {
+    const element = (event.target as HTMLElement).querySelector('app-navbar-submenu')?.children[0];
     if (element) {
       this._showMenuClass.forEach((c) => element.classList.remove(c));
       this._hideMenuClass.forEach((c) => element.classList.add(c));
