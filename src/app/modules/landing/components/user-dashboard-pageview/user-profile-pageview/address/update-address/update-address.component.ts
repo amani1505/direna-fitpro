@@ -40,7 +40,7 @@ export class UpdateAddressComponent implements OnInit {
   isModalOpen = input.required<boolean>();
   @Input({ required: true }) address: Address = undefined;
 
-  @Output() cancel = new EventEmitter<any>();
+  @Output() closed = new EventEmitter<void>();
 
   private _addressService = inject(AddressService);
   private _toastService = inject(ToastService);
@@ -94,7 +94,7 @@ export class UpdateAddressComponent implements OnInit {
       .subscribe({
         next: () => {
           this.addressForm.reset();
-          this.cancel.emit(); // Only close on success
+          this.closed.emit(); // Only close on success
         },
         error: (error) => {
           this._toastService.error(
@@ -105,6 +105,6 @@ export class UpdateAddressComponent implements OnInit {
   }
 
   onCancel() {
-    this.cancel.emit();
+    this.closed.emit();
   }
 }

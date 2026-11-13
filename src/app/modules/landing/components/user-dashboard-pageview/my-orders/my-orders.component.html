@@ -64,5 +64,5 @@
   [subContent]="cancelNote"
   [loading]="cancelling()"
   (closeModalEvent)="cancelId.set(null)"
-  (submit)="confirmCancel()"
+  (confirmed)="confirmCancel()"
 ></Modal>

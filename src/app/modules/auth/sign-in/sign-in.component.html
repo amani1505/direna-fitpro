@@ -84,8 +84,11 @@
           placeholder="••••••••"
         />
 
-        <span
+        <button
+          type="button"
           class="absolute text-gray-400 cursor-pointer top-3 right-5 dark:text-night-300"
+          [attr.aria-label]="passwordTextType ? 'Hide password' : 'Show password'"
+          [attr.aria-pressed]="passwordTextType"
           (click)="togglePasswordTextType()"
         >
           <svg-icon
@@ -97,7 +100,7 @@
             [svgClass]="'h-5  w-5'"
           >
           </svg-icon>
-        </span>
+        </button>
       </div>
 
       @if (

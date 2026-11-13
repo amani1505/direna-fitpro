@@ -32,7 +32,7 @@ export class ClassComponent {
 
   readonly ring = RING;
 
-  classData: Array<ClassInterface> = [
+  classData: ClassInterface[] = [
     {
       id: '1',
       image: './assets/images/class-1.jpg',

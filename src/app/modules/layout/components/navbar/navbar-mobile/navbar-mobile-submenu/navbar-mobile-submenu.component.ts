@@ -2,7 +2,6 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   Input,
-  OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
@@ -23,18 +22,16 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navbar-mobile-submenu.component.scss',
 })
-export class NavbarMobileSubmenuComponent implements OnInit {
-  @Input() public submenu = <SubMenuItem>{};
+export class NavbarMobileSubmenuComponent {
+  @Input() public submenu = {} as SubMenuItem;
 
   constructor(private _menuService: MenuService) {}
-
-  ngOnInit(): void {}
 
   public toggleMenu(menu: any) {
     this._menuService.toggleSubMenu(menu);
   }
 
-  private collapse(items: Array<any>) {
+  private collapse(items: any[]) {
     items.forEach((item) => {
       item.expanded = false;
       if (item.children) this.collapse(item.children);

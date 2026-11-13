@@ -1,11 +1,8 @@
 import {
   Component,
-  HostListener,
   OnInit,
-  OnDestroy,
   Inject,
   PLATFORM_ID,
-  NgZone,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -14,7 +11,6 @@ import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgClass } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { BreadCrumbsComponent } from '@components/bread-crumbs/bread-crumbs.component';
 import { ScrollService } from '@service/scroll.service';
 
 @Component({
@@ -31,12 +27,12 @@ import { ScrollService } from '@service/scroll.service';
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent implements OnInit {
-  isScrolled: boolean = false;
+  isScrolled = false;
   scrollProgress = 0;
   private isBrowser: boolean;
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
+    @Inject(PLATFORM_ID) platformId: object,
     private _scrollService: ScrollService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);

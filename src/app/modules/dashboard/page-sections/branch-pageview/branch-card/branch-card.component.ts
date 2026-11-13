@@ -30,8 +30,8 @@ export class BranchCardComponent {
   @Input({ required: true }) branch: Branch;
   private _branchService = inject(BranchesService);
 
-  deleteContent: string = 'Are you sure you want to delete this Branch?';
-  deleteSubContent: string =
+  deleteContent = 'Are you sure you want to delete this Branch?';
+  deleteSubContent =
     'Deleting this Branch will permanently remove this branch from your branches list';
 
   isDeleteModalOpen = signal<boolean>(false);

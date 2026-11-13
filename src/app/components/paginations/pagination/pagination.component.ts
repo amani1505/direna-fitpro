@@ -15,8 +15,8 @@ import { NgClass } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
-  @Input({ required: true }) totalPages: number = 1;
-  @Input({ required: true }) currentPage: number = 1;
+  @Input({ required: true }) totalPages = 1;
+  @Input({ required: true }) currentPage = 1;
   @Output() pageChange = new EventEmitter<number>();
 
   get pages(): (number | string)[] {

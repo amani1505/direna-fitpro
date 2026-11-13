@@ -1,11 +1,8 @@
 import {
   Component,
-  computed,
   EventEmitter,
   Input,
   Output,
-  signal,
-  inject,
   input,
   ChangeDetectionStrategy,
 } from '@angular/core';
@@ -43,14 +40,14 @@ export class TableComponent {
   @Input({ required: true }) buttonLabel!: string;
   @Input({ required: true }) deleteContent!: string;
   @Input({ required: true }) deleteSubContent!: string;
-  @Input({ required: true }) actions: Array<TableActions> = [];
-  @Input({ required: true }) data: Array<any> = [];
-  @Input({ required: true }) headerColumns: Array<HeaderColumn> = [];
-  @Input({ required: true }) rowColumns: Array<RowColumn> = [];
-  @Input({ required: true }) itemsPerPage: number = 10;
-  @Input({ required: true }) totalItems: number = 100;
-  @Input({ required: true }) currentPage: number = 1;
-  @Input({ required: true }) totalPages: number = 10;
+  @Input({ required: true }) actions: TableActions[] = [];
+  @Input({ required: true }) data: any[] = [];
+  @Input({ required: true }) headerColumns: HeaderColumn[] = [];
+  @Input({ required: true }) rowColumns: RowColumn[] = [];
+  @Input({ required: true }) itemsPerPage = 10;
+  @Input({ required: true }) totalItems = 100;
+  @Input({ required: true }) currentPage = 1;
+  @Input({ required: true }) totalPages = 10;
   isModalOpen = input.required<boolean>();
   // Outputs
   @Output() onAdd = new EventEmitter<void>();
@@ -64,7 +61,7 @@ export class TableComponent {
   @Output() pageChange = new EventEmitter<number>();
   @Output() itemsPerPageChange = new EventEmitter<number>();
 
-  selectedAll: boolean = false;
+  selectedAll = false;
 
   get colSpans(): number {
     return this.headerColumns.length;

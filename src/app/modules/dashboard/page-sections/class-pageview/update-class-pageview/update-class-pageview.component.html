@@ -42,12 +42,13 @@
 
     <!-- <div class="form__group">
     <div class="relative">
-      <label for="day" class="mb-1.5 block text-sm font-semibold text-ink"
+      <p id="week-day-label" class="mb-1.5 block text-sm font-semibold text-ink"
         >Week Day
         <span class="text-primary-500">*</span>
-      </label>
+      </p>
 
       <NormalSelect
+        labelledBy="week-day-label"
       [options]="dayOptions"
       [placeholder]="'Select Weekday'"
       (selectionChange)="selectWeekDay($event)"
@@ -65,10 +66,10 @@
 </div> -->
 
     <!-- <div class="form__group">
-<label class="mb-1.5 block text-sm font-semibold text-ink"
-  >Trainers<span class="text-primary-500">*</span></label
-  >
+<p id="trainers-label" class="mb-1.5 block text-sm font-semibold text-ink"
+  >Trainers<span class="text-primary-500">*</span></p>
   <MultiSelect
+        labelledBy="trainers-label"
   [placeholder]="'Select the Staffs'"
   [options]="transformToMultiSelectOptions(staffs())"
   (selectionChange)="selectStaffs($event)"

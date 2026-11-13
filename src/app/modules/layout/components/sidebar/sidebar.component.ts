@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ThemeService } from '@service/theme.service';
@@ -13,13 +13,11 @@ import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   constructor(
     public themeService: ThemeService,
     public menuService: MenuService,
   ) {}
-
-  ngOnInit(): void {}
 
   public toggleSidebar() {
     this.menuService.toggleSidebar();

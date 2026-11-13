@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -21,9 +21,9 @@ import { environment } from 'environments/environment';
 export class RowComponent {
   fileUrl = environment.staicUrl;
   @Input() data: any;
-  @Input() hasImage: boolean = false;
-  @Input({ required: true }) index: number = 0;
-  @Input() columns: Array<RowColumn> = [];
+  @Input() hasImage = false;
+  @Input({ required: true }) index = 0;
+  @Input() columns: RowColumn[] = [];
 
   @Output() onDelete = new EventEmitter<any>();
   @Output() onView = new EventEmitter<any>();

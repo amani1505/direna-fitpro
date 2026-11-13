@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -18,8 +18,6 @@ import { BreadCrumbsComponent } from '@components/bread-crumbs/bread-crumbs.comp
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './layout.component.scss',
 })
-export class LayoutComponent implements OnInit {
-  constructor() {}
+export class LayoutComponent {
 
-  ngOnInit(): void {}
 }

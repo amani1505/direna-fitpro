@@ -29,8 +29,8 @@ interface NavLink {
   styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
-  @Input() isScrolled: boolean = false;
-  showMenu: boolean = false;
+  @Input() isScrolled = false;
+  showMenu = false;
   isAnimating = false;
 
   private readonly doc = inject(DOCUMENT);

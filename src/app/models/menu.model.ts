@@ -3,7 +3,7 @@ export interface MenuItem {
   separator?: boolean;
   selected?: boolean;
   active?: boolean;
-  items: Array<SubMenuItem>;
+  items: SubMenuItem[];
 }
 
 export interface SubMenuItem {
@@ -12,6 +12,6 @@ export interface SubMenuItem {
   route?: string | null;
   expanded?: boolean;
   active?: boolean;
-  children?: Array<SubMenuItem>;
+  children?: SubMenuItem[];
   roles?: string[];
 }

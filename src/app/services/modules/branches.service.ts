@@ -25,7 +25,7 @@ export class BranchesService {
     total_items: 0,
   });
 
-  private _allBranches = signal<Array<Branch>>([]);
+  private _allBranches = signal<Branch[]>([]);
   private _branch = signal<Branch>({
     id: '',
     city: '',
@@ -49,7 +49,7 @@ export class BranchesService {
   });
 
   branches: Signal<PaginationResponse<Branch>> = this._branches.asReadonly();
-  allBranches: Signal<Array<Branch>> = this._allBranches.asReadonly();
+  allBranches: Signal<Branch[]> = this._allBranches.asReadonly();
   branch: Signal<Branch> = this._branch.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
@@ -101,7 +101,7 @@ export class BranchesService {
   getAllBranches(): void {
     this._loading.set(true);
 
-    this._http.get<Array<Branch>>(`${environment.apiUrl}branch`).subscribe({
+    this._http.get<Branch[]>(`${environment.apiUrl}branch`).subscribe({
       next: (response) => {
         this._allBranches.set(response);
         this._loading.set(false);
@@ -127,7 +127,7 @@ export class BranchesService {
     this._loading.set(true);
 
     this._http.post<Branch>(`${environment.apiUrl}branch`, data).subscribe({
-      next: (response) => {
+      next: () => {
         this._toast.success('branch created successfully.');
         if (type === 'findAll') {
           this.findAll();
@@ -159,7 +159,7 @@ export class BranchesService {
     this._loading.set(true);
 
     this._http.patch<any>(`${environment.apiUrl}branch/${id}`, data).subscribe({
-      next: (response) => {
+      next: () => {
         this._toast.success('Branch updated successfully.');
         if (type === 'findAll') {
           this.findAll();

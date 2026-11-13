@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -8,12 +8,8 @@ import { environment } from 'environments/environment';
   templateUrl: './responsive-helper.component.html',
   styleUrl: './responsive-helper.component.scss'
 })
-export class ResponsiveHelperComponent implements OnInit {
+export class ResponsiveHelperComponent {
 
   public env: any = environment;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
 }

@@ -3,8 +3,6 @@ import {
   Component,
   computed,
   inject,
-  OnInit,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import {
@@ -15,8 +13,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageUploaderComponent } from '@components/image-uploader/image-uploader.component';
-import { MultiSelectComponent } from '@components/select/multi-select/multi-select.component';
-import { NormalSelectComponent } from '@components/select/normal-select/normal-select.component';
 import { ClassesService } from '@service/modules/classes.service';
 import { StaffService } from '@service/modules/staff.service';
 import { ToastService } from '@service/toast.service';
@@ -116,7 +112,7 @@ export class CreateClassPageviewComponent {
     const formData = new FormData();
 
     for (const key in formValues) {
-      if (formValues.hasOwnProperty(key)) {
+      if (Object.hasOwn(formValues, key)) {
         // if (key === 'staffIds') {
         //   formValues.staffIds.forEach((id: string) => {
         //     formData.append('staffIds[]', id);

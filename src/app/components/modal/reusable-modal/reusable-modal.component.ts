@@ -13,6 +13,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'ReusableModal',
+  host: { '(document:keydown.escape)': 'onEscape()' },
   imports: [CommonModule, ButtonComponent, AngularSvgIconModule],
   animations: [
     trigger('modalAnimation', [
@@ -36,8 +37,8 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   styleUrl: './reusable-modal.component.scss',
 })
 export class ReusableModalComponent {
-  @Input() isOpen: boolean = false;
-  @Input() loading: boolean = false;
+  @Input() isOpen = false;
+  @Input() loading = false;
   @Input() config: ModalConfig = {
     title: '',
     showHeader: true,
@@ -47,7 +48,7 @@ export class ReusableModalComponent {
   };
 
   @Output() closeModalEvent = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<void>();
+  @Output() saved = new EventEmitter<void>();
 
   getSizeClass(): string {
     const sizeClasses = {
@@ -63,7 +64,12 @@ export class ReusableModalComponent {
     this.closeModalEvent.emit();
   }
 
+  /** Escape closes the dialog (keyboard alternative to clicking the backdrop). */
+  onEscape(): void {
+    if (this.isOpen) this.closeModal();
+  }
+
   save(): void {
-    this.submit.emit();
+    this.saved.emit();
   }
 }

@@ -18,14 +18,16 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NormalSelectComponent {
-  @Input({ required: true }) options: Array<{ label: string; value: string }> =
+  @Input({ required: true }) options: { label: string; value: string }[] =
     [];
-  @Input({ required: true }) placeholder: string = 'Select an option';
+  @Input({ required: true }) placeholder = 'Select an option';
+  /** id of the visible heading that names this field (sets aria-labelledby). */
+  @Input() labelledBy?: string;
   @Input() width = 'w-full';
   @Output() selectionChange = new EventEmitter<any>();
 
   @Input() selectedOption = signal<string>('');
-  dropdownOpen: boolean = false;
+  dropdownOpen = false;
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;

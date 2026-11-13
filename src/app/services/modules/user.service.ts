@@ -18,7 +18,7 @@ export class UserService {
     this._http
       .patch<Profile>(`${environment.apiUrl}user/${id}`, data)
       .subscribe({
-        next: (response) => {
+        next: () => {
           this._toast.success('Your Information Updated Successfully.');
           this._loading.set(false);
         },
@@ -28,6 +28,5 @@ export class UserService {
         },
       });
   }
-
 
 }

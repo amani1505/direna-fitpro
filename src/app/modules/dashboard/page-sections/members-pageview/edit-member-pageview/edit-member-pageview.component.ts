@@ -117,8 +117,8 @@ export class EditMemberPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
       value: item.id,
@@ -126,8 +126,8 @@ export class EditMemberPageviewComponent implements OnInit {
   };
 
   transformToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
       value: item.id,

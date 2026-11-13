@@ -10,7 +10,7 @@
   >
     @for (sub of submenu.children; track sub) {
       <li>
-        <div
+        <div role="button" tabindex="0" [attr.aria-expanded]="!!sub.expanded" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
           class="flex rounded-lg text-muted transition-colors hover:bg-surface-2 hover:text-ink"
           (click)="toggleMenu(sub)"
         >

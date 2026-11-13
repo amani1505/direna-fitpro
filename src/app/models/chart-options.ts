@@ -18,7 +18,7 @@ import {
     ApexMarkers,
   } from 'ng-apexcharts';
   
-  export type ChartOptions = {
+  export interface ChartOptions {
     series: ApexAxisChartSeries;
     chart: ApexChart;
     legend: ApexLegend;
@@ -38,5 +38,5 @@ import {
     responsive: ApexResponsive[];
     plotOptions: ApexPlotOptions;
     markers: ApexMarkers;
-  };
+  }
   

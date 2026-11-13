@@ -18,7 +18,7 @@ import { HeaderColumn } from '@model/TableColumn.interface';
 })
 export class HeaderComponent {
   @Input() columns: HeaderColumn[] = [];
-  @Input() isAllSelected: boolean = false;
+  @Input() isAllSelected = false;
   @Output() onCheckAll = new EventEmitter<boolean>();
 
   toggle(event: Event) {

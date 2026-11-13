@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MenuService } from '@service/menu.service';
 import { NavbarMobileMenuComponent } from './navbar-mobile-menu/navbar-mobile-menu.component';
@@ -11,10 +11,8 @@ import { NavbarMobileMenuComponent } from './navbar-mobile-menu/navbar-mobile-me
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navbar-mobile.component.scss',
 })
-export class NavbarMobileComponent implements OnInit {
+export class NavbarMobileComponent {
   constructor(public menuService: MenuService) {}
-
-  ngOnInit(): void {}
 
   public toggleMobileMenu(): void {
     this.menuService.showMobileMenu = false;

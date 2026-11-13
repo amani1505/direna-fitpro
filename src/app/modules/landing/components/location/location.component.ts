@@ -1,4 +1,4 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MapComponent } from '@components/map/map.component';
 
 @Component({

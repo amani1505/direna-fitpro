@@ -31,7 +31,7 @@ export class MembersPageviewComponent implements OnInit {
   private _toast = inject(ToastService);
 
   isModalOpen = signal<boolean>(false);
-  memberId: string = '';
+  memberId = '';
 
   currentPage = signal(1);
   searchTerm = signal('');
@@ -58,7 +58,7 @@ export class MembersPageviewComponent implements OnInit {
     { key: 'actions', type: 'actions' },
   ];
 
-  rowColumns: Array<RowColumn> = [
+  rowColumns: RowColumn[] = [
     { key: 's/n', type: 's/n' },
     { key: 'fullname', type: 'text' },
     { key: 'email', type: 'text' },

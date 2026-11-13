@@ -1,18 +1,12 @@
 import { NgClass } from '@angular/common';
 import {
   Component,
-  inject,
-  OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MemberComponent } from './member/member.component';
 import { NormalUserComponent } from './normal-user/normal-user.component';
@@ -34,11 +28,11 @@ import { NormalUserComponent } from './normal-user/normal-user.component';
 export class SignUpComponent {
   activeTab: 'member' | 'user' = 'member';
 
-  tabs: Array<{
+  tabs: {
     title: string;
     icon: string;
     value: 'member' | 'user';
-  }> = [
+  }[] = [
     {
       title: 'Member ',
       icon: 'person',

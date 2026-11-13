@@ -24,7 +24,7 @@ export class EquipmemntCategoryService {
     total_items: 0,
   });
 
-  private _allEquipmentCategories = signal<Array<EquipmentCategory>>([]);
+  private _allEquipmentCategories = signal<EquipmentCategory[]>([]);
   private _equipmentCategory = signal<EquipmentCategory>({
     id: '',
     category_name: '',
@@ -45,7 +45,7 @@ export class EquipmemntCategoryService {
 
   equipmentCategories: Signal<PaginationResponse<EquipmentCategory>> =
     this._equipmentCategories.asReadonly();
-  allEquipmentCategories: Signal<Array<EquipmentCategory>> =
+  allEquipmentCategories: Signal<EquipmentCategory[]> =
     this._allEquipmentCategories.asReadonly();
   equipmentCategory: Signal<EquipmentCategory> =
     this._equipmentCategory.asReadonly();
@@ -113,7 +113,7 @@ export class EquipmemntCategoryService {
     this._loading.set(true);
 
     this._http
-      .get<Array<EquipmentCategory>>(`${environment.apiUrl}equipment-category`)
+      .get<EquipmentCategory[]>(`${environment.apiUrl}equipment-category`)
       .subscribe({
         next: (response) => {
           this._allEquipmentCategories.set(response);
@@ -142,7 +142,7 @@ export class EquipmemntCategoryService {
     this._http
       .post<EquipmentCategory>(`${environment.apiUrl}equipment-category`, data)
       .subscribe({
-        next: (response) => {
+        next: () => {
           this._toast.success('equipment category created successfully.');
           if (type === 'findAll') {
             this.findAll();
@@ -176,7 +176,7 @@ export class EquipmemntCategoryService {
     this._http
       .patch<any>(`${environment.apiUrl}equipment-category/${id}`, data)
       .subscribe({
-        next: (response) => {
+        next: () => {
           this._toast.success('Equipment Category updated successfully.');
           if (type === 'findAll') {
             this.findAll();

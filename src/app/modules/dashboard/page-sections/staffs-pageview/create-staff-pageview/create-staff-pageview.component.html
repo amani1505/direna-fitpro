@@ -7,7 +7,7 @@
   <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
     <div class="form__group">
       <div class="relative">
-        <label class="mb-1.5 block text-sm font-semibold text-ink"
+        <label for="fullname" class="mb-1.5 block text-sm font-semibold text-ink"
           >Fullname
           <span class="text-primary-500">*</span>
         </label>
@@ -31,7 +31,7 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="mb-1.5 block text-sm font-semibold text-ink"
+        <label for="email" class="mb-1.5 block text-sm font-semibold text-ink"
           >Email
           <span class="text-primary-500">*</span>
         </label>
@@ -61,7 +61,7 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="mb-1.5 block text-sm font-semibold text-ink"
+        <label for="phone" class="mb-1.5 block text-sm font-semibold text-ink"
           >Phone Number
           <span class="text-primary-500">*</span>
         </label>
@@ -91,10 +91,9 @@
     </div>
 
     <div class="form__group">
-      <label class="block text-sm font-semibold text-ink"
-        >Gender <span class="text-primary-500">*</span></label
-      >
-      <div class="mt-2 space-x-4">
+      <p id="gender-label" class="block text-sm font-semibold text-ink"
+        >Gender <span class="text-primary-500">*</span></p>
+      <div role="radiogroup" aria-labelledby="gender-label" class="mt-2 space-x-4">
         <label class="inline-flex items-center">
           <input
             type="radio"
@@ -122,7 +121,7 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="mb-1.5 block text-sm font-semibold text-ink"
+        <label for="address" class="mb-1.5 block text-sm font-semibold text-ink"
           >Address
           <span class="text-primary-500">*</span>
         </label>
@@ -146,7 +145,7 @@
 
     <div class="form__group">
       <div class="relative">
-        <label class="mb-1.5 block text-sm font-semibold text-ink"
+        <label for="city" class="mb-1.5 block text-sm font-semibold text-ink"
           >City
           <span class="text-primary-500">*</span>
         </label>
@@ -169,10 +168,10 @@
     </div>
 
     <div class="form__group">
-      <label class="mb-1.5 block text-sm font-semibold text-ink"
-        >Branch<span class="text-primary-500">*</span></label
-      >
+      <p id="branch-label" class="mb-1.5 block text-sm font-semibold text-ink"
+        >Branch<span class="text-primary-500">*</span></p>
       <SeachableSelect
+        labelledBy="branch-label"
         [placeholder]="'Select Branch'"
         [options]="transformBranchToSelectOptions(branches())"
         (selectionChange)="selectBranch($event)"
@@ -183,10 +182,10 @@
     </div>
 
     <div class="form__group">
-      <label class="mb-1.5 block text-sm font-semibold text-ink"
-        >Role<span class="text-primary-500">*</span></label
-      >
+      <p id="role-label" class="mb-1.5 block text-sm font-semibold text-ink"
+        >Role<span class="text-primary-500">*</span></p>
       <SeachableSelect
+        labelledBy="role-label"
         [placeholder]="'Select Role of the staff'"
         [options]="transformRoleToSelectOptions(roles())"
         (selectionChange)="selectRole($event)"

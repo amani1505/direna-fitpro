@@ -17,10 +17,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageUploaderComponent } from '@components/image-uploader/image-uploader.component';
-import { MultiSelectComponent } from '@components/select/multi-select/multi-select.component';
-import { NormalSelectComponent } from '@components/select/normal-select/normal-select.component';
 import { ClassesService } from '@service/modules/classes.service';
-import { StaffService } from '@service/modules/staff.service';
 import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
@@ -119,8 +116,8 @@ export class UpdateClassPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.fullname,
       value: item.id,

@@ -35,7 +35,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 export class CreateAddressComponent {
   isModalOpen = input.required<boolean>();
 
-  @Output() cancel = new EventEmitter<any>();
+  @Output() closed = new EventEmitter<void>();
 
   private _addressService = inject(AddressService);
   private _toastService = inject(ToastService);
@@ -83,7 +83,7 @@ export class CreateAddressComponent {
     this._addressService.create(this.addressForm.value).subscribe({
       next: () => {
         this.addressForm.reset({ is_default: false });
-        this.cancel.emit(); // Only close on success
+        this.closed.emit(); // Only close on success
       },
       error: (error) => {
         this._toastService.error(
@@ -94,6 +94,6 @@ export class CreateAddressComponent {
   }
 
   onCancel() {
-    this.cancel.emit();
+    this.closed.emit();
   }
 }

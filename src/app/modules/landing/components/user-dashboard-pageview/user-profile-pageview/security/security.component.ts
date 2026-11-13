@@ -53,10 +53,10 @@ export class SecurityComponent {
   isConfirmPasswordVisible = signal<boolean>(false);
   isCurrentPasswordVisible = signal<boolean>(false);
 
-  readonly rules: Array<{
+  readonly rules: {
     key: 'length' | 'uppercase' | 'lowercase' | 'number' | 'specialChar';
     label: string;
-  }> = [
+  }[] = [
     { key: 'length', label: 'At least 8 characters' },
     { key: 'uppercase', label: 'An uppercase letter' },
     { key: 'lowercase', label: 'A lowercase letter' },
@@ -110,7 +110,7 @@ export class SecurityComponent {
 
   // Custom validator for password complexity
   passwordComplexityValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
+    return (control: AbstractControl): Record<string, any> | null => {
       const value = control.value;
 
       const lengthValid = value && value.length >= 8;

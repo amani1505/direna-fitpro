@@ -48,9 +48,9 @@
   [title]="'Delete this address?'"
   [content]="deleteContent"
   [subContent]="deleteSubContent"
-  (submit)="delete()"
+  (confirmed)="delete()"
 ></Modal>
 
 @if (isModalOpen() && address.id === addressId()) {
-  <update-address [address]="address" [isModalOpen]="isModalOpen()" (cancel)="closeModal()"></update-address>
+  <update-address [address]="address" [isModalOpen]="isModalOpen()" (closed)="closeModal()"></update-address>
 }

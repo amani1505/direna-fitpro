@@ -30,8 +30,8 @@ export class ServiceCardComponent {
   @Input({ required: true }) service: Services;
   private _serviceService = inject(ServicesService);
 
-  deleteContent: string = 'Are you sure you want to delete this Service?';
-  deleteSubContent: string =
+  deleteContent = 'Are you sure you want to delete this Service?';
+  deleteSubContent =
     'Deleting this member will permanently remove this service from your services list';
 
   isDeleteModalOpen = signal<boolean>(false);

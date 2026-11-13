@@ -11,5 +11,5 @@ import { NormalSelectComponent } from '@components/select/normal-select/normal-s
   styleUrl: './actions.component.scss',
 })
 export class ActionsComponent {
-  @Input() actions: Array<TableActions> = [];
+  @Input() actions: TableActions[] = [];
 }

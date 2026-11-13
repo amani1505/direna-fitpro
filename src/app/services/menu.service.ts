@@ -1,4 +1,4 @@
-import { Injectable, signal, inject } from '@angular/core';
+import { Injectable, signal, inject, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MenuItem, SubMenuItem } from '@model/menu.model';
 import { Menu } from 'app/constant/menu';
@@ -8,7 +8,7 @@ import { AuthService } from '@service/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class MenuService {
+export class MenuService implements OnDestroy {
   private authService = inject(AuthService);
   private _showSidebar = signal(true);
   private _showMobileMenu = signal(false);
@@ -19,7 +19,7 @@ export class MenuService {
     // Set filtered menu based on user role
     this.updateMenuForRole();
 
-    let sub = this.router.events.subscribe((event) => {
+    const sub = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Expand menu based on active route
         this._pagesMenu().forEach((menu) => {
@@ -43,18 +43,19 @@ export class MenuService {
   get showSideBar() {
     return this._showSidebar();
   }
-  get showMobileMenu() {
-    return this._showMobileMenu();
-  }
-  get pagesMenu() {
-    return this._pagesMenu();
-  }
-
   set showSideBar(value: boolean) {
     this._showSidebar.set(value);
   }
+
+  get showMobileMenu() {
+    return this._showMobileMenu();
+  }
   set showMobileMenu(value: boolean) {
     this._showMobileMenu.set(value);
+  }
+
+  get pagesMenu() {
+    return this._pagesMenu();
   }
 
   public toggleSidebar() {
@@ -70,7 +71,7 @@ export class MenuService {
     submenu.expanded = !submenu.expanded;
   }
 
-  private expand(items: Array<any>) {
+  private expand(items: any[]) {
     items.forEach((item) => {
       item.expanded = this.isActive(item.route);
       if (item.children) this.expand(item.children);

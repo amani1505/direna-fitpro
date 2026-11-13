@@ -4,6 +4,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-sidebar',
+  host: { '(document:keydown.escape)': 'onEscape()' },
   standalone: true,
   imports: [CommonModule],
   animations: [
@@ -28,9 +29,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
-  @Input() isOpened: boolean = false;
+  @Input() isOpened = false;
   @Input() position: 'left' | 'right' = 'right';
-  @Input() title: string = '';
+  @Input() title = '';
   @Output() closeSidebar = new EventEmitter<void>();
 
   toggleDrawer() {
@@ -38,5 +39,10 @@ export class SidebarComponent {
     if (!this.isOpened) {
       this.closeSidebar.emit();
     }
+  }
+
+  /** Escape closes the drawer (keyboard alternative to clicking the backdrop). */
+  onEscape() {
+    if (this.isOpened) this.toggleDrawer();
   }
 }

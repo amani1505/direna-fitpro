@@ -3,9 +3,6 @@ export class AuthUtils
     /**
      * Constructor
      */
-    constructor()
-    {
-    }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -183,7 +180,7 @@ export class AuthUtils
         const decodedToken = this._decodeToken(token);
 
         // Return if the decodedToken doesn't have an 'exp' field
-        if ( !decodedToken.hasOwnProperty('exp') )
+        if ( !Object.hasOwn(decodedToken, 'exp') )
         {
             return null;
         }

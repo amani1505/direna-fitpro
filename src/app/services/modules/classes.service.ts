@@ -85,7 +85,7 @@ export class ClassesService {
       });
   }
 
-  findOne(id: string, classRelations = []) {
+  findOne(id: string, _classRelations: string[] = []) {
     this._loading.set(true);
 
     // const params = new HttpParams({

@@ -10,7 +10,7 @@
       @for (item of menu.items; track item) {
         <li>
           <!-- Menu List -->
-          <div
+          <div role="button" tabindex="0" [attr.aria-expanded]="!!item.expanded" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
             (click)="toggleMenu(item)"
             class="menu-row group relative text-muted"
           >
@@ -34,7 +34,7 @@
             </ng-container>
             <!-- Workaround:: Enable routerLink -->
             <ng-template #parentMenu let-item="item">
-              <div
+              <div role="link" tabindex="0" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
                 routerLink="{{ item.route }}"
                 routerLinkActive="nav-item-active"
                 [routerLinkActiveOptions]="{ exact: true }"

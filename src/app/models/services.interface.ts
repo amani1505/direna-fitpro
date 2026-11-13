@@ -4,7 +4,7 @@ export interface Services {
   id: string;
   name: string;
   description: string;
-  members: Array<Member>;
+  members: Member[];
   created_at: Date;
   updated_at: Date;
 }

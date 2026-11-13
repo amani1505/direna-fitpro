@@ -22,18 +22,18 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   styleUrl: './image-uploader.component.scss',
 })
 export class ImageUploaderComponent implements OnInit, OnChanges {
-  @Input() width: string = '200px';
-  @Input() height: string = '200px';
+  @Input() width = '200px';
+  @Input() height = '200px';
   @Input() initialImage: string | null = null;
-  @Input() editMode: boolean = false;
-  @Input() canDelete: boolean = true;
-  @Input() isFromApi: boolean = false;
+  @Input() editMode = false;
+  @Input() canDelete = true;
+  @Input() isFromApi = false;
   @Output() imageSelected = new EventEmitter<File>();
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   currentImage: string | ArrayBuffer | null = null;
-  isDragOver: boolean = false;
+  isDragOver = false;
 
   ngOnInit() {
     if (this.initialImage) {
@@ -69,7 +69,7 @@ export class ImageUploaderComponent implements OnInit, OnChanges {
   handleFile(file: File): void {
     this.imageSelected.emit(file);
     const reader = new FileReader();
-    reader.onload = (e) => (this.currentImage = reader.result);
+    reader.onload = () => (this.currentImage = reader.result);
     reader.readAsDataURL(file);
   }
 

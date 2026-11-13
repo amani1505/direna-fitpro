@@ -47,8 +47,8 @@ export class MemberComponent implements OnInit {
   services = computed(() => this._servicesService.allServices() || []);
   branches = computed(() => this._branchesService.allBranches() || []);
 
-  selectedServices: Array<string> = [];
-  selectedBranch: string = '';
+  selectedServices: string[] = [];
+  selectedBranch = '';
 
   passwordTextType!: boolean;
   submitted = false;
@@ -77,8 +77,8 @@ export class MemberComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
       value: item.id,
@@ -86,8 +86,8 @@ export class MemberComponent implements OnInit {
   };
 
   transformToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
       value: item.id,
@@ -109,13 +109,14 @@ export class MemberComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    const { email } = this.authForm.value;
 
     // stop here if form is invalid
     if (this.authForm.invalid) {
       return;
     }
 
+    // TODO: send the member registration (this.authForm.value) to the API.
+    // The form is validated but nothing is submitted yet.
     this._router.navigate(['/']);
   }
 }

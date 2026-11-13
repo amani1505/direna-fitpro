@@ -55,7 +55,7 @@
         } @else {
           <!-- Actual Data -->
           @for (result of data; track $index) {
-            <div
+            <div role="button" tabindex="0" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
               class="relative p-2 cursor-pointer hover:bg-gray-100"
               (click)="onNavigate(result.id)"
             >

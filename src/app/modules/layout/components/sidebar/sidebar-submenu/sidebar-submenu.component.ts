@@ -2,7 +2,6 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import {
   Component,
   Input,
-  OnInit,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
@@ -23,18 +22,16 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     AngularSvgIconModule,
   ],
 })
-export class SidebarSubmenuComponent implements OnInit {
-  @Input() public submenu = <SubMenuItem>{};
+export class SidebarSubmenuComponent {
+  @Input() public submenu = {} as SubMenuItem;
 
   constructor(public menuService: MenuService) {}
-
-  ngOnInit(): void {}
 
   public toggleMenu(menu: any) {
     this.menuService.toggleSubMenu(menu);
   }
 
-  private collapse(items: Array<any>) {
+  private collapse(items: any[]) {
     items.forEach((item) => {
       item.expanded = false;
       if (item.children) this.collapse(item.children);

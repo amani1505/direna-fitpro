@@ -18,7 +18,7 @@ export class ScrollService {
   scrollProgress$: Observable<number> = this.scrollProgressSubject.asObservable();
 
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
+    @Inject(PLATFORM_ID) platformId: object,
     private ngZone: NgZone
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -40,7 +40,6 @@ export class ScrollService {
       // Periodic checking for reliability
       setInterval(() => this.updateScrollInfo(), 1000);
     });
-
 
   }
 
@@ -95,7 +94,7 @@ export class ScrollService {
       }
     });
   }
-  scrollToPosition(position: number, smooth: boolean = true): void {
+  scrollToPosition(position: number, smooth = true): void {
     if (this.isBrowser) {
       window.scrollTo({
         top: position,

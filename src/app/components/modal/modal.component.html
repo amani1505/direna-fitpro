@@ -4,7 +4,8 @@
     class="fixed inset-0 z-[1100] flex justify-center overflow-y-auto px-4 py-6 sm:py-10"
   >
     <!-- Modal Overlay -->
-    <div
+    <!-- Escape closes it; the backdrop is a mouse shortcut. -->
+    <div aria-hidden="true"
       (click)="closeModal()"
       class="fixed inset-0 bg-[rgb(12_10_17/0.55)] backdrop-blur-sm"
     ></div>

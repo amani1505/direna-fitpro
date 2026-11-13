@@ -1,15 +1,13 @@
-
-
 <div [class]="'relative ' + containerClass">
   <!-- Custom Trigger Template -->
-  <ng-container *ngIf="triggerTemplate">
-    <div (click)="toggleMenu()" class="cursor-pointer">
+  @if (triggerTemplate) {
+    <div role="button" tabindex="0" aria-haspopup="menu" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()" (click)="toggleMenu()" class="cursor-pointer">
       <ng-container *ngTemplateOutlet="triggerTemplate"></ng-container>
     </div>
-  </ng-container>
+  }
 
   <!-- Default Trigger Options -->
-  <ng-container *ngIf="!triggerTemplate">
+  @if (!triggerTemplate) {
     <button
       (click)="toggleMenu()"
       [class]="getTriggerClass()"
@@ -18,116 +16,109 @@
       aria-haspopup="true"
     >
       <!-- Avatar Trigger -->
-      <ng-container *ngIf="config.triggerType === 'avatar' && header?.image">
+      @if (config.triggerType === "avatar" && header?.image) {
         <img
           [src]="header.image"
           [alt]="header.title || ''"
           class="h-9 w-9 rounded-full object-cover"
         />
-      </ng-container>
-
+      }
       <!-- Icon Trigger -->
-      <ng-container *ngIf="config.triggerType === 'icon'">
+      @if (config.triggerType === "icon") {
         <svg-icon [src]="triggerIcon" [svgClass]="'h-6 w-6  '"> </svg-icon>
-      </ng-container>
-
+      }
       <!-- Button Trigger -->
-      <ng-container *ngIf="config.triggerType === 'button'">
+      @if (config.triggerType === "button") {
         <span>{{ triggerText }}</span>
-      </ng-container>
+      }
     </button>
-  </ng-container>
+  }
 
   <!-- Dropdown Content -->
-  <div
-    *ngIf="isMenuOpen"
-    (clickOutside)="closeMenu()"
-    [class]="getDropdownClass()"
-    [ngClass]="getAnimationClass()"
-  >
-    <!-- Custom Header Template -->
-    <ng-container *ngIf="headerTemplate">
-      <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
-    </ng-container>
-
-    <!-- Default Header -->
-    <ng-container *ngIf="!headerTemplate && header">
-      <div class="flex items-center px-2 pb-3 pt-1">
-        <div *ngIf="header.image" class="w-10 shrink-0">
-          <img
-            class="rounded-md"
-            [src]="header.image"
-            [alt]="header.title || ''"
-          />
-        </div>
-        <div class="px-2 overflow-hidden">
-          <div class="text-sm font-semibold text-ink">
-            {{ header.title }}
+  @if (isMenuOpen) {
+    <div
+      (clickOutside)="closeMenu()"
+      [class]="getDropdownClass()"
+      [ngClass]="getAnimationClass()"
+    >
+      <!-- Custom Header Template -->
+      @if (headerTemplate) {
+        <ng-container *ngTemplateOutlet="headerTemplate"></ng-container>
+      }
+      <!-- Default Header -->
+      @if (!headerTemplate && header) {
+        <div class="flex items-center px-2 pb-3 pt-1">
+          @if (header.image) {
+            <div class="w-10 shrink-0">
+              <img
+                class="rounded-md"
+                [src]="header.image"
+                [alt]="header.title || ''"
+              />
+            </div>
+          }
+          <div class="px-2 overflow-hidden">
+            <div class="text-sm font-semibold text-ink">
+              {{ header.title }}
+            </div>
+            @if (header.subtitle) {
+              <p class="truncate text-xs text-muted">
+                {{ header.subtitle }}
+              </p>
+            }
           </div>
-          <p
-            *ngIf="header.subtitle"
-            class="truncate text-xs text-muted"
-          >
-            {{ header.subtitle }}
-          </p>
         </div>
-      </div>
-    </ng-container>
-
-    <!-- Sections -->
-    <ng-container *ngFor="let section of sections; let last = last">
-      <!-- Section Title -->
-      <div
-        *ngIf="section.title"
-        class="px-3 pb-1 pt-2 text-xs font-semibold text-subtle"
-      >
-        {{ section.title }}
-      </div>
-
-      <!-- Items -->
-      <ul class="my-2">
-        <ng-container *ngFor="let item of section.items">
-          <!-- Divider -->
-          <li
-            *ngIf="item.divider"
-            class="my-2 border-b border-dashed border-line"
-          ></li>
-
-          <!-- Menu Item -->
-          <li
-            *ngIf="!item.divider"
-            [routerLink]="item.route"
-            (click)="handleItemClick(item)"
-            [class]="getItemClass(item)"
-          >
-            <!-- <i  [class]="item.icon + ' mr-2'"></i> -->
-            <svg-icon
-              *ngIf="item.icon"
-              [src]="item.icon"
-              [svgClass]="'h-5 w-5 text-subtle mr-2'"
-            ></svg-icon>
-            <span class="flex-grow">{{ item.label }}</span>
-            <span *ngIf="item.badge" [class]="getBadgeClass(item.badge.color)">
-              {{ item.badge.text }}
-            </span>
-          </li>
-        </ng-container>
-      </ul>
-
-      <!-- Section Divider -->
-      <div
-        *ngIf="!last"
-        class="border-b border-dashed border-line"
-      ></div>
-    </ng-container>
-
-    <!-- Footer Template -->
-    <ng-container *ngIf="footerTemplate">
-      <div
-        class="pt-2 mt-2 border-t border-dashed border-line"
-      >
-        <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
-      </div>
-    </ng-container>
-  </div>
+      }
+      <!-- Sections -->
+      @for (section of sections; track section; let last = $last) {
+        <!-- Section Title -->
+        @if (section.title) {
+          <div class="px-3 pb-1 pt-2 text-xs font-semibold text-subtle">
+            {{ section.title }}
+          </div>
+        }
+        <!-- Items -->
+        <ul class="my-2" role="menu">
+          @for (item of section.items; track item) {
+            <!-- Divider -->
+            @if (item.divider) {
+              <li class="my-2 border-b border-dashed border-line"></li>
+            }
+            <!-- Menu Item -->
+            @if (!item.divider) {
+              <li role="menuitem" tabindex="0" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
+                [routerLink]="item.route"
+                (click)="handleItemClick(item)"
+                [class]="getItemClass(item)"
+              >
+                <!-- <i  [class]="item.icon + ' mr-2'"></i> -->
+                @if (item.icon) {
+                  <svg-icon
+                    [src]="item.icon"
+                    [svgClass]="'h-5 w-5 text-subtle mr-2'"
+                  ></svg-icon>
+                }
+                <span class="flex-grow">{{ item.label }}</span>
+                @if (item.badge) {
+                  <span [class]="getBadgeClass(item.badge.color)">
+                    {{ item.badge.text }}
+                  </span>
+                }
+              </li>
+            }
+          }
+        </ul>
+        <!-- Section Divider -->
+        @if (!last) {
+          <div class="border-b border-dashed border-line"></div>
+        }
+      }
+      <!-- Footer Template -->
+      @if (footerTemplate) {
+        <div class="pt-2 mt-2 border-t border-dashed border-line">
+          <ng-container *ngTemplateOutlet="footerTemplate"></ng-container>
+        </div>
+      }
+    </div>
+  }
 </div>

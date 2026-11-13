@@ -25,7 +25,7 @@ export class ButtonComponent {
     | 'info'
     | 'normal' = 'normal';
   @Input() variant: 'filled' | 'outlined' = 'filled';
-  @Input() rounded: boolean = false;
+  @Input() rounded = false;
   @Output() onClick = new EventEmitter<void>();
 
   get sizeClasses() {

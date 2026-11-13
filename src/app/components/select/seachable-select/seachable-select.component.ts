@@ -4,13 +4,11 @@ import {
   Component,
   computed,
   EventEmitter,
-  input,
   Input,
   Output,
-  Signal,
-  signal,
+  signal, OnChanges,
 } from '@angular/core';
-import { FormControl, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 export interface SearchableSelectOption {
@@ -30,7 +28,7 @@ export interface SearchableSelectOption {
     styleUrl: './seachable-select.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SeachableSelectComponent {
+export class SeachableSelectComponent implements OnChanges {
   private optionsSignal = signal<SearchableSelectOption[]>([]);
 
   // selectedValueSignal = input.required<string | null>();
@@ -67,12 +65,16 @@ export class SeachableSelectComponent {
     return this.optionsSignal();
   }
 
-  @Input({ required: true }) placeholder: string = 'Select an option';
+  @Input({ required: true }) placeholder = 'Select an option';
+
+  /** id of the visible heading that names this field (sets aria-labelledby). */
+
+  @Input() labelledBy?: string;
   @Input() buttonLabel!: string;
-  @Input() canAdd: boolean = false;
+  @Input() canAdd = false;
   @Output() selectionChange = new EventEmitter<string>();
   @Output() validationChange = new EventEmitter<boolean>();
-  @Output() search = new EventEmitter<string>();
+  @Output() searchTermChange = new EventEmitter<string>();
   @Output() onAdd = new EventEmitter();
 
   ngOnChanges() {
@@ -93,7 +95,7 @@ export class SeachableSelectComponent {
     const input = event.target as HTMLInputElement;
     const searchTerm = input.value;
     this.searchTermSignal.set(searchTerm);
-    this.search.emit(searchTerm);
+    this.searchTermChange.emit(searchTerm);
   }
 
   selectOption(option: SearchableSelectOption) {
@@ -102,7 +104,6 @@ export class SeachableSelectComponent {
     this.validationChange.emit(this.isValid());
     this.dropdownOpenSignal.set(false);
   }
-
 
   add() {
     this.onAdd.emit();

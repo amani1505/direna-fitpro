@@ -24,7 +24,7 @@ export class RolesService {
     total_items: 0,
   });
 
-  private _allRoles = signal<Array<Roles>>([]);
+  private _allRoles = signal<Roles[]>([]);
 
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
@@ -36,7 +36,7 @@ export class RolesService {
   });
 
   roles: Signal<PaginationResponse<Roles>> = this._roles.asReadonly();
-  allRoles: Signal<Array<Roles>> = this._allRoles.asReadonly();
+  allRoles: Signal<Roles[]> = this._allRoles.asReadonly();
 
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
@@ -74,7 +74,7 @@ export class RolesService {
     this._loading.set(true);
 
     this._http
-      .get<Array<Roles>>(`${environment.apiUrl}roles/except-user`)
+      .get<Roles[]>(`${environment.apiUrl}roles/except-user`)
       .subscribe({
         next: (response) => {
           this._allRoles.set(response);
@@ -97,7 +97,7 @@ export class RolesService {
     this._loading.set(true);
 
     this._http.post<Roles>(`${environment.apiUrl}roles`, data).subscribe({
-      next: (response) => {
+      next: () => {
         this._toast.success('role created successfully.');
         if (type === 'findAll') {
           this.findAll();
@@ -125,7 +125,7 @@ export class RolesService {
     this._loading.set(true);
 
     this._http.patch<any>(`${environment.apiUrl}roles/${id}`, data).subscribe({
-      next: (response) => {
+      next: () => {
         this._toast.success('Role updated successfully.');
         if (type === 'findAll') {
           this.findAll();

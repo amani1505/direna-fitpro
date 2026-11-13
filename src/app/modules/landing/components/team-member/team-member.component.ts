@@ -8,7 +8,7 @@ import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
   styleUrl: './team-member.component.scss',
 })
 export class TeamMemberComponent {
-  @Input() name: string = '';
-  @Input() role: string = '';
-  @Input() imageUrl: string = '';
+  @Input() name = '';
+  @Input() role = '';
+  @Input() imageUrl = '';
 }

@@ -16,10 +16,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TablePaginationComponent {
-  @Input() itemsPerPage: number = 1;
-  @Input() totalPages: number = 1;
-  @Input() currentPage: number = 1;
-  @Input() totalItems: number = 1;
+  @Input() itemsPerPage = 1;
+  @Input() totalPages = 1;
+  @Input() currentPage = 1;
+  @Input() totalItems = 1;
   @Output() pageChange = new EventEmitter<number>();
   @Output() paginatedItems = new EventEmitter<number>();
 

@@ -20,7 +20,6 @@ import { AddBranchModalComponent } from '../../branch-pageview/add-branch-modal/
 import { StaffService } from '@service/modules/staff.service';
 import { BranchesService } from '@service/modules/branches.service';
 import { ToastService } from '@service/toast.service';
-import { Services } from '../../../../../models/services.interface';
 import { RolesService } from '@service/modules/roles.service';
 import { AddRoleComponent } from '../../roles-pageview/add-role/add-role.component';
 
@@ -56,8 +55,8 @@ export class CreateStaffPageviewComponent implements OnInit {
   isBranchModalOpen = signal<boolean>(false);
   isRoleModalOpen = signal<boolean>(false);
 
-  selectedBranch: string = '';
-  selectedRole: string = '';
+  selectedBranch = '';
+  selectedRole = '';
 
   staffForm = this._formBuilder.group({
     fullname: ['', Validators.required],
@@ -76,8 +75,8 @@ export class CreateStaffPageviewComponent implements OnInit {
   }
 
   transformBranchToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
       value: item.id,
@@ -85,8 +84,8 @@ export class CreateStaffPageviewComponent implements OnInit {
   };
 
   transformRoleToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
       value: item.id,

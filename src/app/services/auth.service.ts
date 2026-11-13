@@ -257,8 +257,6 @@ export class AuthService {
   private _toastService = inject(ToastService);
   private _updatePasswordLoading = signal<boolean>(false);
 
-
-
   authenticated: Signal<boolean> = this._authenticated.asReadonly();
   user: Signal<User | null> = this._user.asReadonly();
   userLoaded$ = this._userLoadedSubject.asObservable();
@@ -266,7 +264,7 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
-    @Inject(PLATFORM_ID) private _platformId: Object,
+    @Inject(PLATFORM_ID) private _platformId: object,
   ) {
     this.initAuthentication();
   }
@@ -363,7 +361,7 @@ export class AuthService {
     this._updatePasswordLoading.set(true);
 
     return this._http.post<any>(`${environment.apiUrl}auth/change-password`, data).pipe(
-      tap((response) => {
+      tap(() => {
         this._toastService.success('Password successfuly updated.');
         this._updatePasswordLoading.set(false);
       }),

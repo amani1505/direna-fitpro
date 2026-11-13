@@ -5,7 +5,6 @@ import { EquipmentService } from '@service/modules/equipment.service';
 import { EquipmemntCategoryService } from '@service/modules/equipment-category.service';
 import { CartService } from '@service/modules/cart.service';
 import { AuthGuard } from '@core/guards/auth.guard';
-import { AuthService } from '@service/auth.service';
 import { UserService } from '@service/modules/user.service';
 import { AddressService } from '@service/modules/address.service';
 import { OrderService } from '@service/modules/order.service';

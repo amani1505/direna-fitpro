@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -16,7 +16,7 @@ export class SearchDropdownComponent {
   @Input() data: any[] = [];
   // @Input() hasError = signal<boolean>(false);
   @Input() isLoading = false;
-  searchQuery: string = '';
+  searchQuery = '';
   @Output() searchChange = new EventEmitter<string>();
   @Output() navigateTo = new EventEmitter<string>();
   fileUrl = environment.staicUrl;

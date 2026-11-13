@@ -25,10 +25,10 @@ export interface PaginationConfig {
   styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-  @Input() itemsPerPage: number = 10;
-  @Input() totalItems: number = 100;
-  @Input() currentPage: number = 1;
-  @Input() totalPages: number = 10;
+  @Input() itemsPerPage = 10;
+  @Input() totalItems = 100;
+  @Input() currentPage = 1;
+  @Input() totalPages = 10;
 
   @Output() pageChange = new EventEmitter<number>();
   @Output() itemsPerPageChange = new EventEmitter<number>();
@@ -56,8 +56,8 @@ export class FooterComponent {
       }
 
       // Add the current page in the middle (around the current page) dynamically
-      let start = Math.max(this.currentPage - 1, maxPages + 1);
-      let end = Math.min(this.currentPage + 1, this.totalPages - maxPages);
+      const start = Math.max(this.currentPage - 1, maxPages + 1);
+      const end = Math.min(this.currentPage + 1, this.totalPages - maxPages);
 
       for (let i = start; i <= end; i++) {
         if (!pages.includes(i)) pages.push(i);

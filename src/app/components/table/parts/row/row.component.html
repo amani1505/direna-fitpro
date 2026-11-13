@@ -40,7 +40,7 @@
     }
     @case ("status") {
       <td class="">
-        <div
+        <div role="switch" tabindex="0" [attr.aria-checked]="data[column.key] === true" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
           class="relative inline-flex items-center cursor-pointer"
           (click)="column.action(data)"
           [ngClass]="{

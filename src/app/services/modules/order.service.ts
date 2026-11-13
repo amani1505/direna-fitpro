@@ -24,7 +24,7 @@ export class OrderService {
     return this._http
       .post<any>(`${this._apiUrl}/cart/${cartId}`, orderData)
       .pipe(
-        tap((response) => {
+        tap(() => {
           this._loading.set(false);
         }),
         catchError((error) => {
@@ -59,7 +59,7 @@ export class OrderService {
 
   cancelOrder(id: string): Observable<Order> {
     return this._http.delete<Order>(`${this._apiUrl}/${id}`).pipe(
-      tap((response) => {
+      tap(() => {
         this. getUserOrders();
       }),
       catchError((error) => {

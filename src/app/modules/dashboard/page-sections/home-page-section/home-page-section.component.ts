@@ -45,7 +45,7 @@ export class HomePageSectionComponent implements OnInit, OnDestroy {
     () => this._dashboardService.dashboard().latestServices || [],
   );
 
-  greeting: string = '';
+  greeting = '';
   currentTime: Date = new Date();
 
   ngOnInit() {

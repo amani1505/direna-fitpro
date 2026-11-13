@@ -61,8 +61,8 @@ export class CreateMemberPageviewComponent implements OnInit {
   isServiceModalOpen = signal<boolean>(false);
   isBranchModalOpen = signal<boolean>(false);
 
-  selectedServices: Array<string> = [];
-  selectedBranch: string = '';
+  selectedServices: string[] = [];
+  selectedBranch = '';
 
   memberForm = this._formBuilder.group({
     fullname: ['', Validators.required],
@@ -82,8 +82,8 @@ export class CreateMemberPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
       value: item.id,
@@ -91,8 +91,8 @@ export class CreateMemberPageviewComponent implements OnInit {
   };
 
   transformToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
       value: item.id,

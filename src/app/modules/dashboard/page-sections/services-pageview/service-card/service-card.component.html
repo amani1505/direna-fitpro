@@ -90,7 +90,7 @@
   [title]="'Delete Confirmation'"
   [content]="deleteContent"
   [subContent]="deleteSubContent"
-  (submit)="delete()"
+  (confirmed)="delete()"
 ></Modal>
 
 @if (isServiceModalOpen() && service.id === serviceId()) {

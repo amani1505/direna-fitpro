@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MenuService } from '@service/menu.service';
@@ -20,12 +20,11 @@ import { SidebarSubmenuComponent } from '../sidebar-submenu/sidebar-submenu.comp
     SidebarSubmenuComponent,
   ],
 })
-export class SidebarMenuComponent implements OnInit {
+export class SidebarMenuComponent {
   constructor(public menuService: MenuService) {}
 
   public toggleMenu(subMenu: SubMenuItem) {
     this.menuService.toggleMenu(subMenu);
   }
 
-  ngOnInit(): void {}
 }

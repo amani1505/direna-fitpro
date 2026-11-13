@@ -12,6 +12,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
   selector: 'Modal',
+  host: { '(document:keydown.escape)': 'onEscape()' },
   imports: [ButtonComponent, AngularSvgIconModule],
   animations: [
     trigger('modalAnimation', [
@@ -35,18 +36,23 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {
-  @Input() isOpen: boolean = false;
-  @Input({ required: true }) content: string = '';
-  @Input({ required: true }) title: string = '';
-  @Input({ required: true }) subContent: string = '';
-  @Input() loading: boolean = false;
+  @Input() isOpen = false;
+  @Input({ required: true }) content = '';
+  @Input({ required: true }) title = '';
+  @Input({ required: true }) subContent = '';
+  @Input() loading = false;
   @Output() closeModalEvent = new EventEmitter<void>();
-  @Output() submit = new EventEmitter<void>();
+  @Output() confirmed = new EventEmitter<void>();
 
   closeModal() {
     this.closeModalEvent.emit();
   }
+
+  /** Escape closes the dialog (keyboard alternative to clicking the backdrop). */
+  onEscape() {
+    if (this.isOpen) this.closeModal();
+  }
   save() {
-    this.submit.emit();
+    this.confirmed.emit();
   }
 }

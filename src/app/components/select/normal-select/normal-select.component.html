@@ -2,6 +2,8 @@
   <!-- Dropdown Button -->
   <button
     (click)="toggleDropdown()"
+    [attr.aria-labelledby]="labelledBy || null"
+    aria-haspopup="listbox"
     clickOutside
     (clickOutside)="dropdownOpen = false"
     type="button"
@@ -29,9 +31,9 @@
   <!-- Dropdown Menu -->
   @if (dropdownOpen) {
     <div class="dropdown-panel">
-      <div class="max-h-56 overflow-y-auto">
+      <div class="max-h-56 overflow-y-auto" role="listbox">
         @for (option of options; track option) {
-          <a
+          <a role="option" tabindex="0" [attr.aria-selected]="selectedOption() === option.value" (keydown.enter)="$any($event.currentTarget).click()" (keydown.space)="$event.preventDefault(); $any($event.currentTarget).click()"
             (click)="selectOption(option.value)"
             class="dropdown-option"
             [class.dropdown-option-active]="selectedOption() === option.value"

@@ -29,7 +29,7 @@ export class EquipmentsPageviewComponent implements OnInit {
   private _router = inject(Router);
 
   isModalOpen = signal<boolean>(false);
-  equipmentId: string = '';
+  equipmentId = '';
 
   currentPage = signal(1);
   searchTerm = signal('');

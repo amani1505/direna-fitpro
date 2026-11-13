@@ -110,8 +110,8 @@ export class EditStaffPageviewComponent implements OnInit {
   }
 
   transformBranchToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.road,
       value: item.id,
@@ -119,8 +119,8 @@ export class EditStaffPageviewComponent implements OnInit {
   };
 
   transformRoleToSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.name,
       value: item.id,

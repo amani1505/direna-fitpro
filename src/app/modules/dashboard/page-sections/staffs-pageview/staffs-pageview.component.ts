@@ -3,7 +3,7 @@ import {
   computed,
   inject,
   signal,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@components/table/table.component';
@@ -22,13 +22,13 @@ import { StaffService } from '@service/modules/staff.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './staffs-pageview.component.scss',
 })
-export class StaffsPageviewComponent {
+export class StaffsPageviewComponent implements OnInit {
   private _staffService = inject(StaffService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
 
   isModalOpen = signal<boolean>(false);
-  staffId: string = '';
+  staffId = '';
 
   currentPage = signal(1);
   searchTerm = signal('');
@@ -52,7 +52,7 @@ export class StaffsPageviewComponent {
     { key: 'actions', type: 'actions' },
   ];
 
-  rowColumns: Array<RowColumn> = [
+  rowColumns: RowColumn[] = [
     { key: 's/n', type: 's/n' },
     { key: 'fullname', type: 'text' },
     { key: 'email', type: 'text' },

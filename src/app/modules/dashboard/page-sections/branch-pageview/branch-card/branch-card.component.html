@@ -142,7 +142,7 @@
   [title]="'Delete Confirmation'"
   [content]="deleteContent"
   [subContent]="deleteSubContent"
-  (submit)="delete()"
+  (confirmed)="delete()"
 ></Modal>
 
 @if (isBranchModalOpen() && branch.id === branchId()) {

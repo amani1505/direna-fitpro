@@ -1,5 +1,5 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { NavbarMobileSubmenuComponent } from '../navbar-mobile-submenu/navbar-mobile-submenu.component';
@@ -20,7 +20,7 @@ import { MenuService } from '@service/menu.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './navbar-mobile-menu.component.scss',
 })
-export class NavbarMobileMenuComponent implements OnInit {
+export class NavbarMobileMenuComponent {
   constructor(public menuService: MenuService) {}
 
   public toggleMenu(subMenu: SubMenuItem) {
@@ -31,5 +31,4 @@ export class NavbarMobileMenuComponent implements OnInit {
     this.menuService.showMobileMenu = false;
   }
 
-  ngOnInit(): void {}
 }

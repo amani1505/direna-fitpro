@@ -24,7 +24,7 @@ export class ServicesService {
     total_items: 0,
   });
 
-  private _allServices = signal<Array<Services>>([]);
+  private _allServices = signal<Services[]>([]);
 
   private _loading = signal<boolean>(false);
   private _queryParams = signal<QueryParams>({
@@ -36,7 +36,7 @@ export class ServicesService {
   });
 
   services: Signal<PaginationResponse<Services>> = this._services.asReadonly();
-  allServices: Signal<Array<Services>> = this._allServices.asReadonly();
+  allServices: Signal<Services[]> = this._allServices.asReadonly();
   loading: Signal<boolean> = this._loading.asReadonly();
   queryParams: Signal<QueryParams> = this._queryParams.asReadonly();
 
@@ -72,7 +72,7 @@ export class ServicesService {
   getAllServices(): void {
     this._loading.set(true);
 
-    this._http.get<Array<Services>>(`${environment.apiUrl}service`).subscribe({
+    this._http.get<Services[]>(`${environment.apiUrl}service`).subscribe({
       next: (response) => {
         this._allServices.set(response);
         this._loading.set(false);
@@ -87,7 +87,7 @@ export class ServicesService {
     this._loading.set(true);
 
     this._http.post<Services>(`${environment.apiUrl}service`, data).subscribe({
-      next: (response) => {
+      next: () => {
         this._toast.success('Service created successfully.');
         if (type === 'findAll') {
           this.findAll();
@@ -113,7 +113,7 @@ export class ServicesService {
     this._http
       .patch<any>(`${environment.apiUrl}service/${id}`, data)
       .subscribe({
-        next: (response) => {
+        next: () => {
           this._toast.success('Service updated successfully.');
           if (type === 'findAll') {
             this.findAll();

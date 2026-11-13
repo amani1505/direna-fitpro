@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 
@@ -10,12 +10,8 @@ import { ClickOutsideDirective } from '@directive/click-outside.directive';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './profile-menu.component.scss',
 })
-export class ProfileMenuComponent implements OnInit {
+export class ProfileMenuComponent {
   public isMenuOpen = false;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   public toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

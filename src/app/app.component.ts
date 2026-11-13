@@ -3,7 +3,7 @@ import {
   Component,
   Inject,
   PLATFORM_ID,
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, OnInit,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SplashService } from '@service/splash-screen.service';
@@ -16,9 +16,9 @@ import { ThemeService } from '@service/theme.service';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
     public themeService: ThemeService,
     private _splashService: SplashService,
   ) {

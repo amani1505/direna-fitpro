@@ -10,7 +10,7 @@ import { PaginationResponse } from '@model/PaginationResponse.interface';
 import { QueryParams } from '@model/QueryParams.interface';
 import { ToastService } from '@service/toast.service';
 import { environment } from 'environments/environment';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
 
 @Injectable()
 export class StaffService {

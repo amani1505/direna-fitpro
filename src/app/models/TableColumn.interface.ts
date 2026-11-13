@@ -19,9 +19,9 @@ export interface HeaderColumn extends BaseTableColumn {
 
 export interface RowColumn extends BaseTableColumn {
   alt?: string;
-  actionType?: Array<'delete' | 'update' | 'view'>;
+  actionType?: ('delete' | 'update' | 'view')[];
   icon?: string;
-  action?: Function;
+  action?: (row: any) => void;
 }
 
 export interface TableActions {
@@ -29,6 +29,6 @@ export interface TableActions {
   label?: string;
   value?: string;
   placeholder?: string;
-  options?: Array<{ label: string; value: string }>;
+  options?: { label: string; value: string }[];
   action: (value: Event | string | null) => void;
 }

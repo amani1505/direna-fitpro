@@ -4,7 +4,6 @@ import {
   BehaviorSubject,
   catchError,
   Observable,
-  Subscription,
   tap,
   throwError,
 } from 'rxjs';
@@ -83,7 +82,7 @@ export class CartService {
     });
   }
 
-  addToCart(equipmentId: string, quantity: number = 1): Observable<Cart> {
+  addToCart(equipmentId: string, quantity = 1): Observable<Cart> {
     if (!this._authService.authenticated()) {
       return throwError(() => new Error('Login in order to manage your cart'));
     }

@@ -5,7 +5,7 @@ import {
   Input,
   Output,
   computed,
-  signal,
+  signal, OnChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
@@ -23,7 +23,7 @@ export interface MultiSelectOption {
   styleUrls: ['./multi-select.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MultiSelectComponent {
+export class MultiSelectComponent implements OnChanges {
   // Signals for reactive state management
   private optionsSignal = signal<MultiSelectOption[]>([]);
   @Input() selectedValuesSignal = signal<string[]>([]);
@@ -61,11 +61,15 @@ export class MultiSelectComponent {
   }
 
   @Input({ required: true }) placeholder = 'Select an option';
+
+  /** id of the visible heading that names this field (sets aria-labelledby). */
+
+  @Input() labelledBy?: string;
   @Input() buttonLabel!: string;
-  @Input() canAdd: boolean = false;
+  @Input() canAdd = false;
   @Output() selectionChange = new EventEmitter<string[]>();
   @Output() validationChange = new EventEmitter<boolean>(); // Emit validation status
-  @Output() search = new EventEmitter();
+  @Output() searchTermChange = new EventEmitter<string>();
   @Output() onAdd = new EventEmitter();
 
   ngOnChanges() {
@@ -86,7 +90,7 @@ export class MultiSelectComponent {
     const input = event.target as HTMLInputElement;
     const searchTerm = input.value;
     this.searchTermSignal.set(searchTerm);
-    this.search.emit(searchTerm);
+    this.searchTermChange.emit(searchTerm);
   }
 
   selectOption(option: MultiSelectOption) {

@@ -1,5 +1,5 @@
 export interface PaginationResponse<T> {
-  data: Array<T>;
+  data: T[];
   limit: number;
   current_page: number;
   total_pages: number;

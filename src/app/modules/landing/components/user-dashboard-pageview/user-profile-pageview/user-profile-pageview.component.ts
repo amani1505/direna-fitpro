@@ -34,7 +34,7 @@ export class UserProfilePageviewComponent implements OnInit, OnDestroy {
 
   activeTab: ProfileTab = 'personal';
 
-  tabs: Array<{ title: string; icon: string; value: ProfileTab }> = [
+  tabs: { title: string; icon: string; value: ProfileTab }[] = [
     {
       title: 'Personal',
       icon: './assets/icons/heroicons/outline/person.svg',

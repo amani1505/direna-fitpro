@@ -88,13 +88,13 @@
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <div class="form__group">
               <div class="relative">
-                <label class="mb-1.5 block text-sm font-semibold text-ink"
+                <label for="title" class="mb-1.5 block text-sm font-semibold text-ink"
                   >Equipment Name
                   <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="text"
-                  id="fullname"
+                  id="title"
                   [ngClass]="{
                     'is__invalid-input': equipmentForm
                       .get('title')
@@ -113,13 +113,13 @@
             </div>
             <div class="form__group">
               <div class="relative">
-                <label class="mb-1.5 block text-sm font-semibold text-ink"
+                <label for="model" class="mb-1.5 block text-sm font-semibold text-ink"
                   >Model Number
                   <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="text"
-                  id="fullname"
+                  id="model"
                   [ngClass]="{
                     'is__invalid-input': equipmentForm
                       .get('model')
@@ -139,13 +139,13 @@
 
             <div class="form__group">
               <div class="relative">
-                <label class="mb-1.5 block text-sm font-semibold text-ink"
+                <label for="serial-number" class="mb-1.5 block text-sm font-semibold text-ink"
                   >Serial Number
                   <span class="text-primary-500">*</span>
                 </label>
                 <input
                   type="text"
-                  id="fullname"
+                  id="serial-number"
                   [ngClass]="{
                     'is__invalid-input': equipmentForm
                       .get('serial_number')
@@ -164,12 +164,12 @@
             </div>
 
             <div class="form__group">
-              <label class="mb-1.5 block text-sm font-semibold text-ink"
+              <p id="equipment-categories-label" class="mb-1.5 block text-sm font-semibold text-ink"
                 >Equipment Categories<span class="text-primary-500"
                   >*</span
-                ></label
-              >
+                ></p>
               <MultiSelect
+        labelledBy="equipment-categories-label"
                 [placeholder]="'Select the Category'"
                 [options]="transformToMultiSelectOptions(categories())"
                 (selectionChange)="selectCategory($event)"
@@ -245,7 +245,7 @@
                 </label>
                 <input
                   type="number"
-                  id="quantity"
+                  id="price"
                   min="1"
                   [ngClass]="{
                     'is__invalid-input': equipmentForm
@@ -266,12 +266,12 @@
 
             <div class="form__group sm:col-span-2">
               <div class="relative">
-                <label class="mb-1.5 block text-sm font-semibold text-ink"
+                <label for="short-description" class="mb-1.5 block text-sm font-semibold text-ink"
                   >Short Description
                   <span class="text-primary-500">*</span>
                 </label>
 
-                <textarea
+                <textarea id="short-description"
                   rows="2"
                   [ngClass]="{
                     'is__invalid-input': equipmentForm
@@ -293,11 +293,11 @@
           </div>
           <div class="mt-2 form__group">
             <div class="relative">
-              <label class="mb-2 block text-sm font-semibold text-ink"
+              <p id="description-label" class="mb-2 block text-sm font-semibold text-ink"
                 >Description & Product Feature
 
                 <span class="text-primary-500">*</span>
-              </label>
+              </p>
               <!-- <textarea
                 rows="3"
                 [ngClass]="{
@@ -310,6 +310,7 @@
               ></textarea> -->
               <div>
                 <quill-editor
+                  (onEditorCreated)="$event.root.setAttribute('aria-labelledby', 'description-label')"
                   (onContentChanged)="onDescriptionChange($event)"
                   [styles]="{ height: '200px', width: '100%' }"
                   [ngClass]="{
@@ -328,10 +329,9 @@
           </div>
 
           <div class="form__group">
-            <label class="mt-2 block text-sm font-semibold text-ink"
-              >Publish</label
-            >
-            <div class="mt-2 space-x-4">
+            <p id="publish-label" class="mt-2 block text-sm font-semibold text-ink"
+              >Publish</p>
+            <div role="radiogroup" aria-labelledby="publish-label" class="mt-2 space-x-4">
               <label class="inline-flex items-center">
                 <input
                   type="radio"
@@ -366,13 +366,12 @@
       <div class="p-4 sm:p-5">
         <div class="mt-2">
           <div class="form__group">
-            <label
-              for="equipment_status"
+            <p id="equipment-status-label"
               class="mb-1.5 block text-sm font-semibold text-ink"
-              >Equipment Status<span class="text-primary-500">*</span></label
-            >
+              >Equipment Status<span class="text-primary-500">*</span></p>
 
             <NormalSelect
+        labelledBy="equipment-status-label"
               [options]="status"
               [placeholder]="'select status'"
               (selectionChange)="selectStatus($event)"
@@ -381,15 +380,14 @@
         </div>
         <div class="mt-2">
           <div class="form__group">
-            <label
-              for="used_For"
+            <p id="uses-of-the-equipmenst-label"
               class="mb-1.5 block text-sm font-semibold text-ink"
               >Uses of The Equipmenst<span class="text-primary-500"
                 >*</span
-              ></label
-            >
+              ></p>
 
             <NormalSelect
+        labelledBy="uses-of-the-equipmenst-label"
               [options]="usedFor"
               [placeholder]="'select Used for'"
               (selectionChange)="selectUsedFor($event)"

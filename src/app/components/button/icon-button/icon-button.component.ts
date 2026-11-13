@@ -20,9 +20,9 @@ export class IconButtonComponent {
     | 'info'
     | 'normal' = 'normal';
   @Input() variant: 'filled' | 'basic' = 'basic';
-  @Input({ required: true }) icon: string =
+  @Input({ required: true }) icon =
     'assets/icons/heroicons/outline/x.svg';
-  @Input() rounded: boolean = false;
+  @Input() rounded = false;
   @Output() onClick = new EventEmitter<void>();
 
   get sizeClasses() {

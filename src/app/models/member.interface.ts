@@ -19,7 +19,7 @@ export interface Member {
   weight: string;
   height: string;
   goal: string;
-  services: Array<Services>;
+  services: Services[];
   branch: Branch;
   isActive: boolean;
   // package: PackageInterface;
@@ -33,12 +33,13 @@ export interface PackageInterface {
   type?: PACKAGETYPES;
   duration: string;
   fees: string;
-  members: Array<Member>;
+  members: Member[];
   created_at: Date;
   updated_at: Date;
 }
 
-export interface WorkoutPlanInterface {}
+// Placeholder until workout plans have a defined shape.
+export type WorkoutPlanInterface = Record<string, unknown>;
 
 export interface AttendanceInterface {
   id: string;
@@ -63,11 +64,10 @@ export interface User {
   username: string;
   email: string;
   password: string;
-  role: Array<string>;
+  role: string[];
   created_at: Date;
   updated_at: Date;
 }
-
 
 export interface Media {
   id: string;

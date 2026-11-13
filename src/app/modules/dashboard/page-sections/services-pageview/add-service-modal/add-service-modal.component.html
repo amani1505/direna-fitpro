@@ -15,7 +15,7 @@
     <form [formGroup]="createServiceForm">
       <div class="mb-3 form__group">
         <div class="relative">
-          <label class="mb-2 block text-sm font-semibold text-ink"
+          <label for="fullname" class="mb-2 block text-sm font-semibold text-ink"
             >Title
             <span class="text-primary-500">*</span>
           </label>
@@ -39,12 +39,12 @@
 
       <div class="form__group">
         <div class="relative">
-          <label class="mb-2 block text-sm font-semibold text-ink"
+          <label for="description" class="mb-2 block text-sm font-semibold text-ink"
             >Description
 
             <span class="text-primary-500">*</span>
           </label>
-          <textarea
+          <textarea id="description"
             rows="3"
             [ngClass]="{
               'is__invalid-input': createServiceForm

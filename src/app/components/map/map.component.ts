@@ -18,17 +18,17 @@ import {
   styleUrl: './map.component.scss',
 })
 export class MapComponent implements AfterViewInit, OnDestroy {
-  @Input() latitude: number = 40.712776;
-  @Input() longitude: number = -74.005974;
-  @Input() zoom: number = 13;
+  @Input() latitude = 40.712776;
+  @Input() longitude = -74.005974;
+  @Input() zoom = 13;
   /** CSS height of the map, e.g. '400px' or '100%'. */
-  @Input() height: string = '400px';
+  @Input() height = '400px';
 
   private map: any;
 
   constructor(
     private el: ElementRef,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   ngAfterViewInit() {

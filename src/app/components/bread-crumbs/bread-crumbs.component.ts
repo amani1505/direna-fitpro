@@ -15,7 +15,7 @@ import {
 } from '@angular/router';
 import { Breadcrumb } from '@model/breadcrumbs.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { filter, interval, Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'BreadCrumbs',
@@ -25,11 +25,11 @@ import { filter, interval, Subscription } from 'rxjs';
   styleUrl: './bread-crumbs.component.scss',
 })
 export class BreadCrumbsComponent implements OnInit, OnDestroy {
-  @Input() isEquipment: boolean = false;
+  @Input() isEquipment = false;
   breadcrumbs: Breadcrumb[] = [];
 
-  currentUrl: string = '';
-  currentDateTime: string = '';
+  currentUrl = '';
+  currentDateTime = '';
 
   private timeUpdateTimer: any;
   private routerSubscription: Subscription | null = null;
@@ -106,7 +106,7 @@ export class BreadCrumbsComponent implements OnInit, OnDestroy {
 
   private createBreadcrumbs(
     route: ActivatedRoute,
-    url: string = '',
+    url = '',
     breadcrumbs: Breadcrumb[] = [],
   ): Breadcrumb[] {
     const children: ActivatedRoute[] = route.children;

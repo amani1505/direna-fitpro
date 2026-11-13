@@ -86,9 +86,9 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
     },
   ];
 
-  selectedCategories: Array<string> = [];
-  selectedStatus: string = '';
-  selectedUsedFor: string = '';
+  selectedCategories: string[] = [];
+  selectedStatus = '';
+  selectedUsedFor = '';
   selectedImages: File[] = new Array(this.MIN_IMAGES).fill(null); // Initialize with 4 null slots
   imageUploaders: number[] = [0, 1, 2, 3];
 
@@ -114,7 +114,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
     return this.imageUploaders.length < this.MAX_IMAGES;
   }
 
-  canRemoveUploader(index: number): boolean {
+  canRemoveUploader(_index: number): boolean {
     return this.imageUploaders.length > this.MIN_IMAGES;
   }
 
@@ -142,8 +142,8 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
   }
 
   transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.category_name,
       value: item.id,
@@ -203,7 +203,7 @@ export class CreateEquipmemntPageviewComponent implements OnInit {
     const formData = new FormData();
 
     for (const key in formValues) {
-      if (formValues.hasOwnProperty(key)) {
+      if (Object.hasOwn(formValues, key)) {
         if (key === 'isPublished') {
           formData.append(key, String(formValues[key])); // Ensure boolean is sent as string
         } else if (key === 'equipmentCategoryIds') {

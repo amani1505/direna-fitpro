@@ -28,7 +28,6 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 import { QuillModule } from 'ngx-quill';
 import Quill from 'quill';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'update-equipmemnt-pageview',
@@ -84,7 +83,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
     { label: 'Personal', value: 'personal' },
   ];
 
-  selectedCategories = signal<Array<string>>([]);
+  selectedCategories = signal<string[]>([]);
   selectedStatus = signal<string>('');
   selectedUsedFor = signal<string>('');
   selectedImages = signal<Files[]>(new Array(this.MIN_IMAGES).fill(null));
@@ -211,8 +210,8 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
   }
 
   transformToMultiSelectOptions = (
-    apiData: Array<any>,
-  ): Array<{ label: string; value: string }> => {
+    apiData: any[],
+  ): { label: string; value: string }[] => {
     return apiData.map((item) => ({
       label: item.category_name,
       value: item.id,
@@ -357,7 +356,7 @@ export class UpdateEquipmemntPageviewComponent implements OnInit, OnDestroy {
       next: () => {
         this.cancel();
       },
-      error: (error) => {
+      error: () => {
         this._toast.error('An error occurred while updating equipment');
       },
     });
