@@ -1,5 +1,12 @@
 import { SpotlightDirective } from '@directive/spotlight.directive';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent } from '@components/modal/modal.component';
 import { GymClass } from '@model/class.interface';
@@ -8,16 +15,17 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-    selector: 'ClassPageview',
-    imports: [SpotlightDirective, AngularSvgIconModule, ModalComponent],
-    templateUrl: './class-pageview.component.html',
-    styleUrl: './class-pageview.component.scss'
+  selector: 'ClassPageview',
+  imports: [SpotlightDirective, AngularSvgIconModule, ModalComponent],
+  templateUrl: './class-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './class-pageview.component.scss',
 })
 export class ClassPageviewComponent implements OnInit {
   private _classesService = inject(ClassesService);
   private _route = inject(ActivatedRoute);
   private _router = inject(Router);
-fileUrl = environment.staicUrl;
+  fileUrl = environment.staicUrl;
   deleteContent = 'Are you sure you want to delete this Class?';
   deleteSubContent =
     'Deleting this member will permanently remove this class from your gym classes list';

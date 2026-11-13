@@ -6,6 +6,7 @@ import {
   Input,
   input,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -21,6 +22,7 @@ import { RolesService } from '@service/modules/roles.service';
   selector: 'add-role-modal',
   imports: [ReusableModalComponent, FormsModule, ReactiveFormsModule, NgClass],
   templateUrl: './add-role.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-role.component.scss',
 })
 export class AddRoleComponent {

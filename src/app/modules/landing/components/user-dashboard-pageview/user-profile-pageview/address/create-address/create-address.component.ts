@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, EventEmitter, inject, input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -13,10 +20,17 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'create-address',
-    imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
-    templateUrl: './create-address.component.html',
-    styleUrl: './create-address.component.scss'
+  selector: 'create-address',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    ReusableModalComponent,
+    NgClass,
+    AngularSvgIconModule,
+  ],
+  templateUrl: './create-address.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './create-address.component.scss',
 })
 export class CreateAddressComponent {
   isModalOpen = input.required<boolean>();
@@ -72,7 +86,9 @@ export class CreateAddressComponent {
         this.cancel.emit(); // Only close on success
       },
       error: (error) => {
-        this._toastService.error(error?.error?.message || "Couldn't save the address. Try again.");
+        this._toastService.error(
+          error?.error?.message || "Couldn't save the address. Try again.",
+        );
       },
     });
   }

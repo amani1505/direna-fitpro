@@ -7,13 +7,15 @@ import {
   Input,
   OnDestroy,
   PLATFORM_ID,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 @Component({
-    selector: 'Map',
-    imports: [],
-    templateUrl: './map.component.html',
-    styleUrl: './map.component.scss'
+  selector: 'Map',
+  imports: [],
+  templateUrl: './map.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './map.component.scss',
 })
 export class MapComponent implements AfterViewInit, OnDestroy {
   @Input() latitude: number = 40.712776;

@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormsModule,
@@ -19,6 +19,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     NgClass,
   ],
   templateUrl: './normal-user.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './normal-user.component.scss',
 })
 export class NormalUserComponent {

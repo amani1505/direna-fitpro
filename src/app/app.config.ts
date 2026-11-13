@@ -6,7 +6,10 @@ import {
 } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration } from '@angular/platform-browser';
+import {
+  provideClientHydration,
+  withNoIncrementalHydration,
+} from '@angular/platform-browser';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import {
   provideHttpClient,
@@ -32,7 +35,7 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       }),
     ),
-    provideClientHydration(),
+    provideClientHydration(withNoIncrementalHydration()),
     importProvidersFrom(AngularSvgIconModule.forRoot()),
     provideHttpClient(
       withFetch(),

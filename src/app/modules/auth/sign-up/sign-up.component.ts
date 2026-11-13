@@ -1,5 +1,10 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,6 +28,7 @@ import { NormalUserComponent } from './normal-user/normal-user.component';
     NgClass,
   ],
   templateUrl: './sign-up.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {

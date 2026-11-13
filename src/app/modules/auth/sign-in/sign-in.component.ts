@@ -1,5 +1,5 @@
 import { Location, NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -23,6 +23,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     RouterModule,
   ],
   templateUrl: './sign-in.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent {

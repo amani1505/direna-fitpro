@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Wishlist } from '@model/wishlist.interface';
@@ -9,10 +16,11 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { WishlistCardComponent } from './wishlist-card/wishlist-card.component';
 
 @Component({
-    selector: 'app-my-wishlist',
-    imports: [WishlistCardComponent, RouterLink, AngularSvgIconModule],
-    templateUrl: './my-wishlist.component.html',
-    styleUrl: './my-wishlist.component.scss'
+  selector: 'app-my-wishlist',
+  imports: [WishlistCardComponent, RouterLink, AngularSvgIconModule],
+  templateUrl: './my-wishlist.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './my-wishlist.component.scss',
 })
 export class MyWishlistComponent implements OnInit {
   private _wishlistService = inject(WishlistService);

@@ -1,5 +1,11 @@
 import { NgClass, isPlatformBrowser } from '@angular/common';
-import { Component, PLATFORM_ID, inject, signal } from '@angular/core';
+import {
+  Component,
+  PLATFORM_ID,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { MapComponent } from '@components/map/map.component';
@@ -8,10 +14,18 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CONTACT_INFO } from '../../../../constant/contact';
 
 @Component({
-    selector: 'app-contact-us',
-    imports: [MapComponent, ReactiveFormsModule, NgClass, RouterLink, AngularSvgIconModule, RevealDirective],
-    templateUrl: './contact-us.component.html',
-    styleUrl: './contact-us.component.scss'
+  selector: 'app-contact-us',
+  imports: [
+    MapComponent,
+    ReactiveFormsModule,
+    NgClass,
+    RouterLink,
+    AngularSvgIconModule,
+    RevealDirective,
+  ],
+  templateUrl: './contact-us.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './contact-us.component.scss',
 })
 export class ContactUsComponent {
   private readonly fb = inject(FormBuilder);
@@ -25,7 +39,14 @@ export class ContactUsComponent {
     topic: ['Membership'],
     name: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
-    message: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(this.maxMessage)]],
+    message: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(this.maxMessage),
+      ],
+    ],
   });
 
   /** True once the email app has been opened with the message. */
@@ -54,8 +75,7 @@ export class ContactUsComponent {
     const subject = `${topic} enquiry from ${name}`;
     const body = `${message}\n\n${name}\n${email}`;
     if (this.isBrowser) {
-      window.location.href =
-        `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
     this.sent.set(true);
   }

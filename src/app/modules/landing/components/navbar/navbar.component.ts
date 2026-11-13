@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, inject, DOCUMENT } from '@angular/core';
+import {
+  Component,
+  Input,
+  inject,
+  DOCUMENT,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ThemeToggleComponent } from '@components/theme-toggle/theme-toggle.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -11,10 +17,16 @@ interface NavLink {
 }
 
 @Component({
-    selector: 'app-navbar',
-    imports: [CommonModule, RouterModule, AngularSvgIconModule, ThemeToggleComponent],
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss'
+  selector: 'app-navbar',
+  imports: [
+    CommonModule,
+    RouterModule,
+    AngularSvgIconModule,
+    ThemeToggleComponent,
+  ],
+  templateUrl: './navbar.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './navbar.component.scss',
 })
 export class NavbarComponent {
   @Input() isScrolled: boolean = false;
@@ -73,7 +85,9 @@ export class NavbarComponent {
 
   isActiveRoute(route: string): boolean {
     const url = this._router.url.split('#')[0].split('?')[0];
-    return route === '/' ? url === '/' : url.startsWith(route.startsWith('/') ? route : '/' + route);
+    return route === '/'
+      ? url === '/'
+      : url.startsWith(route.startsWith('/') ? route : '/' + route);
   }
 
   // Method for partial match of routes

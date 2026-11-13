@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { BranchCardComponent } from './branch-card/branch-card.component';
 import { AddBranchModalComponent } from './add-branch-modal/add-branch-modal.component';
 import { BranchesService } from '@service/modules/branches.service';
@@ -9,15 +16,16 @@ import { updateRouteAndFetch } from '@utils/update-route-fetch';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'BranchPageview',
-    imports: [
-        BranchCardComponent,
-        AddBranchModalComponent,
-        PaginationComponent,
-        AngularSvgIconModule,
-    ],
-    templateUrl: './branch-pageview.component.html',
-    styleUrl: './branch-pageview.component.scss'
+  selector: 'BranchPageview',
+  imports: [
+    BranchCardComponent,
+    AddBranchModalComponent,
+    PaginationComponent,
+    AngularSvgIconModule,
+  ],
+  templateUrl: './branch-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './branch-pageview.component.scss',
 })
 export class BranchPageviewComponent implements OnInit {
   private _branchService = inject(BranchesService);
@@ -72,7 +80,7 @@ export class BranchPageviewComponent implements OnInit {
         page: 1,
       },
       this._route,
-      this._router
+      this._router,
     );
   }
   onPageChange(page: number) {

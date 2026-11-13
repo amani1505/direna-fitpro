@@ -67,13 +67,17 @@
       <div>
         <dt class="text-subtle">Created</dt>
         <dd class="font-semibold">
-          {{ service?.created_at | date: "mediumDate" }}
+          {{
+            $safeNavigationMigration(service?.created_at) | date: "mediumDate"
+          }}
         </dd>
       </div>
       <div>
         <dt class="text-subtle">Updated</dt>
         <dd class="font-semibold">
-          {{ service?.updated_at | date: "mediumDate" }}
+          {{
+            $safeNavigationMigration(service?.updated_at) | date: "mediumDate"
+          }}
         </dd>
       </div>
     </dl>

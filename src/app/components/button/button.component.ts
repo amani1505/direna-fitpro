@@ -1,12 +1,19 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatRippleModule } from '@angular/material/core';
 
 @Component({
-    selector: 'Button',
-    imports: [CommonModule, MatRippleModule],
-    templateUrl: './button.component.html',
-    styleUrl: './button.component.scss'
+  selector: 'Button',
+  imports: [CommonModule, MatRippleModule],
+  templateUrl: './button.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './button.component.scss',
 })
 export class ButtonComponent {
   @Input() size: 'medium' | 'small' | 'large' = 'medium';
@@ -34,7 +41,9 @@ export class ButtonComponent {
 
   get colorClasses() {
     const outlined = this.variant === 'outlined';
-    const base = outlined ? 'border-2 bg-transparent' : 'border-2 border-transparent text-white';
+    const base = outlined
+      ? 'border-2 bg-transparent'
+      : 'border-2 border-transparent text-white';
 
     switch (this.color) {
       case 'primary':

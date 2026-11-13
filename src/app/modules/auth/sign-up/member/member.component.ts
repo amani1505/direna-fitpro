@@ -1,5 +1,11 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -29,6 +35,7 @@ import { QuillModule } from 'ngx-quill';
     QuillModule,
   ],
   templateUrl: './member.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './member.component.scss',
 })
 export class MemberComponent implements OnInit {

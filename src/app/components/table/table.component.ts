@@ -7,6 +7,7 @@ import {
   signal,
   inject,
   input,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ import { ModalComponent } from '@components/modal/modal.component';
     ModalComponent,
   ],
   templateUrl: './table.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './table.component.scss',
 })
 export class TableComponent {

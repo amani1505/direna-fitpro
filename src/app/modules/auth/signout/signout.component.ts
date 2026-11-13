@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '@service/auth.service';
 import { ToastService } from '@service/toast.service';
 
 @Component({
-    selector: 'app-signout',
-    imports: [RouterModule],
-    templateUrl: './signout.component.html',
-    styleUrl: './signout.component.scss'
+  selector: 'app-signout',
+  imports: [RouterModule],
+  templateUrl: './signout.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './signout.component.scss',
 })
 export class SignoutComponent {
   private readonly _router = inject(Router);

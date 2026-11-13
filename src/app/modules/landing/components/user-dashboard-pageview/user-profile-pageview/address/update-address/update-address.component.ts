@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -23,10 +24,17 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'update-address',
-    imports: [FormsModule, ReactiveFormsModule, ReusableModalComponent, NgClass, AngularSvgIconModule],
-    templateUrl: './update-address.component.html',
-    styleUrl: './update-address.component.scss'
+  selector: 'update-address',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    ReusableModalComponent,
+    NgClass,
+    AngularSvgIconModule,
+  ],
+  templateUrl: './update-address.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './update-address.component.scss',
 })
 export class UpdateAddressComponent implements OnInit {
   isModalOpen = input.required<boolean>();
@@ -89,7 +97,9 @@ export class UpdateAddressComponent implements OnInit {
           this.cancel.emit(); // Only close on success
         },
         error: (error) => {
-          this._toastService.error(error?.error?.message || "Couldn't save the address. Try again.");
+          this._toastService.error(
+            error?.error?.message || "Couldn't save the address. Try again.",
+          );
         },
       });
   }

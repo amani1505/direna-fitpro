@@ -8,6 +8,7 @@ import {
   PLATFORM_ID,
   ViewChild,
   inject,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -29,10 +30,11 @@ interface HeroTile {
 }
 
 @Component({
-    selector: 'hero',
-    imports: [RouterModule, NgClass, AngularSvgIconModule],
-    templateUrl: './hero.component.html',
-    styleUrl: './hero.component.scss'
+  selector: 'hero',
+  imports: [RouterModule, NgClass, AngularSvgIconModule],
+  templateUrl: './hero.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './hero.component.scss',
 })
 export class HeroComponent implements AfterViewInit, OnDestroy {
   @ViewChild('heroEl') heroEl?: ElementRef<HTMLElement>;
@@ -100,8 +102,14 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     cancelAnimationFrame(this.frame);
     this.frame = requestAnimationFrame(() => {
       const r = el.getBoundingClientRect();
-      el.style.setProperty('--px', ((event.clientX - r.left) / r.width - 0.5).toFixed(3));
-      el.style.setProperty('--py', ((event.clientY - r.top) / r.height - 0.5).toFixed(3));
+      el.style.setProperty(
+        '--px',
+        ((event.clientX - r.left) / r.width - 0.5).toFixed(3),
+      );
+      el.style.setProperty(
+        '--py',
+        ((event.clientY - r.top) / r.height - 0.5).toFixed(3),
+      );
     });
   };
 

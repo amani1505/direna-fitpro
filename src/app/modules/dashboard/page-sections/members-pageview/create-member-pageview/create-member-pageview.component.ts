@@ -1,5 +1,12 @@
 import { CommonModule, Location, NgClass } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -34,6 +41,7 @@ import { ToastService } from '@service/toast.service';
   ],
   providers: [provideNgxMask()],
   templateUrl: './create-member-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './create-member-pageview.component.scss',
 })
 export class CreateMemberPageviewComponent implements OnInit {

@@ -1,14 +1,22 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Profile } from '@model/user';
 import { UserService } from '@service/modules/user.service';
 
 @Component({
-    selector: 'personal-information',
-    imports: [ReactiveFormsModule, NgClass],
-    templateUrl: './personal-information.component.html',
-    styleUrl: './personal-information.component.scss'
+  selector: 'personal-information',
+  imports: [ReactiveFormsModule, NgClass],
+  templateUrl: './personal-information.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './personal-information.component.scss',
 })
 export class PersonalInformationComponent implements OnChanges {
   @Input() user: Profile;

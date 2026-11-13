@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 import { HeaderColumn } from '@model/TableColumn.interface';
@@ -7,6 +13,7 @@ import { HeaderColumn } from '@model/TableColumn.interface';
   selector: '[app-table-header]',
   imports: [AngularSvgIconModule],
   templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {

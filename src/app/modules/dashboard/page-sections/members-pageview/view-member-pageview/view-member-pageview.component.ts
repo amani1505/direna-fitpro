@@ -1,14 +1,21 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@service/modules/member.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'view-member-pageview',
-    imports: [CommonModule, AngularSvgIconModule, DatePipe],
-    templateUrl: './view-member-pageview.component.html',
-    styleUrl: './view-member-pageview.component.scss'
+  selector: 'view-member-pageview',
+  imports: [CommonModule, AngularSvgIconModule, DatePipe],
+  templateUrl: './view-member-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './view-member-pageview.component.scss',
 })
 export class ViewMemberPageviewComponent implements OnInit {
   private _route = inject(ActivatedRoute);

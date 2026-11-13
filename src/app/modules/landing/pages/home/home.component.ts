@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { HeroComponent } from '@modules/landing/components/home/hero/hero.component';
 import { AboutComponent } from '@modules/landing/components/home/about/about.component';
 import { BlogComponent } from '@modules/landing/components/home/blog/blog.component';
 import { ClassComponent } from '@modules/landing/components/home/class/class.component';
 
 @Component({
-    selector: 'app-home',
-    imports: [HeroComponent, AboutComponent, BlogComponent, ClassComponent],
-    templateUrl: './home.component.html',
-    styleUrl: './home.component.scss'
+  selector: 'app-home',
+  imports: [HeroComponent, AboutComponent, BlogComponent, ClassComponent],
+  templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent {}

@@ -1,6 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { SpotlightDirective } from '@directive/spotlight.directive';
-import { Component, inject, Input, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ModalComponent } from '@components/modal/modal.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { EditServiceComponent } from '../edit-service/edit-service.component';
@@ -17,6 +23,7 @@ import { ServicesService } from '@service/modules/services.service';
     EditServiceComponent,
   ],
   templateUrl: './service-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './service-card.component.scss',
 })
 export class ServiceCardComponent {

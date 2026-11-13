@@ -6,6 +6,7 @@ import {
   inject,
   OnInit,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -26,19 +27,20 @@ import { ToastService } from '@service/toast.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'edit-staff-pageview',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgxMaskDirective,
-        AngularSvgIconModule,
-        SeachableSelectComponent,
-        AddBranchModalComponent,
-        AddRoleComponent,
-    ],
-    templateUrl: './edit-staff-pageview.component.html',
-    styleUrl: './edit-staff-pageview.component.scss'
+  selector: 'edit-staff-pageview',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    AngularSvgIconModule,
+    SeachableSelectComponent,
+    AddBranchModalComponent,
+    AddRoleComponent,
+  ],
+  templateUrl: './edit-staff-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './edit-staff-pageview.component.scss',
 })
 export class EditStaffPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);
@@ -104,7 +106,7 @@ export class EditStaffPageviewComponent implements OnInit {
     this._branchesService.getAllBranches();
     this._rolesService.getAllRolesExceptUser();
 
-    this._staffService.findOne(id, ['branch', ]);
+    this._staffService.findOne(id, ['branch']);
   }
 
   transformBranchToSelectOptions = (
@@ -124,8 +126,6 @@ export class EditStaffPageviewComponent implements OnInit {
       value: item.id,
     }));
   };
-
-
 
   selectBranch(id: any) {
     this.selectedBranch.set(id);

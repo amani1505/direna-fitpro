@@ -1,6 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { SpotlightDirective } from '@directive/spotlight.directive';
-import { Component, inject, Input, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ModalComponent } from '@components/modal/modal.component';
 import { Branch } from '@model/branch.interface';
 import { BranchesService } from '@service/modules/branches.service';
@@ -17,6 +23,7 @@ import { EditBranchComponent } from '../edit-branch/edit-branch.component';
     EditBranchComponent,
   ],
   templateUrl: './branch-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './branch-card.component.scss',
 })
 export class BranchCardComponent {

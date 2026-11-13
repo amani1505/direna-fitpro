@@ -3,7 +3,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "baseUrl": "./src",
     "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -20,13 +19,15 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "paths": {
-      "@components/*": ["app/components/*"],
-      "@modules/*": ["app/modules/*"],
-      "@utils/*": ["app/utils/*"],
-      "@model/*": ["app/models/*"],
-      "@service/*": ["app/services/*"],
-      "@directive/*": ["app/directives/*"],
-      "@core/*": ["app/core/*"]
+      "@components/*": ["./src/app/components/*"],
+      "@modules/*": ["./src/app/modules/*"],
+      "@utils/*": ["./src/app/utils/*"],
+      "@model/*": ["./src/app/models/*"],
+      "@service/*": ["./src/app/services/*"],
+      "@directive/*": ["./src/app/directives/*"],
+      "@core/*": ["./src/app/core/*"],
+      "app/*": ["./src/app/*"],
+      "environments/*": ["./src/environments/*"]
     }
   },
   "angularCompilerOptions": {

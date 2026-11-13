@@ -1,6 +1,16 @@
-import { Component, computed, inject } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterOutlet,
+} from '@angular/router';
 import { AuthService } from '@service/auth.service';
 import { CartService } from '@service/modules/cart.service';
 import { WishlistService } from '@service/modules/wishlist.service';
@@ -25,10 +35,11 @@ const HEADINGS: Record<ShopView, { title: string; text: string }> = {
 };
 
 @Component({
-    selector: 'app-equipments',
-    imports: [RouterOutlet, RouterLink, AngularSvgIconModule],
-    templateUrl: './equipments.component.html',
-    styleUrl: './equipments.component.scss'
+  selector: 'app-equipments',
+  imports: [RouterOutlet, RouterLink, AngularSvgIconModule],
+  templateUrl: './equipments.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './equipments.component.scss',
 })
 export class EquipmentsComponent {
   private readonly router = inject(Router);
@@ -56,8 +67,12 @@ export class EquipmentsComponent {
 
   readonly heading = computed(() => HEADINGS[this.view()]);
 
-  private readonly cart = toSignal(this.cartService.cart$, { initialValue: null });
-  private readonly wishlist = toSignal(this.wishlistService.wishlist$, { initialValue: null });
+  private readonly cart = toSignal(this.cartService.cart$, {
+    initialValue: null,
+  });
+  private readonly wishlist = toSignal(this.wishlistService.wishlist$, {
+    initialValue: null,
+  });
 
   readonly cartCount = computed(() => this.cart()?.items?.length ?? 0);
   readonly wishlistCount = computed(() => this.wishlist()?.length ?? 0);

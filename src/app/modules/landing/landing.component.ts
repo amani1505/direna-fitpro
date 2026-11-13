@@ -6,6 +6,7 @@ import {
   Inject,
   PLATFORM_ID,
   NgZone,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -26,6 +27,7 @@ import { ScrollService } from '@service/scroll.service';
     AngularSvgIconModule,
   ],
   templateUrl: './landing.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RevealDirective } from '@directive/reveal.directive';
 
@@ -14,10 +14,11 @@ interface AboutInterface {
 }
 
 @Component({
-    selector: 'about',
-    imports: [RouterLink, RevealDirective],
-    templateUrl: './about.component.html',
-    styleUrl: './about.component.scss'
+  selector: 'about',
+  imports: [RouterLink, RevealDirective],
+  templateUrl: './about.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './about.component.scss',
 })
 export class AboutComponent {
   about: AboutInterface = {

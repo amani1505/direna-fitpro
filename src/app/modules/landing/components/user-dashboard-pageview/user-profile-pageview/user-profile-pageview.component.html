@@ -1,8 +1,4 @@
-<div
-  class="profile-tabs"
-  role="tablist"
-  aria-label="Profile sections"
->
+<div class="profile-tabs" role="tablist" aria-label="Profile sections">
   @for (tab of tabs; track tab.value) {
     <button
       type="button"
@@ -28,13 +24,21 @@
 >
   @switch (activeTab) {
     @case ("personal") {
-      <div class="animate-fade-in-up"><personal-information [user]="user?.profile"></personal-information></div>
+      <div class="animate-fade-in-up">
+        <personal-information
+          [user]="$safeNavigationMigration(user?.profile)"
+        ></personal-information>
+      </div>
     }
     @case ("addresses") {
-      <div class="animate-fade-in-up"><personal-address></personal-address></div>
+      <div class="animate-fade-in-up">
+        <personal-address></personal-address>
+      </div>
     }
     @case ("security") {
-      <div class="animate-fade-in-up"><personal-security></personal-security></div>
+      <div class="animate-fade-in-up">
+        <personal-security></personal-security>
+      </div>
     }
   }
 </div>

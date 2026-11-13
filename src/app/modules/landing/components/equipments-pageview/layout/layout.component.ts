@@ -1,4 +1,15 @@
-import { AfterViewInit, Component, computed, DestroyRef, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QueryParams } from '@model/QueryParams.interface';
@@ -12,10 +23,11 @@ import { EquipmentsComponent } from '../components/equipments/equipments.compone
 const DEFAULT_LIMIT = 12;
 
 @Component({
-    selector: 'equipment-layout',
-    imports: [EquipmentsComponent, AngularSvgIconModule],
-    templateUrl: './layout.component.html',
-    styleUrl: './layout.component.scss'
+  selector: 'equipment-layout',
+  imports: [EquipmentsComponent, AngularSvgIconModule],
+  templateUrl: './layout.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './layout.component.scss',
 })
 export class LayoutComponent implements OnInit, AfterViewInit {
   private _equipmentsService = inject(EquipmentService);
@@ -28,9 +40,15 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   readonly pageSizes = [12, 24, 36];
 
   equipemnts = computed(() => this._equipmentsService.equipments()?.data || []);
-  categories = computed(() => this._equipmentCategoryService.allEquipmentCategories() || []);
-  totalItems = computed(() => this._equipmentsService.equipments()?.total_items || 0);
-  totalPages = computed(() => this._equipmentsService.equipments()?.total_pages || 1);
+  categories = computed(
+    () => this._equipmentCategoryService.allEquipmentCategories() || [],
+  );
+  totalItems = computed(
+    () => this._equipmentsService.equipments()?.total_items || 0,
+  );
+  totalPages = computed(
+    () => this._equipmentsService.equipments()?.total_pages || 1,
+  );
   loading = this._equipmentsService.loading;
 
   currentPage = signal(1);
@@ -49,40 +67,50 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   private categoriesLoaded = false;
 
   ngOnInit(): void {
-    this._route.queryParams.pipe(takeUntilDestroyed(this._destroyRef)).subscribe((params) => {
-      const filterBy = params['filterBy'] || 'title';
-      const search = params['search'] || '';
-      this.selectedCategory.set(filterBy === 'category' ? search : null);
-      this.searchTerm.set(filterBy === 'title' ? search : '');
-      this.syncSearchBox();
+    this._route.queryParams
+      .pipe(takeUntilDestroyed(this._destroyRef))
+      .subscribe((params) => {
+        const filterBy = params['filterBy'] || 'title';
+        const search = params['search'] || '';
+        this.selectedCategory.set(filterBy === 'category' ? search : null);
+        this.searchTerm.set(filterBy === 'title' ? search : '');
+        this.syncSearchBox();
 
-      const queryParams: QueryParams = {
-        page: +params['page'] || 1,
-        limit: +params['limit'] || DEFAULT_LIMIT,
-        sortBy: params['sortBy'] || 'created_at',
-        sortOrder: params['sortOrder'] === 'ASC' ? 'ASC' : 'DESC',
-        search,
-        filterBy,
-        relations: ['files'],
-        withPagination: true,
-      };
+        const queryParams: QueryParams = {
+          page: +params['page'] || 1,
+          limit: +params['limit'] || DEFAULT_LIMIT,
+          sortBy: params['sortBy'] || 'created_at',
+          sortOrder: params['sortOrder'] === 'ASC' ? 'ASC' : 'DESC',
+          search,
+          filterBy,
+          relations: ['files'],
+          withPagination: true,
+        };
 
-      this.currentPage.set(queryParams.page);
-      this.limit.set(queryParams.limit);
-      this.sortOrder.set(queryParams.sortOrder as 'DESC' | 'ASC');
-      this._equipmentsService.findAll(queryParams);
+        this.currentPage.set(queryParams.page);
+        this.limit.set(queryParams.limit);
+        this.sortOrder.set(queryParams.sortOrder as 'DESC' | 'ASC');
+        this._equipmentsService.findAll(queryParams);
 
-      if (!this.categoriesLoaded) {
-        this.categoriesLoaded = true;
-        this._equipmentCategoryService.getAllEquipmentCategory();
-      }
-    });
+        if (!this.categoriesLoaded) {
+          this.categoriesLoaded = true;
+          this._equipmentCategoryService.getAllEquipmentCategory();
+        }
+      });
 
     this.search$
-      .pipe(debounceTime(350), distinctUntilChanged(), takeUntilDestroyed(this._destroyRef))
+      .pipe(
+        debounceTime(350),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this._destroyRef),
+      )
       .subscribe((term) => {
         const value = term.trim();
-        this.updateRoute({ filterBy: value ? 'title' : null, search: value || null, page: 1 });
+        this.updateRoute({
+          filterBy: value ? 'title' : null,
+          search: value || null,
+          page: 1,
+        });
       });
   }
 
@@ -101,7 +129,10 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   /** Show the URL's search text in the box, unless the person is typing in it. */
   private syncSearchBox() {
     const box = this.searchBox?.nativeElement;
-    if (box && (typeof document === 'undefined' || box !== document.activeElement)) {
+    if (
+      box &&
+      (typeof document === 'undefined' || box !== document.activeElement)
+    ) {
       box.value = this.searchTerm();
     }
   }
@@ -122,7 +153,10 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   }
 
   onItemCountChange(limit: number) {
-    this.updateRoute({ limit: limit === DEFAULT_LIMIT ? null : limit, page: 1 });
+    this.updateRoute({
+      limit: limit === DEFAULT_LIMIT ? null : limit,
+      page: 1,
+    });
   }
 
   onSortChange(sort: 'DESC' | 'ASC') {

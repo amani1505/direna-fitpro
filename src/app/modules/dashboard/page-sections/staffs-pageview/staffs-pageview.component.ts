@@ -1,4 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@components/table/table.component';
 import { QueryParams } from '@model/QueryParams.interface';
@@ -10,10 +16,11 @@ import {
 import { StaffService } from '@service/modules/staff.service';
 
 @Component({
-    selector: 'staffs-pageview',
-    imports: [TableComponent],
-    templateUrl: './staffs-pageview.component.html',
-    styleUrl: './staffs-pageview.component.scss'
+  selector: 'staffs-pageview',
+  imports: [TableComponent],
+  templateUrl: './staffs-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './staffs-pageview.component.scss',
 })
 export class StaffsPageviewComponent {
   private _staffService = inject(StaffService);
@@ -144,7 +151,6 @@ export class StaffsPageviewComponent {
       queryParamsHandling: 'merge',
     });
   }
-
 
   addNewStaff() {
     this._router.navigate(['add'], { relativeTo: this._route });

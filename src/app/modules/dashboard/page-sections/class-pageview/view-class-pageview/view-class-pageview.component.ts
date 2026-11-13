@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-    selector: 'view-class-pageview',
-    imports: [],
-    templateUrl: './view-class-pageview.component.html',
-    styleUrl: './view-class-pageview.component.scss'
+  selector: 'view-class-pageview',
+  imports: [],
+  templateUrl: './view-class-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './view-class-pageview.component.scss',
 })
-export class ViewClassPageviewComponent {
-
-}
+export class ViewClassPageviewComponent {}

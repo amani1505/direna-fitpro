@@ -119,13 +119,17 @@
       <div>
         <dt class="text-subtle">Created</dt>
         <dd class="font-semibold">
-          {{ branch?.created_at | date: "mediumDate" }}
+          {{
+            $safeNavigationMigration(branch?.created_at) | date: "mediumDate"
+          }}
         </dd>
       </div>
       <div>
         <dt class="text-subtle">Updated</dt>
         <dd class="font-semibold">
-          {{ branch?.updated_at | date: "mediumDate" }}
+          {{
+            $safeNavigationMigration(branch?.updated_at) | date: "mediumDate"
+          }}
         </dd>
       </div>
     </dl>

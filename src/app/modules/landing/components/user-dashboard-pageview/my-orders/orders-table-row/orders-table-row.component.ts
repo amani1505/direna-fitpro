@@ -1,15 +1,28 @@
 import { DatePipe, DecimalPipe, NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Order } from '@model/order.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
-import { canCancel, itemCount, orderThumbs, statusTone } from '../../order-view';
+import {
+  canCancel,
+  itemCount,
+  orderThumbs,
+  statusTone,
+} from '../../order-view';
 
 @Component({
-    selector: '[orders-table-row]',
-    imports: [AngularSvgIconModule, DatePipe, DecimalPipe, NgClass],
-    templateUrl: './orders-table-row.component.html',
-    styleUrl: './orders-table-row.component.scss'
+  selector: '[orders-table-row]',
+  imports: [AngularSvgIconModule, DatePipe, DecimalPipe, NgClass],
+  templateUrl: './orders-table-row.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './orders-table-row.component.scss',
 })
 export class OrdersTableRowComponent implements OnChanges {
   @Input() order: Order;

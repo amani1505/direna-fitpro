@@ -1,5 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -14,10 +21,11 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'personal-security',
-    imports: [AngularSvgIconModule, FormsModule, ReactiveFormsModule, NgClass],
-    templateUrl: './security.component.html',
-    styleUrl: './security.component.scss'
+  selector: 'personal-security',
+  imports: [AngularSvgIconModule, FormsModule, ReactiveFormsModule, NgClass],
+  templateUrl: './security.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './security.component.scss',
 })
 export class SecurityComponent {
   private _authService = inject(AuthService);
@@ -45,7 +53,10 @@ export class SecurityComponent {
   isConfirmPasswordVisible = signal<boolean>(false);
   isCurrentPasswordVisible = signal<boolean>(false);
 
-  readonly rules: Array<{ key: 'length' | 'uppercase' | 'lowercase' | 'number' | 'specialChar'; label: string }> = [
+  readonly rules: Array<{
+    key: 'length' | 'uppercase' | 'lowercase' | 'number' | 'specialChar';
+    label: string;
+  }> = [
     { key: 'length', label: 'At least 8 characters' },
     { key: 'uppercase', label: 'An uppercase letter' },
     { key: 'lowercase', label: 'A lowercase letter' },
@@ -54,7 +65,9 @@ export class SecurityComponent {
   ];
 
   /** How many of the rules the new password meets. */
-  metCount = computed(() => Object.values(this.criteriaFulfilled()).filter(Boolean).length);
+  metCount = computed(
+    () => Object.values(this.criteriaFulfilled()).filter(Boolean).length,
+  );
 
   constructor(private fb: FormBuilder) {
     this.passwordForm = this.fb.group(
@@ -204,7 +217,11 @@ export class SecurityComponent {
 
   mismatch(): boolean {
     const confirm = this.passwordForm.get('confirmPassword');
-    return !!confirm?.value && !!confirm?.touched && this.passwordForm.hasError('passwordMismatch');
+    return (
+      !!confirm?.value &&
+      !!confirm?.touched &&
+      this.passwordForm.hasError('passwordMismatch')
+    );
   }
 
   onSubmit() {
@@ -225,7 +242,9 @@ export class SecurityComponent {
           this.updatePasswordStrength();
         },
         error: (error) => {
-          this._toastService.error(error?.error?.message || "Couldn't update the password. Try again.");
+          this._toastService.error(
+            error?.error?.message || "Couldn't update the password. Try again.",
+          );
         },
       });
   }

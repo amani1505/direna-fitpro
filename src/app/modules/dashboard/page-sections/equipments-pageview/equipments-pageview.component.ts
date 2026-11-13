@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@components/table/table.component';
 import { QueryParams } from '@model/QueryParams.interface';
@@ -10,10 +17,11 @@ import {
 import { EquipmentService } from '@service/modules/equipment.service';
 
 @Component({
-    selector: 'equipments-pageview',
-    imports: [TableComponent],
-    templateUrl: './equipments-pageview.component.html',
-    styleUrl: './equipments-pageview.component.scss'
+  selector: 'equipments-pageview',
+  imports: [TableComponent],
+  templateUrl: './equipments-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './equipments-pageview.component.scss',
 })
 export class EquipmentsPageviewComponent implements OnInit {
   private _equipmentsService = inject(EquipmentService);

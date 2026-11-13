@@ -1,5 +1,13 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { User } from '@model/user';
 import { AuthService } from '@service/auth.service';
@@ -7,10 +15,17 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
-    selector: 'user-dashboard-pageview',
-    imports: [NgClass, RouterLink, RouterLinkActive, AngularSvgIconModule, RouterOutlet],
-    templateUrl: './user-dashboard-pageview.component.html',
-    styleUrl: './user-dashboard-pageview.component.scss'
+  selector: 'user-dashboard-pageview',
+  imports: [
+    NgClass,
+    RouterLink,
+    RouterLinkActive,
+    AngularSvgIconModule,
+    RouterOutlet,
+  ],
+  templateUrl: './user-dashboard-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './user-dashboard-pageview.component.scss',
 })
 export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);
@@ -92,7 +107,10 @@ export class UserDashboardPageviewComponent implements OnInit, OnDestroy {
         const first = profile?.first_name || profile?.username || '';
         this.firstName.set(first);
         this.initials.set(
-          ((profile?.first_name?.[0] ?? first[0] ?? '') + (profile?.last_name?.[0] ?? '')).toUpperCase() || '✺',
+          (
+            (profile?.first_name?.[0] ?? first[0] ?? '') +
+            (profile?.last_name?.[0] ?? '')
+          ).toUpperCase() || '✺',
         );
       });
   }

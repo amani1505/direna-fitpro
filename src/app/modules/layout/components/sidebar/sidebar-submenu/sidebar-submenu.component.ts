@@ -1,5 +1,10 @@
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 import { SubMenuItem } from '@model/menu.model';
 import { MenuService } from '@service/menu.service';
@@ -9,6 +14,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   selector: 'app-sidebar-submenu',
   templateUrl: './sidebar-submenu.component.html',
   styleUrls: ['./sidebar-submenu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     NgClass,
     NgTemplateOutlet,

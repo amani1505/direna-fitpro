@@ -6,6 +6,7 @@ import {
   input,
   Input,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -21,6 +22,7 @@ import { ServicesService } from '@service/modules/services.service';
   selector: 'add-service-modal',
   imports: [ReusableModalComponent, FormsModule, ReactiveFormsModule, NgClass],
   templateUrl: './add-service-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-service-modal.component.scss',
 })
 export class AddServiceModalComponent {

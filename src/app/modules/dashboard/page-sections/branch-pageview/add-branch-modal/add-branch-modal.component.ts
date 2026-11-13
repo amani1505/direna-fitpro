@@ -6,6 +6,7 @@ import {
   input,
   Input,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -21,6 +22,7 @@ import { BranchesService } from '@service/modules/branches.service';
   selector: 'add-branch-modal',
   imports: [ReusableModalComponent, NgClass, FormsModule, ReactiveFormsModule],
   templateUrl: './add-branch-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './add-branch-modal.component.scss',
 })
 export class AddBranchModalComponent {

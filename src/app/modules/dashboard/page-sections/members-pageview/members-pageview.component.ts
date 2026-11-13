@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@components/table/table.component';
 import { QueryParams } from '@model/QueryParams.interface';
@@ -11,10 +18,11 @@ import { MemberService } from '@service/modules/member.service';
 import { ToastService } from '@service/toast.service';
 
 @Component({
-    selector: 'members-pageview',
-    imports: [TableComponent],
-    templateUrl: './members-pageview.component.html',
-    styleUrl: './members-pageview.component.scss'
+  selector: 'members-pageview',
+  imports: [TableComponent],
+  templateUrl: './members-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './members-pageview.component.scss',
 })
 export class MembersPageviewComponent implements OnInit {
   private _memberService = inject(MemberService);
@@ -67,7 +75,7 @@ export class MembersPageviewComponent implements OnInit {
           .subscribe({
             next: () => {
               this._toast.success('Member Status updated successfully.');
-              this._memberService.findAll()
+              this._memberService.findAll();
             },
             error: () => {
               this._toast.error('Failed to update the Status');

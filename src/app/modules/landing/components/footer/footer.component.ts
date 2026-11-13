@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CONTACT_INFO } from '../../../../constant/contact';
 
 @Component({
-    selector: 'app-footer',
-    imports: [AngularSvgIconModule, RouterModule],
-    templateUrl: './footer.component.html',
-    styleUrl: './footer.component.scss'
+  selector: 'app-footer',
+  imports: [AngularSvgIconModule, RouterModule],
+  templateUrl: './footer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
   currentYear: number = new Date().getFullYear();

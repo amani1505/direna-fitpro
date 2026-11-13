@@ -1,4 +1,9 @@
-import { Component, Input, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { NgClass } from '@angular/common';
 import { ThemeService } from '@service/theme.service';
 
@@ -10,15 +15,17 @@ let nextId = 0;
  * circular reveal that starts at the button (see ThemeService.toggle).
  */
 @Component({
-    selector: 'app-theme-toggle',
-    imports: [NgClass],
-    template: `
+  selector: 'app-theme-toggle',
+  imports: [NgClass],
+  template: `
     <button
       type="button"
       class="theme-toggle"
       [ngClass]="btnClass"
       [class.is-dark]="theme.dark()"
-      [attr.aria-label]="theme.dark() ? 'Switch to light mode' : 'Switch to dark mode'"
+      [attr.aria-label]="
+        theme.dark() ? 'Switch to light mode' : 'Switch to dark mode'
+      "
       [attr.aria-pressed]="theme.dark()"
       [attr.title]="theme.dark() ? 'Light mode' : 'Dark mode'"
       (click)="theme.toggle($event)"
@@ -36,7 +43,12 @@ let nextId = 0;
           fill="currentColor"
           [attr.mask]="'url(#' + maskId + ')'"
         />
-        <g class="tt-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <g
+          class="tt-rays"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
           <line x1="12" y1="1.5" x2="12" y2="3.5" />
           <line x1="12" y1="20.5" x2="12" y2="22.5" />
           <line x1="1.5" y1="12" x2="3.5" y2="12" />
@@ -49,8 +61,9 @@ let nextId = 0;
       </svg>
     </button>
   `,
-    styles: [
-        `
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styles: [
+    `
       :host {
         display: inline-flex;
       }
@@ -87,7 +100,8 @@ let nextId = 0;
       .tt-rays {
         transform-box: fill-box;
         transform-origin: center;
-        transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transition:
+          transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
           opacity 0.3s ease;
       }
 
@@ -112,7 +126,7 @@ let nextId = 0;
         opacity: 0;
       }
     `,
-    ]
+  ],
 })
 export class ThemeToggleComponent {
   readonly theme = inject(ThemeService);

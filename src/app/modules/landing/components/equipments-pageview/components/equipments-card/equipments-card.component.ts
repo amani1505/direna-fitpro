@@ -1,15 +1,23 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Equipment } from '@model/equipment';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-    selector: 'equipment-card',
-    imports: [AngularSvgIconModule, DecimalPipe, RouterLink],
-    templateUrl: './equipments-card.component.html',
-    styleUrl: './equipments-card.component.scss'
+  selector: 'equipment-card',
+  imports: [AngularSvgIconModule, DecimalPipe, RouterLink],
+  templateUrl: './equipments-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './equipments-card.component.scss',
 })
 export class EquipmentsCardComponent implements OnChanges {
   @Input({ required: true }) equipment!: Equipment;
@@ -24,7 +32,10 @@ export class EquipmentsCardComponent implements OnChanges {
   soldOut = false;
 
   ngOnChanges(): void {
-    this.images = (this.equipment?.files ?? []).map((f) => f.file_path).filter(Boolean).slice(0, 2);
+    this.images = (this.equipment?.files ?? [])
+      .map((f) => f.file_path)
+      .filter(Boolean)
+      .slice(0, 2);
     this.category = this.equipment?.categories?.[0]?.category_name ?? '';
     this.soldOut = this.equipment?.quantity === 0;
   }

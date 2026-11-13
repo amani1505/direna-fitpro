@@ -1,5 +1,11 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RowColumn } from '@model/TableColumn.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -9,6 +15,7 @@ import { environment } from 'environments/environment';
   selector: '[table-row]',
   imports: [FormsModule, AngularSvgIconModule, CommonModule],
   templateUrl: './row.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './row.component.scss',
 })
 export class RowComponent {

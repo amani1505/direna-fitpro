@@ -1,5 +1,12 @@
 import { CommonModule, NgClass, Location } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -26,6 +33,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     ImageUploaderComponent,
   ],
   templateUrl: './create-class-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './create-class-pageview.component.scss',
 })
 export class CreateClassPageviewComponent {

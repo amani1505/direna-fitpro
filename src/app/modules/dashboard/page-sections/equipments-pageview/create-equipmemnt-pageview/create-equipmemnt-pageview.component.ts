@@ -1,5 +1,11 @@
 import { NgClass, Location } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -16,19 +22,20 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { QuillModule } from 'ngx-quill';
 
 @Component({
-    selector: 'create-equipmemnt-pageview',
-    imports: [
-        AngularSvgIconModule,
-        NormalSelectComponent,
-        ImageUploaderComponent,
-        ReactiveFormsModule,
-        FormsModule,
-        NgClass,
-        MultiSelectComponent,
-        QuillModule,
-    ],
-    templateUrl: './create-equipmemnt-pageview.component.html',
-    styleUrl: './create-equipmemnt-pageview.component.scss'
+  selector: 'create-equipmemnt-pageview',
+  imports: [
+    AngularSvgIconModule,
+    NormalSelectComponent,
+    ImageUploaderComponent,
+    ReactiveFormsModule,
+    FormsModule,
+    NgClass,
+    MultiSelectComponent,
+    QuillModule,
+  ],
+  templateUrl: './create-equipmemnt-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './create-equipmemnt-pageview.component.scss',
 })
 export class CreateEquipmemntPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

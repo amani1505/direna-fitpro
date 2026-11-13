@@ -1,15 +1,22 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartItem } from '@model/cart.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-    selector: '[cart-item]',
-    imports: [AngularSvgIconModule, RouterLink, DecimalPipe],
-    templateUrl: './cart-item.component.html',
-    styleUrl: './cart-item.component.scss'
+  selector: '[cart-item]',
+  imports: [AngularSvgIconModule, RouterLink, DecimalPipe],
+  templateUrl: './cart-item.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './cart-item.component.scss',
 })
 export class CartItemComponent {
   @Input({ required: true }) product!: CartItem;

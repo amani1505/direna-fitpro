@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { User } from '@model/user';
 import { AuthService } from '@service/auth.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,15 +16,16 @@ import { DashboardEquipmentComponent } from './dashboard-equipment/dashboard-equ
 import { DashboardService } from '@service/modules/dashboard.service';
 
 @Component({
-    selector: 'home-page-section',
-    imports: [
-        HeaderCardsComponent,
-        DashboardBranchesComponent,
-        DashboardServicesComponent,
-        DashboardEquipmentComponent,
-    ],
-    templateUrl: './home-page-section.component.html',
-    styleUrl: './home-page-section.component.scss'
+  selector: 'home-page-section',
+  imports: [
+    HeaderCardsComponent,
+    DashboardBranchesComponent,
+    DashboardServicesComponent,
+    DashboardEquipmentComponent,
+  ],
+  templateUrl: './home-page-section.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './home-page-section.component.scss',
 })
 export class HomePageSectionComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ServiceCardComponent } from './service-card/service-card.component';
 import { AddServiceModalComponent } from './add-service-modal/add-service-modal.component';
 import { PaginationComponent } from '@components/paginations/pagination/pagination.component';
@@ -9,15 +16,16 @@ import { QueryParams } from '@model/QueryParams.interface';
 import { updateRouteAndFetch } from '@utils/update-route-fetch';
 
 @Component({
-    selector: 'ServicesPageview',
-    imports: [
-        ServiceCardComponent,
-        AddServiceModalComponent,
-        PaginationComponent,
-        AngularSvgIconModule,
-    ],
-    templateUrl: './services-pageview.component.html',
-    styleUrl: './services-pageview.component.scss'
+  selector: 'ServicesPageview',
+  imports: [
+    ServiceCardComponent,
+    AddServiceModalComponent,
+    PaginationComponent,
+    AngularSvgIconModule,
+  ],
+  templateUrl: './services-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './services-pageview.component.scss',
 })
 export class ServicesPageviewComponent implements OnInit {
   private _serviceService = inject(ServicesService);

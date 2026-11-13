@@ -1,14 +1,21 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Wishlist } from '@model/wishlist.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-    selector: 'wishlist-card',
-    imports: [AngularSvgIconModule, DecimalPipe],
-    templateUrl: './wishlist-card.component.html',
-    styleUrl: './wishlist-card.component.scss'
+  selector: 'wishlist-card',
+  imports: [AngularSvgIconModule, DecimalPipe],
+  templateUrl: './wishlist-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './wishlist-card.component.scss',
 })
 export class WishlistCardComponent {
   @Input() wishlist: Wishlist;

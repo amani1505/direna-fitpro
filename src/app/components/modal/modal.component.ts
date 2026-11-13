@@ -1,6 +1,12 @@
 import { trigger, transition, style, animate } from '@angular/animations';
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { ButtonComponent } from '@components/button/button.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
@@ -25,6 +31,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     ]),
   ],
   templateUrl: './modal.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './modal.component.scss',
 })
 export class ModalComponent {

@@ -8,6 +8,7 @@ import {
   Input,
   OnInit,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -25,6 +26,7 @@ import { BranchesService } from '@service/modules/branches.service';
   selector: 'edit-branch',
   imports: [ReusableModalComponent, NgClass, FormsModule, ReactiveFormsModule],
   templateUrl: './edit-branch.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-branch.component.scss',
 })
 export class EditBranchComponent implements OnInit {

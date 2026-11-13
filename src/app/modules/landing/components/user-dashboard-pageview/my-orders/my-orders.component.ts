@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ModalComponent } from '@components/modal/modal.component';
 import { OrderService } from '@service/modules/order.service';
@@ -8,10 +15,17 @@ import { OrdersCardComponent } from './orders-card/orders-card.component';
 import { OrdersTableRowComponent } from './orders-table-row/orders-table-row.component';
 
 @Component({
-    selector: 'app-my-orders',
-    imports: [OrdersTableRowComponent, OrdersCardComponent, ModalComponent, RouterLink, AngularSvgIconModule],
-    templateUrl: './my-orders.component.html',
-    styleUrl: './my-orders.component.scss'
+  selector: 'app-my-orders',
+  imports: [
+    OrdersTableRowComponent,
+    OrdersCardComponent,
+    ModalComponent,
+    RouterLink,
+    AngularSvgIconModule,
+  ],
+  templateUrl: './my-orders.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './my-orders.component.scss',
 })
 export class MyOrdersComponent implements OnInit {
   private _ordersService = inject(OrderService);
@@ -23,8 +37,10 @@ export class MyOrdersComponent implements OnInit {
   /** Order waiting for the person to confirm the cancellation. */
   cancelId = signal<string | null>(null);
   cancelling = signal(false);
-  readonly cancelContent = "The order will be cancelled and won't be delivered.";
-  readonly cancelNote = "This can't be undone. To get the items later, place a new order.";
+  readonly cancelContent =
+    "The order will be cancelled and won't be delivered.";
+  readonly cancelNote =
+    "This can't be undone. To get the items later, place a new order.";
 
   ngOnInit() {
     this._ordersService.getUserOrders();
@@ -45,7 +61,9 @@ export class MyOrdersComponent implements OnInit {
         this.cancelId.set(null);
       },
       error: (error) => {
-        this._toast.error(error?.error?.message || 'Couldn\'t cancel the order. Try again.');
+        this._toast.error(
+          error?.error?.message || "Couldn't cancel the order. Try again.",
+        );
         this.cancelling.set(false);
       },
     });

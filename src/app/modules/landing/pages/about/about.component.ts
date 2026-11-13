@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RevealDirective } from '@directive/reveal.directive';
 import { SpotlightDirective } from '@directive/spotlight.directive';
@@ -8,18 +8,19 @@ import { TeamMemberComponent } from '@modules/landing/components/team-member/tea
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'app-about',
-    imports: [
-        CommonModule,
-        RouterLink,
-        AngularSvgIconModule,
-        AboutSectionComponent,
-        TeamMemberComponent,
-        RevealDirective,
-        SpotlightDirective,
-    ],
-    templateUrl: './about.component.html',
-    styleUrl: './about.component.scss'
+  selector: 'app-about',
+  imports: [
+    CommonModule,
+    RouterLink,
+    AngularSvgIconModule,
+    AboutSectionComponent,
+    TeamMemberComponent,
+    RevealDirective,
+    SpotlightDirective,
+  ],
+  templateUrl: './about.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './about.component.scss',
 })
 export class AboutComponent {
   /** Services named in the company description. */
@@ -67,17 +68,20 @@ export class AboutComponent {
     {
       name: 'Jane Doe',
       role: 'Certified Fitness Trainer',
-      imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEwfHxneW0lMjB0cmFpbmVycyUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
+      imageUrl:
+        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEwfHxneW0lMjB0cmFpbmVycyUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D',
     },
     {
       name: 'John Smith',
       role: 'Nutrition Specialist',
-      imageUrl: 'https://plus.unsplash.com/premium_photo-1663036312913-620738b33f69?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGd5bSUyMHRyYWluZXJzJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
+      imageUrl:
+        'https://plus.unsplash.com/premium_photo-1663036312913-620738b33f69?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fGd5bSUyMHRyYWluZXJzJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
     },
     {
       name: 'Emily Johnson',
       role: 'Yoga Instructor',
-      imageUrl: 'https://plus.unsplash.com/premium_photo-1682435111671-dc6542c642e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGd5bSUyMHRyYWluZXJzJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
+      imageUrl:
+        'https://plus.unsplash.com/premium_photo-1682435111671-dc6542c642e7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDF8fGd5bSUyMHRyYWluZXJzJTIwcHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D',
     },
   ];
 }

@@ -1,14 +1,22 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { AddressService } from '@service/modules/address.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AddressCardComponent } from './address-card/address-card.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 
 @Component({
-    selector: 'personal-address',
-    imports: [AngularSvgIconModule, CreateAddressComponent, AddressCardComponent],
-    templateUrl: './address.component.html',
-    styleUrl: './address.component.scss'
+  selector: 'personal-address',
+  imports: [AngularSvgIconModule, CreateAddressComponent, AddressCardComponent],
+  templateUrl: './address.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './address.component.scss',
 })
 export class AddressComponent implements OnInit {
   private _addressService = inject(AddressService);

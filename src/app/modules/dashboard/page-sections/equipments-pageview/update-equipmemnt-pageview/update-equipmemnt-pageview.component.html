@@ -8,11 +8,7 @@
     <!-- Equipment Image Section -->
     <div class="form-card relative">
       <div>
-        <div
-          class="form-card-title"
-        >
-          Equipment Image
-        </div>
+        <div class="form-card-title">Equipment Image</div>
         <div class="p-4 sm:p-5">
           <div class="flex flex-wrap gap-2">
             <!-- Loop through image uploaders -->
@@ -23,7 +19,10 @@
                   [height]="'130px'"
                   [initialImage]="
                     selectedImages()[$index]
-                      ? fileUrl + selectedImages()[$index]?.file_path
+                      ? fileUrl +
+                        $safeNavigationMigration(
+                          selectedImages()[$index]?.file_path
+                        )
                       : null
                   "
                   [editMode]="true"
@@ -75,9 +74,7 @@
 
           <!-- Image Upload Instructions -->
           <div class="mt-8">
-            <div
-              class="mt-2 flex items-center gap-2 text-wrap text-ink"
-            >
+            <div class="mt-2 flex items-center gap-2 text-wrap text-ink">
               <div>
                 <svg-icon
                   src="./assets/icons/heroicons/outline/information-circle.svg"
@@ -98,11 +95,7 @@
     <!-- Equipment Details Section -->
     <div class="xl:col-span-2">
       <div class="form-card">
-        <div
-          class="form-card-title"
-        >
-          Equipment Details
-        </div>
+        <div class="form-card-title">Equipment Details</div>
         <div class="p-4 sm:p-5">
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             <!-- Equipment Name -->
@@ -380,11 +373,7 @@
 
     <!-- Equipment Status Section -->
     <div class="form-card mt-4">
-      <div
-        class="form-card-title"
-      >
-        Status
-      </div>
+      <div class="form-card-title">Status</div>
       <div class="p-4 sm:p-5">
         <div class="mt-2">
           <div class="form__group">
@@ -407,7 +396,9 @@
             <label
               for="used_For"
               class="mb-1.5 block text-sm font-semibold text-ink"
-              >Uses of The Equipment<span class="text-primary-500">*</span></label
+              >Uses of The Equipment<span class="text-primary-500"
+                >*</span
+              ></label
             >
 
             <NormalSelect
@@ -424,12 +415,7 @@
 
   <!-- Form Actions -->
   <div class="form-actions">
-    <button
-      (click)="cancel()"
-      class="form-cancel"
-    >
-      Cancel
-    </button>
+    <button (click)="cancel()" class="form-cancel">Cancel</button>
     <button
       type="submit"
       [disabled]="

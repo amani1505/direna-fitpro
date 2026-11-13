@@ -1,5 +1,14 @@
 import { DecimalPipe, isPlatformBrowser, NgClass } from '@angular/common';
-import { Component, computed, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RevealDirective } from '@directive/reveal.directive';
@@ -14,10 +23,18 @@ import { environment } from 'environments/environment';
 import { QuillModule } from 'ngx-quill';
 
 @Component({
-    selector: 'view-single-pageview',
-    imports: [NgClass, DecimalPipe, AngularSvgIconModule, QuillModule, RouterLink, RevealDirective],
-    templateUrl: './view-single-pageview.component.html',
-    styleUrl: './view-single-pageview.component.scss'
+  selector: 'view-single-pageview',
+  imports: [
+    NgClass,
+    DecimalPipe,
+    AngularSvgIconModule,
+    QuillModule,
+    RouterLink,
+    RevealDirective,
+  ],
+  templateUrl: './view-single-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './view-single-pageview.component.scss',
 })
 export class ViewSinglePageviewComponent implements OnInit {
   private _equipmentsService = inject(EquipmentService);
@@ -35,15 +52,30 @@ export class ViewSinglePageviewComponent implements OnInit {
   private requestedId = signal<string | null>(null);
 
   /** The service keeps the last viewed item, so wait until it matches this page. */
-  ready = computed(() => !this.loading() && String(this.equipment()?.id) === this.requestedId());
+  ready = computed(
+    () =>
+      !this.loading() && String(this.equipment()?.id) === this.requestedId(),
+  );
   /** The request finished but did not return this item. */
-  notFound = computed(() => this.requestedId() !== null && !this.loading() && !this.ready());
+  notFound = computed(
+    () => this.requestedId() !== null && !this.loading() && !this.ready(),
+  );
 
   private cart = toSignal(this._cartService.cart$, { initialValue: null });
-  private wishlist = toSignal(this._wishlistService.wishlist$, { initialValue: null });
+  private wishlist = toSignal(this._wishlistService.wishlist$, {
+    initialValue: null,
+  });
 
-  inCart = computed(() => (this.cart()?.items ?? []).some((item) => item.equipment?.id === this.equipment()?.id));
-  inWishlist = computed(() => (this.wishlist() ?? []).some((item) => item.equipment?.id === this.equipment()?.id));
+  inCart = computed(() =>
+    (this.cart()?.items ?? []).some(
+      (item) => item.equipment?.id === this.equipment()?.id,
+    ),
+  );
+  inWishlist = computed(() =>
+    (this.wishlist() ?? []).some(
+      (item) => item.equipment?.id === this.equipment()?.id,
+    ),
+  );
 
   selectedImage = signal<Files | null>(null);
   adding = signal(false);
@@ -72,7 +104,10 @@ export class ViewSinglePageviewComponent implements OnInit {
     const newIndex = this.equipment().files.indexOf(image);
     if (newIndex === this.currentIndex) return;
 
-    this.animationClass = newIndex > this.currentIndex ? 'animate-slide-left' : 'animate-slide-right';
+    this.animationClass =
+      newIndex > this.currentIndex
+        ? 'animate-slide-left'
+        : 'animate-slide-right';
     this.currentIndex = newIndex;
     this.selectedImage.set(image);
     setTimeout(() => (this.animationClass = ''), 500);
@@ -81,8 +116,12 @@ export class ViewSinglePageviewComponent implements OnInit {
   /** Cart and wishlist need an account; send guests to sign in first. */
   private requireSignIn(): boolean {
     if (this._authService.authenticated()) return false;
-    this._toastService.error('Sign in to save items and add them to your cart.');
-    this._router.navigate(['/auth'], { queryParams: { redirectURL: this._router.url } });
+    this._toastService.error(
+      'Sign in to save items and add them to your cart.',
+    );
+    this._router.navigate(['/auth'], {
+      queryParams: { redirectURL: this._router.url },
+    });
     return true;
   }
 
@@ -109,7 +148,8 @@ export class ViewSinglePageviewComponent implements OnInit {
     }
     this._wishlistService.addToWishlist(this.equipment().id).subscribe({
       next: () => this._toastService.success('Saved to your wishlist.'),
-      error: (error) => this._toastService.error(error?.error?.message || error.message),
+      error: (error) =>
+        this._toastService.error(error?.error?.message || error.message),
     });
   }
 

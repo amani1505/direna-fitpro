@@ -1,5 +1,12 @@
 import { DatePipe, isPlatformBrowser } from '@angular/common';
-import { Component, computed, inject, PLATFORM_ID, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  PLATFORM_ID,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { RevealDirective } from '@directive/reveal.directive';
@@ -9,22 +16,34 @@ import { BLOG_POSTS, findBlogPost } from '../../../../../constant/blog-posts';
 import { BlogCardComponent } from '../all-blogs-pageview/blog-card/blog-card.component';
 
 @Component({
-    selector: 'single-blog-pageview',
-    imports: [RouterLink, DatePipe, RevealDirective, AngularSvgIconModule, BlogCardComponent],
-    templateUrl: './single-blog-pageview.component.html',
-    styleUrl: './single-blog-pageview.component.scss'
+  selector: 'single-blog-pageview',
+  imports: [
+    RouterLink,
+    DatePipe,
+    RevealDirective,
+    AngularSvgIconModule,
+    BlogCardComponent,
+  ],
+  templateUrl: './single-blog-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './single-blog-pageview.component.scss',
 })
 export class SingleBlogPageviewComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   /** Follows the :id param so moving between posts updates the page. */
-  private readonly id = toSignal(this.route.paramMap.pipe(map((params) => params.get('id'))), {
-    initialValue: this.route.snapshot.paramMap.get('id'),
-  });
+  private readonly id = toSignal(
+    this.route.paramMap.pipe(map((params) => params.get('id'))),
+    {
+      initialValue: this.route.snapshot.paramMap.get('id'),
+    },
+  );
 
   readonly post = computed(() => findBlogPost(this.id()));
-  readonly more = computed(() => BLOG_POSTS.filter((p) => p.id !== this.id()).slice(0, 3));
+  readonly more = computed(() =>
+    BLOG_POSTS.filter((p) => p.id !== this.id()).slice(0, 3),
+  );
   readonly copied = signal(false);
 
   async share(title: string): Promise<void> {

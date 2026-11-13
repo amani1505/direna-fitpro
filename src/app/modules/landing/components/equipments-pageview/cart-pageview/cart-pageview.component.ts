@@ -1,5 +1,12 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Cart, CartItem } from '@model/cart.interface';
@@ -11,10 +18,17 @@ import { CartItemComponent } from './cart-item/cart-item.component';
 import { CartLoaderComponent } from './cart-loader/cart-loader.component';
 
 @Component({
-    selector: 'cart-pageview',
-    imports: [RouterLink, DecimalPipe, AngularSvgIconModule, CartLoaderComponent, CartItemComponent],
-    templateUrl: './cart-pageview.component.html',
-    styleUrl: './cart-pageview.component.scss'
+  selector: 'cart-pageview',
+  imports: [
+    RouterLink,
+    DecimalPipe,
+    AngularSvgIconModule,
+    CartLoaderComponent,
+    CartItemComponent,
+  ],
+  templateUrl: './cart-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './cart-pageview.component.scss',
 })
 export class CartPageviewComponent implements OnInit {
   cart = signal<Cart | null>(null);
@@ -44,7 +58,10 @@ export class CartPageviewComponent implements OnInit {
 
   /** Units across all lines (2 × dumbbells + 1 mat = 3). */
   get unitCount(): number {
-    return (this.cart()?.items ?? []).reduce((sum, item) => sum + (item.quantity || 0), 0);
+    return (this.cart()?.items ?? []).reduce(
+      (sum, item) => sum + (item.quantity || 0),
+      0,
+    );
   }
 
   updateQuantity(item: CartItem, quantity: number): void {
@@ -89,11 +106,15 @@ export class CartPageviewComponent implements OnInit {
   createOrder(cartId: string) {
     this._orderService.create(cartId).subscribe({
       next: () => {
-        this._toastService.success('Order placed. You can follow it in your dashboard.');
+        this._toastService.success(
+          'Order placed. You can follow it in your dashboard.',
+        );
         this._cartService.loadCart();
       },
       error: (error) => {
-        this._toastService.error(error?.error?.message || "Couldn't place the order. Try again.");
+        this._toastService.error(
+          error?.error?.message || "Couldn't place the order. Try again.",
+        );
       },
     });
   }

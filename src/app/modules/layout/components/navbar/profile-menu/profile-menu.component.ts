@@ -1,13 +1,14 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ClickOutsideDirective } from '@directive/click-outside.directive';
 
 @Component({
-    selector: 'app-profile-menu',
-    imports: [ClickOutsideDirective, NgClass, RouterLink],
-    templateUrl: './profile-menu.component.html',
-    styleUrl: './profile-menu.component.scss'
+  selector: 'app-profile-menu',
+  imports: [ClickOutsideDirective, NgClass, RouterLink],
+  templateUrl: './profile-menu.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './profile-menu.component.scss',
 })
 export class ProfileMenuComponent implements OnInit {
   public isMenuOpen = false;

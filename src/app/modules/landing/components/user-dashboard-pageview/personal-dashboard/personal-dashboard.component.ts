@@ -1,5 +1,13 @@
 import { DatePipe, DecimalPipe, NgClass } from '@angular/common';
-import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Order } from '@model/order.interface';
 import { AuthService } from '@service/auth.service';
@@ -8,10 +16,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { itemCount, statusTone } from '../order-view';
 
 @Component({
-    selector: 'personal-dashboard',
-    imports: [NgClass, DatePipe, DecimalPipe, RouterLink, AngularSvgIconModule],
-    templateUrl: './personal-dashboard.component.html',
-    styleUrl: './personal-dashboard.component.scss'
+  selector: 'personal-dashboard',
+  imports: [NgClass, DatePipe, DecimalPipe, RouterLink, AngularSvgIconModule],
+  templateUrl: './personal-dashboard.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './personal-dashboard.component.scss',
 })
 export class PersonalDashboardComponent implements OnInit, OnDestroy {
   private _authService = inject(AuthService);

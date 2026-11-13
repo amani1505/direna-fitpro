@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -11,10 +18,11 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { filter, interval, Subscription } from 'rxjs';
 
 @Component({
-    selector: 'BreadCrumbs',
-    imports: [CommonModule, RouterModule, AngularSvgIconModule],
-    templateUrl: './bread-crumbs.component.html',
-    styleUrl: './bread-crumbs.component.scss'
+  selector: 'BreadCrumbs',
+  imports: [CommonModule, RouterModule, AngularSvgIconModule],
+  templateUrl: './bread-crumbs.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './bread-crumbs.component.scss',
 })
 export class BreadCrumbsComponent implements OnInit, OnDestroy {
   @Input() isEquipment: boolean = false;

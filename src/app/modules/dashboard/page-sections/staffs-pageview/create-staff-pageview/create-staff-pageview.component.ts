@@ -1,5 +1,12 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -18,19 +25,20 @@ import { RolesService } from '@service/modules/roles.service';
 import { AddRoleComponent } from '../../roles-pageview/add-role/add-role.component';
 
 @Component({
-    selector: 'create-staff-pageview',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgxMaskDirective,
-        AngularSvgIconModule,
-        SeachableSelectComponent,
-        AddBranchModalComponent,
-        AddRoleComponent,
-    ],
-    templateUrl: './create-staff-pageview.component.html',
-    styleUrl: './create-staff-pageview.component.scss'
+  selector: 'create-staff-pageview',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxMaskDirective,
+    AngularSvgIconModule,
+    SeachableSelectComponent,
+    AddBranchModalComponent,
+    AddRoleComponent,
+  ],
+  templateUrl: './create-staff-pageview.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './create-staff-pageview.component.scss',
 })
 export class CreateStaffPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

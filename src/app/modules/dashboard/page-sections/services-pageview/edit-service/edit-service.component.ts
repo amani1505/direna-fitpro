@@ -7,6 +7,7 @@ import {
   Input,
   OnInit,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -24,6 +25,7 @@ import { ServicesService } from '@service/modules/services.service';
   selector: 'edit-service',
   imports: [ReusableModalComponent, FormsModule, ReactiveFormsModule, NgClass],
   templateUrl: './edit-service.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './edit-service.component.scss',
 })
 export class EditServiceComponent implements OnInit {

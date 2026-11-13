@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
@@ -12,10 +18,11 @@ export interface PaginationConfig {
 }
 
 @Component({
-    selector: 'TableFooter',
-    imports: [AngularSvgIconModule, CommonModule, FormsModule],
-    templateUrl: './footer.component.html',
-    styleUrl: './footer.component.scss'
+  selector: 'TableFooter',
+  imports: [AngularSvgIconModule, CommonModule, FormsModule],
+  templateUrl: './footer.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
   @Input() itemsPerPage: number = 10;

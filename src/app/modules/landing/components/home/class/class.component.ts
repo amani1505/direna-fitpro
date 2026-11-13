@@ -1,4 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RevealDirective } from '@directive/reveal.directive';
 import { SpotlightDirective } from '@directive/spotlight.directive';
@@ -16,10 +21,11 @@ interface ClassInterface {
 const RING = 2 * Math.PI * 18;
 
 @Component({
-    selector: 'class',
-    imports: [RevealDirective, SpotlightDirective, RouterLink],
-    templateUrl: './class.component.html',
-    styleUrl: './class.component.scss'
+  selector: 'class',
+  imports: [RevealDirective, SpotlightDirective, RouterLink],
+  templateUrl: './class.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './class.component.scss',
 })
 export class ClassComponent {
   @ViewChild('track') track?: ElementRef<HTMLUListElement>;
@@ -76,6 +82,9 @@ export class ClassComponent {
     const el = this.track?.nativeElement;
     const card = el?.querySelector('li');
     if (!el || !card) return;
-    el.scrollBy({ left: direction * (card.getBoundingClientRect().width + 16), behavior: 'smooth' });
+    el.scrollBy({
+      left: direction * (card.getBoundingClientRect().width + 16),
+      behavior: 'smooth',
+    });
   }
 }

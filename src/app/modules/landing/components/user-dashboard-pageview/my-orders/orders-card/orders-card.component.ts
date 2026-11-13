@@ -1,14 +1,27 @@
 import { DatePipe, DecimalPipe, NgClass } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Order } from '@model/order.interface';
 import { environment } from 'environments/environment';
-import { canCancel, itemCount, orderThumbs, statusTone } from '../../order-view';
+import {
+  canCancel,
+  itemCount,
+  orderThumbs,
+  statusTone,
+} from '../../order-view';
 
 @Component({
-    selector: 'orders-card',
-    imports: [NgClass, DatePipe, DecimalPipe],
-    templateUrl: './orders-card.component.html',
-    styleUrl: './orders-card.component.scss'
+  selector: 'orders-card',
+  imports: [NgClass, DatePipe, DecimalPipe],
+  templateUrl: './orders-card.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
+  styleUrl: './orders-card.component.scss',
 })
 export class OrdersCardComponent implements OnChanges {
   @Input() order: Order;
