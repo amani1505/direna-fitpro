@@ -1,80 +1,83 @@
 <!-- modal.component.html -->
-<div
-  *ngIf="isOpen"
-  class="fixed inset-0 z-[1100] flex justify-center overflow-y-auto px-4 py-6 sm:py-10"
->
-  <!-- Modal Overlay -->
+@if (isOpen) {
   <div
-    (click)="closeModal()"
-    class="fixed inset-0 bg-[rgb(12_10_17/0.55)] backdrop-blur-sm"
-  ></div>
-
-  <!-- Modal -->
-  <div
-    @modalAnimation
-    class="relative z-10 my-auto w-full max-w-lg rounded-3xl border border-line bg-surface shadow-2xl"
+    class="fixed inset-0 z-[1100] flex justify-center overflow-y-auto px-4 py-6 sm:py-10"
   >
-    <div class="flex items-center gap-2 border-b px-5 py-4">
-      <div>
-        <svg-icon
-          src="assets/icons/heroicons/solid/exclamation-triangle.svg"
-          [svgClass]="'h-7 w-7 text-yellow-500 '"
-        ></svg-icon>
+    <!-- Modal Overlay -->
+    <div
+      (click)="closeModal()"
+      class="fixed inset-0 bg-[rgb(12_10_17/0.55)] backdrop-blur-sm"
+    ></div>
+    <!-- Modal -->
+    <div
+      @modalAnimation
+      class="relative z-10 my-auto w-full max-w-lg rounded-3xl border border-line bg-surface shadow-2xl"
+    >
+      <div class="flex items-center gap-2 border-b px-5 py-4">
+        <div>
+          <svg-icon
+            src="assets/icons/heroicons/solid/exclamation-triangle.svg"
+            [svgClass]="'h-7 w-7 text-yellow-500 '"
+          ></svg-icon>
+        </div>
+        <div>
+          <h2 class="font-display text-xl font-bold text-ink">
+            {{ title }}
+          </h2>
+        </div>
       </div>
-      <div>
-        <h2
-          class="font-display text-xl font-bold text-ink"
-        >
-          {{ title }}
-        </h2>
+      <div class="p-4 sm:p-6">
+        <p class="text-gray-700 dark:text-night-50 font-rubik font-[500]">
+          {{ content }}
+        </p>
+        <p class="my-3 text-md font-raleway dark:text-night-50">
+          <span class="text-red-600 font-[500] font-rubik">Note:: </span
+          >{{ subContent }}
+        </p>
       </div>
-    </div>
-    <div class="p-4 sm:p-6">
-      <p class="text-gray-700 dark:text-night-50 font-rubik font-[500]">
-        {{ content }}
-      </p>
-      <p class="my-3 text-md font-raleway dark:text-night-50">
-        <span class="text-red-600 font-[500] font-rubik">Note:: </span
-        >{{ subContent }}
-      </p>
-    </div>
-    <div class="flex flex-col-reverse gap-3 rounded-b-3xl border-t bg-surface-2/50 px-5 py-3 sm:flex-row sm:items-center sm:justify-end">
-      <Button
-        size="medium"
-        color="danger"
-        (onClick)="closeModal()"
-        [rounded]="true"
-        >cancel</Button
+      <div
+        class="flex flex-col-reverse gap-3 rounded-b-3xl border-t bg-surface-2/50 px-5 py-3 sm:flex-row sm:items-center sm:justify-end"
       >
-
-      <Button
-        size="medium"
-        color="secondary"
-        (onClick)="save()"
-        [rounded]="true"
-        ><svg
-          *ngIf="loading"
-          class="w-5 h-5 mr-3 -ml-1 text-center animate-spin text-primary-500"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+        <Button
+          size="medium"
+          color="danger"
+          (onClick)="closeModal()"
+          [rounded]="true"
+          >cancel</Button
         >
-          <circle
-            class="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            stroke-width="4"
-          ></circle>
-          <path
-            class="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
-        </svg>
-        <span *ngIf="!loading"> submit</span></Button
-      >
+        <Button
+          size="medium"
+          color="secondary"
+          (onClick)="save()"
+          [rounded]="true"
+        >
+          @if (loading) {
+            <svg
+              class="w-5 h-5 mr-3 -ml-1 text-center animate-spin text-primary-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+          }
+          @if (!loading) {
+            <span> submit</span>
+          }
+        </Button>
+      </div>
     </div>
   </div>
-</div>
+}

@@ -20,7 +20,10 @@
 
   <!-- Pagination controls -->
   <div class="flex flex-wrap items-center justify-center gap-3">
-    <span class="font-semibold text-ink">{{ startItem }}–{{ endItem }} <span class="font-normal text-muted">of {{ totalItems }}</span></span>
+    <span class="font-semibold text-ink"
+      >{{ startItem }}–{{ endItem }}
+      <span class="font-normal text-muted">of {{ totalItems }}</span></span
+    >
     <div class="inline-flex items-center gap-1">
       <!-- Previous Button -->
       <button
@@ -37,16 +40,21 @@
       </button>
 
       <!-- Page Numbers -->
-      <button
-        *ngFor="let page of visiblePages"
-        type="button"
-        class="grid h-8 min-w-8 flex-shrink-0 place-items-center rounded-full px-2 font-display text-sm font-bold transition duration-200 ease-spring active:scale-90"
-        [ngClass]="page === currentPage ? 'scale-105 bg-primary-500 text-white shadow-glow' : 'text-ink hover:bg-surface-2'"
-        [attr.aria-current]="page === currentPage ? 'page' : null"
-        (click)="goToPage(+page)"
-      >
-        {{ page }}
-      </button>
+      @for (page of visiblePages; track page) {
+        <button
+          type="button"
+          class="grid h-8 min-w-8 flex-shrink-0 place-items-center rounded-full px-2 font-display text-sm font-bold transition duration-200 ease-spring active:scale-90"
+          [ngClass]="
+            page === currentPage
+              ? 'scale-105 bg-primary-500 text-white shadow-glow'
+              : 'text-ink hover:bg-surface-2'
+          "
+          [attr.aria-current]="page === currentPage ? 'page' : null"
+          (click)="goToPage(+page)"
+        >
+          {{ page }}
+        </button>
+      }
 
       <!-- Next Button -->
       <button

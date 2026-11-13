@@ -8,69 +8,70 @@
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
 >
-  <img
-    *ngIf="currentImage"
-    [src]="currentImage"
-    [style.width]="width"
-    [style.height]="height"
-    alt="Selected image"
-    class="max-w-full animate-pop-in rounded-2xl object-cover"
-  />
+  @if (currentImage) {
+    <img
+      [src]="currentImage"
+      [style.width]="width"
+      [style.height]="height"
+      alt="Selected image"
+      class="max-w-full animate-pop-in rounded-2xl object-cover"
+    />
+  }
 
-  <div
-    class="absolute inset-0 flex flex-col items-center justify-center gap-1 px-2 text-muted"
-    *ngIf="!currentImage"
-  >
-    <svg-icon
-      src="./assets/icons/heroicons/outline/photo.svg"
-      [svgClass]="'w-7 h-7'"
-      class="inline-block text-subtle transition-transform duration-500 ease-spring group-hover:-translate-y-1 group-hover:rotate-[-8deg] group-hover:text-primary-500"
-    >
-    </svg-icon>
-    <span class="text-center text-[11px] leading-snug"
-      >Drag an image here or
-      <span
-        class="cursor-pointer font-semibold text-primary-500 underline underline-offset-2"
-        (click)="fileInput.click()"
-      >
-        browse
-      </span></span
-    >
-  </div>
-
-  <div
-    *ngIf="currentImage"
-    class="absolute flex items-center space-x-2 bottom-2 right-2"
-  >
-    <button
-      *ngIf="editMode"
-      (click)="fileInput.click()"
-      type="button"
-      aria-label="Replace image"
-      class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-ink shadow-soft backdrop-blur transition hover:scale-110 hover:bg-primary-500 hover:text-white"
+  @if (!currentImage) {
+    <div
+      class="absolute inset-0 flex flex-col items-center justify-center gap-1 px-2 text-muted"
     >
       <svg-icon
-        src="./assets/icons/heroicons/outline/pencil.svg"
-        [svgClass]="'w-4 h-4'"
+        src="./assets/icons/heroicons/outline/photo.svg"
+        [svgClass]="'w-7 h-7'"
+        class="inline-block text-subtle transition-transform duration-500 ease-spring group-hover:-translate-y-1 group-hover:rotate-[-8deg] group-hover:text-primary-500"
       >
       </svg-icon>
-    </button>
-
-    @if (canDelete && !isFromApi) {
-      <button
-        (click)="deleteImage()"
-        type="button"
-        aria-label="Remove image"
-        class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-rose-500 shadow-soft backdrop-blur transition hover:scale-110 hover:bg-rose-500 hover:text-white"
-      >
-        <svg-icon
-          src="./assets/icons/heroicons/outline/trash.svg"
-          [svgClass]="'w-4 h-4'"
+      <span class="text-center text-[11px] leading-snug"
+        >Drag an image here or
+        <span
+          class="cursor-pointer font-semibold text-primary-500 underline underline-offset-2"
+          (click)="fileInput.click()"
         >
-        </svg-icon>
-      </button>
-    }
-  </div>
+          browse
+        </span></span
+      >
+    </div>
+  }
+
+  @if (currentImage) {
+    <div class="absolute flex items-center space-x-2 bottom-2 right-2">
+      @if (editMode) {
+        <button
+          (click)="fileInput.click()"
+          type="button"
+          aria-label="Replace image"
+          class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-ink shadow-soft backdrop-blur transition hover:scale-110 hover:bg-primary-500 hover:text-white"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/outline/pencil.svg"
+            [svgClass]="'w-4 h-4'"
+          >
+          </svg-icon>
+        </button>
+      }
+      @if (canDelete && !isFromApi) {
+        <button
+          (click)="deleteImage()"
+          type="button"
+          aria-label="Remove image"
+          class="grid h-8 w-8 place-items-center rounded-full bg-surface/90 text-rose-500 shadow-soft backdrop-blur transition hover:scale-110 hover:bg-rose-500 hover:text-white"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/outline/trash.svg"
+            [svgClass]="'w-4 h-4'"
+          >
+          </svg-icon>
+        </button>
+      }
+    </div>
+  }
 
   <input
     type="file"

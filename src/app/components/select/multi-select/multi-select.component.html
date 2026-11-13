@@ -1,6 +1,4 @@
-<div
-  class="relative inline-block w-full text-left"
->
+<div class="relative inline-block w-full text-left">
   <!-- Dropdown Button -->
   <button
     (click)="toggleDropdown()"
@@ -30,16 +28,16 @@
     </div>
     <svg-icon
       src="assets/icons/heroicons/solid/chevron-down.svg"
-      [svgClass]="'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'"
+      [svgClass]="
+        'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'
+      "
       [class.rotate-180]="dropdownOpenSignal()"
     ></svg-icon>
   </button>
 
   <!-- Dropdown Menu -->
   @if (dropdownOpenSignal()) {
-    <div
-      class="dropdown-panel"
-    >
+    <div class="dropdown-panel">
       <!-- Search Input -->
       <input
         type="text"
@@ -62,20 +60,14 @@
             </div>
           }
         } @else {
-          <div
-            class="px-3 py-4 text-center text-sm text-muted"
-          >
+          <div class="px-3 py-4 text-center text-sm text-muted">
             There are no options
           </div>
         }
       </div>
       @if (canAdd) {
         <div>
-          <button
-            (click)="add()"
-            type="button"
-            class="dropdown-add"
-          >
+          <button (click)="add()" type="button" class="dropdown-add">
             <div>
               <svg-icon
                 src="./assets/icons/heroicons/solid/plus-circle.svg"
@@ -92,6 +84,6 @@
   }
 </div>
 
-<div class="is__invalid-error" *ngIf="isTouchedSignal() && !isValid()">
-  Please select at least one option.
-</div>
+@if (isTouchedSignal() && !isValid()) {
+  <div class="is__invalid-error">Please select at least one option.</div>
+}

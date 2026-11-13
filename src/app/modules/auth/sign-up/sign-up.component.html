@@ -1,57 +1,56 @@
 <!-- login form -->
 
-  <div class="text-center font-catamaran">
-    <h2 class="mb-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-      Create your account
-    </h2>
-    <p class="text-sm text-gray-400 md:text-md dark:text-night-200">
-      Enter your Details to start working with our Platform.
-    </p>
-    <p class="text-sm text-gray-400 md:text-md dark:text-night-200">
-      <span class="text-red-600">Note:</span> You can register as a member
-      or a user.
-    </p>
-    <p class="text-sm text-red-600 dark:text-night-200">
-      Also Ensure to use a valid email address as it will be used to send your login
-      credentials!.
-    </p>
+<div class="text-center font-catamaran">
+  <h2
+    class="mb-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl"
+  >
+    Create your account
+  </h2>
+  <p class="text-sm text-gray-400 md:text-md dark:text-night-200">
+    Enter your Details to start working with our Platform.
+  </p>
+  <p class="text-sm text-gray-400 md:text-md dark:text-night-200">
+    <span class="text-red-600">Note:</span> You can register as a member or a
+    user.
+  </p>
+  <p class="text-sm text-red-600 dark:text-night-200">
+    Also Ensure to use a valid email address as it will be used to send your
+    login credentials!.
+  </p>
+</div>
+
+<div class="">
+  <div
+    class="mt-6 flex gap-1 overflow-x-auto rounded-full border border-line bg-surface-2 p-1"
+    role="tablist"
+  >
+    @for (tab of tabs; track $index) {
+      <button
+        type="button"
+        role="tab"
+        [attr.aria-selected]="activeTab === tab.value"
+        [ngClass]="
+          activeTab === tab.value
+            ? 'bg-primary-500 text-white shadow-glow'
+            : 'text-muted hover:text-ink'
+        "
+        (click)="setActiveTab(tab.value)"
+        class="flex-1 whitespace-nowrap rounded-full px-4 py-2 font-display text-sm font-bold transition-all duration-300 ease-out-expo active:scale-95"
+      >
+        {{ tab.title }}
+      </button>
+    }
   </div>
 
-  <div class="">
-    <div
-      class="mt-6 flex gap-1 overflow-x-auto rounded-full border border-line bg-surface-2 p-1"
-      role="tablist"
-    >
-      @for (tab of tabs; track $index) {
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === tab.value"
-          [ngClass]="
-            activeTab === tab.value
-              ? 'bg-primary-500 text-white shadow-glow'
-              : 'text-muted hover:text-ink'
-          "
-          (click)="setActiveTab(tab.value)"
-          class="flex-1 whitespace-nowrap rounded-full px-4 py-2 font-display text-sm font-bold transition-all duration-300 ease-out-expo active:scale-95"
-        >
-          {{ tab.title }}
-        </button>
-      }
-    </div>
-
-    <div
-      *ngIf="activeTab === 'member'"
-      class="animate-fade-in-up py-6 text-ink"
-    >
+  @if (activeTab === "member") {
+    <div class="animate-fade-in-up py-6 text-ink">
       <member-registration></member-registration>
     </div>
+  }
 
-    <div
-      *ngIf="activeTab === 'user'"
-      class="animate-fade-in-up py-6 text-ink"
-    >
+  @if (activeTab === "user") {
+    <div class="animate-fade-in-up py-6 text-ink">
       <user-registaration></user-registaration>
     </div>
-  </div>
-
+  }
+</div>

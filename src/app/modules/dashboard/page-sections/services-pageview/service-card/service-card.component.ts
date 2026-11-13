@@ -1,4 +1,4 @@
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { SpotlightDirective } from '@directive/spotlight.directive';
 import { Component, inject, Input, signal } from '@angular/core';
 import { ModalComponent } from '@components/modal/modal.component';
@@ -8,20 +8,19 @@ import { Services } from '@model/services.interface';
 import { ServicesService } from '@service/modules/services.service';
 
 @Component({
-    selector: 'ServiceCard',
-    imports: [
-        SpotlightDirective,
-        AngularSvgIconModule,
-        DatePipe,
-        ModalComponent,
-        NgIf,
-        EditServiceComponent,
-    ],
-    templateUrl: './service-card.component.html',
-    styleUrl: './service-card.component.scss'
+  selector: 'ServiceCard',
+  imports: [
+    SpotlightDirective,
+    AngularSvgIconModule,
+    DatePipe,
+    ModalComponent,
+    EditServiceComponent,
+  ],
+  templateUrl: './service-card.component.html',
+  styleUrl: './service-card.component.scss',
 })
 export class ServiceCardComponent {
- @Input({ required: true }) service: Services;
+  @Input({ required: true }) service: Services;
   private _serviceService = inject(ServicesService);
 
   deleteContent: string = 'Are you sure you want to delete this Service?';
@@ -53,7 +52,4 @@ export class ServiceCardComponent {
   closeEditModal() {
     this.isServiceModalOpen.set(false);
   }
-
-
-
 }

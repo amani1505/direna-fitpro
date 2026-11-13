@@ -8,7 +8,7 @@ import {
   inject,
   input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ActionsComponent } from './parts/actions/actions.component';
 import { FooterComponent } from './parts/footer/footer.component';
@@ -22,18 +22,17 @@ import {
 import { ModalComponent } from '@components/modal/modal.component';
 
 @Component({
-    selector: 'ListTable',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ActionsComponent,
-        FooterComponent,
-        HeaderComponent,
-        RowComponent,
-        ModalComponent,
-    ],
-    templateUrl: './table.component.html',
-    styleUrl: './table.component.scss'
+  selector: 'ListTable',
+  imports: [
+    FormsModule,
+    ActionsComponent,
+    FooterComponent,
+    HeaderComponent,
+    RowComponent,
+    ModalComponent,
+  ],
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.scss',
 })
 export class TableComponent {
   @Input({ required: true }) title!: string;

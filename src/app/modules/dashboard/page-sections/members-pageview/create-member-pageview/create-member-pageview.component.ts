@@ -1,4 +1,4 @@
-import { CommonModule, Location, NgClass, NgIf } from '@angular/common';
+import { CommonModule, Location, NgClass } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
@@ -19,23 +19,22 @@ import { MemberService } from '@service/modules/member.service';
 import { ToastService } from '@service/toast.service';
 
 @Component({
-    selector: 'create-member-pageview',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgClass,
-        NgIf,
-        NgxMaskDirective,
-        MultiSelectComponent,
-        AngularSvgIconModule,
-        SeachableSelectComponent,
-        AddServiceModalComponent,
-        AddBranchModalComponent,
-    ],
-    providers: [provideNgxMask()],
-    templateUrl: './create-member-pageview.component.html',
-    styleUrl: './create-member-pageview.component.scss'
+  selector: 'create-member-pageview',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    NgxMaskDirective,
+    MultiSelectComponent,
+    AngularSvgIconModule,
+    SeachableSelectComponent,
+    AddServiceModalComponent,
+    AddBranchModalComponent,
+  ],
+  providers: [provideNgxMask()],
+  templateUrl: './create-member-pageview.component.html',
+  styleUrl: './create-member-pageview.component.scss',
 })
 export class CreateMemberPageviewComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);

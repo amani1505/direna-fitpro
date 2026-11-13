@@ -1,58 +1,64 @@
 <div class="flex flex-col">
-  <nav
-    *ngIf="breadcrumbs.length > 1"
-    class="flex items-center justify-start overflow-x-auto text-sm text-muted"
-    aria-label="Breadcrumb"
-    [ngClass]="{
-      'mt-0': isEquipment,
-      'mt-5': !isEquipment,
-    }"
-  >
-    <ul class="flex items-center gap-1 whitespace-nowrap">
-      <li
-        *ngFor="
-          let breadcrumb of breadcrumbs;
-          let first = first;
-          let last = last
-        "
-        class="flex items-center"
-      >
-        <ng-container *ngIf="first">
-          <a
-            [routerLink]="breadcrumb.url"
-            class="grid h-7 w-7 place-items-center rounded-full transition hover:bg-surface-2 hover:text-primary-500"
-            aria-label="Home"
-            [ngClass]="{
-              'text-primary-500': isEquipment,
-              'text-ink': !isEquipment,
-            }"
-          >
-            <svg-icon
-              src="./assets/icons/home.svg"
-              [svgClass]="'w-4 h-4'"
-              class="inline-block"
-            >
-            </svg-icon>
-          </a>
-        </ng-container>
-        <ng-container *ngIf="!first">
-          <a
-            [routerLink]="breadcrumb.url"
-            class="rounded-full px-2 py-0.5 capitalize transition hover:bg-surface-2"
-            [ngClass]="last ? 'font-semibold text-primary-500' : 'text-muted hover:text-ink'"
-            [attr.aria-current]="last ? 'page' : null"
-          >
-            {{ breadcrumb.title || (breadcrumb.label | titlecase) }}
-          </a>
-        </ng-container>
-        <span *ngIf="!last" class="text-subtle" aria-hidden="true">/</span>
-      </li>
-    </ul>
-  </nav>
-  <div
-    *ngIf="breadcrumbs.length > 1 && !isEquipment"
-    class="mb-6 mt-1 text-xs text-subtle"
-  >
-    {{ currentDateTime }}
-  </div>
+  @if (breadcrumbs.length > 1) {
+    <nav
+      class="flex items-center justify-start overflow-x-auto text-sm text-muted"
+      aria-label="Breadcrumb"
+      [ngClass]="{
+        'mt-0': isEquipment,
+        'mt-5': !isEquipment,
+      }"
+    >
+      <ul class="flex items-center gap-1 whitespace-nowrap">
+        @for (
+          breadcrumb of breadcrumbs;
+          track breadcrumb;
+          let first = $first;
+          let last = $last
+        ) {
+          <li class="flex items-center">
+            @if (first) {
+              <a
+                [routerLink]="breadcrumb.url"
+                class="grid h-7 w-7 place-items-center rounded-full transition hover:bg-surface-2 hover:text-primary-500"
+                aria-label="Home"
+                [ngClass]="{
+                  'text-primary-500': isEquipment,
+                  'text-ink': !isEquipment,
+                }"
+              >
+                <svg-icon
+                  src="./assets/icons/home.svg"
+                  [svgClass]="'w-4 h-4'"
+                  class="inline-block"
+                >
+                </svg-icon>
+              </a>
+            }
+            @if (!first) {
+              <a
+                [routerLink]="breadcrumb.url"
+                class="rounded-full px-2 py-0.5 capitalize transition hover:bg-surface-2"
+                [ngClass]="
+                  last
+                    ? 'font-semibold text-primary-500'
+                    : 'text-muted hover:text-ink'
+                "
+                [attr.aria-current]="last ? 'page' : null"
+              >
+                {{ breadcrumb.title || (breadcrumb.label | titlecase) }}
+              </a>
+            }
+            @if (!last) {
+              <span class="text-subtle" aria-hidden="true">/</span>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  }
+  @if (breadcrumbs.length > 1 && !isEquipment) {
+    <div class="mb-6 mt-1 text-xs text-subtle">
+      {{ currentDateTime }}
+    </div>
+  }
 </div>

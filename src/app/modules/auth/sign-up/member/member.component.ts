@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, computed, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -16,21 +16,20 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { QuillModule } from 'ngx-quill';
 
 @Component({
-    selector: 'member-registration',
-    imports: [
-        AngularSvgIconModule,
-        ReactiveFormsModule,
-        FormsModule,
-        RouterLink,
-        NgIf,
-        NgClass,
-        NgxMaskDirective,
-        MultiSelectComponent,
-        SeachableSelectComponent,
-        QuillModule,
-    ],
-    templateUrl: './member.component.html',
-    styleUrl: './member.component.scss'
+  selector: 'member-registration',
+  imports: [
+    AngularSvgIconModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterLink,
+    NgClass,
+    NgxMaskDirective,
+    MultiSelectComponent,
+    SeachableSelectComponent,
+    QuillModule,
+  ],
+  templateUrl: './member.component.html',
+  styleUrl: './member.component.scss',
 })
 export class MemberComponent implements OnInit {
   private readonly _formBuilder = inject(FormBuilder);
@@ -88,7 +87,7 @@ export class MemberComponent implements OnInit {
     }));
   };
   onGoalChange(event: any) {
-     this.authForm.get('goal').setValue(event.html);
+    this.authForm.get('goal').setValue(event.html);
   }
 
   selectService(ids: any) {

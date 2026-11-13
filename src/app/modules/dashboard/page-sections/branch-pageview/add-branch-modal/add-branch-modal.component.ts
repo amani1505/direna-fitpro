@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -18,16 +18,10 @@ import { ModalConfig } from '@model/modal-config.interface';
 import { BranchesService } from '@service/modules/branches.service';
 
 @Component({
-    selector: 'add-branch-modal',
-    imports: [
-        ReusableModalComponent,
-        NgClass,
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
-    templateUrl: './add-branch-modal.component.html',
-    styleUrl: './add-branch-modal.component.scss'
+  selector: 'add-branch-modal',
+  imports: [ReusableModalComponent, NgClass, FormsModule, ReactiveFormsModule],
+  templateUrl: './add-branch-modal.component.html',
+  styleUrl: './add-branch-modal.component.scss',
 })
 export class AddBranchModalComponent {
   isModalOpen = input.required<boolean>();

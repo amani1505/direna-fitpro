@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,16 +17,11 @@ export interface MultiSelectOption {
 }
 
 @Component({
-    selector: 'MultiSelect',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ClickOutsideDirective,
-        AngularSvgIconModule,
-    ],
-    templateUrl: './multi-select.component.html',
-    styleUrls: ['./multi-select.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'MultiSelect',
+  imports: [FormsModule, ClickOutsideDirective, AngularSvgIconModule],
+  templateUrl: './multi-select.component.html',
+  styleUrls: ['./multi-select.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MultiSelectComponent {
   // Signals for reactive state management

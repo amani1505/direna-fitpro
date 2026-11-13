@@ -1,7 +1,4 @@
-<div
-  class="relative inline-block text-left"
-  [ngClass]="width"
->
+<div class="relative inline-block text-left" [ngClass]="width">
   <!-- Dropdown Button -->
   <button
     (click)="toggleDropdown()"
@@ -15,32 +12,34 @@
       class="capitalize truncate"
       [ngClass]="{
         'text-ink': selectedOption(),
-        'text-subtle': !selectedOption()
+        'text-subtle': !selectedOption(),
       }"
     >
       {{ getSelectedLabel() }}
     </span>
     <svg-icon
       src="assets/icons/heroicons/solid/chevron-down.svg"
-      [svgClass]="'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'"
+      [svgClass]="
+        'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'
+      "
       [class.rotate-180]="dropdownOpen"
     ></svg-icon>
   </button>
 
   <!-- Dropdown Menu -->
-  <div
-    *ngIf="dropdownOpen"
-    class="dropdown-panel"
-  >
-    <div class="max-h-56 overflow-y-auto">
-      <a
-        *ngFor="let option of options"
-        (click)="selectOption(option.value)"
-        class="dropdown-option"
-        [class.dropdown-option-active]="selectedOption() === option.value"
-      >
-        {{ option.label }}
-      </a>
+  @if (dropdownOpen) {
+    <div class="dropdown-panel">
+      <div class="max-h-56 overflow-y-auto">
+        @for (option of options; track option) {
+          <a
+            (click)="selectOption(option.value)"
+            class="dropdown-option"
+            [class.dropdown-option-active]="selectedOption() === option.value"
+          >
+            {{ option.label }}
+          </a>
+        }
+      </div>
     </div>
-  </div>
+  }
 </div>

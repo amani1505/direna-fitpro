@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -21,16 +21,10 @@ import { Services } from '@model/services.interface';
 import { ServicesService } from '@service/modules/services.service';
 
 @Component({
-    selector: 'edit-service',
-    imports: [
-        ReusableModalComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        NgIf,
-        NgClass,
-    ],
-    templateUrl: './edit-service.component.html',
-    styleUrl: './edit-service.component.scss'
+  selector: 'edit-service',
+  imports: [ReusableModalComponent, FormsModule, ReactiveFormsModule, NgClass],
+  templateUrl: './edit-service.component.html',
+  styleUrl: './edit-service.component.scss',
 })
 export class EditServiceComponent implements OnInit {
   isModalOpen = input.required<boolean>();

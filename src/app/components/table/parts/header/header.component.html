@@ -1,39 +1,39 @@
-
-<th
-  *ngFor="let column of columns"
-  [class.w-[25px]]="column.type === 's/n'"
-  [class.w-[50px]]="column.type === 'checkbox'"
-  [class.min-w-[240px]]="column.key === 'member'"
-  [class.min-w-[160px]]="!['checkbox', 'actions','s/n'].includes(column.type)"
-  [class.w-[60px]]="column.type === 'actions'"
-  [class.text-center]="column.align === 'center'"
->
-  <ng-container [ngSwitch]="column.type">
-    <!-- Checkbox Header -->
-    <ng-container *ngSwitchCase="'s/n'">
-      {{ column.label }}
-    </ng-container>
-    <ng-container *ngSwitchCase="'checkbox'">
-      <input
-        (change)="toggle($event)"
-        class="checkbox checkbox-sm"
-        data-datatable-check="true"
-        [checked]="isAllSelected"
-        type="checkbox"
-      />
-    </ng-container>
-    <ng-container *ngSwitchCase="'image'">
-      {{ column.label }}
-    </ng-container>
-
-    <!-- Text Header -->
-    <ng-container *ngSwitchCase="'text'">
-      {{ column.label }}
-    </ng-container>
-
-    <!-- Blank Header for Actions -->
-    <ng-container *ngSwitchCase="'actions'">
-      <!-- Empty Header -->
-    </ng-container>
-  </ng-container>
-</th>
+@for (column of columns; track column) {
+  <th
+    [class.w-[25px]]="column.type === 's/n'"
+    [class.w-[50px]]="column.type === 'checkbox'"
+    [class.min-w-[240px]]="column.key === 'member'"
+    [class.min-w-[160px]]="
+      !['checkbox', 'actions', 's/n'].includes(column.type)
+    "
+    [class.w-[60px]]="column.type === 'actions'"
+    [class.text-center]="column.align === 'center'"
+  >
+    @switch (column.type) {
+      <!-- Checkbox Header -->
+      @case ("s/n") {
+        {{ column.label }}
+      }
+      @case ("checkbox") {
+        <input
+          (change)="toggle($event)"
+          class="checkbox checkbox-sm"
+          data-datatable-check="true"
+          [checked]="isAllSelected"
+          type="checkbox"
+        />
+      }
+      @case ("image") {
+        {{ column.label }}
+      }
+      <!-- Text Header -->
+      @case ("text") {
+        {{ column.label }}
+      }
+      <!-- Blank Header for Actions -->
+      @case ("actions") {
+        <!-- Empty Header -->
+      }
+    }
+  </th>
+}

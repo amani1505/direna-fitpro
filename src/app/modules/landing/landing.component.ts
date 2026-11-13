@@ -1,18 +1,32 @@
-import { Component, HostListener, OnInit, OnDestroy, Inject, PLATFORM_ID, NgZone } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  Inject,
+  PLATFORM_ID,
+  NgZone,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { BreadCrumbsComponent } from '@components/bread-crumbs/bread-crumbs.component';
 import { ScrollService } from '@service/scroll.service';
 
 @Component({
-    selector: 'app-landing',
-    imports: [NavbarComponent, RouterOutlet, FooterComponent, NgIf, NgClass, AngularSvgIconModule],
-    templateUrl: './landing.component.html',
-    styleUrl: './landing.component.scss'
+  selector: 'app-landing',
+  imports: [
+    NavbarComponent,
+    RouterOutlet,
+    FooterComponent,
+    NgClass,
+    AngularSvgIconModule,
+  ],
+  templateUrl: './landing.component.html',
+  styleUrl: './landing.component.scss',
 })
 export class LandingComponent implements OnInit {
   isScrolled: boolean = false;
@@ -21,7 +35,7 @@ export class LandingComponent implements OnInit {
 
   constructor(
     @Inject(PLATFORM_ID) platformId: Object,
-    private _scrollService: ScrollService
+    private _scrollService: ScrollService,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -29,12 +43,11 @@ export class LandingComponent implements OnInit {
   ngOnInit() {
     if (this.isBrowser) {
       // Subscribe to scroll service
-      this._scrollService.isScrolled$.subscribe(scrolled => {
+      this._scrollService.isScrolled$.subscribe((scrolled) => {
         this.isScrolled = scrolled;
-        
       });
 
-      this._scrollService.scrollProgress$.subscribe(progress => {
+      this._scrollService.scrollProgress$.subscribe((progress) => {
         this.scrollProgress = progress;
       });
     }

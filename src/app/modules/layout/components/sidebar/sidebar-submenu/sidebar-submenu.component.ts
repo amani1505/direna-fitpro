@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
 import { SubMenuItem } from '@model/menu.model';
@@ -6,17 +6,16 @@ import { MenuService } from '@service/menu.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'app-sidebar-submenu',
-    templateUrl: './sidebar-submenu.component.html',
-    styleUrls: ['./sidebar-submenu.component.scss'],
-    imports: [
-        NgClass,
-        NgFor,
-        NgTemplateOutlet,
-        RouterLinkActive,
-        RouterLink,
-        AngularSvgIconModule,
-    ]
+  selector: 'app-sidebar-submenu',
+  templateUrl: './sidebar-submenu.component.html',
+  styleUrls: ['./sidebar-submenu.component.scss'],
+  imports: [
+    NgClass,
+    NgTemplateOutlet,
+    RouterLinkActive,
+    RouterLink,
+    AngularSvgIconModule,
+  ],
 })
 export class SidebarSubmenuComponent implements OnInit {
   @Input() public submenu = <SubMenuItem>{};

@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -13,19 +13,17 @@ import { MemberComponent } from './member/member.component';
 import { NormalUserComponent } from './normal-user/normal-user.component';
 
 @Component({
-    selector: 'app-sign-up',
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        AngularSvgIconModule,
-        NgIf,
-        MemberComponent,
-        NormalUserComponent,
-        NgClass,
-        NgIf,
-    ],
-    templateUrl: './sign-up.component.html',
-    styleUrl: './sign-up.component.scss'
+  selector: 'app-sign-up',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    AngularSvgIconModule,
+    MemberComponent,
+    NormalUserComponent,
+    NgClass,
+  ],
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.scss',
 })
 export class SignUpComponent {
   activeTab: 'member' | 'user' = 'member';

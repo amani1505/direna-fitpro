@@ -1,4 +1,4 @@
-import { Location, NgClass, NgIf } from '@angular/common';
+import { Location, NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
@@ -14,17 +14,16 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'app-sign-in',
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        AngularSvgIconModule,
-        NgIf,
-        NgClass,
-        RouterModule
-    ],
-    templateUrl: './sign-in.component.html',
-    styleUrl: './sign-in.component.scss'
+  selector: 'app-sign-in',
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    AngularSvgIconModule,
+    NgClass,
+    RouterModule,
+  ],
+  templateUrl: './sign-in.component.html',
+  styleUrl: './sign-in.component.scss',
 })
 export class SignInComponent {
   private _authService = inject(AuthService);

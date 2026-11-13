@@ -1,4 +1,4 @@
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -18,16 +18,10 @@ import { ModalConfig } from '@model/modal-config.interface';
 import { RolesService } from '@service/modules/roles.service';
 
 @Component({
-    selector: 'add-role-modal',
-    imports: [
-        ReusableModalComponent,
-        FormsModule,
-        ReactiveFormsModule,
-        NgIf,
-        NgClass,
-    ],
-    templateUrl: './add-role.component.html',
-    styleUrl: './add-role.component.scss'
+  selector: 'add-role-modal',
+  imports: [ReusableModalComponent, FormsModule, ReactiveFormsModule, NgClass],
+  templateUrl: './add-role.component.html',
+  styleUrl: './add-role.component.scss',
 })
 export class AddRoleComponent {
   isModalOpen = input.required<boolean>();

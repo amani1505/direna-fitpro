@@ -7,88 +7,83 @@
     type="button"
     class="field"
   >
-    <span class="capitalize truncate"
-
-    [ngClass]="{
-      'text-ink': selectedOptionDetail(),
-      'text-subtle': !selectedOptionDetail()
-    }"
-
+    <span
+      class="capitalize truncate"
+      [ngClass]="{
+        'text-ink': selectedOptionDetail(),
+        'text-subtle': !selectedOptionDetail(),
+      }"
     >
       {{ selectedOptionDetail()?.label || placeholder }}
     </span>
     <svg-icon
       src="assets/icons/heroicons/solid/chevron-down.svg"
-      [svgClass]="'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'"
+      [svgClass]="
+        'h-4 w-4 shrink-0 text-subtle transition-transform duration-300'
+      "
       [class.rotate-180]="dropdownOpenSignal()"
     ></svg-icon>
   </button>
 
   <!-- Dropdown Menu -->
-  <div
-    *ngIf="dropdownOpenSignal()"
-    class="dropdown-panel"
-  >
-    <!-- Search Input -->
-    <input
-      type="text"
-      placeholder="Search..."
-      class="mb-1.5 !rounded-lg !py-2 text-sm"
-      (input)="onSearchChange($event)"
-      (click)="$event.stopPropagation()"
-    />
-
-    <!-- Options -->
-    <div *ngIf="filteredOptions().length > 0; else noOptions" class="max-h-56 overflow-y-auto">
-      <div
-        *ngFor="let option of filteredOptions()"
-        (click)="selectOption(option)"
-        class="dropdown-option"
-        [class.dropdown-option-active]="selectedOptionDetail()?.value === option.value"
-      >
-        {{ option.label }}
-      </div>
-    </div>
-    <ng-template #noOptions>
-      <div class="px-3 py-4 text-center text-sm text-muted">
-        No options available
-      </div>
-    </ng-template>
-
-    @if (canAdd) {
-      <div>
-        <button
-          (click)="add()"
-          type="button"
-            class="dropdown-add"
-        >
-          <div>
-            <svg-icon
-              src="./assets/icons/heroicons/solid/plus-circle.svg"
-              [svgClass]="'w-4 h-4'"
-              class="inline-block"
+  @if (dropdownOpenSignal()) {
+    <div class="dropdown-panel">
+      <!-- Search Input -->
+      <input
+        type="text"
+        placeholder="Search..."
+        class="mb-1.5 !rounded-lg !py-2 text-sm"
+        (input)="onSearchChange($event)"
+        (click)="$event.stopPropagation()"
+      />
+      <!-- Options -->
+      @if (filteredOptions().length > 0) {
+        <div class="max-h-56 overflow-y-auto">
+          @for (option of filteredOptions(); track option) {
+            <div
+              (click)="selectOption(option)"
+              class="dropdown-option"
+              [class.dropdown-option-active]="
+                selectedOptionDetail()?.value === option.value
+              "
             >
-            </svg-icon>
-          </div>
-          <div>{{ buttonLabel }}</div>
-        </button>
-      </div>
-    }
-  </div>
+              {{ option.label }}
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="px-3 py-4 text-center text-sm text-muted">
+          No options available
+        </div>
+      }
+      @if (canAdd) {
+        <div>
+          <button (click)="add()" type="button" class="dropdown-add">
+            <div>
+              <svg-icon
+                src="./assets/icons/heroicons/solid/plus-circle.svg"
+                [svgClass]="'w-4 h-4'"
+                class="inline-block"
+              >
+              </svg-icon>
+            </div>
+            <div>{{ buttonLabel }}</div>
+          </button>
+        </div>
+      }
+    </div>
+  }
 
   <!-- Validation Error -->
-  <div
-    class="is__invalid-error"
-    *ngIf="isTouchedSignal() && !isValid()"
-  >
-    Please select an option.
-  </div>
+  @if (isTouchedSignal() && !isValid()) {
+    <div class="is__invalid-error">Please select an option.</div>
+  }
 
   <!-- Submit Button -->
   <!-- <button
-    (click)="handleSubmit()"
-    class="px-4 py-2 mt-3 text-white bg-blue-500 rounded"
+  (click)="handleSubmit()"
+  class="px-4 py-2 mt-3 text-white bg-blue-500 rounded"
   >
-    Submit
-  </button> -->
+  Submit
+</button> -->
 </div>

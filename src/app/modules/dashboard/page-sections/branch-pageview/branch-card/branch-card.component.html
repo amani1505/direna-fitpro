@@ -2,12 +2,21 @@
   spotlight
   class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface text-ink transition-[transform,box-shadow,border-color] duration-300 ease-out-expo hover:-translate-y-1 hover:border-primary-500/40 hover:shadow-soft animate-pop-in"
 >
-  <header class="flex items-start justify-between gap-3 border-b border-line p-4">
+  <header
+    class="flex items-start justify-between gap-3 border-b border-line p-4"
+  >
     <div class="flex min-w-0 items-center gap-2.5">
-      <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-500/10 text-primary-500 transition-transform duration-500 ease-spring group-hover:-rotate-12">
-        <svg-icon src="assets/icons/heroicons/solid/building-office-2.svg" [svgClass]="'w-5 h-5'"></svg-icon>
+      <span
+        class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-500/10 text-primary-500 transition-transform duration-500 ease-spring group-hover:-rotate-12"
+      >
+        <svg-icon
+          src="assets/icons/heroicons/solid/building-office-2.svg"
+          [svgClass]="'w-5 h-5'"
+        ></svg-icon>
       </span>
-      <h4 class="min-w-0 truncate font-display text-lg font-bold capitalize">{{ branch?.road || "N/A" }}</h4>
+      <h4 class="min-w-0 truncate font-display text-lg font-bold capitalize">
+        {{ branch?.road || "N/A" }}
+      </h4>
     </div>
     <div class="flex shrink-0 gap-1.5">
       <button
@@ -16,7 +25,10 @@
         (click)="openEditModal(branch.id)"
         aria-label="Edit branch"
       >
-        <svg-icon src="./assets/icons/heroicons/outline/pencil.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <svg-icon
+          src="./assets/icons/heroicons/outline/pencil.svg"
+          [svgClass]="'w-4 h-4'"
+        ></svg-icon>
       </button>
       <button
         type="button"
@@ -24,7 +36,10 @@
         (click)="openDeleteModal()"
         aria-label="Delete branch"
       >
-        <svg-icon src="./assets/icons/heroicons/outline/trash.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <svg-icon
+          src="./assets/icons/heroicons/outline/trash.svg"
+          [svgClass]="'w-4 h-4'"
+        ></svg-icon>
       </button>
     </div>
   </header>
@@ -32,45 +47,86 @@
   <div class="flex grow flex-col gap-4 p-4">
     <ul class="space-y-2.5 text-sm">
       <li class="flex items-start gap-2.5">
-        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted">
-          <svg-icon src="./assets/icons/heroicons/solid/globe-europe-africa.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <span
+          class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/solid/globe-europe-africa.svg"
+            [svgClass]="'w-4 h-4'"
+          ></svg-icon>
         </span>
-        <span class="min-w-0 break-words pt-0.5">{{ branch?.country || "N/A" }}</span>
+        <span class="min-w-0 break-words pt-0.5">{{
+          branch?.country || "N/A"
+        }}</span>
       </li>
       <li class="flex items-start gap-2.5">
-        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted">
-          <svg-icon src="./assets/icons/heroicons/solid/globe-alt.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <span
+          class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/solid/globe-alt.svg"
+            [svgClass]="'w-4 h-4'"
+          ></svg-icon>
         </span>
-        <span class="min-w-0 break-words pt-0.5">{{ branch?.city || "N/A" }}</span>
+        <span class="min-w-0 break-words pt-0.5">{{
+          branch?.city || "N/A"
+        }}</span>
       </li>
       <li class="flex items-start gap-2.5">
-        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted">
-          <svg-icon src="./assets/icons/heroicons/solid/home-modern.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <span
+          class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/solid/home-modern.svg"
+            [svgClass]="'w-4 h-4'"
+          ></svg-icon>
         </span>
-        <span class="min-w-0 break-words pt-0.5">{{ branch?.district || "N/A" }}</span>
+        <span class="min-w-0 break-words pt-0.5">{{
+          branch?.district || "N/A"
+        }}</span>
       </li>
       <li class="flex items-start gap-2.5">
-        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted">
-          <svg-icon src="./assets/icons/heroicons/solid/building-storefront.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <span
+          class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/solid/building-storefront.svg"
+            [svgClass]="'w-4 h-4'"
+          ></svg-icon>
         </span>
-        <span class="min-w-0 break-words pt-0.5">{{ branch?.street || "N/A" }}</span>
+        <span class="min-w-0 break-words pt-0.5">{{
+          branch?.street || "N/A"
+        }}</span>
       </li>
       <li class="flex items-start gap-2.5">
-        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted">
-          <svg-icon src="./assets/icons/heroicons/solid/calculator.svg" [svgClass]="'w-4 h-4'"></svg-icon>
+        <span
+          class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-surface-2 text-muted"
+        >
+          <svg-icon
+            src="./assets/icons/heroicons/solid/calculator.svg"
+            [svgClass]="'w-4 h-4'"
+          ></svg-icon>
         </span>
-        <span class="min-w-0 break-words pt-0.5">{{ branch?.house_no || "N/A" }}</span>
+        <span class="min-w-0 break-words pt-0.5">{{
+          branch?.house_no || "N/A"
+        }}</span>
       </li>
     </ul>
 
-    <dl class="mt-auto grid grid-cols-2 gap-3 border-t border-dashed border-line pt-3 text-xs">
+    <dl
+      class="mt-auto grid grid-cols-2 gap-3 border-t border-dashed border-line pt-3 text-xs"
+    >
       <div>
         <dt class="text-subtle">Created</dt>
-        <dd class="font-semibold">{{ branch?.created_at | date: "mediumDate" }}</dd>
+        <dd class="font-semibold">
+          {{ branch?.created_at | date: "mediumDate" }}
+        </dd>
       </div>
       <div>
         <dt class="text-subtle">Updated</dt>
-        <dd class="font-semibold">{{ branch?.updated_at | date: "mediumDate" }}</dd>
+        <dd class="font-semibold">
+          {{ branch?.updated_at | date: "mediumDate" }}
+        </dd>
       </div>
     </dl>
   </div>
@@ -85,10 +141,11 @@
   (submit)="delete()"
 ></Modal>
 
-<edit-branch
-  *ngIf="isBranchModalOpen() && branch.id === branchId()"
-  [branch]="branch"
-  [isModalOpen]="isBranchModalOpen()"
-  (onCancel)="closeEditModal()"
-  [refetchString]="'findAll'"
-></edit-branch>
+@if (isBranchModalOpen() && branch.id === branchId()) {
+  <edit-branch
+    [branch]="branch"
+    [isModalOpen]="isBranchModalOpen()"
+    (onCancel)="closeEditModal()"
+    [refetchString]="'findAll'"
+  ></edit-branch>
+}

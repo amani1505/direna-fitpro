@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgIf, Location } from '@angular/common';
+import { CommonModule, NgClass, Location } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
@@ -16,18 +16,17 @@ import { ToastService } from '@service/toast.service';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'create-class-pageview',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        NgClass,
-        NgIf,
-        AngularSvgIconModule,
-        ImageUploaderComponent,
-    ],
-    templateUrl: './create-class-pageview.component.html',
-    styleUrl: './create-class-pageview.component.scss'
+  selector: 'create-class-pageview',
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgClass,
+    AngularSvgIconModule,
+    ImageUploaderComponent,
+  ],
+  templateUrl: './create-class-pageview.component.html',
+  styleUrl: './create-class-pageview.component.scss',
 })
 export class CreateClassPageviewComponent {
   private readonly _formBuilder = inject(FormBuilder);
@@ -115,7 +114,7 @@ export class CreateClassPageviewComponent {
         //     formData.append('staffIds[]', id);
         //   });
         // } else {
-          formData.append(key, formValues[key]);
+        formData.append(key, formValues[key]);
         // }
       }
     }

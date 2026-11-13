@@ -1,4 +1,4 @@
-import { NgIf, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   ReactiveFormsModule,
@@ -10,17 +10,16 @@ import { Router, RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @Component({
-    selector: 'user-registaration',
-    imports: [
-        AngularSvgIconModule,
-        ReactiveFormsModule,
-        FormsModule,
-        RouterLink,
-        NgIf,
-        NgClass,
-    ],
-    templateUrl: './normal-user.component.html',
-    styleUrl: './normal-user.component.scss'
+  selector: 'user-registaration',
+  imports: [
+    AngularSvgIconModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterLink,
+    NgClass,
+  ],
+  templateUrl: './normal-user.component.html',
+  styleUrl: './normal-user.component.scss',
 })
 export class NormalUserComponent {
   private readonly _formBuilder = inject(FormBuilder);

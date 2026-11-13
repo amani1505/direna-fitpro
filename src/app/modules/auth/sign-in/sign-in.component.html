@@ -1,7 +1,9 @@
 <!-- login form -->
 <form class="my-10 space-y-6" [formGroup]="authForm" (ngSubmit)="onSubmit()">
   <div class="text-center">
-    <h2 class="mb-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+    <h2
+      class="mb-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl"
+    >
       Welcome back
     </h2>
     <p class="text-muted">Sign in with your email and password.</p>
@@ -34,20 +36,18 @@
         />
       </div>
 
-      <div *ngIf="authForm.get('email')?.touched">
-        <div
-          *ngIf="authForm.get('email').hasError('required')"
-          class="is__invalid-error"
-        >
-          Email is Required
+      @if (authForm.get("email")?.touched) {
+        <div>
+          @if (authForm.get("email").hasError("required")) {
+            <div class="is__invalid-error">Email is Required</div>
+          }
+          @if (authForm.get("email").hasError("email")) {
+            <div class="is__invalid-error">
+              Email must be an email address valid
+            </div>
+          }
         </div>
-        <div
-          *ngIf="authForm.get('email').hasError('email')"
-          class="is__invalid-error"
-        >
-          Email must be an email address valid
-        </div>
-      </div>
+      }
     </div>
 
     <div class="space-y-2">
@@ -57,7 +57,7 @@
         >
         <!-- <a href="#" class="text-xs text-[#ff4836] hover:underline"
           >Forgot Password?</a
-        > -->
+          > -->
       </div>
       <div class="relative">
         <div
@@ -100,26 +100,23 @@
         </span>
       </div>
 
-      <div
-        *ngIf="
-          authForm.get('password')?.touched &&
-          authForm.get('password').hasError('required')
-        "
-        class="is__invalid-error"
-      >
-        Password Field is Required
-      </div>
+      @if (
+        authForm.get("password")?.touched &&
+        authForm.get("password").hasError("required")
+      ) {
+        <div class="is__invalid-error">Password Field is Required</div>
+      }
     </div>
   </div>
-    <!-- Sign-up -->
-    <div class="flex flex-wrap justify-center gap-x-2 text-sm text-muted">
-      Not a Member or a User yet?
-      <a
-        routerLink="/auth/sign-up"
-        class="font-semibold text-primary-500 underline-offset-4 hover:underline"
-        >Register here</a
-      >
-    </div>
+  <!-- Sign-up -->
+  <div class="flex flex-wrap justify-center gap-x-2 text-sm text-muted">
+    Not a Member or a User yet?
+    <a
+      routerLink="/auth/sign-up"
+      class="font-semibold text-primary-500 underline-offset-4 hover:underline"
+      >Register here</a
+    >
+  </div>
 
   <!-- Submit Button -->
   <button
@@ -127,30 +124,29 @@
     class="btn-pop shine w-full !py-3.5 text-base disabled:cursor-not-allowed disabled:!translate-x-0 disabled:!translate-y-0 disabled:!border-line disabled:!bg-surface-2 disabled:!text-subtle disabled:!shadow-none"
     [disabled]="authForm.invalid || loading"
   >
-    <svg
-      *ngIf="loading"
-      class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        class="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        stroke-width="4"
-      ></circle>
-      <path
-        class="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-      ></path>
-    </svg>
+    @if (loading) {
+      <svg
+        class="w-5 h-5 mr-3 -ml-1 text-white animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+        ></path>
+      </svg>
+    }
 
     {{ loading ? "Submitting..." : "Sign in" }}
   </button>
-
-
 </form>

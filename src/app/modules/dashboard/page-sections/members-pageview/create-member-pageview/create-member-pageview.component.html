@@ -26,12 +26,9 @@
         />
       </div>
 
-      <div
-        *ngIf="memberForm.get('fullname').hasError('required')"
-        class="is__invalid-error"
-      >
-        Fullname is Required
-      </div>
+      @if (memberForm.get("fullname").hasError("required")) {
+        <div class="is__invalid-error">Fullname is Required</div>
+      }
     </div>
 
     <div class="form__group">
@@ -54,18 +51,14 @@
         />
       </div>
 
-      <div
-        *ngIf="memberForm.get('email').hasError('required')"
-        class="is__invalid-error"
-      >
-        Email is required
-      </div>
-      <div
-        *ngIf="memberForm.get('email').hasError('email')"
-        class="is__invalid-error"
-      >
-        Email must be an email address valid
-      </div>
+      @if (memberForm.get("email").hasError("required")) {
+        <div class="is__invalid-error">Email is required</div>
+      }
+      @if (memberForm.get("email").hasError("email")) {
+        <div class="is__invalid-error">
+          Email must be an email address valid
+        </div>
+      }
     </div>
 
     <div class="form__group">
@@ -89,18 +82,14 @@
         />
       </div>
 
-      <div
-        *ngIf="memberForm.get('phone').hasError('required')"
-        class="is__invalid-error"
-      >
-        Phone number is required
-      </div>
-      <div
-        *ngIf="memberForm.get('phone').hasError('mask')"
-        class="is__invalid-error"
-      >
-        Fill all inputs for the phone number
-      </div>
+      @if (memberForm.get("phone").hasError("required")) {
+        <div class="is__invalid-error">Phone number is required</div>
+      }
+      @if (memberForm.get("phone").hasError("mask")) {
+        <div class="is__invalid-error">
+          Fill all inputs for the phone number
+        </div>
+      }
     </div>
 
     <div class="form__group">
@@ -128,12 +117,9 @@
         </label>
       </div>
 
-      <div
-        *ngIf="memberForm.get('gender').hasError('required')"
-        class="is__invalid-error"
-      >
-        Please select a gender
-      </div>
+      @if (memberForm.get("gender").hasError("required")) {
+        <div class="is__invalid-error">Please select a gender</div>
+      }
     </div>
     <div class="form__group">
       <label class="mb-1.5 block text-sm font-semibold text-ink"
@@ -183,12 +169,9 @@
         />
       </div>
 
-      <div
-        *ngIf="memberForm.get('weight').hasError('required')"
-        class="is__invalid-error"
-      >
-        Weight field is Required
-      </div>
+      @if (memberForm.get("weight").hasError("required")) {
+        <div class="is__invalid-error">Weight field is Required</div>
+      }
     </div>
 
     <div class="form__group">
@@ -235,21 +218,13 @@
         />
       </div>
 
-      <div
-        *ngIf="memberForm.get('goal').hasError('required')"
-        class="is__invalid-error"
-      >
-        Goal Field is Required
-      </div>
+      @if (memberForm.get("goal").hasError("required")) {
+        <div class="is__invalid-error">Goal Field is Required</div>
+      }
     </div>
   </div>
   <div class="form-actions">
-    <button
-      (click)="cancel()"
-      class="form-cancel"
-    >
-      Cancel
-    </button>
+    <button (click)="cancel()" class="form-cancel">Cancel</button>
     <button
       type="submit"
       [disabled]="
@@ -273,27 +248,28 @@
           !selectedBranch,
       }"
     >
-      <svg
-        *ngIf="memberLoading()"
-        class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle
-          class="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          stroke-width="4"
-        ></circle>
-        <path
-          class="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
+      @if (memberLoading()) {
+        <svg
+          class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      }
       {{ memberLoading() ? "Submitting..." : "Submit" }}
     </button>
   </div>

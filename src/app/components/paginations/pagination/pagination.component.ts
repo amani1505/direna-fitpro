@@ -1,12 +1,18 @@
-import { Component, EventEmitter, Output, Input, ChangeDetectionStrategy } from '@angular/core';
-import { NgClass, NgIf, NgFor } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
-    selector: 'Pagination',
-    imports: [NgIf, NgFor, NgClass],
-    templateUrl: './pagination.component.html',
-    styleUrls: ['./pagination.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'Pagination',
+  imports: [NgClass],
+  templateUrl: './pagination.component.html',
+  styleUrls: ['./pagination.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
   @Input({ required: true }) totalPages: number = 1;
@@ -16,7 +22,7 @@ export class PaginationComponent {
   get pages(): (number | string)[] {
     const pages: (number | string)[] = [];
     const maxVisiblePages = 2;
-    const startPages =3 ;
+    const startPages = 3;
     const endPages = 3;
 
     if (this.totalPages <= maxVisiblePages) {

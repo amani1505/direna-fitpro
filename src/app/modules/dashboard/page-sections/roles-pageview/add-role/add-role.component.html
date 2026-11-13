@@ -5,11 +5,7 @@
 >
   <!-- Custom header -->
   <ng-container modalHeader>
-    <h2
-      class="ms-2 font-display text-xl font-bold text-ink"
-    >
-      Add New Role
-    </h2>
+    <h2 class="ms-2 font-display text-xl font-bold text-ink">Add New Role</h2>
   </ng-container>
 
   <!-- Modal content -->
@@ -19,10 +15,7 @@
         <div class="relative">
           <label class="mb-2 block text-sm font-semibold text-ink"
             >Title
-            <span
-            class="text-primary-500"
-              >*</span
-            >
+            <span class="text-primary-500">*</span>
           </label>
           <input
             type="text"
@@ -30,30 +23,22 @@
             class="block text-md peer input-field"
             placeholder="Enter role title"
             [ngClass]="{
-              'is__invalid-input': roleForm
-                .get('name')
-                .hasError('required'),
+              'is__invalid-input': roleForm.get('name').hasError('required'),
             }"
             formControlName="name"
           />
         </div>
-        <div
-          *ngIf="roleForm.get('name').hasError('required')"
-          class="is__invalid-error"
-        >
-          Role title is required
-        </div>
+        @if (roleForm.get("name").hasError("required")) {
+          <div class="is__invalid-error">Role title is required</div>
+        }
       </div>
-
 
       <div class="form__group">
         <div class="relative">
           <label class="mb-2 block text-sm font-semibold text-ink"
             >Description
 
-            <span
-            class="text-primary-500">*</span
-            >
+            <span class="text-primary-500">*</span>
           </label>
           <textarea
             rows="3"
@@ -65,57 +50,51 @@
             formControlName="description"
           ></textarea>
         </div>
-        <div
-          *ngIf="roleForm.get('description').hasError('required')"
-          class="is__invalid-error"
-        >
-          Role description is required
-        </div>
+        @if (roleForm.get("description").hasError("required")) {
+          <div class="is__invalid-error">Role description is required</div>
+        }
       </div>
     </form>
   </ng-container>
   <ng-container modalFooter>
     <div class="form-actions">
-      <button
-        type="submit"
-        (click)="cancel()"
-        class="form-cancel"
-      >
+      <button type="submit" (click)="cancel()" class="form-cancel">
         Cancel
       </button>
       <button
-      type="submit"
-      [disabled]="roleForm.invalid || loading()"
-      (click)="submit()"
-      class="form-submit"
-      [ngClass]="{
-        'form-submit-ready': !roleForm.invalid && !loading(),
-        'form-submit-disabled': roleForm.invalid || loading()
-      }"
-    >
-      <svg
-        *ngIf="loading()"
-        class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
+        type="submit"
+        [disabled]="roleForm.invalid || loading()"
+        (click)="submit()"
+        class="form-submit"
+        [ngClass]="{
+          'form-submit-ready': !roleForm.invalid && !loading(),
+          'form-submit-disabled': roleForm.invalid || loading(),
+        }"
       >
-        <circle
-          class="opacity-25"
-          cx="12"
-          cy="12"
-          r="10"
-          stroke="currentColor"
-          stroke-width="4"
-        ></circle>
-        <path
-          class="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-        ></path>
-      </svg>
-      {{ loading() ? 'Submitting...' : 'Submit' }}
-    </button>
+        @if (loading()) {
+          <svg
+            class="-ml-1 mr-2 h-5 w-5 animate-spin text-current"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        }
+        {{ loading() ? "Submitting..." : "Submit" }}
+      </button>
     </div>
   </ng-container>
 </ReusableModal>

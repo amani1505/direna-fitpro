@@ -1,15 +1,15 @@
-import { CommonModule,DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input,  Output } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RowColumn } from '@model/TableColumn.interface';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { environment } from 'environments/environment';
 
 @Component({
-    selector: '[table-row]',
-    imports: [FormsModule, AngularSvgIconModule, CommonModule],
-    templateUrl: './row.component.html',
-    styleUrl: './row.component.scss'
+  selector: '[table-row]',
+  imports: [FormsModule, AngularSvgIconModule, CommonModule],
+  templateUrl: './row.component.html',
+  styleUrl: './row.component.scss',
 })
 export class RowComponent {
   fileUrl = environment.staicUrl;

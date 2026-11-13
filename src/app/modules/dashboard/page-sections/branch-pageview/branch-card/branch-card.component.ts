@@ -1,4 +1,4 @@
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { SpotlightDirective } from '@directive/spotlight.directive';
 import { Component, inject, Input, signal } from '@angular/core';
 import { ModalComponent } from '@components/modal/modal.component';
@@ -8,17 +8,16 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { EditBranchComponent } from '../edit-branch/edit-branch.component';
 
 @Component({
-    selector: 'BranchCard',
-    imports: [
-        SpotlightDirective,
-        AngularSvgIconModule,
-        DatePipe,
-        ModalComponent,
-        EditBranchComponent,
-        NgIf,
-    ],
-    templateUrl: './branch-card.component.html',
-    styleUrl: './branch-card.component.scss'
+  selector: 'BranchCard',
+  imports: [
+    SpotlightDirective,
+    AngularSvgIconModule,
+    DatePipe,
+    ModalComponent,
+    EditBranchComponent,
+  ],
+  templateUrl: './branch-card.component.html',
+  styleUrl: './branch-card.component.scss',
 })
 export class BranchCardComponent {
   @Input({ required: true }) branch: Branch;

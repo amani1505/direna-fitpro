@@ -1,4 +1,4 @@
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -22,16 +22,10 @@ import { ModalConfig } from '@model/modal-config.interface';
 import { BranchesService } from '@service/modules/branches.service';
 
 @Component({
-    selector: 'edit-branch',
-    imports: [
-        ReusableModalComponent,
-        NgClass,
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
-    templateUrl: './edit-branch.component.html',
-    styleUrl: './edit-branch.component.scss'
+  selector: 'edit-branch',
+  imports: [ReusableModalComponent, NgClass, FormsModule, ReactiveFormsModule],
+  templateUrl: './edit-branch.component.html',
+  styleUrl: './edit-branch.component.scss',
 })
 export class EditBranchComponent implements OnInit {
   isModalOpen = input.required<boolean>();
@@ -69,7 +63,6 @@ export class EditBranchComponent implements OnInit {
     customClass: 'my-custom-modal',
   };
 
-
   submit() {
     if (this.editBranchForm.invalid) {
       return;
@@ -77,7 +70,7 @@ export class EditBranchComponent implements OnInit {
     const { city, country, street, district, house_no, road } =
       this.editBranchForm.value;
 
-    this._branchesService.update(this.refetchString, this.branch.id,{
+    this._branchesService.update(this.refetchString, this.branch.id, {
       city,
       country,
       street,

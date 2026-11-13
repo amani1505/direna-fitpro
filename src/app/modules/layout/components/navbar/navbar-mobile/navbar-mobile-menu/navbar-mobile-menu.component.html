@@ -1,83 +1,88 @@
-<div class="pt-4" *ngFor="let menu of menuService.pagesMenu">
-  <div class="mx-1 mb-2 flex items-center justify-between">
-    <small class="text-xs font-semibold text-subtle">
-      {{ menu.group }}
-    </small>
+@for (menu of menuService.pagesMenu; track menu) {
+  <div class="pt-4">
+    <div class="mx-1 mb-2 flex items-center justify-between">
+      <small class="text-xs font-semibold text-subtle">
+        {{ menu.group }}
+      </small>
+    </div>
+    <ul class="flex flex-col space-y-1">
+      <!-- List items -->
+      @for (item of menu.items; track item) {
+        <li>
+          <!-- Menu List -->
+          <div
+            (click)="toggleMenu(item)"
+            class="menu-row group relative text-muted"
+          >
+            <!-- Icon -->
+            <div
+              [ngClass]="
+                item.active && !menuService.showSideBar
+                  ? 'text-primary-500'
+                  : ''
+              "
+              class="menu-icon pointer-events-none absolute left-2.5 top-2.5 transition-transform duration-300 ease-spring group-hover:scale-110"
+            >
+              <svg-icon src="{{ item.icon }}" [svgClass]="'h-5 w-5'">
+              </svg-icon>
+            </div>
+            <!-- Condition -->
+            <ng-container
+              [ngTemplateOutlet]="item.children ? childMenu : parentMenu"
+              [ngTemplateOutletContext]="{ item: item }"
+            >
+            </ng-container>
+            <!-- Workaround:: Enable routerLink -->
+            <ng-template #parentMenu let-item="item">
+              <div
+                routerLink="{{ item.route }}"
+                routerLinkActive="nav-item-active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="closeMenu()"
+                class="nav-item flex h-11 cursor-pointer items-center justify-start rounded-xl hover:bg-surface-2 hover:text-ink"
+              >
+                <a
+                  class="ml-10 truncate text-sm font-semibold capitalize focus:outline-none"
+                >
+                  {{ item.label }}
+                </a>
+              </div>
+            </ng-template>
+            <!-- Workaround:: Disable routerLink -->
+            <ng-template #childMenu let-item="item">
+              <div
+                class="nav-item flex h-11 cursor-pointer items-center justify-start rounded-xl hover:bg-surface-2 hover:text-ink"
+                [class.nav-item-active]="item.active"
+              >
+                <a
+                  class="ml-10 truncate text-sm font-semibold capitalize focus:outline-none"
+                >
+                  {{ item.label }}
+                </a>
+              </div>
+            </ng-template>
+            <!-- Arrow Icon -->
+            @if (item.children) {
+              <button
+                type="button"
+                tabindex="-1"
+                [ngClass]="{ 'rotate-90': item.expanded }"
+                class="pointer-events-none absolute right-1 top-3 flex items-center p-1 text-subtle transition-transform duration-300 ease-spring"
+              >
+                <svg-icon
+                  src="assets/icons/heroicons/solid/chevron-right.svg"
+                  [svgClass]="'h-5 w-5'"
+                >
+                </svg-icon>
+              </button>
+            }
+          </div>
+          <!-- Submenu items -->
+          <app-navbar-mobile-submenu
+            [submenu]="item"
+          ></app-navbar-mobile-submenu>
+        </li>
+      }
+    </ul>
   </div>
-  <ul class="flex flex-col space-y-1">
-    <!-- List items -->
-    <li *ngFor="let item of menu.items">
-      <!-- Menu List -->
-      <div
-        (click)="toggleMenu(item)"
-        class="menu-row group relative text-muted"
-      >
-        <!-- Icon -->
-        <div
-          [ngClass]="
-            item.active && !menuService.showSideBar ? 'text-primary-500' : ''
-          "
-          class="menu-icon pointer-events-none absolute left-2.5 top-2.5 transition-transform duration-300 ease-spring group-hover:scale-110"
-        >
-          <svg-icon src="{{ item.icon }}" [svgClass]="'h-5 w-5'"> </svg-icon>
-        </div>
-
-        <!-- Condition -->
-        <ng-container
-          [ngTemplateOutlet]="item.children ? childMenu : parentMenu"
-          [ngTemplateOutletContext]="{ item: item }"
-        >
-        </ng-container>
-
-        <!-- Workaround:: Enable routerLink -->
-        <ng-template #parentMenu let-item="item">
-          <div
-            routerLink="{{ item.route }}"
-            routerLinkActive="nav-item-active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            (click)="closeMenu()"
-            class="nav-item flex h-11 cursor-pointer items-center justify-start rounded-xl hover:bg-surface-2 hover:text-ink"
-          >
-            <a
-              class="ml-10 truncate text-sm font-semibold capitalize focus:outline-none"
-            >
-              {{ item.label }}
-            </a>
-          </div>
-        </ng-template>
-
-        <!-- Workaround:: Disable routerLink -->
-        <ng-template #childMenu let-item="item">
-          <div
-            class="nav-item flex h-11 cursor-pointer items-center justify-start rounded-xl hover:bg-surface-2 hover:text-ink"
-            [class.nav-item-active]="item.active"
-          >
-            <a
-              class="ml-10 truncate text-sm font-semibold capitalize focus:outline-none"
-            >
-              {{ item.label }}
-            </a>
-          </div>
-        </ng-template>
-
-        <!-- Arrow Icon -->
-        <button
-          *ngIf="item.children"
-          type="button"
-          tabindex="-1"
-          [ngClass]="{ 'rotate-90': item.expanded }"
-          class="pointer-events-none absolute right-1 top-3 flex items-center p-1 text-subtle transition-transform duration-300 ease-spring"
-        >
-          <svg-icon
-            src="assets/icons/heroicons/solid/chevron-right.svg"
-            [svgClass]="'h-5 w-5'"
-          >
-          </svg-icon>
-        </button>
-      </div>
-
-      <!-- Submenu items -->
-      <app-navbar-mobile-submenu [submenu]="item"></app-navbar-mobile-submenu>
-    </li>
-  </ul>
-</div>
+}

@@ -1,4 +1,4 @@
-import { NgFor, NgClass, NgTemplateOutlet, NgIf } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -7,20 +7,18 @@ import { SubMenuItem } from '@model/menu.model';
 import { SidebarSubmenuComponent } from '../sidebar-submenu/sidebar-submenu.component';
 
 @Component({
-    selector: 'app-sidebar-menu',
-    templateUrl: './sidebar-menu.component.html',
-    styleUrls: ['./sidebar-menu.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        NgFor,
-        NgClass,
-        AngularSvgIconModule,
-        NgTemplateOutlet,
-        RouterLink,
-        RouterLinkActive,
-        NgIf,
-        SidebarSubmenuComponent,
-    ]
+  selector: 'app-sidebar-menu',
+  templateUrl: './sidebar-menu.component.html',
+  styleUrls: ['./sidebar-menu.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    NgClass,
+    AngularSvgIconModule,
+    NgTemplateOutlet,
+    RouterLink,
+    RouterLinkActive,
+    SidebarSubmenuComponent,
+  ],
 })
 export class SidebarMenuComponent implements OnInit {
   constructor(public menuService: MenuService) {}
