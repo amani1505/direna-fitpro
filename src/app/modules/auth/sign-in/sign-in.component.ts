@@ -1,4 +1,4 @@
-import { Location, NgClass } from '@angular/common';
+import { Location } from '@angular/common';
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   FormBuilder,
@@ -19,7 +19,6 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     FormsModule,
     ReactiveFormsModule,
     AngularSvgIconModule,
-    NgClass,
     RouterModule,
   ],
   templateUrl: './sign-in.component.html',

@@ -26,12 +26,18 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
-  }));
+  // (Express 5 no longer accepts bare '*' wildcards in route paths.)
+  server.use(
+    express.static(browserDistFolder, {
+      maxAge: '1y',
+      index: false,
+      // Prerendered routes are folders; let Angular handle them without a 301.
+      redirect: false,
+    }),
+  );
 
   // All regular routes use the Angular engine
-  server.get('*', (req, res, next) => {
+  server.get('/{*splat}', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine

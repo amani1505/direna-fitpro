@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ThemeToggleComponent } from '@components/theme-toggle/theme-toggle.component';
 import { MenuService } from '@service/menu.service';
-import { NavbarMenuComponent } from './navbar-menu/navbar-menu.component';
 import { NavbarMobileComponent } from './navbar-mobile/navbar-mobile.component';
 import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
 
@@ -11,7 +10,6 @@ import { ProfileMenuComponent } from './profile-menu/profile-menu.component';
   selector: 'app-navbar',
   imports: [
     AngularSvgIconModule,
-    NavbarMenuComponent,
     ProfileMenuComponent,
     NavbarMobileComponent,
     ThemeToggleComponent,
